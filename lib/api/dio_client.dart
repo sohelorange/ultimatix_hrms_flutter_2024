@@ -1,0 +1,137 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
+
+import '../utility/preference_utils.dart';
+import 'app_exceptions.dart';
+
+class DioClient {
+  static const int timeOutDuration = 20;
+
+  //TODO : API CALL GET API
+  Future<dynamic> get(String baseUrl) async {
+    var uri = Uri.parse(baseUrl);
+    try {
+      var response = await Dio()
+          .get(baseUrl)
+          .timeout(const Duration(seconds: timeOutDuration));
+      return _processResponse(response);
+    } on SocketException {
+      throw FetchDataException('No Internet connection', uri.toString());
+    } on TimeoutException {
+      throw ApiNotRespondingException(
+          'API not responded in time', uri.toString());
+    } on DioException catch (error) {
+      throw handleError(error);
+    }
+  }
+
+  //TODO : API CALL GET QUERY API
+  Future<dynamic> getQueryParam(String baseUrl,
+      {Map<String, dynamic>? queryParams}) async {
+    var uri = Uri.parse(baseUrl);
+
+    // Append query parameters if they are not null or empty
+    if (queryParams != null && queryParams.isNotEmpty) {
+      uri = Uri.parse(baseUrl).replace(queryParameters: queryParams);
+    }
+
+    try {
+      var response = await Dio()
+          .get(uri.toString(),
+              options: Options(
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': PreferenceUtils.getAuthToken()
+                },
+              ))
+          .timeout(const Duration(seconds: timeOutDuration));
+      return _processResponse(response);
+    } on SocketException {
+      throw FetchDataException('No Internet connection', uri.toString());
+    } on TimeoutException {
+      throw ApiNotRespondingException(
+          'API not responded in time', uri.toString());
+    } on DioException catch (error) {
+      throw handleError(error);
+    }
+  }
+
+  //TODO : API CALL FOR POST API
+  Future<dynamic> post(String url, dynamic payloadObj) async {
+    var uri = Uri.parse(url);
+    var payload = json.encode(payloadObj);
+    try {
+      var response = await Dio()
+          .post(url,
+              options: Options(
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': PreferenceUtils.getAuthToken()
+                },
+              ),
+              data: payload)
+          .timeout(const Duration(seconds: timeOutDuration));
+      return _processResponse(response);
+    } on SocketException {
+      throw FetchDataException('No Internet connection', uri.toString());
+    } on TimeoutException {
+      throw ApiNotRespondingException(
+          'API not responded in time', uri.toString());
+    } on DioException catch (error) {
+      throw handleError(error);
+    }
+  }
+
+  //OTHER
+  dynamic _processResponse(response) {
+    switch (response.statusCode) {
+      case 200:
+      case 201:
+        return response.data;
+      case 400:
+        throw BadRequestException(
+            utf8.decode(response.bodyBytes), response.request!.url.toString());
+      case 401:
+      case 403:
+      case 404:
+        //PreferenceUtils.clearAllPreferences();
+        PreferenceUtils.setIsLogin(false);
+        //Get.offAll(() =>const LoginViewNewScreen());
+        throw UnAuthorizedException(
+            utf8.decode(response.bodyBytes), response.request!.url.toString());
+      case 500:
+      default:
+        throw FetchDataException(
+            'Error occurred with code : ${response.statusCode}',
+            response.request!.url.toString());
+    }
+  }
+
+  dynamic handleError(DioException error) {
+    if (error.response != null) {
+      switch (error.response!.statusCode) {
+        case 400:
+          throw BadRequestException(error.response!.data.toString(),
+              error.requestOptions.uri.toString());
+        case 401:
+        case 403:
+        case 404:
+          //PreferenceUtils.clearAllPreferences();
+          PreferenceUtils.setIsLogin(false);
+          //Get.offAll(() =>const LoginViewNewScreen());
+          throw UnAuthorizedException(error.response!.data.toString(),
+              error.requestOptions.uri.toString());
+        case 500:
+        default:
+          throw FetchDataException(
+              'Error occurred with code : ${error.response!.statusCode}',
+              error.requestOptions.uri.toString());
+      }
+    } else {
+      throw FetchDataException('Error occurred with message : ${error.message}',
+          error.requestOptions.uri.toString());
+    }
+  }
+}

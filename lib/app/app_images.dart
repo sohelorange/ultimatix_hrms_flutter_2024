@@ -8,7 +8,7 @@ class AppImages {
   static const String icLocationPr = 'assets/images/ic_location_pr.png';
   static const String icUnlock = 'assets/images/ic_unLock.png';
   static const String icCalenderIcon = 'assets/images/ic_clocking.png';
-  static const String icUserClock = 'assets/images/ic_user_clock.png';
+
   static const String icCalenderNew = 'assets/images/ic_calender_new.png';
   static const String icDotBack = 'assets/images/ic_dot_back.png';
   static const String icLocationRegular = 'assets/images/ic_location_regular.png';
@@ -109,7 +109,6 @@ class AppImages {
   static const String icLeaveNew = 'assets/icon/ic_leave_new.png';
   static const String icGoogle = 'assets/icon/ic_google.png';
   static const String icProfileNew = 'assets/icon/ic_profilenew.png';
-  static const String icaarrowback = 'assets/icon/ic_arrowback.png';
   static const String icacheckinnew = 'assets/icon/ic_checkinnew.png';
   static const String icbattery = 'assets/icon/ic_battery.png';
   static const String iccalander = 'assets/icon/ic_calader.png';
@@ -180,7 +179,7 @@ class AppImages {
   //svg
   static const String svgLocation = 'assets/images/svg_location.svg';
   static const String svgProfile = 'assets/images/svg_profile.svg';
-  static const String checkInBtnSvg = "assets/images/checkInBtn.svg";
+  static const String checkInBtnSvg = "assets/icon/clockInOut/svg_clock_in.svg";
   static const String checkOutBtnSvg = "assets/images/checkOutBtn.svg";
   static const String leaveAppSvg = "assets/images/leave_app_svg.svg";
   static const String leaveStatusSvg = "assets/images/leave_status_svg.svg";
@@ -195,4 +194,8 @@ class AppImages {
   static const String svgAttendanceEdit = "assets/images/svg_attendance_edit.svg";
   static const String svgUserLoc = "assets/images/svg_user_loc.svg";
   static const String svgCalender = "assets/images/svg_calender.svg";
+  static const String svgCamera = 'assets/icon/clockInOut/svg_camera.svg';
+  static const String icaarrowback = 'assets/icon/clockInOut/svg_back.svg';
+  static const String svgTime = 'assets/icon/clockInOut/svg_time.svg';
+
 }

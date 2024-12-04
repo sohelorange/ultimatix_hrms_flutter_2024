@@ -15,7 +15,9 @@ class SplashController extends GetxController {
 
     Future.delayed(const Duration(seconds: 3)).then(
       (value) {
-        if (PreferenceUtils.getIsLogin()) {
+        Get.offAllNamed(AppRoutes.clockInOutRoute);
+
+        /*if (PreferenceUtils.getIsLogin()) {
           if (kDebugMode) {
             print('dashboard page');
           }
@@ -25,7 +27,7 @@ class SplashController extends GetxController {
             print('login redirect');
           }
           Get.offAllNamed(AppRoutes.loginRoute);
-        }
+        }*/
       },
     );
   }

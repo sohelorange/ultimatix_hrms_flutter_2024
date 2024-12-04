@@ -97,6 +97,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icon/
+    - assets/icon/clockInOut/
     - assets/applicationIcon/
     - assets/map/
     - assets/map/resources/

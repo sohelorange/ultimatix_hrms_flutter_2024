@@ -60,4 +60,17 @@ class AppColors {
   static const Color colorF4F2FF = Color(0xFFF4F2FF);
   static const Color colorGreen = Colors.green;
   static const Color colorRed = Colors.red;
+
+  static const Color colorFDF1E0 = Color(0xFFFDF1E0);
+  static const Color color9C9BA2 = Color(0xFF9C9BA2);
+  static const Color colorF18700 = Color(0xFFF18700);
+  static const Color colorF68C1F = Color(0xFFF68C1F);
+  static const Color colorAppBars = Color(0xFFF9F6FC);
+  static const Color colorAppPurple = Color(0xFF7920A2);
+  static const Color color7B1FA2 = Color(0xFF7B1FA2);
+  static const Color color631983 = Color(0xFF631983);
+  static const Color colorLightPurple1 = Color(0xFFEDE8F1);
+  static const Color colorLightPurple2 = Color(0xFFC3AAD0);
+  static const Color colorBlueDark = Color(0xFF1C1F37);
+
 }

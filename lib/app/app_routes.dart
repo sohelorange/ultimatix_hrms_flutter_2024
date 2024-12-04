@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/screen/auth/login/login_view.dart';
+import 'package:ultimatix_hrms_flutter/screen/clockInOut/clockInOut_bind.dart';
+import 'package:ultimatix_hrms_flutter/screen/clockInOut/clock_in_out_ui.dart';
 
 import '../screen/auth/login/login_binding.dart';
 import '../screen/splash/splash_view.dart';
@@ -29,7 +31,7 @@ class AppRoutes {
   //end region
 
   //clock in region
-  static const clockInRoute = '/clock_in_route';
+  static const clockInOutRoute = '/clockInOut_route';
 
   //end region
 
@@ -80,6 +82,11 @@ class AppRoutes {
       name: AppRoutes.loginRoute,
       binding: LoginBinding(),
       page: () => const LoginView(),
+    ),
+    GetPage(
+      name: AppRoutes.clockInOutRoute,
+      binding: ClockInOutBinding(),
+      page: () => const ClockInOutUi(),
     )
   ];
 }

@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/screen/auth/login/login_view.dart';
+import 'package:ultimatix_hrms_flutter/screen/auth/serverconnection/server_connection_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/auth/serverconnection/server_connection_view.dart';
 
 import '../screen/auth/login/login_binding.dart';
 import '../screen/splash/splash_view.dart';
@@ -12,6 +14,7 @@ class AppRoutes {
   static const loginRoute = '/login_route';
   static const forgotPasswordRoute = '/forgot_password_route';
   static const setPermissionRoute = '/set_permission_route';
+  static const serverRoute = '/server_route';
 
   //end region
 
@@ -80,6 +83,11 @@ class AppRoutes {
       name: AppRoutes.loginRoute,
       binding: LoginBinding(),
       page: () => const LoginView(),
+    ),
+    GetPage(
+      name: AppRoutes.serverRoute,
+      binding: ServerConnectionBinding(),
+      page: () => const ServerConnectionView(),
     )
   ];
 }

@@ -180,7 +180,7 @@ class AppImages {
   static const String svgLocation = 'assets/images/svg_location.svg';
   static const String svgProfile = 'assets/images/svg_profile.svg';
   static const String checkInBtnSvg = "assets/icon/clockInOut/svg_clock_in.svg";
-  static const String checkOutBtnSvg = "assets/images/checkOutBtn.svg";
+  static const String checkOutBtnSvg = "assets/icon/clockInOut/svg_clock_out.svg";
   static const String leaveAppSvg = "assets/images/leave_app_svg.svg";
   static const String leaveStatusSvg = "assets/images/leave_status_svg.svg";
   static const String svgLocLive = "assets/images/svg_loc_live.svg";

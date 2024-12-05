@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/screen/auth/login/login_view.dart';
-import 'package:ultimatix_hrms_flutter/screen/clockInOut/clockInOut_bind.dart';
+import 'package:ultimatix_hrms_flutter/screen/clockInOut/clock_in_out_bind.dart';
 import 'package:ultimatix_hrms_flutter/screen/clockInOut/clock_in_out_ui.dart';
 
 import '../screen/auth/login/login_binding.dart';

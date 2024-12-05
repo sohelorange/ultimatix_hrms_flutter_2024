@@ -3,11 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:ultimatix_hrms_flutter/screen/clockInOut/clockInOut_controller.dart';
+import 'package:ultimatix_hrms_flutter/screen/clockInOut/clock_in_out_controller.dart';
 import '../../app/app_colors.dart';
 import '../../app/app_font_weight.dart';
 import '../../app/app_images.dart';
 import '../../utility/utils.dart';
+import '../../widget/common_app_image.dart';
 import '../../widget/common_text.dart';
 
 class ClockInOutUi extends GetView<ClockInOutController> {
@@ -100,100 +101,109 @@ class ClockInOutUi extends GetView<ClockInOutController> {
   }
 
   getClockInOutView(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [AppColors.colorAppBars, AppColors.colorAppBars], // Gradient colors
-              begin: Alignment.bottomLeft,
-              end: Alignment.topRight,
-              stops: [0.3, 0.7], // Stops for the gradient colors
-              tileMode: TileMode.clamp,
+    return Obx(()=>
+       Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [AppColors.colorAppBars, AppColors.colorAppBars], // Gradient colors
+                begin: Alignment.bottomLeft,
+                end: Alignment.topRight,
+                stops: [0.3, 0.7], // Stops for the gradient colors
+                tileMode: TileMode.clamp,
+              ),
             ),
+            height: Utils.getScreenHeight(context: context) / 15,
           ),
-          height: Utils.getScreenHeight(context: context) / 15,
-        ),
-        Container(
-          height: Utils.getScreenHeight(context: context), // remove fixed height
-          width: Utils.getScreenWidth(context: context),
-          decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(20.0))
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: MediaQuery.of(context).size.width * 0.05),
-                Center(
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.3,
-                    height: MediaQuery.of(context).size.width * 0.3,
-                    child: Card(
-                      elevation: 0,
-                      color: AppColors.colorLightPurple1,
-                      shape: CircleBorder(
-                        side: BorderSide(
-                          color: AppColors.colorLightPurple2.withOpacity(0.4),
-                          width: 2,
+          Container(
+            height: Utils.getScreenHeight(context: context), // remove fixed height
+            width: Utils.getScreenWidth(context: context),
+            decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(20.0))
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(height: MediaQuery.of(context).size.width * 0.05),
+                  Center(
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      height: MediaQuery.of(context).size.width * 0.3,
+                      child: Card(
+                        elevation: 0,
+                        color: AppColors.colorLightPurple1,
+                        shape: CircleBorder(
+                          side: BorderSide(
+                            color: AppColors.colorLightPurple2.withOpacity(0.4),
+                            width: 2,
+                          ),
+                        ),
+                        child: controller.selectedImage.value == null ? SvgPicture.asset(AppImages.svgCamera, fit: BoxFit.fill).paddingAll(37)
+                          : CommonAppImage(
+                          imagePath: controller.selectedImage.value!.path,
+                          fit: BoxFit.fill,
+                          isCircle: true,
                         ),
                       ),
-                      child: SvgPicture.asset(AppImages.svgCamera, fit: BoxFit.fill).paddingAll(37),
                     ),
                   ),
-                ),
-                SizedBox(height: MediaQuery.of(context).size.width * 0.02),
-                Center(
-                  child: CommonText(
-                    text: 'Select your working mode',
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.colorBlueDark,
-                  ),
-                ),
-                SizedBox(height: MediaQuery.of(context).size.width * 0.02),
-                getDropdownWidget(context),
-                SizedBox(height: MediaQuery.of(context).size.width * 0.02),
-                Card(
-                  elevation: 4,
-                  color: AppColors.colorLightPurple1,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    padding: EdgeInsets.zero,
+                  SizedBox(height: MediaQuery.of(context).size.width * 0.02),
+                  Center(
                     child: CommonText(
-                      text: "Kataria Arcade, Makarba, Ahmedabad, Gujarat.",
-                      fontSize: 13,
-                      maxLine: 3,
+                      text: 'Select your working mode',
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                       color: AppColors.colorBlueDark,
-                      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                      fontWeight: AppFontWeight.w400,
                     ),
                   ),
-                ),
-                SizedBox(height: MediaQuery.of(context).size.width * 0.02),
-                getWorkHourWidget(context),
-                SizedBox(height: MediaQuery.of(context).size.width * 0.02),
-                IconButton(
-                  icon: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      height: MediaQuery.of(context).size.width * 0.4,
-                      child: !controller.isCheckIn.value ? SvgPicture.asset(AppImages.checkInBtnSvg) : SvgPicture.asset(AppImages.checkInBtnSvg)
+                  SizedBox(height: MediaQuery.of(context).size.width * 0.02),
+                  getDropdownWidget(context),
+                  SizedBox(height: MediaQuery.of(context).size.width * 0.02),
+                  Card(
+                    elevation: 4,
+                    color: AppColors.colorLightPurple1,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      padding: EdgeInsets.zero,
+                      child: CommonText(
+                        text: controller.userLocAddress.value,
+                        fontSize: 13,
+                        maxLine: 3,
+                        color: AppColors.colorBlueDark,
+                        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                        fontWeight: AppFontWeight.w400,
+                      ),
+                    ),
                   ),
-                  onPressed: () {},
-                  splashColor: AppColors.colorLightPurple2,
-                ),
-                SizedBox(height: MediaQuery.of(context).size.width * 0.02),
-                getBottomWidgets(context),
-                const SizedBox(height: 20),
-              ],
+                  SizedBox(height: MediaQuery.of(context).size.width * 0.02),
+                  getWorkHourWidget(context),
+                  SizedBox(height: MediaQuery.of(context).size.width * 0.02),
+                  IconButton(
+                    icon: SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        height: MediaQuery.of(context).size.width * 0.4,
+                        child: !controller.isCheckIn.value ? SvgPicture.asset(AppImages.checkInBtnSvg) : SvgPicture.asset(AppImages.checkOutBtnSvg)
+                    ),
+                    onPressed: () {
+                      controller.checkInOutEvent();
+                    },
+                    splashColor: AppColors.colorLightPurple2,
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.width * 0.02),
+                  getBottomWidgets(context),
+                  const SizedBox(height: 20),
+                ],
+              ),
             ),
-          ),
-        ).marginOnly(top: 10),
-      ],
+          ).marginOnly(top: 10),
+        ],
+      ),
     );
   }
 

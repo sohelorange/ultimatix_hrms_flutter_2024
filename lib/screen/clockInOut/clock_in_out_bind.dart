@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'clockInOut_controller.dart';
+import 'clock_in_out_controller.dart';
 
 class ClockInOutBinding extends Bindings{
   @override

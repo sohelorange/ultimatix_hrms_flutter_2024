@@ -133,9 +133,9 @@ class Utils {
     );
   }
 
-  static Future<XFile?> pickImage({required ImageSource source}) async {
+  static Future<XFile?> pickImage({required ImageSource source, required CameraDevice cameraDevice}) async {
     try {
-      final pickedFile = await ImagePicker().pickImage(source: source);
+      final pickedFile = await ImagePicker().pickImage(source: source, preferredCameraDevice: cameraDevice);
       if (pickedFile != null) {
         // selectedImage.value = File(pickedFile.path);
         debugPrint("SELECTED ::: ${pickedFile.path}");

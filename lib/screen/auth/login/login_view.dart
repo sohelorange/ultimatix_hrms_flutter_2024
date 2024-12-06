@@ -110,7 +110,7 @@ class LoginView extends GetView<LoginController> {
                         activeColor: AppColors.colorPurple,
                         value: controller.rememberCheck.value,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
+                          borderRadius: BorderRadius.circular(2),
                         ),
                         onChanged: (bool? value) {
                           controller.rememberCheck.value = value!;
@@ -133,7 +133,7 @@ class LoginView extends GetView<LoginController> {
                   const Spacer(),
                   TextButton(
                     onPressed: () {
-                      // Get.toNamed(AppRoutes.forgotPasswordPage);
+                      Get.toNamed(AppRoutes.forgotPasswordRoute);
                     },
                     child: CommonText(
                       text: AppString.forgotPassWord,

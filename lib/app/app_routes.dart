@@ -1,4 +1,7 @@
 import 'package:get/get.dart';
+import 'package:ultimatix_hrms_flutter/screen/auth/forgotpassword/forgot_pass_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/auth/forgotpassword/forgot_pass_controller.dart';
+import 'package:ultimatix_hrms_flutter/screen/auth/forgotpassword/forgot_pass_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/auth/login/login_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/auth/serverconnection/server_connection_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/auth/serverconnection/server_connection_view.dart';
@@ -88,6 +91,11 @@ class AppRoutes {
       name: AppRoutes.serverRoute,
       binding: ServerConnectionBinding(),
       page: () => const ServerConnectionView(),
+    ),
+    GetPage(
+      name: AppRoutes.forgotPasswordRoute,
+      binding: ForgotPassBinding(),
+      page: () => const ForgotPassView(),
     )
   ];
 }

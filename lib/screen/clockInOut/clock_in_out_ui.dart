@@ -191,7 +191,7 @@ class ClockInOutUi extends GetView<ClockInOutController> {
                         child: !controller.isCheckIn.value ? SvgPicture.asset(AppImages.checkInBtnSvg) : SvgPicture.asset(AppImages.checkOutBtnSvg)
                     ),
                     onPressed: () {
-                      controller.checkInOutEvent();
+                      controller.imageCapture();
                     },
                     splashColor: AppColors.colorLightPurple2,
                   ),
@@ -208,36 +208,37 @@ class ClockInOutUi extends GetView<ClockInOutController> {
   }
 
   getDropdownWidget(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.9,
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      decoration: const ShapeDecoration(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(width: 1.0, style: BorderStyle.solid, color: Colors.grey),
-          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+    return Obx(()=> Container(
+        width: MediaQuery.of(context).size.width * 0.9,
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        decoration: const ShapeDecoration(
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(width: 1.0, style: BorderStyle.solid, color: Colors.grey),
+            borderRadius: BorderRadius.all(Radius.circular(8.0)),
+          ),
         ),
-      ),
-      child: DropdownButton<String>(
-        value: controller.defaultValue.value,
-        hint: const Text('Select an option'),
-        isExpanded: true,
-        underline: const SizedBox(), // Remove the default underline
-        items: controller.items.map((String items) {
-          return DropdownMenuItem(
-            value: items,
-            child: CommonText(
-              text: items,
-              fontSize: 14,
-              color: AppColors.color9C9BA2,
-              fontWeight: AppFontWeight.w400,
-              padding: const EdgeInsets.only(left: 10, right: 10),
-            ),
-          );
-        }).toList(),
-        onChanged: (String? newValue) {
-          log("Clicked Button");
-        },
+        child: DropdownButton<String>(
+          value: controller.defaultValue.value,
+          hint: const Text('Select an option'),
+          isExpanded: true,
+          underline: const SizedBox(), // Remove the default underline
+          items: controller.items.map((String items) {
+            return DropdownMenuItem(
+              value: items,
+              child: CommonText(
+                text: items,
+                fontSize: 14,
+                color: AppColors.color9C9BA2,
+                fontWeight: AppFontWeight.w400,
+                padding: const EdgeInsets.only(left: 10, right: 10),
+              ),
+            );
+          }).toList(),
+          onChanged: (String? newValue) {
+            controller.defaultValue.value = newValue!;
+          },
+        ),
       ),
     );
   }
@@ -245,28 +246,30 @@ class ClockInOutUi extends GetView<ClockInOutController> {
   getWorkHourWidget(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.9,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          CommonText(
-            text: 'Working Hours',
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            color: AppColors.color1C1F37,
-          ),
-          CommonText(
-            text: "5 Hours",
-            fontSize: 40,
-            fontWeight: FontWeight.bold,
-            color: AppColors.color631983,
-          ),
-          CommonText(
-            text: "12-12-2024",
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            color: AppColors.color9C9BA2,
-          ),
-        ],
+      child: Obx(
+        ()=> Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CommonText(
+              text: 'Working Hours',
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: AppColors.color1C1F37,
+            ),
+            CommonText(
+              text: controller.totalTime.value,
+              fontSize: 40,
+              fontWeight: FontWeight.bold,
+              color: AppColors.color631983,
+            ),
+            CommonText(
+              text: controller.nDate.value,
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: AppColors.color9C9BA2,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -287,17 +290,17 @@ class ClockInOutUi extends GetView<ClockInOutController> {
             children: [
               SvgPicture.asset(height: 20, width: 20,AppImages.svgTime),
               const SizedBox(width: 10), // Space between icon and text
-              const Expanded(
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'CheckIn',
                       style: TextStyle(fontSize: 14),
                     ),
-                    SizedBox(height: 4),
+                    const SizedBox(height: 4),
                     Text( //removed obx
-                      "1:00 PM",
+                        controller.checkInTime.value,
                       style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -320,17 +323,17 @@ class ClockInOutUi extends GetView<ClockInOutController> {
               SvgPicture.asset(height: 20,
                   width: 20,AppImages.svgTime),
               const SizedBox(width: 10), // Space between icon and text
-              const Expanded(
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'CheckOut',
                       style: TextStyle(fontSize: 14),
                     ),
-                    SizedBox(height: 4),
+                    const SizedBox(height: 4),
                     Text( //removed obx
-                      "12:30 PM",
+                      controller.checkOutTime.value,
                       style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
                     ),
                   ],

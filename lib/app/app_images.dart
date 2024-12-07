@@ -60,6 +60,10 @@ class AppImages {
   static const String icAddNew = 'assets/images/ic_new_add.png';
   static const String icMinusNew = 'assets/images/ic_new_minus.png';
   static const String icBanner = 'assets/images/ic_banner.png';
+  static const String icserver = 'assets/images/ic_server.png';
+  static const String icserverlogo = 'assets/images/ic_server_logo.png';
+  static const String icserverright = 'assets/images/ic_server_right.png';
+
 
   // Icon
   static const String icUserIcon = 'assets/icon/ic_user_icon.png';
@@ -70,7 +74,6 @@ class AppImages {
   static const String icApprove = 'assets/icon/ic_approve.png';
   static const String icRegulaisation = 'assets/icon/ic_regularization.png';
   static const String icCancel = 'assets/icon/ic_cancel.png';
-  // static const String icPunch = 'assets/icon/ic_punch.png';
   static const String icLocationIcon = 'assets/icon/ic_location.png';
   static const String icLocationNewIcon = 'assets/icon/ic_location_new.png';
   static const String icPresent = 'assets/icon/ic_present.png';
@@ -102,7 +105,6 @@ class AppImages {
   static const String icEmail = 'assets/icon/ic_email.png';
   static const String icAdharIcon = 'assets/icon/ic_adhar_icon.png';
   static const String icOfficeEarlyIcon = 'assets/icon/ic_office_early_icon.png';
-  static const String icServerIcon = 'assets/icon/ic_server_connect.png';
   static const String icAttendanceNew = 'assets/icon/ic_attendance_new.png';
   static const String icExploreNew = 'assets/icon/ic_explore_new.png';
   static const String icHomeNew = 'assets/icon/ic_home_new.png';
@@ -214,4 +216,6 @@ class AppImages {
   static const String svgAttendanceEdit = "assets/images/svg_attendance_edit.svg";
   static const String svgUserLoc = "assets/images/svg_user_loc.svg";
   static const String svgCalender = "assets/images/svg_calender.svg";
+
+
 }

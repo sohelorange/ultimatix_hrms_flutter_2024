@@ -1,7 +1,12 @@
 import 'package:get/get.dart';
+import 'package:ultimatix_hrms_flutter/screen/auth/forgotpassword/forgot_pass_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/auth/forgotpassword/forgot_pass_controller.dart';
+import 'package:ultimatix_hrms_flutter/screen/auth/forgotpassword/forgot_pass_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/auth/login/login_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/dashboard_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/dashboard_view.dart';
+import 'package:ultimatix_hrms_flutter/screen/auth/serverconnection/server_connection_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/auth/serverconnection/server_connection_view.dart';
 
 import '../screen/auth/login/login_binding.dart';
 import '../screen/splash/splash_view.dart';
@@ -14,6 +19,7 @@ class AppRoutes {
   static const loginRoute = '/login_route';
   static const forgotPasswordRoute = '/forgot_password_route';
   static const setPermissionRoute = '/set_permission_route';
+  static const serverRoute = '/server_route';
 
   //end region
 
@@ -87,6 +93,16 @@ class AppRoutes {
       name: AppRoutes.dashBoardRoute,
       binding: DashboardBinding(),
       page: () => const DashboardView(),
+    ),
+    GetPage(
+      name: AppRoutes.serverRoute,
+      binding: ServerConnectionBinding(),
+      page: () => const ServerConnectionView(),
+    ),
+    GetPage(
+      name: AppRoutes.forgotPasswordRoute,
+      binding: ForgotPassBinding(),
+      page: () => const ForgotPassView(),
     )
   ];
 }

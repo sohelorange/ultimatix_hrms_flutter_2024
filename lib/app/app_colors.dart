@@ -10,14 +10,15 @@ class AppColors {
     <int, Color>{
       50: Color(0xFFF3E5F5), // Purple 50
       100: Color(0xFFE1BEE7), // Purple 100
+      // Purple 100
       200: Color(0xFFCE93D8), // Purple 200
       300: Color(0xFFBA68C8), // Purple 300
       400: Color(0xFFAB47BC), // Purple 400
       500: Color(0xFF9C27B0), // Purple 500
       600: Color(0xFF8E24AA), // Purple 600
-      700: Color(0xFF7B1FA2), // Purple 700
+      700: Color(0xFF7B1FA2),
       800: Color(0xFF6A1B9A), // Purple 800
-      900: Color(0xFF4A148C), // Purple 900
+      900: Color(0xFF4A148C),
     },
   );
 

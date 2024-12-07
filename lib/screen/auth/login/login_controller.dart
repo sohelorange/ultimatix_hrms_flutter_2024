@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/api/dio_client.dart';
 import 'package:ultimatix_hrms_flutter/app/app_colors.dart';
@@ -13,6 +14,14 @@ class LoginController extends GetxController {
 
   var isLoading = false.obs;
   var token = ''.obs;
+
+  TextEditingController userNameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  FocusNode userNameFocus = FocusNode();
+  FocusNode passWordFocus = FocusNode();
+
+  RxBool rememberCheck = false.obs;
 
   @override
   void onInit() {

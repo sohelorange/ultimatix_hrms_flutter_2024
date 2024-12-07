@@ -23,4 +23,5 @@ class AppFontWeight {
   static FontWeight w700 = FontWeight.w700;
   static FontWeight w800 = FontWeight.w800;
   static FontWeight w900 = FontWeight.w900;
+
 }

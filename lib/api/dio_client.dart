@@ -25,6 +25,7 @@ class DioClient {
     } on DioException catch (error) {
       throw handleError(error);
     }
+
   }
 
   //TODO : API CALL GET QUERY API

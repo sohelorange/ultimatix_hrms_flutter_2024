@@ -10,13 +10,14 @@ class AppString {
   static const String useYourLocation = 'Use Your Location';
   static const String locationText = 'Ultimatix Payroll Collect location Data to enable location and movement tacking even when app is closed or not in use.';
   static const String locationText1 = 'This(All Time Allow) is then used for Clock-in & Clock-out, Geofencing, Pinning Customer Location.';
-  static const String loginDetails = "Login Details";
+  static const String loginDetails = "Login ";
   static const String userName = "User Name";
   static const String loginId = "Login ID";
   static const String login = "Login";
   static const String submit = "Submit";
   static const String connect = "Connect";
   static const String ok = "OK";
+  static const String cancel = "Cancel";
 
   static const String password = "Password";
   static const String passwordHint = "XXXXXXXXXX";

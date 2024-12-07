@@ -111,7 +111,7 @@ class AppImages {
   static const String icLeaveNew = 'assets/icon/ic_leave_new.png';
   static const String icGoogle = 'assets/icon/ic_google.png';
   static const String icProfileNew = 'assets/icon/ic_profilenew.png';
-  static const String icaarrowback = 'assets/icon/ic_arrowback.png';
+  static const String icaarrowback = 'assets/icon/clockInOut/svg_back.svg';
   static const String icacheckinnew = 'assets/icon/ic_checkinnew.png';
   static const String icbattery = 'assets/icon/ic_battery.png';
   static const String iccalander = 'assets/icon/ic_calader.png';
@@ -201,8 +201,8 @@ class AppImages {
   //svg
   static const String svgLocation = 'assets/images/svg_location.svg';
   static const String svgProfile = 'assets/images/svg_profile.svg';
-  static const String checkInBtnSvg = "assets/images/checkInBtn.svg";
-  static const String checkOutBtnSvg = "assets/images/checkOutBtn.svg";
+  static const String checkInBtnSvg = "assets/icon/clockInOut/svg_clock_in.svg";
+  static const String checkOutBtnSvg = "assets/icon/clockInOut/svg_clock_out.svg";
   static const String leaveAppSvg = "assets/images/leave_app_svg.svg";
   static const String leaveStatusSvg = "assets/images/leave_status_svg.svg";
   static const String svgLocLive = "assets/images/svg_loc_live.svg";

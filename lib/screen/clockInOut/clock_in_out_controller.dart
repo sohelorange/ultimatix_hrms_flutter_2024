@@ -257,6 +257,8 @@ class ClockInOutController extends GetxController with GetSingleTickerProviderSt
 
   /*This method preparing the data, then execute the _callApi for Api*/
   Future<void> clockInOutByApi() async{
+    isLoading.value = true;
+
     var geoLocation = await Geolocator.getCurrentPosition(locationSettings: const LocationSettings(accuracy: LocationAccuracy.bestForNavigation));
     dio.FormData formData = dio.FormData();
     formData.fields.add(const MapEntry("Emp_id", ""));
@@ -279,6 +281,7 @@ class ClockInOutController extends GetxController with GetSingleTickerProviderSt
     receivePort.listen((message) {
       if(message!=null){
         log(message);
+        isLoading.value = false;
         checkInOutEvent();
       }
     },);

@@ -23,7 +23,7 @@ class LoginController extends GetxController {
         });
   }
 
-  Future<void> login(String username, String password) async {
+  /*Future<void> login(String username, String password) async {
     try {
       isLoading(true);
 
@@ -51,5 +51,5 @@ class LoginController extends GetxController {
     } finally {
       isLoading(false);
     }
-  }
+  }*/
 }

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ultimatix_hrms_flutter/app/app_date_format.dart';
 import 'package:ultimatix_hrms_flutter/app/app_url.dart';
+import 'package:ultimatix_hrms_flutter/utility/preference_utils.dart';
 import 'package:ultimatix_hrms_flutter/utility/utils.dart';
 
 import '../../api/dio_client.dart';
@@ -48,6 +49,7 @@ class DashboardController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+    PreferenceUtils.setIsLogin(true);
     fetchDataInParallel();
 
     // Get the current date

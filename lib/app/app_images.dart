@@ -216,6 +216,7 @@ class AppImages {
   static const String svgAttendanceEdit = "assets/images/svg_attendance_edit.svg";
   static const String svgUserLoc = "assets/images/svg_user_loc.svg";
   static const String svgCalender = "assets/images/svg_calender.svg";
-
-
+  static const String svgAvatar = "assets/images/ic_avatar_logo.svg";
+  static const String svgCamera = 'assets/icon/clockInOut/svg_camera.svg';
+  static const String svgTime = 'assets/icon/clockInOut/svg_time.svg';
 }

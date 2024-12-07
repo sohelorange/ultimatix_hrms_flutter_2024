@@ -1,6 +1,4 @@
 import 'package:get/get.dart';
-import 'package:ultimatix_hrms_flutter/screen/auth/forgotpassword/forgot_pass_binding.dart';
-import 'package:ultimatix_hrms_flutter/screen/auth/forgotpassword/forgot_pass_controller.dart';
 import 'package:ultimatix_hrms_flutter/screen/auth/forgotpassword/forgot_pass_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/auth/login/login_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/dashboard_binding.dart';
@@ -8,7 +6,10 @@ import 'package:ultimatix_hrms_flutter/screen/dashboard/dashboard_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/auth/serverconnection/server_connection_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/auth/serverconnection/server_connection_view.dart';
 
+import '../screen/auth/forgotpassword/forgot_pass_binding.dart';
 import '../screen/auth/login/login_binding.dart';
+import '../screen/clockInOut/clock_in_out_bind.dart';
+import '../screen/clockInOut/clock_in_out_ui.dart';
 import '../screen/splash/splash_view.dart';
 
 /// All routes for app pages are defined here
@@ -103,6 +104,11 @@ class AppRoutes {
       name: AppRoutes.forgotPasswordRoute,
       binding: ForgotPassBinding(),
       page: () => const ForgotPassView(),
+    ),
+    GetPage(
+      name: AppRoutes.clockInRoute,
+      binding: ClockInOutBinding(),
+      page: () => const ClockInOutUi(),
     )
   ];
 }

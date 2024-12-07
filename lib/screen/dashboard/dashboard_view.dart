@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ultimatix_hrms_flutter/app/app_routes.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/dashboard_controller.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_container.dart';
 
@@ -156,31 +157,34 @@ class DashboardView extends GetView<DashboardController> {
                   ),
                 ],
               )),
-              Container(
-                height: 40,
-                width: 100,
-                decoration: BoxDecoration(
-                  // boxShadow: const [
-                  //   BoxShadow(
-                  //     color: AppColors.colorDarkGray,
-                  //     blurRadius: 0.0,
-                  //     spreadRadius: 0.0,
-                  //     offset: Offset(
-                  //         0, 0),
-                  //   ),
-                  // ],
-                  borderRadius: BorderRadius.circular(6),
-                  color: AppColors.purpleSwatch,
-                ),
-                child: Center(
-                  child: CommonText(
-                    textAlign: TextAlign.center,
-                    text: controller.checkInTime.isEmpty
-                        ? 'Check In'
-                        : 'Check Out',
-                    color: AppColors.colorWhite,
-                    fontSize: 14,
-                    fontWeight: AppFontWeight.w500,
+              GestureDetector(
+                onTap: (){
+                  Get.toNamed(AppRoutes.clockInRoute);
+                },
+                child: Container(
+                  height: 40,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    // boxShadow: const [
+                    //   BoxShadow(
+                    //     color: AppColors.colorDarkGray,
+                    //     blurRadius: 0.0,
+                    //     spreadRadius: 0.0,
+                    //     offset: Offset(
+                    //         0, 0),
+                    //   ),
+                    // ],
+                    borderRadius: BorderRadius.circular(6),
+                    color: AppColors.purpleSwatch,
+                  ),
+                  child: Center(
+                    child: CommonText(
+                      textAlign: TextAlign.center,
+                      text: 'Check In/Out',
+                      color: AppColors.colorWhite,
+                      fontSize: 14,
+                      fontWeight: AppFontWeight.w500,
+                    ),
                   ),
                 ),
               ),

@@ -19,12 +19,12 @@ class SplashController extends GetxController {
           if (kDebugMode) {
             print('dashboard page');
           }
-          //Get.offAllNamed(AppRoutes.dashBoardRoute);
+          Get.offAllNamed(AppRoutes.dashBoardRoute);
         } else {
           if (kDebugMode) {
             print('login redirect');
           }
-          Get.offAllNamed(AppRoutes.dashBoardRoute);
+          Get.offAllNamed(AppRoutes.loginRoute);
         }
       },
     );

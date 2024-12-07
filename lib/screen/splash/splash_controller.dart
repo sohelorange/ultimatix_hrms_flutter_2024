@@ -24,7 +24,7 @@ class SplashController extends GetxController {
           if (kDebugMode) {
             print('login redirect');
           }
-          Get.offAllNamed(AppRoutes.loginRoute);
+          Get.offAllNamed(AppRoutes.dashBoardRoute);
         }
       },
     );

@@ -108,7 +108,7 @@ class AppDatePicker {
     }
   }
 
-  static String convertDateFormat(
+  static String convertDateTimeFormat(
       String inputDate, String inputDateFormat, String outputDateFormat) {
     DateFormat inputParser = DateFormat(inputDateFormat);
     DateFormat outputParser = DateFormat(outputDateFormat);

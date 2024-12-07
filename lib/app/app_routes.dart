@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/screen/auth/login/login_view.dart';
+import 'package:ultimatix_hrms_flutter/screen/dashboard/dashboard_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/dashboard/dashboard_view.dart';
 
 import '../screen/auth/login/login_binding.dart';
 import '../screen/splash/splash_view.dart';
@@ -80,6 +82,11 @@ class AppRoutes {
       name: AppRoutes.loginRoute,
       binding: LoginBinding(),
       page: () => const LoginView(),
+    ),
+    GetPage(
+      name: AppRoutes.dashBoardRoute,
+      binding: DashboardBinding(),
+      page: () => const DashboardView(),
     )
   ];
 }

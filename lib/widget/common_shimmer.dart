@@ -17,14 +17,14 @@ class CommonAppShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Shimmer.fromColors(
-        baseColor: AppColors.purpleSwatch,
-        highlightColor: AppColors.purpleSwatch,
+        baseColor: AppColors.colorCBCBCB,
+        highlightColor: AppColors.colorCBCBCB,
         period: const Duration(seconds: 2),
         child: Container(
           width: width,
           height: height,
           decoration: ShapeDecoration(
-            color: AppColors.purpleSwatch,
+            color: AppColors.colorCBCBCB,
             shape: shapeBorder,
           ),
         ),

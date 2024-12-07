@@ -22,7 +22,7 @@ class SplashView extends GetView<SplashController> {
   Widget build(BuildContext context) {
     AppStatusBar.setStatusBarStyle(
       statusBarColor: AppColors.colorWhite,
-      statusBarIconBrightness: Brightness.dark,
+      //statusBarIconBrightness: Brightness.dark,
     );
 
     return Scaffold(

@@ -123,6 +123,25 @@ class AppImages {
   static const String icCancelReg = 'assets/icon/ic_cancel_reg.png';
   static const String icPendingReg = 'assets/icon/ic_pending_reg.png';
 
+  static const String dashFillHomeIcon = 'assets/applicationIcon/dashboard/dash_fill_home_icon.svg';
+  static const String dashFillExploreIcon = 'assets/applicationIcon/dashboard/dash_fill_explore_icon.svg';
+  static const String dashFillAttendanceIcon = 'assets/applicationIcon/dashboard/dash_fill_attendance_icon.svg';
+  static const String dashFillLeaveIcon = 'assets/applicationIcon/dashboard/dash_fill_leave_icon.svg';
+
+  static const String dashUnFillHomeIcon = 'assets/applicationIcon/dashboard/dash_un_fill_home_icon.svg';
+  static const String dashUnFillExploreIcon = 'assets/applicationIcon/dashboard/dash_un_fill_explore_icon.svg';
+  static const String dashUnFillAttendanceIcon = 'assets/applicationIcon/dashboard/dash_un_fill_attendance_icon.svg';
+  static const String dashUnFillLeaveIcon = 'assets/applicationIcon/dashboard/dash_un_fill_leave_icon.svg';
+  static const String dashRefreshIcon = 'assets/applicationIcon/dashboard/dash_refresh_icon.svg';
+  static const String dashNotificationIcon = 'assets/applicationIcon/dashboard/dash_notification_icon.svg';
+  static const String dashClockIcon = 'assets/applicationIcon/dashboard/dash_clock_icon.svg';
+  static const String dashPresentIcon = 'assets/applicationIcon/dashboard/dash_present_icon.svg';
+  static const String dashLeaveIcon = 'assets/applicationIcon/dashboard/dash_leave_icon.svg';
+  static const String dashAbsentIcon = 'assets/applicationIcon/dashboard/dash_absent_icon.svg';
+  static const String dashOnDutyIcon = 'assets/applicationIcon/dashboard/dash_on_duty_icon.svg';
+  static const String dashHolidayIcon = 'assets/applicationIcon/dashboard/dash_holiday_icon.svg';
+  static const String dashWeekOffIcon = 'assets/applicationIcon/dashboard/dash_week_off_icon.svg';
+
   // Drawer Icons
   static const String icDrawerHome = 'assets/icon/ic_drawer_home.png';
   static const String icDrawerAttendance = 'assets/icon/ic_drawer_attendence.png';
@@ -195,4 +214,5 @@ class AppImages {
   static const String svgAttendanceEdit = "assets/images/svg_attendance_edit.svg";
   static const String svgUserLoc = "assets/images/svg_user_loc.svg";
   static const String svgCalender = "assets/images/svg_calender.svg";
+  static const String svgAvatar = "assets/images/ic_avatar_logo.svg";
 }

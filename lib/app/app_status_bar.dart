@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 class AppStatusBar {
   /// Sets the status bar color and brightness.
   static void setStatusBarStyle({
-    Color statusBarColor = Colors.white,
+    Color statusBarColor = Colors.transparent,
     Brightness statusBarIconBrightness = Brightness.dark,
     Brightness statusBarBrightness = Brightness.light, // For iOS
   }) {

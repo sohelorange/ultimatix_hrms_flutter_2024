@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:battery_plus/battery_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ultimatix_hrms_flutter/app/app_date_format.dart';
@@ -15,7 +15,6 @@ import '../../utility/constants.dart';
 import '../../utility/network.dart';
 
 class DashboardController extends GetxController {
-  final Battery _battery = Battery();
 
   RxString address = ''.obs;
   RxString checkInTime = "--:--".obs;
@@ -37,7 +36,7 @@ class DashboardController extends GetxController {
   RxString weekOffDayLbl = "Week Off".obs;
   RxString weekOffDayValue = "0".obs;
 
-  List<Map<String, dynamic>> statusData = [];
+  RxList<Map<String, dynamic>> statusData = <Map<String, dynamic>>[].obs;
 
   final List<String> listEvent = [
     "https://www.shutterstock.com/image-vector/happy-diwali-celebration-background-festival-600nw-2523970115.jpg",
@@ -70,7 +69,7 @@ class DashboardController extends GetxController {
     try {
       await Future.wait([
         fetchDashboardPresentDetailsAPICall(),
-        //fetchDashboardAttendanceHistoryAPICall(),
+        fetchDashboardAttendanceHistoryAPICall(),
       ]);
     } catch (e) {
       AppSnackBar.showGetXCustomSnackBar(message: e.toString());
@@ -83,12 +82,9 @@ class DashboardController extends GetxController {
         //Map<String, dynamic> param = {
         //  'Key': 'value',
         //};
-        print("Days Present : TEST");
 
         var response =
             await DioClient().getQueryParam(AppURL.clockInOutTimeURL);
-
-        print("Days Present : "+response);
 
         if (response['code'] == 200 && response['status'] == true) {
           final data = response['data'];
@@ -107,8 +103,10 @@ class DashboardController extends GetxController {
           AppSnackBar.showGetXCustomSnackBar(message: response['message']);
         }
       } catch (e) {
-        print(e.toString());
-        AppSnackBar.showGetXCustomSnackBar(message: e.toString());
+        if (kDebugMode) {
+          print(e.toString());
+        }
+        //AppSnackBar.showGetXCustomSnackBar(message: e.toString());
       }
     } else {
       AppSnackBar.showGetXCustomSnackBar(message: Constants.networkMsg);
@@ -124,25 +122,30 @@ class DashboardController extends GetxController {
 
         var response = await DioClient().getQueryParam(AppURL.dashboardURL);
 
-        print("Attendance Present : "+response);
-
         if (response['code'] == 200 && response['status'] == true) {
-          final data = response['data'];
-          if (data != null) {
+          final data = response['data']; // Keep this as Map<String, dynamic>
+          if (data != null && data is Map<String, dynamic>) {
             address.value = data['employeeData']['location'].toString();
-            presentDayValue.value = data['employeeCount']['present'] ?? '0';
-            leaveDayValue.value = data['employeeCount']['leave'] ?? '0';
-            absentDayValue.value = data['employeeCount']['absent'] ?? '0';
-            onDutyDayValue.value = data['employeeCount']['od'] ?? '0';
-            holidayDayValue.value = data['employeeCount']['ho'] ?? '0';
-            weekOffDayValue.value = data['employeeCount']['wo'] ?? '0';
+            presentDayValue.value =
+                data['employeeCount']['present']?.toString() ?? '0';
+            leaveDayValue.value =
+                data['employeeCount']['leave']?.toString() ?? '0';
+            absentDayValue.value =
+                data['employeeCount']['absent']?.toString() ?? '0';
+            onDutyDayValue.value =
+                data['employeeCount']['od']?.toString() ?? '0';
+            holidayDayValue.value =
+                data['employeeCount']['ho']?.toString() ?? '0';
+            weekOffDayValue.value =
+                data['employeeCount']['wo']?.toString() ?? '0';
+
             if (presentDayValue.value.isNotEmpty &&
                 leaveDayValue.value.isNotEmpty &&
                 absentDayValue.value.isNotEmpty &&
                 onDutyDayValue.value.isNotEmpty &&
                 holidayDayValue.value.isNotEmpty &&
                 weekOffDayValue.value.isNotEmpty) {
-              statusData = [
+              statusData.value = [
                 {
                   'color': const Color(0XFF34A853),
                   'icon': AppImages.dashPresentIcon,
@@ -186,7 +189,10 @@ class DashboardController extends GetxController {
           AppSnackBar.showGetXCustomSnackBar(message: response['message']);
         }
       } catch (e) {
-        AppSnackBar.showGetXCustomSnackBar(message: e.toString());
+        if (kDebugMode) {
+          print(e.toString());
+        }
+        //AppSnackBar.showGetXCustomSnackBar(message: e.toString());
       }
     } else {
       AppSnackBar.showGetXCustomSnackBar(message: Constants.networkMsg);

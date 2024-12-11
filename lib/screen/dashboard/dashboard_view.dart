@@ -30,7 +30,9 @@ class DashboardView extends GetView<DashboardController> {
         profileImageUrl: "",
         actions: [
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              controller.fetchDataInParallel();
+            },
             child: const CommonAppImage(
               imagePath: AppImages.dashRefreshIcon,
               color: AppColors.colorDarkBlue,
@@ -50,26 +52,30 @@ class DashboardView extends GetView<DashboardController> {
       ),
       body: CommonContainer(
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 15,
-              ),
-              Obx(() => _buildLocationInfo()),
-              const SizedBox(
-                height: 15,
-              ),
-              _buildUpcomingEvent(),
-              const SizedBox(
-                height: 15,
-              ),
-              //Obx(() => _buildAttendanceSummary()),
-              const SizedBox(
-                height: 15,
-              ),
-            ],
+          child: Obx(
+            ()=> Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 15,
+                ),
+                _buildLocationInfo(),
+                //Obx(() => _buildLocationInfo()),
+                const SizedBox(
+                  height: 15,
+                ),
+                _buildUpcomingEvent(),
+                const SizedBox(
+                  height: 15,
+                ),
+                _buildAttendanceSummary(),
+                //Obx(() => _buildAttendanceSummary()),
+                const SizedBox(
+                  height: 15,
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -180,7 +186,7 @@ class DashboardView extends GetView<DashboardController> {
                   child: Center(
                     child: CommonText(
                       textAlign: TextAlign.center,
-                      text: 'Check In/Out',
+                      text: controller.checkInTime.value == '--:--' && controller.checkOutTime.value == '--:--' ? 'Check In' : 'Check Out',
                       color: AppColors.colorWhite,
                       fontSize: 14,
                       fontWeight: AppFontWeight.w500,

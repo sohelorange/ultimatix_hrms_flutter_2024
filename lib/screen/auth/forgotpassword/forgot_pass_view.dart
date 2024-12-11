@@ -101,7 +101,6 @@ class ForgotPassView extends GetView<ForgotPassController> {
                   ),
                 ),
               ).paddingOnly(left: 30, right: 30, top: 20),
-
             ],
           ),
         ),

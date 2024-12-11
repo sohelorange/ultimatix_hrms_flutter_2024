@@ -10,6 +10,8 @@ class LoginViewNew extends GetView<LoginController> {
   Widget build(BuildContext context) {
     // TODO: implement build
     throw UnimplementedError();
+
+
   }
 
 

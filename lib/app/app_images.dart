@@ -199,7 +199,6 @@ class AppImages {
 
 
   //svg
-  static const String svgLocation = 'assets/images/svg_location.svg';
   static const String svgProfile = 'assets/images/svg_profile.svg';
   static const String checkInBtnSvg = "assets/icon/clockInOut/svg_clock_in.svg";
   static const String checkOutBtnSvg = "assets/icon/clockInOut/svg_clock_out.svg";
@@ -215,8 +214,13 @@ class AppImages {
   static const String svgAttendanceLocation = "assets/images/svg_attendance_location.svg";
   static const String svgAttendanceEdit = "assets/images/svg_attendance_edit.svg";
   static const String svgUserLoc = "assets/images/svg_user_loc.svg";
-  static const String svgCalender = "assets/images/svg_calender.svg";
   static const String svgAvatar = "assets/images/ic_avatar_logo.svg";
   static const String svgCamera = 'assets/icon/clockInOut/svg_camera.svg';
   static const String svgTime = 'assets/icon/clockInOut/svg_time.svg';
+
+  static const String svgBattery = 'assets/icon/liveTracking/svg_battery.svg';
+  static const String svgCalender = 'assets/icon/liveTracking/svg_calender.svg';
+  static const String svgClock = 'assets/icon/liveTracking/svg_clock.svg';
+  static const String svgDistance = 'assets/icon/liveTracking/svg_distnce.svg';
+  static const String svgLocation = 'assets/icon/liveTracking/svg_location.svg';
 }

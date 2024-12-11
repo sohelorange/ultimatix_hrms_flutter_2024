@@ -298,7 +298,7 @@ class ClockInOutController extends GetxController with GetSingleTickerProviderSt
 
   /*This method is call the api with parameters*/
   static void _callApi(_IsolateApiData isolateData) async{
-      await DioClient().post(isolateData.apiUrl,isolateData.formData).then((value) {
+      await DioClient().postFormData(isolateData.apiUrl,isolateData.formData).then((value) {
         if (value != null) {
           isolateData.answerPort.send("Api data getting success");
         } else {

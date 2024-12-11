@@ -1,4 +1,4 @@
-
+// Create the OpenLayers map
 const map = new ol.Map({
   target: 'map',
   controls: ol.control.defaults({ attribution: false }),
@@ -15,21 +15,22 @@ const map = new ol.Map({
 
 // Create a vector source for displaying locations
 const vectorSource = new ol.source.Vector();
+
 // Create a vector layer for displaying locations
 const vectorLayer = new ol.layer.Vector({
     source: vectorSource,
     style: new ol.style.Style({
         image: new ol.style.Icon({
-          src: 'resources/locate.png',// URL to your icon image
+          src: 'resources/locate.png', // URL to your icon image
         })
     })
 });
+
 // Add the vector layer to the map
 map.addLayer(vectorLayer);
 
 // Function to display location with an icon
 function displayLocation(longitude, latitude) {
-
   vectorSource.clear();
   // Create a feature with the location
   const feature = new ol.Feature({
@@ -44,73 +45,85 @@ function displayLocation(longitude, latitude) {
   map.getView().setZoom(14);
 }
 
-/*const locations = [
-   [72.4997, 22.9960], // New York City
-   [72.5108, 23.0120] // Los Angeles
-];*/
+// Function to pan the map in a specific direction
+function panMap(direction) {
+  const view = map.getView();
+  const currentCenter = view.getCenter();
+  const panDistance = 100000; // Distance to pan in pixels
 
-/*const locations = [
-     [72.502564, 23.011767], // New York City
-     [72.495011, 22.987336] // Los Angeles
-];*/
+  let newCenter;
+  switch (direction) {
+    case 'left':
+      newCenter = [currentCenter[0] - panDistance, currentCenter[1]];
+      break;
+    case 'right':
+      newCenter = [currentCenter[0] + panDistance, currentCenter[1]];
+      break;
+    case 'up':
+      newCenter = [currentCenter[0], currentCenter[1] - panDistance];
+      break;
+    case 'down':
+      newCenter = [currentCenter[0], currentCenter[1] + panDistance];
+      break;
+  }
 
-
-
-/*displayTrack(locations);*/
-
-function displayTrack(locations) {
-  const lineString = new ol.geom.LineString(locations.map(coord => ol.proj.fromLonLat(coord)));
-
-  const feature = new ol.Feature({
-    geometry: lineString
-  });
-
-  const vectorSource = new ol.source.Vector({
-    features: [feature]
-  });
-
-  const vectorLayer = new ol.layer.Vector({
-    source: vectorSource,
-    style: new ol.style.Style({
-      stroke: new ol.style.Stroke({
-        color: 'blue',
-        width: 5
-      })
-    })
-  });
-
-  map.addLayer(vectorLayer);
-
-  /*After adding the track layer on map, it provides the distance.*/
-  /*formatLength(lineString);*/
+  // Update the map center to the new position
+  view.setCenter(newCenter);
 }
 
-/*Now it's not used*/
-function formatLength(line) {
-  var length = Math.round(line.getLength() * 100) / 100;
-  //const length = getLength(line); /*check before uncomment it.*/
-  let output;
-  if (length > 100) {
-    output = Math.round((length / 1000) * 100) / 100 + ' ' + 'km';
-  } else {
-    output = Math.round(length * 100) / 100 + ' ' + 'm';
+// Create custom pan controls (left, right, up, down)
+const controlContainer = document.createElement('div');
+controlContainer.className = 'custom-pan-controls';
+
+// Create buttons for left, right, up, and down
+const leftButton = document.createElement('button');
+leftButton.textContent = '←';
+leftButton.title = 'Pan Left';
+leftButton.className = 'pan-button';
+leftButton.onclick = () => panMap('left');
+
+const rightButton = document.createElement('button');
+rightButton.textContent = '→';
+rightButton.title = 'Pan Right';
+rightButton.className = 'pan-button';
+rightButton.onclick = () => panMap('right');
+
+const upButton = document.createElement('button');
+upButton.textContent = '↑';
+upButton.title = 'Pan Up';
+upButton.className = 'pan-button';
+upButton.onclick = () => panMap('up');
+
+const downButton = document.createElement('button');
+downButton.textContent = '↓';
+downButton.title = 'Pan Down';
+downButton.className = 'pan-button';
+downButton.onclick = () => panMap('down');
+
+// Append buttons to the control container
+controlContainer.appendChild(leftButton);
+controlContainer.appendChild(upButton);
+controlContainer.appendChild(downButton);
+controlContainer.appendChild(rightButton);
+
+// Add the custom controls to the map's DOM
+document.getElementById('map').appendChild(controlContainer);
+
+// Styling the buttons (optional)
+const style = document.createElement('style');
+style.innerHTML = `
+  .custom-pan-controls {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
   }
- console.log('formatLength call: '+output);
-    if(window.getDistanceByCord){
-        getDistanceByCord.postMessage(output);
-    }
-};
-
-/*Now it's not used*/
-async function getAddress(longitude, latitude) {
- console.log('getAddress call: '+longitude+ ', '+latitude);
-  const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lon=${longitude}&lat=${latitude}`);
-  const data = await response.json();
-  console.log('Data Getting: '+response.json());
-
-  console.log('Data Getting: '+data);
-  if(window.getAddressByLatLon){
-    getAddressByLatLon.postMessage(data.display_name);
+  .pan-button {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
   }
-}
-
+`;
+document.head.appendChild(style);

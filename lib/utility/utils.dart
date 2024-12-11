@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 import '../app/app_colors.dart';
 import '../app/app_font_weight.dart';
@@ -155,5 +156,20 @@ class Utils {
       color: AppColors.purpleSwatch,
       strokeWidth: 2,
     );
+  }
+
+  static Future<String> selectDateNew({required BuildContext context}) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2015, 8),
+      lastDate: DateTime.now(),
+      initialDatePickerMode: DatePickerMode.year,
+    );
+    if (picked != null) {
+      return DateFormat('yyyy-MM-dd').format(picked);
+    } else {
+      return '';
+    }
   }
 }

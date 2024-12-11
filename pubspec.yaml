@@ -102,6 +102,7 @@ flutter:
     - assets/icon/
     - assets/applicationIcon/
     - assets/icon/clockInOut/
+    - assets/icon/liveTracking/
     - assets/applicationIcon/dashboard/
     - assets/map/
     - assets/map/resources/

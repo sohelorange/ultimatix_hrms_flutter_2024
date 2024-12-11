@@ -60,7 +60,7 @@ class DioClient {
   }
 
   //TODO : API CALL FOR POST API
-  Future<dynamic> post(String url, FormData payloadObj) async {
+  Future<dynamic> postFormData(String url, FormData payloadObj) async {
     var uri = Uri.parse(url);
     /*var payload = json.encode(payloadObj);*/
     try {
@@ -73,6 +73,32 @@ class DioClient {
                 },
               ),
               data: payloadObj)
+          .timeout(const Duration(seconds: timeOutDuration));
+      return _processResponse(response);
+    } on SocketException {
+      throw FetchDataException('No Internet connection', uri.toString());
+    } on TimeoutException {
+      throw ApiNotRespondingException(
+          'API not responded in time', uri.toString());
+    } on DioException catch (error) {
+      throw handleError(error);
+    }
+  }
+
+  //TODO : API CALL FOR POST API
+  Future<dynamic> post(String url, Map<String, dynamic> requestParam) async {
+    var uri = Uri.parse(url);
+    /*var payload = json.encode(requestParam);*/
+    try {
+      var response = await Dio()
+          .post(url,
+          options: Options(
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJMb2dpbl9JRCI6IjIxNzc0IiwiQ21wX0lEIjoiMTg3IiwiRW1wX0lEIjoiMjgxOTkiLCJEZXB0X0lEIjoiNTA1IiwiQWxwaGFfRW1wX0NvZGUiOiIwMDU4IiwiRW1wX0Z1bGxfTmFtZSI6IjAwNTggLSBNci4gQVAgQk0iLCJEZXB0X05hbWUiOiJTb2Z0d2FyZSIsIkRlc2lnTmFtZSI6Ik1BTkFHRVIiLCJEZXZpY2VUb2tlbiI6InN0cmluZyIsIm5iZiI6MTczMzM5NTY4NywiZXhwIjoxNzM1OTg3Njg3LCJpYXQiOjE3MzMzOTU2ODd9.C0XjeTwXI4gTati4mTdiPMtwZLR5I16hQo0VNKJr1is'
+            },
+          ),
+          data: requestParam)
           .timeout(const Duration(seconds: timeOutDuration));
       return _processResponse(response);
     } on SocketException {

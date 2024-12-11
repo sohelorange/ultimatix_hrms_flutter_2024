@@ -5,6 +5,8 @@ import 'package:ultimatix_hrms_flutter/screen/dashboard/dashboard_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/dashboard_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/auth/serverconnection/server_connection_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/auth/serverconnection/server_connection_view.dart';
+import 'package:ultimatix_hrms_flutter/screen/liveTracking/live_tracking_bind.dart';
+import 'package:ultimatix_hrms_flutter/screen/liveTracking/live_tracking_ui.dart';
 
 import '../screen/auth/forgotpassword/forgot_pass_binding.dart';
 import '../screen/auth/login/login_binding.dart';
@@ -109,6 +111,11 @@ class AppRoutes {
       name: AppRoutes.clockInRoute,
       binding: ClockInOutBinding(),
       page: () => const ClockInOutUi(),
+    ),
+    GetPage(
+      name: AppRoutes.liveTrackingRoute,
+      binding: LiveTrackingBinding(),
+      page: () => const LiveTrackingUi(),
     )
   ];
 }

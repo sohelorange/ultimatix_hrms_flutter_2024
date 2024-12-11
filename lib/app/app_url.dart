@@ -57,7 +57,7 @@ class AppURL {
   //Live Tracking region
   static String geoLocationURL =
       '${PreferenceUtils.getAppUrl()}api/v1/GeoLocationTracking';
-  static String getTrackRecordURL =
+  static String getGeoLocationTrackingList =
       "${PreferenceUtils.getAppUrl()}api/v1/GeoLocationTrackingList";
   static String addLocationsURL =
       "${PreferenceUtils.getAppUrl()}api/v1/AddGeoLocation";

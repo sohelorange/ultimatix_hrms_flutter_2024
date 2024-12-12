@@ -15,7 +15,7 @@ class AppURL {
   static const String serverConnectionURL = "${baseURL}api/v1/ServerConnection";
   static String loginURL = "${PreferenceUtils.getAppUrl()}api/v1/LoginCheck";
   static String forgotPassWordURL =
-      "${PreferenceUtils.getAppUrl()}api/Login/ForgetPassword";
+      "${PreferenceUtils.getAppUrl()}api/v1/ForgotPassword";
   static String otpVerificationURL =
       "${PreferenceUtils.getAppUrl()}api/Login/OTP_Verification";
   static String resetPasswordURL =

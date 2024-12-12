@@ -60,7 +60,7 @@ class DioClient {
     }
   }
 
-  //TODO : API CALL FOR POST API
+  //TODO : API CALL FOR FormData POST API
   Future<dynamic> postFormData(String url, FormData payloadObj) async {
     var uri = Uri.parse(url);
     /*var payload = json.encode(payloadObj);*/
@@ -70,7 +70,7 @@ class DioClient {
               options: Options(
                 headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJMb2dpbl9JRCI6IjIxNzc0IiwiQ21wX0lEIjoiMTg3IiwiRW1wX0lEIjoiMjgxOTkiLCJEZXB0X0lEIjoiNTA1IiwiQWxwaGFfRW1wX0NvZGUiOiIwMDU4IiwiRW1wX0Z1bGxfTmFtZSI6IjAwNTggLSBNci4gQVAgQk0iLCJEZXB0X05hbWUiOiJTb2Z0d2FyZSIsIkRlc2lnTmFtZSI6Ik1BTkFHRVIiLCJEZXZpY2VUb2tlbiI6InN0cmluZyIsIm5iZiI6MTczMzM5NTY4NywiZXhwIjoxNzM1OTg3Njg3LCJpYXQiOjE3MzMzOTU2ODd9.C0XjeTwXI4gTati4mTdiPMtwZLR5I16hQo0VNKJr1is'
+                  'Authorization': PreferenceUtils.getAuthToken()
                 },
               ),
               data: payloadObj)
@@ -125,7 +125,7 @@ class DioClient {
             utf8.decode(response.bodyBytes), response.request!.url.toString());
       case 401:
       case 403:
-      case 404:
+      //case 404:
         //PreferenceUtils.clearAllPreferences();
         PreferenceUtils.setIsLogin(false);
         //Get.offAll(() =>const LoginViewNewScreen());
@@ -147,7 +147,7 @@ class DioClient {
               error.requestOptions.uri.toString());
         case 401:
         case 403:
-        case 404:
+        //case 404:
           //PreferenceUtils.clearAllPreferences();
           PreferenceUtils.setIsLogin(false);
           //Get.offAll(() =>const LoginViewNewScreen());

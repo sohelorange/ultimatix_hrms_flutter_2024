@@ -7,6 +7,7 @@ import 'package:ultimatix_hrms_flutter/widget/common_container.dart';
 import '../../app/app_colors.dart';
 import '../../app/app_font_weight.dart';
 import '../../app/app_images.dart';
+import '../../utility/preference_utils.dart';
 import '../../widget/common_app_image.dart';
 import '../../widget/common_app_image_svg.dart';
 import '../../widget/common_banner.dart';
@@ -31,6 +32,22 @@ class DashboardView extends GetView<DashboardController> {
         actions: [
           GestureDetector(
             onTap: () {
+              PreferenceUtils.setIsLogin(false).then((_) {
+                Get.offAllNamed(AppRoutes.loginRoute);
+              });
+            },
+            child: const CommonAppImage(
+              height: 20,
+              width: 20,
+              imagePath: AppImages.icAppLogo,
+              //color: AppColors.colorDarkBlue,
+            ),
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          GestureDetector(
+            onTap: () {
               controller.fetchDataInParallel();
             },
             child: const CommonAppImage(
@@ -53,7 +70,7 @@ class DashboardView extends GetView<DashboardController> {
       body: CommonContainer(
         child: SingleChildScrollView(
           child: Obx(
-            ()=> Column(
+            () => Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -164,7 +181,7 @@ class DashboardView extends GetView<DashboardController> {
                 ],
               )),
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   Get.toNamed(AppRoutes.liveTrackingRoute);
                 },
                 child: Container(
@@ -186,7 +203,10 @@ class DashboardView extends GetView<DashboardController> {
                   child: Center(
                     child: CommonText(
                       textAlign: TextAlign.center,
-                      text: controller.checkInTime.value == '--:--' && controller.checkOutTime.value == '--:--' ? 'Check In' : 'Check Out',
+                      text: controller.checkInTime.value == '--:--' &&
+                              controller.checkOutTime.value == '--:--'
+                          ? 'Check In'
+                          : 'Check Out',
                       color: AppColors.colorWhite,
                       fontSize: 14,
                       fontWeight: AppFontWeight.w500,

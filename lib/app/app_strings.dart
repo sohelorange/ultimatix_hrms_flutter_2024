@@ -39,7 +39,7 @@ class AppString {
   static const String currentPassword = "Current Password";
   static const String newPassword = "New Password";
   static const String enterCurrentPassword = "Enter Current Password";
-  static const String forgotPasswordText = "We just need your registered User Id to send you \n password reset instructions.";
+  static const String forgotPasswordText = "We just need your registered User Id to send you \npassword reset instructions.";
   static const String successText = "Successfully Connected Enter your \n Credential to Login.";
   static const String pleaseEnterUserNamePassword = "Please enter your username and password to \n connect mobile Payroll and HRMS";
 

@@ -63,6 +63,7 @@ class AppColors {
   static const Color colorF4F2FF = Color(0xFFF4F2FF);
   static const Color colorGreen = Colors.green;
   static const Color colorRed = Colors.red;
+  static const Color colorUnderline =Color(0XFF4F1B78);
 
   static const Color color1F1100 = Color(0xFF1F1100);
   static const Color colorCBCBCB = Color(0xFFCBCBCB);

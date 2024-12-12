@@ -31,6 +31,13 @@ class Constants {
   static const String isLoginPref = 'isLoginPref';
   static const String fcmIdPref = 'fcmIdPref';
   static const String authTokenPref = 'authTokenPref';
+  static const String loginDataPref = 'loginDataPref';
+  static const String loginDetailsArrayPref = 'loginDetailsArrayPref';
+  static const String deviceIDPref = 'deviceIDPref';
+  static const String isRememberPref = 'isRememberPref';
+  static const String loginUserIDPref = 'loginUserIDPref';
+  static const String loginUserPasswordPref = 'loginUserPasswordPref';
+  static const String serverConnectionPref = 'serverConnectionPref';
 
   //TODO : Msg Show Constants
   static const String contactMsg = 'Please contact to system admin...';

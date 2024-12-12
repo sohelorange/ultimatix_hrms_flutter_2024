@@ -32,11 +32,6 @@ void main() async {
     return true;
   };
 
-  PreferenceUtils.setAppUrl('http://192.168.1.200:8080/');
-  PreferenceUtils.setAuthToken('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJMb2dpbl9JRCI6IjIxNzc2IiwiQ21wX0lEIjoiMTg3IiwiRW1wX0lEIjoiMjgyMDEiLCJEZXB0X0lEIjoiNTA1IiwiQWxwaGFfRW1wX0NvZGUiOiIwMDYwIiwiRW1wX0Z1bGxfTmFtZSI6IjAwNjAgLSBNci4gQVAgVEwgUUExMjMiLCJEZXB0X05hbWUiOiJTb2Z0d2FyZSIsIkRlc2lnTmFtZSI6IlNyLiBRQSBUZXN0ZXIiLCJEZXZpY2VUb2tlbiI6InN0cmluZyIsIm5iZiI6MTczMzQ4NjkwNSwiZXhwIjoxNzM2MDc4OTA1LCJpYXQiOjE3MzM0ODY5MDV9.tCSsg4YEaxVK-sEFU2_Nf1Eb8NzTGKUP2DHSel-DWmw');
-
-  //isBiometricAvailable();
-
   runApp(
     ChangeNotifierProvider(
       create: (_) => AppThemeController(),

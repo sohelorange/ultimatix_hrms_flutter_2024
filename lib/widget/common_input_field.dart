@@ -83,7 +83,7 @@ class CommonInputField extends StatelessWidget {
         textAlign: textAlign ?? TextAlign.start,
         focusNode: focusNode,
         controller: textEditingController,
-        cursorColor: AppColors.purpleSwatch,
+        cursorColor: AppColors.colorUnderline,
         keyboardType: textInputType,
         obscureText: isPassword ?? false,
         textInputAction: textInputAction,
@@ -156,30 +156,39 @@ class CommonInputField extends StatelessWidget {
                       ),
                     )
                   : null,
-          //labelText: hintText, // Use hintText as the label text
-          hintText: hintText,
-          isDense: true,
+          labelText: hintText,
+          // Label text moves above when focused or text entered
           labelStyle: labelStyle ??
               AppFonts.dMSansTextStyle()
-                  .copyWith(fontSize: 14, color: hintColor ?? borderColor),
+                  .copyWith(fontSize: 16, color: hintColor ?? borderColor),
+          //hintText: hintText,
+          // Acts as a label when no text is entered
           hintStyle: hintStyle ??
               AppFonts.dMSansTextStyle()
-                  .copyWith(fontSize: 14, color: hintColor ?? borderColor),
+                  .copyWith(fontSize: 16, color: hintColor ?? borderColor),
+          isDense: true,
           contentPadding: padding ??
               const EdgeInsets.symmetric(
                 horizontal: 10,
                 vertical: 10,
               ),
-          enabledBorder: const UnderlineInputBorder(
+          enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-              color: AppColors.colorDarkGray, // Your desired color
+              color: AppColors.colorDarkBlue.withOpacity(0.1),
+              // Your desired color
               width: 1.0, // Your desired width
             ),
           ),
           focusedBorder: const UnderlineInputBorder(
             borderSide: BorderSide(
-              color: AppColors.purpleSwatch, // Your desired color
+              color: AppColors.colorUnderline, // Your desired color
               width: 1.0, // A wider border for focused state
+            ),
+          ),
+          disabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.grey.withOpacity(0.5), // Dull gray for disabled state
+              width: 1.0,
             ),
           ),
         ),

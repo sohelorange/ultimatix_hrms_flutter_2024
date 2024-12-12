@@ -71,8 +71,8 @@ class LoginView extends GetView<LoginController> {
               ).paddingOnly(left: 15, top: 17),
               CommonAppInput(
                 key: const Key('Enter Login ID'),
-                textEditingController: controller.userNameController,
-                focusNode: controller.userNameFocus,
+                textEditingController: controller.loginIDController.value,
+                focusNode: controller.loginIDFocus,
                 hintText: AppString.enterUserName,
                 // prifixPadding: const EdgeInsets.all(12),
                 hintColor: AppColors.colorBlack.withOpacity(0.3),
@@ -90,7 +90,7 @@ class LoginView extends GetView<LoginController> {
                 ],
               ).paddingOnly(left: 15, top: 10),
               CommonAppInput(
-                textEditingController: controller.passwordController,
+                textEditingController: controller.passwordController.value,
                 focusNode: controller.passWordFocus,
                 hintText: AppString.enterpassword,
                 prifixPadding: const EdgeInsets.all(12),
@@ -107,19 +107,19 @@ class LoginView extends GetView<LoginController> {
                       child: Checkbox(
                         checkColor: Colors.white,
                         activeColor: AppColors.colorPurple,
-                        value: controller.rememberCheck.value,
+                        value: controller.isRememberCheck.value,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(2),
                         ),
                         onChanged: (bool? value) {
-                          controller.rememberCheck.value = value!;
+                          controller.isRememberCheck.value = value!;
                         },
                       ),
                     ),
                   ),
                   GestureDetector(
                     onTap: () {
-                      controller.rememberCheck.toggle();
+                      controller.isRememberCheck.toggle();
                     },
                     child: CommonText(
                       padding: const EdgeInsets.only(left: 15),
@@ -144,7 +144,11 @@ class LoginView extends GetView<LoginController> {
                     ),
                   ),
                 ],
-              ).paddingOnly(top: 10, left: 15, right: 15,),
+              ).paddingOnly(
+                top: 10,
+                left: 15,
+                right: 15,
+              ),
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.width / 8,
@@ -211,5 +215,4 @@ class LoginView extends GetView<LoginController> {
       ),
     );
   }
-
 }

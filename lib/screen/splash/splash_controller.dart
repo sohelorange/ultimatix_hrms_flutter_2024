@@ -11,7 +11,7 @@ class SplashController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    checkLocationEnabled();
+    //checkLocationEnabled();
 
     Future.delayed(const Duration(seconds: 3)).then(
       (value) {
@@ -33,5 +33,4 @@ class SplashController extends GetxController {
   void checkLocationEnabled() async {
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
   }
-
 }

@@ -15,7 +15,6 @@ import '../../utility/constants.dart';
 import '../../utility/network.dart';
 
 class DashboardController extends GetxController {
-
   RxString address = ''.obs;
   RxString checkInTime = "--:--".obs;
   RxString checkOutTime = "--:--".obs;
@@ -48,7 +47,6 @@ class DashboardController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    PreferenceUtils.setIsLogin(true);
     fetchDataInParallel();
 
     // Get the current date
@@ -184,6 +182,8 @@ class DashboardController extends GetxController {
                 },
               ];
             }
+
+            print(statusData);
           }
         } else {
           AppSnackBar.showGetXCustomSnackBar(message: response['message']);

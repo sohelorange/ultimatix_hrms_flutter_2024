@@ -33,4 +33,5 @@ class SplashController extends GetxController {
   void checkLocationEnabled() async {
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
   }
+
 }

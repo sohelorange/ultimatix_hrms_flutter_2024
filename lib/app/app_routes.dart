@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:ultimatix_hrms_flutter/screen/attendanceReg/attendance_main_bind.dart';
+import 'package:ultimatix_hrms_flutter/screen/attendanceReg/attendance_main_ui.dart';
 import 'package:ultimatix_hrms_flutter/screen/auth/forgotpassword/forgot_pass_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/auth/login/login_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/dashboard_binding.dart';
@@ -61,7 +63,7 @@ class AppRoutes {
   //end region
 
   //attendance region
-  static const attendanceRoute = '/attendance_route';
+  static const attendanceMainRoute = '/attendance_main_route';
   static const userAttendanceRoute = '/user_attendance_route';
   static const regularizeRequestRoute = '/regularize_request_route';
 
@@ -116,6 +118,11 @@ class AppRoutes {
       name: AppRoutes.liveTrackingRoute,
       binding: LiveTrackingBinding(),
       page: () => const LiveTrackingUi(),
+    ),
+    GetPage(
+      name: AppRoutes.attendanceMainRoute,
+      binding: AttendanceMainBinding(),
+      page: () => const AttendanceMainUi(),
     )
   ];
 }

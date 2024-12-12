@@ -47,10 +47,8 @@ class AppImages {
   static const String icweekoff = 'assets/images/ic_weekoff.png';
   static const String icWeekOffNew = 'assets/images/ic_weekOff_new.png';
   static const String imgUserProf = 'assets/images/img_profile.png';
-  static const String icId = 'assets/images/ic_id.png';
   static const String icDesignation = 'assets/images/ic_designation.png';
   static const String icEditPen = 'assets/images/ic_edit_pen.png';
-  static const String icAbsentImg = 'assets/images/ic_absent.png';
   static const String icPresentImg = 'assets/images/ic_present.png';
   static const String icWeekOffImg = 'assets/images/ic_week_off.png';
   static const String icHolidayImg = 'assets/images/ic_holiday.png';
@@ -121,9 +119,6 @@ class AppImages {
   static const String ictravel2 = 'assets/icon/ic_trave2.png';
   static const String icadd = 'assets/icon/ic_add.png';
   static const String icarrowup = 'assets/icon/ic_arrowup.png';
-  static const String icApproveReg = 'assets/icon/ic_approve_reg.png';
-  static const String icCancelReg = 'assets/icon/ic_cancel_reg.png';
-  static const String icPendingReg = 'assets/icon/ic_pending_reg.png';
 
   static const String dashFillHomeIcon = 'assets/applicationIcon/dashboard/dash_fill_home_icon.svg';
   static const String dashFillExploreIcon = 'assets/applicationIcon/dashboard/dash_fill_explore_icon.svg';
@@ -211,8 +206,6 @@ class AppImages {
   static const String svgLateIn = "assets/images/svg_late_in.svg";
   static const String svgEarlyOut = "assets/images/svg_early_out.svg";
   static const String svgShift = "assets/images/svg_shift_time.svg";
-  static const String svgAttendanceLocation = "assets/images/svg_attendance_location.svg";
-  static const String svgAttendanceEdit = "assets/images/svg_attendance_edit.svg";
   static const String svgUserLoc = "assets/images/svg_user_loc.svg";
   static const String svgAvatar = "assets/images/ic_avatar_logo.svg";
   static const String svgCamera = 'assets/icon/clockInOut/svg_camera.svg';
@@ -223,4 +216,11 @@ class AppImages {
   static const String svgClock = 'assets/icon/liveTracking/svg_clock.svg';
   static const String svgDistance = 'assets/icon/liveTracking/svg_distnce.svg';
   static const String svgLocation = 'assets/icon/liveTracking/svg_location.svg';
+  static const String icId = 'assets/icon/attendance/svg_id.svg';
+  static const String svgAttendanceEdit = "assets/icon/attendance/svg_edit.svg";
+  static const String icPendingReg = 'assets/icon/attendance/svg_pending.svg';
+  static const String icApproveReg = 'assets/icon/attendance/svg_approve.svg';
+  static const String icCancelReg = 'assets/icon/attendance/svg_cancel.svg';
+  static const String svgAbsentReg = 'assets/icon/attendance/svg_absent.svg';
+  static const String svgAttendanceLocation = "assets/icon/attendance/svg_team_loc.svg";
 }

@@ -9,7 +9,6 @@ import '../../app/app_colors.dart';
 import '../../app/app_font_weight.dart';
 import '../../app/app_images.dart';
 import '../../utility/utils.dart';
-import '../../widget/common_app_image.dart';
 import '../../widget/common_text.dart';
 
 class LiveTrackingUi extends GetView<LiveTrackingController> {
@@ -42,7 +41,7 @@ class LiveTrackingUi extends GetView<LiveTrackingController> {
           },
           child: SafeArea(
             child: Obx(() => IgnorePointer(
-              ignoring: controller.isLoading.isTrue,
+              ignoring: controller.isLoadingOnUi.isTrue,
               child: Stack(
                 children: [
                   Scaffold(
@@ -90,7 +89,7 @@ class LiveTrackingUi extends GetView<LiveTrackingController> {
                     ),
                     body: liveTrackingView(context),
                   ),
-                  controller.isLoading.isTrue
+                  controller.isLoadingOnUi.isTrue
                       ? ColoredBox(
                     color: AppColors.colorBlack.withOpacity(0.6),
                     child: Center(
@@ -152,13 +151,7 @@ class LiveTrackingUi extends GetView<LiveTrackingController> {
                       bottomRight: Radius.circular(5.0),
                     ),
                   ),
-                  child: Obx(() {
-                    if (controller.isLoading.value == false) {
-                      return WebViewWidget(controller: controller.webController!);
-                    } else {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                  }),
+                  child: controller.isWebLoading.value == false ? WebViewWidget(controller: controller.webController!) : const Center(child: CircularProgressIndicator()),
                 ).paddingOnly(top: screenHeight * 0.02),
                 Card(
                   elevation: 4,
@@ -194,15 +187,15 @@ class LiveTrackingUi extends GetView<LiveTrackingController> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Obx(() => CommonText(
+                                  CommonText(
                                     text: controller.userName.toString().trim(),
                                     fontWeight: AppFontWeight.bold,
                                     fontSize: screenWidth * 0.035, // Responsively adjusted font size
                                     color: Colors.black,
-                                  )),
+                                  ),
                                   const SizedBox(height: 8.0),
                                   CommonText(
-                                    text: controller.textPosition.value.trim(),
+                                    text: controller.userLocAddress.value.trim(),
                                     color: Colors.black,
                                     fontWeight: FontWeight.normal,
                                     maxLine: 4,
@@ -223,135 +216,151 @@ class LiveTrackingUi extends GetView<LiveTrackingController> {
                   children: [
                     // Box 1
                     Expanded(
-                      child: Container(
-                        padding: EdgeInsets.all(screenWidth * 0.02),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: AppColors.colorLightPurple1),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(AppImages.svgBattery),
-                            const SizedBox(width: 8.0),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CommonText(
-                                    text: 'Battery',
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: screenWidth * 0.032, // Responsively adjusted font size
-                                    color: AppColors.color9C9BA2,
-                                  ),
-                                  Obx(() => CommonText(
-                                    text: controller.battery.value,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: screenWidth * 0.032, // Responsively adjusted font size
-                                    color: AppColors.colorBlack,
-                                  )),
-                                ],
+                      child: GestureDetector( //TODO: Need to remove only gesture detecter to call static method 11-12-2024
+                        onTap: () {
+                          controller.setInGeoFencingLocation();
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(screenWidth * 0.02),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: AppColors.colorLightPurple1),
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(AppImages.svgBattery),
+                              const SizedBox(width: 8.0),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CommonText(
+                                      text: 'Battery',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: screenWidth * 0.032, // Responsively adjusted font size
+                                      color: AppColors.color9C9BA2,
+                                    ),
+                                    CommonText(
+                                      text: controller.battery.value,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: screenWidth * 0.032, // Responsively adjusted font size
+                                      color: AppColors.colorBlack,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
                     SizedBox(width: screenWidth * 0.04),
                     // Box 2
                     Expanded(
-                      child: Container(
-                        padding: EdgeInsets.all(screenWidth * 0.02),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: AppColors.colorLightPurple1),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(AppImages.svgDistance, height: 20, width: 20),
-                            const SizedBox(width: 8.0),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CommonText(
-                                    text: 'Kilometer',
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: screenWidth * 0.032, // Responsively adjusted font size
-                                    color: AppColors.colorBlack,
-                                  ),
-                                  Obx(() => CommonText(
-                                    text: controller.distance.value.toStringAsFixed(2),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: screenWidth * 0.032, // Responsively adjusted font size
-                                    color: AppColors.colorBlack,
-                                  )),
-                                ],
+                      child: GestureDetector(//TODO: Need to remove only gesture detecter to call static method 11-12-2024
+                        onTap: () {
+                          controller.setOutGeoFencingLocation();
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(screenWidth * 0.02),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: AppColors.colorLightPurple1),
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(AppImages.svgDistance, height: 20, width: 20),
+                              const SizedBox(width: 8.0),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CommonText(
+                                      text: 'Kilometer',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: screenWidth * 0.032, // Responsively adjusted font size
+                                      color: AppColors.colorBlack,
+                                    ),
+                                    CommonText(
+                                      text: controller.distance.value.toStringAsFixed(2),
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: screenWidth * 0.032, // Responsively adjusted font size
+                                      color: AppColors.colorBlack,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
                     SizedBox(width: screenWidth * 0.04),
                     // Box 3
                     Expanded(
-                      child: Container(
-                        padding: EdgeInsets.all(screenWidth * 0.02),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: AppColors.colorLightPurple1),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(AppImages.svgTime, height: 20, width: 20),
-                            const SizedBox(width: 8.0),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CommonText(
-                                    text: 'Time',
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: screenWidth * 0.032, // Responsively adjusted font size
-                                    color: AppColors.colorBlack,
-                                  ),
-                                  CommonText(
-                                    text: '48min',
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: screenWidth * 0.032, // Responsively adjusted font size
-                                    color: AppColors.colorBlack,
-                                  ),
-                                ],
+                      child: GestureDetector(//TODO: Need to remove only gesture detecter to call static method 11-12-2024
+                        onTap: () {
+                          controller.showStaticTrack();
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(screenWidth * 0.02),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: AppColors.colorLightPurple1),
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(AppImages.svgTime, height: 20, width: 20),
+                              const SizedBox(width: 8.0),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CommonText(
+                                      text: 'Time',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: screenWidth * 0.032, // Responsively adjusted font size
+                                      color: AppColors.colorBlack,
+                                    ),
+                                    CommonText(
+                                      text: controller.trackTime.value,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: screenWidth * 0.032, // Responsively adjusted font size
+                                      color: AppColors.colorBlack,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ).paddingOnly(left: screenWidth * 0.05, right: screenWidth * 0.05),
                 const SizedBox(height: 16.0),
-                Container(
-                  padding: EdgeInsets.all(screenWidth * 0.03),
-                  width: screenWidth * 0.9,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: AppColors.colorBlueDark,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () async {
-                          // Handle date selection
-                        },
-                        child:SvgPicture.asset(AppImages.svgCalender,height: 20, width: 20,),
-                      ),
-                      const SizedBox(width: 10,),
-                      CommonText(
-                        text: 'Select Date',
-                        fontWeight: FontWeight.w600,
-                        fontSize: screenWidth * 0.035, // Responsively adjusted font size
-                        color: AppColors.colorWhite,
-                      )
-                    ],
+                GestureDetector(
+                  onTap: () async{
+                    var selectedDate = await Utils.selectDateNew(context: context);
+                    controller.getGeoLocationTrackingList(selectedDate);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(screenWidth * 0.03),
+                    width: screenWidth * 0.9,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: AppColors.colorBlueDark,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(AppImages.svgCalender,height: 20, width: 20,),
+                        const SizedBox(width: 10,),
+                        CommonText(
+                          text: 'Select Date',
+                          fontWeight: FontWeight.w600,
+                          fontSize: screenWidth * 0.035, // Responsively adjusted font size
+                          color: AppColors.colorWhite,
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 Container(
@@ -367,7 +376,7 @@ class LiveTrackingUi extends GetView<LiveTrackingController> {
                   elevation: 2,
                   color: AppColors.colorWhite,
                   child: ListView.builder(
-                    itemCount: 8,
+                    itemCount: controller.locationTrackingResponse.value.data?.length ?? 0,
                     shrinkWrap: true,
                     padding: EdgeInsets.all(screenWidth * 0.03),
                     physics: const ClampingScrollPhysics(),
@@ -393,14 +402,14 @@ class LiveTrackingUi extends GetView<LiveTrackingController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 CommonText(
-                                  text: "12-12-2024",
+                                  text: controller.getDateInFormat(controller.locationTrackingResponse.value.data?.elementAt(position).trackingDate),
                                   fontSize: screenWidth * 0.035, // Responsively adjusted font size
                                   fontWeight: AppFontWeight.w600,
                                   color: AppColors.color1C1F37,
                                   padding: const EdgeInsets.only(bottom: 5),
                                 ),
                                 CommonText(
-                                  text: "Ahmedabad",
+                                  text: controller.locationTrackingResponse.value.data?.elementAt(position).address.toString()==null ? "" : controller.locationTrackingResponse.value.data!.elementAt(position).address.toString(),
                                   fontSize: screenWidth * 0.03, // Responsively adjusted font size
                                   fontWeight: AppFontWeight.w400,
                                   maxLine: 4,

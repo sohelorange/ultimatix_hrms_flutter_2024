@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 
@@ -88,6 +89,8 @@ class DioClient {
   //TODO : API CALL FOR POST API
   Future<dynamic> post(String url, Map<String, dynamic> requestParam) async {
     var uri = Uri.parse(url);
+    log("API is:$url");
+    log("API is:$requestParam");
     /*var payload = json.encode(requestParam);*/
     try {
       var response = await Dio()

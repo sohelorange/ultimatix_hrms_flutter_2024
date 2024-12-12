@@ -165,7 +165,7 @@ class DashboardView extends GetView<DashboardController> {
               )),
               GestureDetector(
                 onTap: (){
-                  Get.toNamed(AppRoutes.clockInRoute);
+                  Get.toNamed(AppRoutes.liveTrackingRoute);
                 },
                 child: Container(
                   height: 40,

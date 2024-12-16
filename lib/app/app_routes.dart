@@ -6,6 +6,8 @@ import 'package:ultimatix_hrms_flutter/screen/dashboard/dashboard_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/dashboard_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/auth/serverconnection/server_connection_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/auth/serverconnection/server_connection_view.dart';
+import 'package:ultimatix_hrms_flutter/screen/explore/explore_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/explore/explore_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/liveTracking/live_tracking_bind.dart';
 import 'package:ultimatix_hrms_flutter/screen/liveTracking/live_tracking_ui.dart';
 
@@ -123,6 +125,11 @@ class AppRoutes {
       name: AppRoutes.attendanceMainRoute,
       binding: AttendanceMainBinding(),
       page: () => const AttendanceMainUi(),
+    ),
+    GetPage(
+      name: AppRoutes.exploreTabRoute,
+      binding: ExploreBinding(),
+      page: () => const ExploreView(),
     )
   ];
 }

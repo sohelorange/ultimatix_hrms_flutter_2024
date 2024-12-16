@@ -38,6 +38,7 @@ class Constants {
   static const String loginUserIDPref = 'loginUserIDPref';
   static const String loginUserPasswordPref = 'loginUserPasswordPref';
   static const String serverConnectionPref = 'serverConnectionPref';
+  static const String locationDetailsPref = 'locationDetailsPref';
 
   //TODO : Msg Show Constants
   static const String contactMsg = 'Please contact to system admin...';

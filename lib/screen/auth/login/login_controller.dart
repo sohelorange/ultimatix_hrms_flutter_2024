@@ -11,6 +11,7 @@ import 'package:ultimatix_hrms_flutter/utility/constants.dart';
 import 'package:ultimatix_hrms_flutter/utility/preference_utils.dart';
 import 'package:unique_identifier/unique_identifier.dart';
 
+import '../../../app/app_routes.dart';
 import '../../../utility/network.dart';
 
 class LoginController extends GetxController {
@@ -32,6 +33,7 @@ class LoginController extends GetxController {
 
   RxBool isShowHide = false.obs;
   RxBool isRememberCheck = false.obs;
+  RxBool isObscured = true.obs;
 
   RxString strIdentifier = 'Unknown'.obs;
 
@@ -64,6 +66,10 @@ class LoginController extends GetxController {
     loginIDController.value.dispose();
     serverConnectionController.value.dispose();
     super.dispose();
+  }
+
+  void toggleObscured() {
+    isObscured.value = !isObscured.value;
   }
 
   Future<void> deviceID() async {
@@ -135,21 +141,28 @@ class LoginController extends GetxController {
         var response = await DioClient().post(AppURL.loginURL, param);
         if (response['code'] == 200 && response['status'] == true) {
           PreferenceUtils.setAuthToken('Bearer ${response['data']['token']}');
-          PreferenceUtils.setLoginDetails(response['data']['loginData']);
-          PreferenceUtils.setDetails(response['data']['details']);
 
-          print('Token :' + PreferenceUtils.getAuthToken());
-          PreferenceUtils.setIsLogin(true);
-          print('Login Check' + PreferenceUtils.getIsLogin().toString());
+          if (response['data']['loginData'] is Map<String, dynamic>) {
+            await PreferenceUtils.setLoginDetails(
+                response['data']['loginData']);
+          }
+          //TODO : Get MAP DATA
+          Map<String, dynamic> loginData = PreferenceUtils.getLoginDetails();
 
-          //print('loginData :' + PreferenceUtils.getLoginDetails().toString());
-          //print('details :' + PreferenceUtils.getDetails().toString());
+          if (response['data']['details'] is List<dynamic>) {
+            await PreferenceUtils.setDetails(response['data']['details']);
+          }
+          //TODO : Get List DATA
+          List<dynamic> details = PreferenceUtils.getDetails();
 
-          AppSnackBar.showGetXCustomSnackBar(
-              message: response['message'],
-              backgroundColor: AppColors.colorGreen);
-
-          Get.offAllNamed('/dash_board_route');
+          if (loginData.isNotEmpty && details.isNotEmpty) {
+            PreferenceUtils.setIsLogin(true).then((_) {
+              Get.offAllNamed(AppRoutes.dashBoardRoute);
+              AppSnackBar.showGetXCustomSnackBar(
+                  message: response['message'],
+                  backgroundColor: AppColors.colorGreen);
+            });
+          }
         } else {
           AppSnackBar.showGetXCustomSnackBar(message: response['message']);
         }

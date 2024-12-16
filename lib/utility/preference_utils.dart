@@ -70,14 +70,15 @@ class PreferenceUtils {
     return _prefsInstance!.setString(Constants.deviceIDPref, deviceIDPref);
   }
 
-
   static String getServerConnection() {
     return _prefsInstance?.getString(Constants.serverConnectionPref) ?? '';
   }
 
   static Future<bool> setServerConnection(String serverConnectionPref) {
-    ArgumentError.checkNotNull(serverConnectionPref, Constants.serverConnectionPref);
-    return _prefsInstance!.setString(Constants.serverConnectionPref, serverConnectionPref);
+    ArgumentError.checkNotNull(
+        serverConnectionPref, Constants.serverConnectionPref);
+    return _prefsInstance!
+        .setString(Constants.serverConnectionPref, serverConnectionPref);
   }
 
   static String getLoginUserID() {
@@ -128,13 +129,26 @@ class PreferenceUtils {
 
   static List<dynamic> getDetails() {
     final detailsString =
-        _prefsInstance?.getString(Constants.loginDataPref) ?? '[]';
+        _prefsInstance?.getString(Constants.loginDetailsArrayPref) ?? '[]';
     return json.decode(detailsString);
   }
 
   static Future<bool> setDetails(List<dynamic> details) async {
     final detailsString = json.encode(details);
     return await _prefsInstance!
-        .setString(Constants.loginDataPref, detailsString);
+        .setString(Constants.loginDetailsArrayPref, detailsString);
+  }
+
+  static List<List<double>> getGeoLocations() {
+    final encodedCoordinates =
+        _prefsInstance?.getString(Constants.locationDetailsPref) ?? '[]';
+    List<dynamic> decoded = jsonDecode(encodedCoordinates);
+    return decoded.map((e) => List<double>.from(e)).toList();
+  }
+
+  static Future<bool> setGeoLocations(List<List<double>> coordinates) async {
+    final encodedCoordinates = json.encode(coordinates);
+    return await _prefsInstance!
+        .setString(Constants.locationDetailsPref, encodedCoordinates);
   }
 }

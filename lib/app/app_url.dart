@@ -26,6 +26,8 @@ class AppURL {
   static String dashboardURL = "${PreferenceUtils.getAppUrl()}api/v1/Dashboard";
   static String clockInOutTimeURL =
       "${PreferenceUtils.getAppUrl()}api/v1/GetPresentDayDuration";
+  static const String geoLocation = 'api/v1/GeoLocationTracking';
+  static const String addLocations = "api/v1/AddGeoLocation";
   //end region
 
   //ClockIn region

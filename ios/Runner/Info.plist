@@ -59,5 +59,16 @@
     <string>This app needs access to your location when in use.</string>
     <key>NSLocationAlwaysUsageDescription</key>
     <string>This app needs access to your location always.</string>
+    <key>UIBackgroundModes</key>
+    <array>
+      <string>fetch</string>
+      <string>remote-notification</string>
+    </array>
+
+    <key>UIUserNotificationSettings</key>
+    <dict>
+      <key>UIUserNotificationAlertStyle</key>
+      <string>UIUserNotificationAlertStyleBanner</string>
+    </dict>
 </dict>
 </plist>

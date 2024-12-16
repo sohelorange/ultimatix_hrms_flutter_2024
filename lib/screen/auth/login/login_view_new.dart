@@ -128,11 +128,15 @@ class LoginViewNew extends GetView<LoginController> {
                 height: 30,
               ),
               CommonInputField(
+                suffixIcon: controller.isObscured.value
+                    ? Icons.visibility_off_rounded
+                    : Icons.visibility_rounded,
+                onSuffixClick: () => controller.toggleObscured(),
                 textInputAction: TextInputAction.done,
                 textEditingController: controller.passwordController.value,
                 hintText: "Password",
                 focusNode: controller.passWordFocus,
-                isPassword: true,
+                isPassword: controller.isObscured.value ? true : false,
                 labelStyle: const TextStyle(
                   color: AppColors.colorDarkBlue,
                 ),

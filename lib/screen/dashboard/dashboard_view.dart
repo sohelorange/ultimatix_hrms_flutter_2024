@@ -1,13 +1,18 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/app/app_routes.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/dashboard_controller.dart';
+import 'package:ultimatix_hrms_flutter/screen/explore/explore_view.dart';
+import 'package:ultimatix_hrms_flutter/utility/utils.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_container.dart';
+import 'package:ultimatix_hrms_flutter/widget/common_logout_dialog.dart';
 
 import '../../app/app_colors.dart';
 import '../../app/app_font_weight.dart';
 import '../../app/app_images.dart';
 import '../../app/app_status_bar.dart';
+import '../../utility/constants.dart';
 import '../../utility/preference_utils.dart';
 import '../../widget/common_app_image.dart';
 import '../../widget/common_app_image_svg.dart';
@@ -27,18 +32,28 @@ class DashboardView extends GetView<DashboardController> {
     AppStatusBar.setStatusBarStyle(
       statusBarColor: AppColors.colorAppBar,
     );
+
     return SafeArea(
         child: Scaffold(
       appBar: DashAppBar(
         name: "Hello",
-        designation: "John Doe",
-        profileImageUrl: "",
+        designation: controller.userName.value,
+        profileImageUrl: controller.userImageUrl.value,
         actions: [
           GestureDetector(
             onTap: () {
-              PreferenceUtils.setIsLogin(false).then((_) {
-                Get.offAllNamed(AppRoutes.loginRoute);
-              });
+              showCupertinoDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return CommonLogoutDialog(
+                    onLogoutPressed: () {
+                      PreferenceUtils.setIsLogin(false).then((_) {
+                        Get.offAllNamed(AppRoutes.loginRoute);
+                      });
+                    },
+                  );
+                },
+              );
             },
             child: const CommonAppImage(
               height: 20,
@@ -71,34 +86,13 @@ class DashboardView extends GetView<DashboardController> {
           ),
         ],
       ),
-      body: CommonContainer(
-        child: SingleChildScrollView(
-          child: Obx(
-            () => Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 15,
-                ),
-                _buildLocationInfo(),
-                //Obx(() => _buildLocationInfo()),
-                const SizedBox(
-                  height: 15,
-                ),
-                _buildUpcomingEvent(),
-                const SizedBox(
-                  height: 15,
-                ),
-                _buildAttendanceSummary(),
-                //Obx(() => _buildAttendanceSummary()),
-                const SizedBox(
-                  height: 15,
-                ),
-              ],
-            ),
-          ),
-        ),
+      body: IndexedStack(
+        index: controller.selectedIndex.value,
+        // Maintains state of selected tab
+        children: [
+          _dashboardUI(context),
+          const ExploreView(),
+        ],
       ),
       bottomNavigationBar: CommonBottomNavBar(
         items: [
@@ -123,12 +117,42 @@ class DashboardView extends GetView<DashboardController> {
             unselectedIconPath: AppImages.dashUnFillLeaveIcon,
           ),
         ],
-        initialIndex: 0,
-        onTabSelected: (index) {
-          //setState(() {});
-        },
+        initialIndex: controller.selectedIndex.value,
+        onTabSelected: controller.onBottomTabSelected,
       ),
     ));
+  }
+
+  Widget _dashboardUI(BuildContext context) {
+    return CommonContainer(
+      child: SingleChildScrollView(
+        child: Obx(
+          () => Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 15,
+              ),
+              _buildLocationInfo(),
+              //Obx(() => _buildLocationInfo()),
+              const SizedBox(
+                height: 15,
+              ),
+              _buildUpcomingEvent(),
+              const SizedBox(
+                height: 15,
+              ),
+              _buildAttendanceSummary(context),
+              //Obx(() => _buildAttendanceSummary()),
+              const SizedBox(
+                height: 15,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _buildLocationInfo() {
@@ -185,8 +209,8 @@ class DashboardView extends GetView<DashboardController> {
                 ],
               )),
               GestureDetector(
-                onTap: (){
-                  Get.toNamed(AppRoutes.attendanceMainRoute);
+                onTap: () {
+                  Get.toNamed(AppRoutes.clockInRoute);
                 },
                 child: Container(
                   height: 40,
@@ -374,7 +398,7 @@ class DashboardView extends GetView<DashboardController> {
     );
   }
 
-  Widget _buildAttendanceSummary() {
+  Widget _buildAttendanceSummary(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
@@ -388,9 +412,25 @@ class DashboardView extends GetView<DashboardController> {
             fontWeight: AppFontWeight.w500,
           ),
           const SizedBox(height: 10),
-          CommonGridView(
-            statusData: controller.statusData,
-          ),
+          controller.isLoading.value && controller.statusData.isEmpty
+              ? SizedBox(
+                  height: Utils.getScreenHeight(context: context) / 3.25,
+                  child: Center(child: Utils.commonCircularProgress()))
+              : controller.statusData.isEmpty
+                  ? SizedBox(
+                      height: Utils.getScreenHeight(context: context) / 3.25,
+                      child: Center(
+                        child: CommonText(
+                          text: Constants.noDataMsg,
+                          color: AppColors.colorDarkBlue,
+                          fontSize: 14,
+                          fontWeight: AppFontWeight.w400,
+                        ),
+                      ),
+                    )
+                  : CommonGridView(
+                      statusData: controller.statusData,
+                    ),
         ],
       ),
     );

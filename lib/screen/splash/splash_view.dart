@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ultimatix_hrms_flutter/app/app_dimensions.dart';
-import 'package:ultimatix_hrms_flutter/app/app_status_bar.dart';
-
 import '../../app/app_colors.dart';
+import '../../app/app_dimensions.dart';
 import '../../app/app_font_weight.dart';
 import '../../app/app_images.dart';
+import '../../app/app_status_bar.dart';
 import '../../app/app_strings.dart';
 import '../../widget/common_app_image.dart';
 import '../../widget/common_text.dart';
@@ -22,7 +21,6 @@ class SplashView extends GetView<SplashController> {
   Widget build(BuildContext context) {
     AppStatusBar.setStatusBarStyle(
       statusBarColor: AppColors.colorWhite,
-      //statusBarIconBrightness: Brightness.dark,
     );
 
     return Scaffold(
@@ -30,7 +28,6 @@ class SplashView extends GetView<SplashController> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          //crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const CommonAppImage(
               imagePath: AppImages.icAppLogo,
@@ -56,41 +53,34 @@ class SplashView extends GetView<SplashController> {
       ),
       bottomNavigationBar: SizedBox(
         height: 60,
-        child: Column(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center, // Center content horizontally
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const CommonAppImage(
-                    imagePath: AppImages.icAppLogo,
-                    height: 30,
-                    width: 30,
-                    fit: BoxFit.fill,
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CommonText(
-                          text: AppString.poweredBy,
-                          color: AppColors.color1C1F37,
-                          fontSize: AppDimensions.fontSizeThin,
-                          fontWeight: AppFontWeight.w500,
-                        ),
-                        CommonText(
-                          text: AppString.copyRights,
-                          maxLine: 2,
-                          color: AppColors.color1C1F37,
-                          fontSize: AppDimensions.fontSizeThin,
-                          fontWeight: AppFontWeight.w400,
-                        ),
-                      ],
-                    ).paddingOnly(left: 10),
-                  ),
-                ],
-              ),
+            const CommonAppImage(
+              imagePath: AppImages.icAppLogo,
+              height: 30,
+              width: 30,
+              fit: BoxFit.fill,
+            ),
+            const SizedBox(width: 10), // Add space between image and text
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CommonText(
+                  text: AppString.poweredBy,
+                  color: AppColors.color1C1F37,
+                  fontSize: AppDimensions.fontSizeThin,
+                  fontWeight: AppFontWeight.w500,
+                ),
+                CommonText(
+                  text: AppString.copyRights,
+                  maxLine: 2,
+                  color: AppColors.color1C1F37,
+                  fontSize: AppDimensions.fontSizeThin,
+                  fontWeight: AppFontWeight.w400,
+                ),
+              ],
             ),
           ],
         ),

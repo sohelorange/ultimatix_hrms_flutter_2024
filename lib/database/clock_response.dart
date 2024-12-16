@@ -8,7 +8,8 @@ class ClockResponse {
     bool? status,
     num? code,
     String? message,
-    List<Data>? data,}){
+    List<Data>? data,
+  }) {
     _status = status;
     _code = code;
     _message = message;
@@ -26,22 +27,31 @@ class ClockResponse {
       });
     }
   }
+
   bool? _status;
   num? _code;
   String? _message;
   List<Data>? _data;
-  ClockResponse copyWith({  bool? status,
+
+  ClockResponse copyWith({
+    bool? status,
     num? code,
     String? message,
     List<Data>? data,
-  }) => ClockResponse(  status: status ?? _status,
-    code: code ?? _code,
-    message: message ?? _message,
-    data: data ?? _data,
-  );
+  }) =>
+      ClockResponse(
+        status: status ?? _status,
+        code: code ?? _code,
+        message: message ?? _message,
+        data: data ?? _data,
+      );
+
   bool? get status => _status;
+
   num? get code => _code;
+
   String? get message => _message;
+
   List<Data>? get data => _data;
 
   Map<String, dynamic> toJson() {
@@ -54,7 +64,6 @@ class ClockResponse {
     }
     return map;
   }
-
 }
 
 /// Duration : "04:53"
@@ -67,7 +76,8 @@ class Data {
     String? duration,
     String? forDate,
     String? firstInTime,
-    String? lastOutTime,}){
+    String? lastOutTime,
+  }) {
     _duration = duration;
     _forDate = forDate;
     _firstInTime = firstInTime;
@@ -80,6 +90,7 @@ class Data {
     _firstInTime = json['First_In_Time'];
     _lastOutTime = json['Last_Out_Time'];
   }
+
   String? _duration;
   String? _forDate;
   String? _firstInTime;
@@ -90,14 +101,20 @@ class Data {
     String? forDate,
     String? firstInTime,
     String? lastOutTime,
-  }) => Data(  duration: duration ?? _duration,
-    forDate: forDate ?? _forDate,
-    firstInTime: firstInTime ?? _firstInTime,
-    lastOutTime: lastOutTime ?? _lastOutTime,
-  );
+  }) =>
+      Data(
+        duration: duration ?? _duration,
+        forDate: forDate ?? _forDate,
+        firstInTime: firstInTime ?? _firstInTime,
+        lastOutTime: lastOutTime ?? _lastOutTime,
+      );
+
   String? get duration => _duration;
+
   String? get forDate => _forDate;
+
   String? get firstInTime => _firstInTime;
+
   String? get lastOutTime => _lastOutTime;
 
   Map<String, dynamic> toJson() {
@@ -108,5 +125,4 @@ class Data {
     map['Last_Out_Time'] = _lastOutTime;
     return map;
   }
-
 }

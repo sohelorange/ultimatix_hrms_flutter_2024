@@ -4,12 +4,14 @@ import 'clock_in_out_entity.dart';
 import 'location_entity.dart';
 
 @dao
-abstract class UltimatixDao{
+abstract class UltimatixDao {
   @insert
   Future<void> insertClockInOutDetails(ClockInOutEntity clockInOutEntity);
 
-  @Query("UPDATE ClockInOutEntity SET checkOutTime = :checkOutTime, checkInStatus = :checkInStatus,workHours = :workHours WHERE userId = :userId")
-  Future<void> updateClockInOutDetails(String checkOutTime, String workHours, String userId, bool checkInStatus);
+  @Query(
+      "UPDATE ClockInOutEntity SET checkOutTime = :checkOutTime, checkInStatus = :checkInStatus,workHours = :workHours WHERE userId = :userId")
+  Future<void> updateClockInOutDetails(
+      String checkOutTime, String workHours, String userId, bool checkInStatus);
 
   @Query("SELECT * FROM ClockInOutEntity WHERE userId = :userId")
   Future<ClockInOutEntity?> getClockInOutRecord(String userId);

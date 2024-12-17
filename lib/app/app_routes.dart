@@ -6,6 +6,8 @@ import 'package:ultimatix_hrms_flutter/screen/dashboard/dashboard_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/dashboard_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/auth/serverconnection/server_connection_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/auth/serverconnection/server_connection_view.dart';
+import 'package:ultimatix_hrms_flutter/screen/dashboard/drawer/drawer_dash_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/dashboard/drawer/drawer_dash_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/explore/explore_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/explore/explore_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/liveTracking/live_tracking_bind.dart';
@@ -33,6 +35,7 @@ class AppRoutes {
   //dashboard region
   //static const geoFencingRoute = '/geo_fencing_route';
   static const dashBoardRoute = '/dash_board_route';
+  static const drawerRoute = '/drawer_route';
 
   //end region
 
@@ -130,6 +133,11 @@ class AppRoutes {
       name: AppRoutes.exploreTabRoute,
       binding: ExploreBinding(),
       page: () => const ExploreView(),
+    ),
+    GetPage(
+      name: AppRoutes.drawerRoute,
+      binding: DrawerDashBinding(),
+      page: () => const DrawerDashView(),
     )
   ];
 }

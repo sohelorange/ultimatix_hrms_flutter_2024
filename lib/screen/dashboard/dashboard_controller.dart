@@ -6,6 +6,7 @@ import 'package:battery_plus/battery_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -54,8 +55,8 @@ class DashboardController extends GetxController {
   RxString weekOffDayValue = "0".obs;
   RxString userImageUrl = "".obs;
   RxString userName = "".obs;
-  RxString empID = "".obs;
-  RxString cmpID = "".obs;
+  String empID = "";
+  String cmpID = "";
 
   RxList<Map<String, dynamic>> statusData = <Map<String, dynamic>>[].obs;
 
@@ -72,35 +73,39 @@ class DashboardController extends GetxController {
     // TODO: implement onInit
     super.onInit();
 
-    _notificationServices.requestNotificationPermission();
-    _notificationServices.firebaseInit(Get.context!);
-    _notificationServices.setUpInterMsg(Get.context!);
-    //notificationServices.isTokenRefresh();
-    _notificationServices.getDeviceToken().then((value) => {
-          // ignore: avoid_print
-          print('Device Token $value')
-        });
+    try {
+      _notificationServices.requestNotificationPermission();
+      _notificationServices.firebaseInit(Get.context!);
+      _notificationServices.setUpInterMsg(Get.context!);
+      //notificationServices.isTokenRefresh();
+      _notificationServices.getDeviceToken().then((value) => {
+            // ignore: avoid_print
+            print('Device Token $value')
+          });
 
-    Map<String, dynamic> loginData = PreferenceUtils.getLoginDetails();
-    userImageUrl.value = loginData['image_Name'] ?? '';
-    userName.value = loginData['emp_Full_Name'] ?? '';
-    empID.value = loginData['emp_ID'].toString();
-    cmpID.value = loginData['cmp_ID'].toString();
+      Map<String, dynamic> loginData = PreferenceUtils.getLoginDetails();
+      userImageUrl.value = loginData['image_Name'] ?? '';
+      userName.value = loginData['emp_Full_Name'] ?? '';
+      empID = loginData['emp_ID'].toString();
+      cmpID = loginData['cmp_ID'].toString();
 
-    fetchDataInParallel();
+      fetchDataInParallel();
 
-    // Get the current date
-    DateTime now = DateTime.now();
-    currentMonthYear.value = DateFormat('MMMM yyyy').format(now);
-    todayDayDate.value = getTodayFormattedDate();
+      // Get the current date
+      DateTime now = DateTime.now();
+      currentMonthYear.value = DateFormat('MMMM yyyy').format(now);
+      todayDayDate.value = getTodayFormattedDate();
 
-    await initDatabase();
-    await getAllLocationRecords().then(
-      (value) {
-        syncAllGeoLocationRecord();
-      },
-    );
-    initializeService();
+      /*await initDatabase();
+      await getAllLocationRecords().then(
+        (value) {
+          syncAllGeoLocationRecord();
+        },
+      );
+      initializeService();*/
+    } catch (e) {
+      print(e);
+    }
   }
 
   void onBottomTabSelected(int index) {
@@ -114,10 +119,9 @@ class DashboardController extends GetxController {
         Get.toNamed(AppRoutes.exploreTabRoute);
         break;
       case 2:
-        //Get.toNamed(AppRoutes.attendanceMainRoute);
+        Get.toNamed(AppRoutes.attendanceMainRoute);
         break;
       case 3:
-        Get.toNamed(AppRoutes.liveTrackingRoute);
         break;
     }
   }
@@ -136,8 +140,8 @@ class DashboardController extends GetxController {
         isLoading(true);
 
         await Future.wait([
-          fetchDashboardPresentDetailsAPICall(),
           fetchDashboardAttendanceHistoryAPICall(),
+          fetchDashboardPresentDetailsAPICall(),
         ]).then((_) {
           isLoading(false);
         });
@@ -163,16 +167,44 @@ class DashboardController extends GetxController {
 
       if (response['code'] == 200 && response['status'] == true) {
         final data = response['data'];
-        if (data != null && data is Map<String, dynamic>) {
-          workingHours.value = data['Duration'] ?? '00:00';
-          checkInTime.value = AppDatePicker.convertDateTimeFormat(
-              data['First_In_Time'].toString(),
-              Utils.commonUTCDateFormat,
-              'hh:mm a');
-          checkOutTime.value = AppDatePicker.convertDateTimeFormat(
-              data['Last_Out_Time'].toString(),
-              Utils.commonUTCDateFormat,
-              'hh:mm a');
+        if (data != null && data is List && data.isNotEmpty) {
+          final record = data[0];
+
+          // Handle First_In_Time
+          String firstInTime = record['First_In_Time']?.toString() ?? '';
+          String lastOutTime = record['Last_Out_Time']?.toString() ?? '';
+
+          // Calculate Duration
+          if (firstInTime.isNotEmpty) {
+            DateTime firstIn = DateTime.parse(firstInTime);
+            DateTime lastOut = lastOutTime.isNotEmpty
+                ? DateTime.parse(lastOutTime)
+                : DateTime.now();
+
+            // Calculate difference in hours and minutes
+            Duration duration = lastOut.difference(firstIn);
+            int hours = duration.inHours;
+            int minutes = duration.inMinutes % 60;
+
+            // Format duration as hh:mm
+            workingHours.value =
+                '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}';
+          } else {
+            // Default to '00:00' if First_In_Time is null
+            workingHours.value = '00:00';
+          }
+
+          // Handle First_In_Time Display
+          checkInTime.value = firstInTime.isNotEmpty
+              ? AppDatePicker.convertDateTimeFormat(
+                  firstInTime, Utils.commonUTCDateFormat, 'hh:mm a')
+              : 'N/A';
+
+          // Handle Last_Out_Time Display
+          checkOutTime.value = lastOutTime.isNotEmpty
+              ? AppDatePicker.convertDateTimeFormat(
+                  lastOutTime, Utils.commonUTCDateFormat, 'hh:mm a')
+              : 'N/A';
         }
       } else {
         AppSnackBar.showGetXCustomSnackBar(message: response['message']);
@@ -274,9 +306,9 @@ class DashboardController extends GetxController {
   }
 
   //TODO : Location Logic
-  RxString city = "".obs;
-  RxString area = "".obs;
-  RxString textPosition = "".obs;
+  String city = "";
+  String area = "";
+  String textPosition = "";
 
   final Battery _battery = Battery();
 
@@ -366,20 +398,20 @@ class DashboardController extends GetxController {
     }
   }
 
-  Future<void> initializeService() async {
-    await checkGpsEnabled();
-
-    final service = FlutterBackgroundService();
-
-    await service.configure(
-        iosConfiguration: IosConfiguration(),
-        androidConfiguration: AndroidConfiguration(
-            onStart: onStartOne,
-            isForegroundMode: true,
-            autoStartOnBoot: true));
-
-    await service.startService();
-  }
+  // Future<void> initializeService() async {
+  //   await checkGpsEnabled();
+  //
+  //   final service = FlutterBackgroundService();
+  //
+  //   await service.configure(
+  //       iosConfiguration: IosConfiguration(),
+  //       androidConfiguration: AndroidConfiguration(
+  //           onStart: onStartOne,
+  //           isForegroundMode: true,
+  //           autoStartOnBoot: true));
+  //
+  //   await service.startService();
+  // }
 
   Future<void> getAllLocationRecords() async {
     if (localGeoLocationList.isNotEmpty) {
@@ -393,9 +425,9 @@ class DashboardController extends GetxController {
       List<Placemark> address =
           await placemarkFromCoordinates(latitude, longitude);
       Placemark place = address[0];
-      city.value = place.locality.toString();
-      area.value = place.subLocality.toString();
-      textPosition.value =
+      city = place.locality.toString();
+      area = place.subLocality.toString();
+      textPosition =
           "${place.name}, ${place.street}, ${place.subLocality}, ${place.locality}, ${place.administrativeArea}, ${place.country}, ${place.postalCode}";
     } catch (e) {
       e.printError();
@@ -408,11 +440,11 @@ class DashboardController extends GetxController {
         await getAddress(lat, lon);
 
         Map<String, dynamic> param = {
-          "empID": empID.value,
-          "cmpID": cmpID.value,
+          "empID": empID,
+          "cmpID": cmpID,
           "latitude": lat,
           "longitude": lon,
-          "addressLocation": textPosition.value.trim(),
+          "addressLocation": textPosition.toString().trim(),
         };
 
         var response = await DioClient().post(AppURL.geoLocation, param);
@@ -457,14 +489,16 @@ class DashboardController extends GetxController {
       String deviceName = await getDeviceName();
 
       Map<String, dynamic> param = {
-        "empID": empID.value,
-        "cmpID": cmpID.value,
+        "empID": empID,
+        "cmpID": cmpID,
+        // "empID": '28201',
+        // "cmpID": '187',
         "latitude": lat,
         "longitude": lon,
         "trackingDate": DateFormat('dd/MM/yyyy').format(DateTime.now()),
-        "address": textPosition.value.trim(),
-        "city": city,
-        "area": area,
+        "address": textPosition.toString().trim(), // Fixed here
+        "city": city.toString().trim(),
+        "area": area.toString().trim(),
         "battery": "$battery%",
         "gps": "$gpsAcc Meters",
         "imei": PreferenceUtils.getDeviceID(),
@@ -515,7 +549,7 @@ class DashboardController extends GetxController {
   }
 }
 
-final _viewModelController = Get.put(DashboardController());
+/*final _viewModelController = Get.put(DashboardController());
 late Timer timer;
 
 @pragma('vm:entry-point')
@@ -611,4 +645,4 @@ void insertDataToStorage() async {
       );
     }
   }
-}
+}*/

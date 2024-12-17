@@ -11,7 +11,8 @@ class AppImages {
   static const String icUserClock = 'assets/images/ic_user_clock.png';
   static const String icCalenderNew = 'assets/images/ic_calender_new.png';
   static const String icDotBack = 'assets/images/ic_dot_back.png';
-  static const String icLocationRegular = 'assets/images/ic_location_regular.png';
+  static const String icLocationRegular =
+      'assets/images/ic_location_regular.png';
   static const String icRight = 'assets/images/ic_right.png';
   static const String icPdf = 'assets/images/ic_pdf.png';
   static const String icHobby = 'assets/images/ic_hobyy.png';
@@ -62,7 +63,6 @@ class AppImages {
   static const String icserverlogo = 'assets/images/ic_server_logo.png';
   static const String icserverright = 'assets/images/ic_server_right.png';
 
-
   // Icon
   static const String icUserIcon = 'assets/icon/ic_user_icon.png';
   static const String icLockIcon = 'assets/icon/ic_lock.png';
@@ -102,7 +102,8 @@ class AppImages {
   static const String icBloodIcon = 'assets/icon/ic_blood_icon.png';
   static const String icEmail = 'assets/icon/ic_email.png';
   static const String icAdharIcon = 'assets/icon/ic_adhar_icon.png';
-  static const String icOfficeEarlyIcon = 'assets/icon/ic_office_early_icon.png';
+  static const String icOfficeEarlyIcon =
+      'assets/icon/ic_office_early_icon.png';
   static const String icAttendanceNew = 'assets/icon/ic_attendance_new.png';
   static const String icExploreNew = 'assets/icon/ic_explore_new.png';
   static const String icHomeNew = 'assets/icon/ic_home_new.png';
@@ -120,30 +121,110 @@ class AppImages {
   static const String icadd = 'assets/icon/ic_add.png';
   static const String icarrowup = 'assets/icon/ic_arrowup.png';
 
-  static const String dashFillHomeIcon = 'assets/applicationIcon/dashboard/dash_fill_home_icon.svg';
-  static const String dashFillExploreIcon = 'assets/applicationIcon/dashboard/dash_fill_explore_icon.svg';
-  static const String dashFillAttendanceIcon = 'assets/applicationIcon/dashboard/dash_fill_attendance_icon.svg';
-  static const String dashFillLeaveIcon = 'assets/applicationIcon/dashboard/dash_fill_leave_icon.svg';
+  //region dashboard icon
+  static const String dashFillHomeIcon =
+      'assets/applicationIcon/dashboard/dash_fill_home_icon.svg';
+  static const String dashFillExploreIcon =
+      'assets/applicationIcon/dashboard/dash_fill_explore_icon.svg';
+  static const String dashFillAttendanceIcon =
+      'assets/applicationIcon/dashboard/dash_fill_attendance_icon.svg';
+  static const String dashFillLeaveIcon =
+      'assets/applicationIcon/dashboard/dash_fill_leave_icon.svg';
+  static const String dashUnFillHomeIcon =
+      'assets/applicationIcon/dashboard/dash_un_fill_home_icon.svg';
+  static const String dashUnFillExploreIcon =
+      'assets/applicationIcon/dashboard/dash_un_fill_explore_icon.svg';
+  static const String dashUnFillAttendanceIcon =
+      'assets/applicationIcon/dashboard/dash_un_fill_attendance_icon.svg';
+  static const String dashUnFillLeaveIcon =
+      'assets/applicationIcon/dashboard/dash_un_fill_leave_icon.svg';
+  static const String dashRefreshIcon =
+      'assets/applicationIcon/dashboard/dash_refresh_icon.svg';
+  static const String dashNotificationIcon =
+      'assets/applicationIcon/dashboard/dash_notification_icon.svg';
+  static const String dashClockIcon =
+      'assets/applicationIcon/dashboard/dash_clock_icon.svg';
+  static const String dashPresentIcon =
+      'assets/applicationIcon/dashboard/dash_present_icon.svg';
+  static const String dashLeaveIcon =
+      'assets/applicationIcon/dashboard/dash_leave_icon.svg';
+  static const String dashAbsentIcon =
+      'assets/applicationIcon/dashboard/dash_absent_icon.svg';
+  static const String dashOnDutyIcon =
+      'assets/applicationIcon/dashboard/dash_on_duty_icon.svg';
+  static const String dashHolidayIcon =
+      'assets/applicationIcon/dashboard/dash_holiday_icon.svg';
+  static const String dashWeekOffIcon =
+      'assets/applicationIcon/dashboard/dash_week_off_icon.svg';
+  static const String dashLogoutIcon =
+      'assets/applicationIcon/dashboard/dash_logout_icon.svg';
 
-  static const String dashUnFillHomeIcon = 'assets/applicationIcon/dashboard/dash_un_fill_home_icon.svg';
-  static const String dashUnFillExploreIcon = 'assets/applicationIcon/dashboard/dash_un_fill_explore_icon.svg';
-  static const String dashUnFillAttendanceIcon = 'assets/applicationIcon/dashboard/dash_un_fill_attendance_icon.svg';
-  static const String dashUnFillLeaveIcon = 'assets/applicationIcon/dashboard/dash_un_fill_leave_icon.svg';
-  static const String dashRefreshIcon = 'assets/applicationIcon/dashboard/dash_refresh_icon.svg';
-  static const String dashNotificationIcon = 'assets/applicationIcon/dashboard/dash_notification_icon.svg';
-  static const String dashClockIcon = 'assets/applicationIcon/dashboard/dash_clock_icon.svg';
-  static const String dashPresentIcon = 'assets/applicationIcon/dashboard/dash_present_icon.svg';
-  static const String dashLeaveIcon = 'assets/applicationIcon/dashboard/dash_leave_icon.svg';
-  static const String dashAbsentIcon = 'assets/applicationIcon/dashboard/dash_absent_icon.svg';
-  static const String dashOnDutyIcon = 'assets/applicationIcon/dashboard/dash_on_duty_icon.svg';
-  static const String dashHolidayIcon = 'assets/applicationIcon/dashboard/dash_holiday_icon.svg';
-  static const String dashWeekOffIcon = 'assets/applicationIcon/dashboard/dash_week_off_icon.svg';
+  //end region
 
+  //region explore icon
+  static const String exploreClockingIcon =
+      'assets/applicationIcon/explore/explore_clocking_icon.svg';
+  static const String exploreLeaveIcon =
+      'assets/applicationIcon/explore/explore_leave_icon.svg';
+  static const String exploreAttendanceIcon =
+      'assets/applicationIcon/explore/explore_attendance_icon.svg';
+  static const String exploreChangeReqIcon =
+      'assets/applicationIcon/explore/explore_change_req_icon.svg';
+  static const String exploreTravelIcon =
+      'assets/applicationIcon/explore/explore_travel_icon.svg';
+  static const String exploreMedicalIcon =
+      'assets/applicationIcon/explore/explore_medical_icon.svg';
+  static const String exploreGrievanceIcon =
+      'assets/applicationIcon/explore/explore_grievance_icon.svg';
+  static const String exploreCanteenIcon =
+      'assets/applicationIcon/explore/explore_canteen_icon.svg';
+  static const String exploreCRMIcon =
+      'assets/applicationIcon/explore/explore_crm_icon.svg';
+  static const String exploreTicketAppIcon =
+      'assets/applicationIcon/explore/explore_ticket_icon.svg';
+  static const String exploreClaimIcon =
+      'assets/applicationIcon/explore/explore_claim_icon.svg';
+  static const String exploreExitAppIcon =
+      'assets/applicationIcon/explore/explore_exit_icon.svg';
+
+  //end region
+
+  //region Drawer icon
+  static const String drawerHomeIcon =
+      'assets/applicationIcon/drawer/drawer_home_icon.svg';
+  static const String drawerExploreIcon =
+      'assets/applicationIcon/drawer/drawer_explore_icon.svg';
+  static const String drawerQRIcon =
+      'assets/applicationIcon/drawer/drawer_qr_icon.svg';
+  static const String drawerApprovalsIcon =
+      'assets/applicationIcon/drawer/drawer_approvals_icon.svg';
+  static const String drawerSalaryIcon =
+      'assets/applicationIcon/drawer/drawer_salary_icon.svg';
+  static const String drawerPhotoGalleryIcon =
+      'assets/applicationIcon/drawer/drawer_photo_gallery_icon.svg';
+  static const String drawerLiveTrackingIcon =
+      'assets/applicationIcon/drawer/drawer_live_tracking_icon.svg';
+  static const String drawerBirthdayIcon =
+      'assets/applicationIcon/drawer/drawer_birthday_icon.svg';
+  static const String drawerHolidayIcon =
+      'assets/applicationIcon/drawer/drawer_holiday_icon.svg';
+  static const String drawerSurveyIcon =
+      'assets/applicationIcon/drawer/drawer_survey_icon.svg';
+  static const String drawerPolicyIcon =
+      'assets/applicationIcon/drawer/drawer_policy_icon.svg';
+  static const String drawerTeamAttendanceIcon =
+      'assets/applicationIcon/drawer/drawer_team_attendance_icon.svg';
+  static const String drawerSettingIcon =
+      'assets/applicationIcon/drawer/drawer_setting_icon.svg';
+
+  //end region
   // Drawer Icons
   static const String icDrawerHome = 'assets/icon/ic_drawer_home.png';
-  static const String icDrawerAttendance = 'assets/icon/ic_drawer_attendence.png';
+  static const String icDrawerAttendance =
+      'assets/icon/ic_drawer_attendence.png';
   static const String icDrawerApproval = 'assets/icon/ic_drawer_approval.png';
-  static const String icDrawerApplication = 'assets/icon/ic_drawer_application.png';
+  static const String icDrawerApplication =
+      'assets/icon/ic_drawer_application.png';
   static const String icDrawerQrCode = 'assets/icon/ic_drawer_qr_code.png';
   static const String icDrawerSalery = 'assets/icon/ic_drawer_sallery.png';
   static const String icDrawerTracking = 'assets/icon/ic_drawer_tracking.png';
@@ -154,7 +235,8 @@ class AppImages {
   static const String icDrawerDocument = 'assets/icon/ic_drawer_document.png';
   static const String icDrawerMyTeam = 'assets/icon/ic_drawer_my_team.png';
   static const String icDrawerDirectory = 'assets/icon/ic_drawer_directory.png';
-  static const String icDrawerInformation = 'assets/icon/ic_drawer_information.png';
+  static const String icDrawerInformation =
+      'assets/icon/ic_drawer_information.png';
   static const String icDrawerWidget = 'assets/icon/ic_drawer_widget.png';
   static const String icDrawerSetting = 'assets/icon/ic_drawer_setting.png';
   static const String icDrawerSignOut = 'assets/icon/ic_drawer_logout.png';
@@ -167,36 +249,57 @@ class AppImages {
   static const String icCalSvg = 'assets/images/ic_cal_svg.svg';
 
   // Application Icon
-  static const String icApplicationClocking = 'assets/applicationIcon/ic_application_clock.png';
-  static const String icApplicationLeaves = 'assets/applicationIcon/ic_application_leaves.png';
-  static const String icApplicationAttendance = 'assets/applicationIcon/ic_application_attendance.png';
-  static const String icApplicationChangeRequest = 'assets/applicationIcon/ic_application_change_request.png';
-  static const String icApplicationTravel = 'assets/applicationIcon/ic_application_travel.png';
-  static const String icApplicationMedical = 'assets/applicationIcon/ic_application_medical.png';
-  static const String icApplicationGrievance = 'assets/applicationIcon/ic_application_grivance.png';
-  static const String icApplicationCrm = 'assets/applicationIcon/ic_application_crm.png';
-  static const String icApplicationTicket = 'assets/applicationIcon/ic_application_ticket.png';
-  static const String icApplicationClaim = 'assets/applicationIcon/ic_application_claim.png';
-  static const String icApplicationCanteen = 'assets/applicationIcon/ic_application_canteen.png';
-  static const String icApplicationExit = 'assets/applicationIcon/ic_application_exit.png';
-  static const String icApplicationLastClock = 'assets/applicationIcon/ic_application_last_cloking.png';
-  static const String icApplicationLeaveApproval = 'assets/applicationIcon/ic_application_leaves_approval.png';
-  static const String icApplicationCancelLeave = 'assets/applicationIcon/ic_application_cancel_leave.png';
-  static const String icFeedBackTerrible = 'assets/applicationIcon/ic_application_terrible.png';
-  static const String icFeedBackBad = 'assets/applicationIcon/ic_application_bad.png';
-  static const String icFeedBackOkay = 'assets/applicationIcon/ic_application_okay.png';
-  static const String icFeedBackGood = 'assets/applicationIcon/ic_application_good.png';
-  static const String icFeedBackGreat = 'assets/applicationIcon/ic_application_great.png';
+  static const String icApplicationClocking =
+      'assets/applicationIcon/ic_application_clock.png';
+  static const String icApplicationLeaves =
+      'assets/applicationIcon/ic_application_leaves.png';
+  static const String icApplicationAttendance =
+      'assets/applicationIcon/ic_application_attendance.png';
+  static const String icApplicationChangeRequest =
+      'assets/applicationIcon/ic_application_change_request.png';
+  static const String icApplicationTravel =
+      'assets/applicationIcon/ic_application_travel.png';
+  static const String icApplicationMedical =
+      'assets/applicationIcon/ic_application_medical.png';
+  static const String icApplicationGrievance =
+      'assets/applicationIcon/ic_application_grivance.png';
+  static const String icApplicationCrm =
+      'assets/applicationIcon/ic_application_crm.png';
+  static const String icApplicationTicket =
+      'assets/applicationIcon/ic_application_ticket.png';
+  static const String icApplicationClaim =
+      'assets/applicationIcon/ic_application_claim.png';
+  static const String icApplicationCanteen =
+      'assets/applicationIcon/ic_application_canteen.png';
+  static const String icApplicationExit =
+      'assets/applicationIcon/ic_application_exit.png';
+  static const String icApplicationLastClock =
+      'assets/applicationIcon/ic_application_last_cloking.png';
+  static const String icApplicationLeaveApproval =
+      'assets/applicationIcon/ic_application_leaves_approval.png';
+  static const String icApplicationCancelLeave =
+      'assets/applicationIcon/ic_application_cancel_leave.png';
+  static const String icFeedBackTerrible =
+      'assets/applicationIcon/ic_application_terrible.png';
+  static const String icFeedBackBad =
+      'assets/applicationIcon/ic_application_bad.png';
+  static const String icFeedBackOkay =
+      'assets/applicationIcon/ic_application_okay.png';
+  static const String icFeedBackGood =
+      'assets/applicationIcon/ic_application_good.png';
+  static const String icFeedBackGreat =
+      'assets/applicationIcon/ic_application_great.png';
   static const String icBrowse = 'assets/images/browse.png';
   static const String icEditLeaveIcon = 'assets/images/ic_edit_leave.png';
-  static const String imgAttendanceDrawer = 'assets/images/img_attendance_drawer.png';
+  static const String imgAttendanceDrawer =
+      'assets/images/img_attendance_drawer.png';
   static const String imgMedicalIcon = 'assets/images/ic_medical.png';
-
 
   //svg
   static const String svgProfile = 'assets/images/svg_profile.svg';
   static const String checkInBtnSvg = "assets/icon/clockInOut/svg_clock_in.svg";
-  static const String checkOutBtnSvg = "assets/icon/clockInOut/svg_clock_out.svg";
+  static const String checkOutBtnSvg =
+      "assets/icon/clockInOut/svg_clock_out.svg";
   static const String leaveAppSvg = "assets/images/leave_app_svg.svg";
   static const String leaveStatusSvg = "assets/images/leave_status_svg.svg";
   static const String svgLocLive = "assets/images/svg_loc_live.svg";
@@ -222,5 +325,6 @@ class AppImages {
   static const String icApproveReg = 'assets/icon/attendance/svg_approve.svg';
   static const String icCancelReg = 'assets/icon/attendance/svg_cancel.svg';
   static const String svgAbsentReg = 'assets/icon/attendance/svg_absent.svg';
-  static const String svgAttendanceLocation = "assets/icon/attendance/svg_team_loc.svg";
+  static const String svgAttendanceLocation =
+      "assets/icon/attendance/svg_team_loc.svg";
 }

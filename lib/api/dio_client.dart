@@ -45,7 +45,8 @@ class DioClient {
               options: Options(
                 headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': PreferenceUtils.getAuthToken()
+                  //'Authorization': PreferenceUtils.getAuthToken()
+                  'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJMb2dpbl9JRCI6IjIxNzc2IiwiQ21wX0lEIjoiMTg3IiwiRW1wX0lEIjoiMjgyMDEiLCJEZXB0X0lEIjoiNTA1IiwiQWxwaGFfRW1wX0NvZGUiOiIwMDYwIiwiRW1wX0Z1bGxfTmFtZSI6IjAwNjAgLSBNci4gQVAgVEwgUUExMjMiLCJEZXB0X05hbWUiOiJTb2Z0d2FyZSIsIkRlc2lnTmFtZSI6IlNyLiBRQSBUZXN0ZXIiLCJEZXZpY2VUb2tlbiI6InN0cmluZyIsIm5iZiI6MTczNDMzMDY5OCwiZXhwIjoxNzM2OTIyNjk4LCJpYXQiOjE3MzQzMzA2OTh9.0uSHMch3XEPW2x60voEaGdNR9nTgBcSIg5nhm-qGOow'
                 },
               ))
           .timeout(const Duration(seconds: timeOutDuration));
@@ -70,7 +71,8 @@ class DioClient {
               options: Options(
                 headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': PreferenceUtils.getAuthToken()
+                  //'Authorization': PreferenceUtils.getAuthToken()
+                  'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJMb2dpbl9JRCI6IjIxNzc2IiwiQ21wX0lEIjoiMTg3IiwiRW1wX0lEIjoiMjgyMDEiLCJEZXB0X0lEIjoiNTA1IiwiQWxwaGFfRW1wX0NvZGUiOiIwMDYwIiwiRW1wX0Z1bGxfTmFtZSI6IjAwNjAgLSBNci4gQVAgVEwgUUExMjMiLCJEZXB0X05hbWUiOiJTb2Z0d2FyZSIsIkRlc2lnTmFtZSI6IlNyLiBRQSBUZXN0ZXIiLCJEZXZpY2VUb2tlbiI6InN0cmluZyIsIm5iZiI6MTczNDMzMDY5OCwiZXhwIjoxNzM2OTIyNjk4LCJpYXQiOjE3MzQzMzA2OTh9.0uSHMch3XEPW2x60voEaGdNR9nTgBcSIg5nhm-qGOow'
                 },
               ),
               data: payloadObj)
@@ -91,6 +93,7 @@ class DioClient {
     var uri = Uri.parse(url);
     log("API is:$url");
     log("API is:$requestParam");
+    log("API TOKEN:${PreferenceUtils.getAuthToken()}");
     /*var payload = json.encode(requestParam);*/
     try {
       var response = await Dio()
@@ -98,7 +101,8 @@ class DioClient {
           options: Options(
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': PreferenceUtils.getAuthToken()
+              //'Authorization': PreferenceUtils.getAuthToken()
+              'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJMb2dpbl9JRCI6IjIxNzc2IiwiQ21wX0lEIjoiMTg3IiwiRW1wX0lEIjoiMjgyMDEiLCJEZXB0X0lEIjoiNTA1IiwiQWxwaGFfRW1wX0NvZGUiOiIwMDYwIiwiRW1wX0Z1bGxfTmFtZSI6IjAwNjAgLSBNci4gQVAgVEwgUUExMjMiLCJEZXB0X05hbWUiOiJTb2Z0d2FyZSIsIkRlc2lnTmFtZSI6IlNyLiBRQSBUZXN0ZXIiLCJEZXZpY2VUb2tlbiI6InN0cmluZyIsIm5iZiI6MTczNDMzMDY5OCwiZXhwIjoxNzM2OTIyNjk4LCJpYXQiOjE3MzQzMzA2OTh9.0uSHMch3XEPW2x60voEaGdNR9nTgBcSIg5nhm-qGOow'
             },
           ),
           data: requestParam)
@@ -127,7 +131,7 @@ class DioClient {
       case 403:
       //case 404:
         //PreferenceUtils.clearAllPreferences();
-        PreferenceUtils.setIsLogin(false);
+        //PreferenceUtils.setIsLogin(false);
         //Get.offAll(() =>const LoginViewNewScreen());
         throw UnAuthorizedException(
             utf8.decode(response.bodyBytes), response.request!.url.toString());
@@ -149,7 +153,7 @@ class DioClient {
         case 403:
         //case 404:
           //PreferenceUtils.clearAllPreferences();
-          PreferenceUtils.setIsLogin(false);
+          //PreferenceUtils.setIsLogin(false);
           //Get.offAll(() =>const LoginViewNewScreen());
           throw UnAuthorizedException(error.response!.data.toString(),
               error.requestOptions.uri.toString());

@@ -1,19 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/app/app_routes.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/dashboard_controller.dart';
-import 'package:ultimatix_hrms_flutter/screen/explore/explore_view.dart';
 import 'package:ultimatix_hrms_flutter/utility/utils.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_container.dart';
-import 'package:ultimatix_hrms_flutter/widget/common_logout_dialog.dart';
 
 import '../../app/app_colors.dart';
 import '../../app/app_font_weight.dart';
 import '../../app/app_images.dart';
 import '../../app/app_status_bar.dart';
 import '../../utility/constants.dart';
-import '../../utility/preference_utils.dart';
 import '../../widget/common_app_image.dart';
 import '../../widget/common_app_image_svg.dart';
 import '../../widget/common_banner.dart';
@@ -39,32 +35,35 @@ class DashboardView extends GetView<DashboardController> {
         name: "Hello",
         designation: controller.userName.value,
         profileImageUrl: controller.userImageUrl.value,
+        onProfileImageClick: () {
+          Get.toNamed(AppRoutes.drawerRoute);
+        },
         actions: [
-          GestureDetector(
-            onTap: () {
-              showCupertinoDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return CommonLogoutDialog(
-                    onLogoutPressed: () {
-                      PreferenceUtils.setIsLogin(false).then((_) {
-                        Get.offAllNamed(AppRoutes.loginRoute);
-                      });
-                    },
-                  );
-                },
-              );
-            },
-            child: const CommonAppImage(
-              height: 20,
-              width: 20,
-              imagePath: AppImages.icAppLogo,
-              //color: AppColors.colorDarkBlue,
-            ),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
+          // GestureDetector(
+          //   onTap: () {
+          //     showCupertinoDialog(
+          //       context: context,
+          //       builder: (BuildContext context) {
+          //         return CommonLogoutDialog(
+          //           onLogoutPressed: () {
+          //             PreferenceUtils.setIsLogin(false).then((_) {
+          //               Get.offAllNamed(AppRoutes.loginRoute);
+          //             });
+          //           },
+          //         );
+          //       },
+          //     );
+          //   },
+          //   child: const CommonAppImage(
+          //     height: 20,
+          //     width: 20,
+          //     imagePath: AppImages.icAppLogo,
+          //     //color: AppColors.colorDarkBlue,
+          //   ),
+          // ),
+          // const SizedBox(
+          //   width: 10,
+          // ),
           GestureDetector(
             onTap: () {
               controller.fetchDataInParallel();
@@ -84,16 +83,60 @@ class DashboardView extends GetView<DashboardController> {
               color: AppColors.colorDarkBlue,
             ),
           ),
+
+          Visibility(
+            visible: false,
+            child: Stack(
+              children: [
+                GestureDetector(
+                  onTap: () {},
+                  child: const Icon(
+                    Icons.notifications,
+                    // Placeholder for your notification icon
+                    color: AppColors.colorBlack,
+                    size: 25.0, // Icon size
+                  ),
+                ),
+                Positioned(
+                  left: 14,
+                  bottom: 13,
+                  child: Container(
+                    padding: const EdgeInsets.all(2.0),
+                    // Padding around the badge
+                    decoration: const BoxDecoration(
+                      color: Colors.red, // Badge color (red)
+                      shape: BoxShape.circle, // Circular shape for the badge
+                    ),
+                    constraints: const BoxConstraints(
+                      minWidth: 10.0,
+                      minHeight: 10.0,
+                    ),
+                    child: Text(
+                      '9+',
+                      style: const TextStyle(
+                        color: Colors.white, // Text color inside the badge
+                        fontSize: 10.0, // Font size for the badge text
+                        fontWeight: FontWeight.bold, // Text weight
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
         ],
       ),
-      body: IndexedStack(
-        index: controller.selectedIndex.value,
-        // Maintains state of selected tab
-        children: [
-          _dashboardUI(context),
-          const ExploreView(),
-        ],
-      ),
+      // body: IndexedStack(
+      //   index: controller.selectedIndex.value,
+      //   // Maintains state of selected tab
+      //   children: [
+      //     _dashboardUI(context),
+      //     //const ExploreView(),
+      //   ],
+      // ),
+
+      body: _dashboardUI(context),
       bottomNavigationBar: CommonBottomNavBar(
         items: [
           BottomNavItem(
@@ -234,7 +277,10 @@ class DashboardView extends GetView<DashboardController> {
                       text: controller.checkInTime.value == '--:--' &&
                               controller.checkOutTime.value == '--:--'
                           ? 'Check In'
-                          : 'Check Out',
+                          : controller.checkInTime.value.isNotEmpty &&
+                                  controller.checkOutTime.value.isNotEmpty
+                              ? 'Check In'
+                              : 'Check Out',
                       color: AppColors.colorWhite,
                       fontSize: 14,
                       fontWeight: AppFontWeight.w500,

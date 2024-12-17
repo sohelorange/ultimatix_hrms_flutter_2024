@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/app/app_routes.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/dashboard_controller.dart';
-import 'package:ultimatix_hrms_flutter/utility/utils.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_container.dart';
 
 import '../../app/app_colors.dart';
 import '../../app/app_font_weight.dart';
 import '../../app/app_images.dart';
-import '../../app/app_status_bar.dart';
-import '../../utility/constants.dart';
 import '../../widget/common_app_image.dart';
 import '../../widget/common_app_image_svg.dart';
 import '../../widget/common_banner.dart';
@@ -25,45 +22,13 @@ class DashboardView extends GetView<DashboardController> {
 
   @override
   Widget build(BuildContext context) {
-    AppStatusBar.setStatusBarStyle(
-      statusBarColor: AppColors.colorAppBar,
-    );
-
     return SafeArea(
         child: Scaffold(
       appBar: DashAppBar(
         name: "Hello",
-        designation: controller.userName.value,
-        profileImageUrl: controller.userImageUrl.value,
-        onProfileImageClick: () {
-          Get.toNamed(AppRoutes.drawerRoute);
-        },
+        designation: "John Doe",
+        profileImageUrl: "",
         actions: [
-          // GestureDetector(
-          //   onTap: () {
-          //     showCupertinoDialog(
-          //       context: context,
-          //       builder: (BuildContext context) {
-          //         return CommonLogoutDialog(
-          //           onLogoutPressed: () {
-          //             PreferenceUtils.setIsLogin(false).then((_) {
-          //               Get.offAllNamed(AppRoutes.loginRoute);
-          //             });
-          //           },
-          //         );
-          //       },
-          //     );
-          //   },
-          //   child: const CommonAppImage(
-          //     height: 20,
-          //     width: 20,
-          //     imagePath: AppImages.icAppLogo,
-          //     //color: AppColors.colorDarkBlue,
-          //   ),
-          // ),
-          // const SizedBox(
-          //   width: 10,
-          // ),
           GestureDetector(
             onTap: () {
               controller.fetchDataInParallel();
@@ -83,60 +48,37 @@ class DashboardView extends GetView<DashboardController> {
               color: AppColors.colorDarkBlue,
             ),
           ),
-
-          Visibility(
-            visible: false,
-            child: Stack(
+        ],
+      ),
+      body: CommonContainer(
+        child: SingleChildScrollView(
+          child: Obx(
+            ()=> Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                GestureDetector(
-                  onTap: () {},
-                  child: const Icon(
-                    Icons.notifications,
-                    // Placeholder for your notification icon
-                    color: AppColors.colorBlack,
-                    size: 25.0, // Icon size
-                  ),
+                const SizedBox(
+                  height: 15,
                 ),
-                Positioned(
-                  left: 14,
-                  bottom: 13,
-                  child: Container(
-                    padding: const EdgeInsets.all(2.0),
-                    // Padding around the badge
-                    decoration: const BoxDecoration(
-                      color: Colors.red, // Badge color (red)
-                      shape: BoxShape.circle, // Circular shape for the badge
-                    ),
-                    constraints: const BoxConstraints(
-                      minWidth: 10.0,
-                      minHeight: 10.0,
-                    ),
-                    child: Text(
-                      '9+',
-                      style: const TextStyle(
-                        color: Colors.white, // Text color inside the badge
-                        fontSize: 10.0, // Font size for the badge text
-                        fontWeight: FontWeight.bold, // Text weight
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
+                _buildLocationInfo(),
+                //Obx(() => _buildLocationInfo()),
+                const SizedBox(
+                  height: 15,
+                ),
+                _buildUpcomingEvent(),
+                const SizedBox(
+                  height: 15,
+                ),
+                _buildAttendanceSummary(),
+                //Obx(() => _buildAttendanceSummary()),
+                const SizedBox(
+                  height: 15,
                 ),
               ],
             ),
-          )
-        ],
+          ),
+        ),
       ),
-      // body: IndexedStack(
-      //   index: controller.selectedIndex.value,
-      //   // Maintains state of selected tab
-      //   children: [
-      //     _dashboardUI(context),
-      //     //const ExploreView(),
-      //   ],
-      // ),
-
-      body: _dashboardUI(context),
       bottomNavigationBar: CommonBottomNavBar(
         items: [
           BottomNavItem(
@@ -158,44 +100,30 @@ class DashboardView extends GetView<DashboardController> {
             label: "Leave",
             selectedIconPath: AppImages.dashFillLeaveIcon,
             unselectedIconPath: AppImages.dashUnFillLeaveIcon,
+
           ),
         ],
-        initialIndex: controller.selectedIndex.value,
-        onTabSelected: controller.onBottomTabSelected,
+        initialIndex: 0,
+        onTabSelected: (index) {
+          print('navigate:: ${index}');
+          switch (index) {
+            case 0:
+              Get.toNamed(AppRoutes.dashBoardRoute);
+              break ;
+            case 1:
+              break;
+            case 2:
+              break;
+            case 3:
+              Get.toNamed(AppRoutes.leaveApplicationRoute);
+              break;
+          }
+//           setState(() {
+// print('navigate ${index}');
+//           });
+        },
       ),
     ));
-  }
-
-  Widget _dashboardUI(BuildContext context) {
-    return CommonContainer(
-      child: SingleChildScrollView(
-        child: Obx(
-          () => Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 15,
-              ),
-              _buildLocationInfo(),
-              //Obx(() => _buildLocationInfo()),
-              const SizedBox(
-                height: 15,
-              ),
-              _buildUpcomingEvent(),
-              const SizedBox(
-                height: 15,
-              ),
-              _buildAttendanceSummary(context),
-              //Obx(() => _buildAttendanceSummary()),
-              const SizedBox(
-                height: 15,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 
   Widget _buildLocationInfo() {
@@ -252,7 +180,7 @@ class DashboardView extends GetView<DashboardController> {
                 ],
               )),
               GestureDetector(
-                onTap: () {
+                onTap: (){
                   Get.toNamed(AppRoutes.clockInRoute);
                 },
                 child: Container(
@@ -274,13 +202,7 @@ class DashboardView extends GetView<DashboardController> {
                   child: Center(
                     child: CommonText(
                       textAlign: TextAlign.center,
-                      text: controller.checkInTime.value == '--:--' &&
-                              controller.checkOutTime.value == '--:--'
-                          ? 'Check In'
-                          : controller.checkInTime.value.isNotEmpty &&
-                                  controller.checkOutTime.value.isNotEmpty
-                              ? 'Check In'
-                              : 'Check Out',
+                      text: controller.checkInTime.value == '--:--' && controller.checkOutTime.value == '--:--' ? 'Check In' : 'Check Out',
                       color: AppColors.colorWhite,
                       fontSize: 14,
                       fontWeight: AppFontWeight.w500,
@@ -444,7 +366,7 @@ class DashboardView extends GetView<DashboardController> {
     );
   }
 
-  Widget _buildAttendanceSummary(BuildContext context) {
+  Widget _buildAttendanceSummary() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
@@ -458,25 +380,9 @@ class DashboardView extends GetView<DashboardController> {
             fontWeight: AppFontWeight.w500,
           ),
           const SizedBox(height: 10),
-          controller.isLoading.value && controller.statusData.isEmpty
-              ? SizedBox(
-                  height: Utils.getScreenHeight(context: context) / 3.25,
-                  child: Center(child: Utils.commonCircularProgress()))
-              : controller.statusData.isEmpty
-                  ? SizedBox(
-                      height: Utils.getScreenHeight(context: context) / 3.25,
-                      child: Center(
-                        child: CommonText(
-                          text: Constants.noDataMsg,
-                          color: AppColors.colorDarkBlue,
-                          fontSize: 14,
-                          fontWeight: AppFontWeight.w400,
-                        ),
-                      ),
-                    )
-                  : CommonGridView(
-                      statusData: controller.statusData,
-                    ),
+          CommonGridView(
+            statusData: controller.statusData,
+          ),
         ],
       ),
     );

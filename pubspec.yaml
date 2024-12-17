@@ -109,6 +109,7 @@ flutter:
     - assets/applicationIcon/dashboard/
     - assets/applicationIcon/explore/
     - assets/applicationIcon/drawer/
+    - assets/icon/leaveApplication/
     - assets/map/
     - assets/map/resources/
 

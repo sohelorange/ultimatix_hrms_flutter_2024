@@ -113,12 +113,11 @@ class AppImages {
   static const String icaarrowback = 'assets/icon/clockInOut/svg_back.svg';
   static const String icacheckinnew = 'assets/icon/ic_checkinnew.png';
   static const String icbattery = 'assets/icon/ic_battery.png';
-  static const String iccalander = 'assets/icon/ic_calader.png';
+  // static const String iccalander = 'assets/icon/ic_calader.png';
   static const String icKM = 'assets/icon/ic_km.png';
   static const String imgLeaveStatus = 'assets/images/leave_status_img.png';
   static const String ictravel = 'assets/icon/ic_travel.png';
   static const String ictravel2 = 'assets/icon/ic_trave2.png';
-  static const String icadd = 'assets/icon/ic_add.png';
   static const String icarrowup = 'assets/icon/ic_arrowup.png';
 
   //region dashboard icon
@@ -327,4 +326,15 @@ class AppImages {
   static const String svgAbsentReg = 'assets/icon/attendance/svg_absent.svg';
   static const String svgAttendanceLocation =
       "assets/icon/attendance/svg_team_loc.svg";
+
+  //LeaveApplication icon
+static const String icadd2 = 'assets/icon/leaveApplication/ic_add.png';
+static const String icarrowback = 'assets/icon/leaveApplication/ic_arrowback.png';
+static const String iccalander2 = 'assets/icon/leaveApplication/ic_calander.png';
+static const String icbrowse = 'assets/icon/leaveApplication/ic_browsefile.png';
+static const String icavtar= 'assets/icon/leaveApplication/ic_avtar.png';
+static const String icedit= 'assets/icon/leaveApplication/ic_edit.png';
+
+
+
 }

@@ -24,7 +24,7 @@ class _CommonCarouselBannerState extends State<CommonCarouselBanner> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Stack(
-          children: [
+          children: [ 
             CarouselSlider.builder(
               itemCount: widget.images.isNotEmpty ? widget.images.length : 1,
               options: CarouselOptions(

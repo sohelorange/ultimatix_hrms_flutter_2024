@@ -50,7 +50,6 @@ class _CommonBottomNavBarState extends State<CommonBottomNavBar> {
           children: widget.items.map((item) {
             final int index = widget.items.indexOf(item);
             final bool isSelected = _selectedIndex == index;
-
             return Expanded(
               child: InkWell(
                 onTap: () => _onItemTapped(index),
@@ -59,14 +58,13 @@ class _CommonBottomNavBarState extends State<CommonBottomNavBar> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min, // Prevent overflow
                   children: [
-                    // if (isSelected)
-                    //   Container(
-                    //     //margin: const EdgeInsets.only(bottom: 10),
-                    //     height: 1,
-                    //     width: double.infinity,
-                    //     color: AppColors.colorDarkGray,
-                    //   ),
-
+                    if (isSelected)
+                      Container(
+                        //margin: const EdgeInsets.only(bottom: 10),
+                        height: 1,
+                        width: double.infinity,
+                        color: AppColors.colorDarkGray,
+                      ),
                     CommonAppImage(
                       imagePath: isSelected
                           ? item.selectedIconPath

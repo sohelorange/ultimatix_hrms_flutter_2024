@@ -11,8 +11,6 @@ class LoginViewNew extends GetView<LoginController> {
     // TODO: implement build
     throw UnimplementedError();
 
-
   }
-
 
 }

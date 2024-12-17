@@ -100,11 +100,27 @@ class DashboardView extends GetView<DashboardController> {
             label: "Leave",
             selectedIconPath: AppImages.dashFillLeaveIcon,
             unselectedIconPath: AppImages.dashUnFillLeaveIcon,
+
           ),
         ],
         initialIndex: 0,
         onTabSelected: (index) {
-          //setState(() {});
+          print('navigate:: ${index}');
+          switch (index) {
+            case 0:
+              Get.toNamed(AppRoutes.dashBoardRoute);
+              break ;
+            case 1:
+              break;
+            case 2:
+              break;
+            case 3:
+              Get.toNamed(AppRoutes.leaveApplicationRoute);
+              break;
+          }
+//           setState(() {
+// print('navigate ${index}');
+//           });
         },
       ),
     ));

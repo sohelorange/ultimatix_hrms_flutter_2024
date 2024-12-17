@@ -5,6 +5,13 @@ import 'package:ultimatix_hrms_flutter/screen/dashboard/dashboard_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/dashboard_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/auth/serverconnection/server_connection_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/auth/serverconnection/server_connection_view.dart';
+import 'package:ultimatix_hrms_flutter/screen/leaveApplication/addLeave/addLeave_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/leaveApplication/addLeave/addLeave_view.dart';
+import 'package:ultimatix_hrms_flutter/screen/leaveApplication/leave_app_view.dart';
+import 'package:ultimatix_hrms_flutter/screen/leaveApplication/leave_application_details/leave_application_details_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/leaveApplication/leave_application_details/leave_application_details_view.dart';
+import 'package:ultimatix_hrms_flutter/screen/leaveApplication/leave_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/leaveApplication/leave_controller.dart';
 import 'package:ultimatix_hrms_flutter/screen/liveTracking/live_tracking_bind.dart';
 import 'package:ultimatix_hrms_flutter/screen/liveTracking/live_tracking_ui.dart';
 
@@ -33,7 +40,7 @@ class AppRoutes {
   //end region
 
   //leave region
-  static const leaveApplicationDetailRoute = '/leave_application_detail_route';
+  static const leaveApplicationRoute = '/leave_application_route';
   static const leaveRequestDetailRoute = '/leave_request_detail_route';
   static const addLeaveRoute = '/add_leave_route';
 
@@ -116,6 +123,21 @@ class AppRoutes {
       name: AppRoutes.liveTrackingRoute,
       binding: LiveTrackingBinding(),
       page: () => const LiveTrackingUi(),
-    )
+    ),
+    GetPage(
+      name: AppRoutes.leaveApplicationRoute,
+      binding: LeaveBinding(),
+      page: () => const LeaveAppView(),
+    ),
+    GetPage(
+      name: AppRoutes.addLeaveRoute,
+      binding: AddleaveBinding(),
+      page: () => const AddleaveView(),
+    ),
+    GetPage(
+      name: AppRoutes.leaveRequestDetailRoute,
+      binding: LeaveApplicationDetailsBinding(),
+      page: () => const LeaveApplicationDetailsView(),
+    ),
   ];
 }

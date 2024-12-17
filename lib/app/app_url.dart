@@ -28,6 +28,7 @@ class AppURL {
       "${PreferenceUtils.getAppUrl()}api/v1/GetPresentDayDuration";
   static const String geoLocation = 'api/v1/GeoLocationTracking';
   static const String addLocations = "api/v1/AddGeoLocation";
+  static String logoutURL = "${PreferenceUtils.getAppUrl()}api/v1/Logout";
   //end region
 
   //ClockIn region

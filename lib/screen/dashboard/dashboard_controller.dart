@@ -72,15 +72,16 @@ class DashboardController extends GetxController {
   void onInit() async {
     // TODO: implement onInit
     super.onInit();
-
     try {
-      _notificationServices.requestNotificationPermission();
-      _notificationServices.firebaseInit(Get.context!);
-      _notificationServices.setUpInterMsg(Get.context!);
-      //notificationServices.isTokenRefresh();
-      _notificationServices.getDeviceToken().then((value) => {
-            // ignore: avoid_print
-            print('Device Token $value')
+      _getCurrentLocation().then((value) => {
+            _notificationServices.requestNotificationPermission(),
+            _notificationServices.firebaseInit(Get.context!),
+            _notificationServices.setUpInterMsg(Get.context!),
+            //notificationServices.isTokenRefresh();
+            _notificationServices.getDeviceToken().then((value) => {
+                  // ignore: avoid_print
+                  print('Device Token $value')
+                }),
           });
 
       Map<String, dynamic> loginData = PreferenceUtils.getLoginDetails();
@@ -122,6 +123,7 @@ class DashboardController extends GetxController {
         Get.toNamed(AppRoutes.attendanceMainRoute);
         break;
       case 3:
+        Get.toNamed(AppRoutes.leaveApplicationRoute);
         break;
     }
   }
@@ -546,6 +548,43 @@ class DashboardController extends GetxController {
     if (status.isDenied || status.isPermanentlyDenied) {
       openAppSettings();
     }
+  }
+
+  Future<void> _getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Check if location services are enabled
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      location.value = 'Location services are disabled.';
+
+      return;
+    }
+
+    // Check for location permission
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        location.value = 'Location permissions are denied.';
+
+        return;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      location.value = 'Location permissions are permanently denied.';
+
+      return;
+    }
+
+    // If permission is granted, get the location
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    location.value =
+        'Latitude: ${position.latitude}, Longitude: ${position.longitude}';
   }
 }
 

@@ -16,7 +16,6 @@ import 'package:ultimatix_hrms_flutter/screen/leaveApplication/leave_app_view.da
 import 'package:ultimatix_hrms_flutter/screen/leaveApplication/leave_application_details/leave_application_details_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/leaveApplication/leave_application_details/leave_application_details_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/leaveApplication/leave_binding.dart';
-import 'package:ultimatix_hrms_flutter/screen/leaveApplication/leave_controller.dart';
 import 'package:ultimatix_hrms_flutter/screen/liveTracking/live_tracking_bind.dart';
 import 'package:ultimatix_hrms_flutter/screen/liveTracking/live_tracking_ui.dart';
 
@@ -145,7 +144,6 @@ class AppRoutes {
       name: AppRoutes.drawerRoute,
       binding: DrawerDashBinding(),
       page: () => const DrawerDashView(),
-    )
     ),
     GetPage(
       name: AppRoutes.leaveApplicationRoute,

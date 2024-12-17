@@ -45,6 +45,7 @@ class ExploreController extends GetxController {
         Get.offAllNamed(AppRoutes.clockInRoute);
         break;
       case 2: // Leaves
+        Get.toNamed(AppRoutes.leaveApplicationRoute);
         break;
       case 3: // Attendance
       Get.toNamed(AppRoutes.attendanceMainRoute);

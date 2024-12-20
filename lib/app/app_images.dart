@@ -350,9 +350,6 @@ class AppImages {
 
   static const String gifLogo = 'assets/icon/gif_otl.gif';
 
-  static const String svgAttendanceLocation =
-      "assets/icon/attendance/svg_team_loc.svg";
-
   //LeaveApplication icon
   static const String icadd2 = 'assets/icon/leaveApplication/ic_add.png';
   static const String icarrowback =

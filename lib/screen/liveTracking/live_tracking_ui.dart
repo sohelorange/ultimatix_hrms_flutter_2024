@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/screen/liveTracking/live_tracking_controller.dart';
+import 'package:ultimatix_hrms_flutter/widget/common_app_image.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../app/app_colors.dart';
@@ -180,7 +181,11 @@ class LiveTrackingUi extends GetView<LiveTrackingController> {
                                     ],
                                     borderRadius: BorderRadius.circular(10),
                                     color: Colors.white),
-                                child: SvgPicture.asset(AppImages.svgAvatar)
+                                child: CommonAppImage(
+                                    imagePath: controller.userProfile.value,
+                                    height: 20,
+                                    width: 20,
+                                )/*SvgPicture.asset(AppImages.svgAvatar)*/
                             ),
                             SizedBox(width: screenWidth * 0.04),
                             Expanded(

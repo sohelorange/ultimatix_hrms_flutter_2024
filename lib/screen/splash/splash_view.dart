@@ -29,13 +29,14 @@ class SplashView extends GetView<SplashController> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const CommonAppImage(
+            /*const CommonAppImage(
               imagePath: AppImages.icAppLogo,
               height: 80,
               width: 80,
               fit: BoxFit.fill,
-            ),
-            CommonText(
+            ),*/
+            Image.asset(AppImages.gifLogo,filterQuality: FilterQuality.high,repeat: ImageRepeat.repeat,gaplessPlayback: true,),
+            /*CommonText(
               padding: const EdgeInsets.only(top: 10),
               text: AppString.orangeTechnoLabPvt,
               color: AppColors.color1C1F37,
@@ -47,7 +48,7 @@ class SplashView extends GetView<SplashController> {
               color: AppColors.color1C1F37,
               fontSize: AppDimensions.fontSizeExtraLarge,
               fontWeight: AppFontWeight.w700,
-            ),
+            ),*/
           ],
         ),
       ),

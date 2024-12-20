@@ -7,6 +7,7 @@ import '../../app/app_colors.dart';
 import '../../app/app_font_weight.dart';
 import '../../app/app_images.dart';
 import '../../utility/utils.dart';
+import '../../widget/common_app_image.dart';
 import '../../widget/common_text.dart';
 
 
@@ -310,7 +311,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
 
 
                 Visibility(
-                  visible: false/*controller.teamAttendanceResponse.value.data.isEmpty ? true : false*/,
+                  visible: getVisible()/*controller.teamAttendanceResponse.value.data.isEmpty ? true : false*/,
                   child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: Row(
@@ -327,7 +328,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
                   ),
                 ),
                 Visibility(
-                  visible: false/*controller.teamAttendanceResponse.value.data!.isEmpty ? true : false*/,
+                  visible: getVisible(),
                   child: Expanded(
                     child: ListView.builder(
                       itemCount: controller.attendanceRegularizeDetails.value.data?.length ?? 1,
@@ -338,9 +339,9 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
                   ),
                 ),
 
-                const Visibility(
-                  visible: true/*controller.teamAttendanceResponse.value.data!.isNotEmpty ? true : false*/,
-                  child: Padding(
+                Visibility(
+                  visible: getVis() /*controller.teamAttendanceResponse.value.data!.isNotEmpty ? true : false*/,
+                  child: const Padding(
                     padding: EdgeInsets.all(20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -351,7 +352,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
                   ),
                 ),
                 Visibility(
-                  visible: true/*controller.teamAttendanceResponse.value.data!.isNotEmpty ? true : false*/,
+                  visible: getVis()/*controller.teamAttendanceResponse.value.data!.isNotEmpty ? true : false*/,
                   child: Expanded(
                     child: ListView.builder(
                       itemCount: controller.teamAttendanceResponse.value.data?.length, // Number of items in the list
@@ -415,13 +416,12 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.white
                         ),
-                        child:SvgPicture.asset(AppImages.svgAbsentReg)
-                        /*CommonAppImage(
+                        child: CommonAppImage(
                           imagePath: getImageUrl(index),
                           radius: 10,
                           height: 50,
                           width: 50,
-                        )*/,
+                        ),
                       ),
                       const SizedBox(width: 16.0), // Spacer between image and text
                       // Column for Texts
@@ -431,7 +431,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             CommonText(
-                              text: "Tset User"/*controller.teamAttendanceResponse.value.data!.elementAt(index).empFullName.toString()*/,
+                              text: controller.teamAttendanceResponse.value.data!.elementAt(index).empFullName.toString(),
                               fontWeight: AppFontWeight.w500,
                               fontSize: fontSize,
                               color: AppColors.color1C1F37,
@@ -443,7 +443,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
                                 const SizedBox(width: 2.0),
                                 /*Obx(
                                       ()=> */CommonText(
-                                    text: "Software eng"/*controller.teamAttendanceResponse.value.data!.elementAt(index).desigName.toString()*/,
+                                    text: controller.teamAttendanceResponse.value.data!.elementAt(index).desigName.toString(),
                                     color: AppColors.color1C1F37,
                                     fontWeight: FontWeight.w400,
                                     fontSize: fontSize,
@@ -524,8 +524,8 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
                                       style: TextStyle(fontSize: fontSize,color: AppColors.color6B6D7A, fontWeight: FontWeight.w400),
                                     ),
                                     /*Obx(
-                                          ()=> */Text("10:30 AM"
-                                        /*controller.teamAttendanceResponse.value.data!.elementAt(index).shInTime.toString()=="" ? "--:--" : controller.teamAttendanceResponse.value.data!.elementAt(index).shInTime.toString()*/,
+                                          ()=> */Text(
+                                        controller.teamAttendanceResponse.value.data!.elementAt(index).shInTime.toString()=="" ? "--:--" : controller.teamAttendanceResponse.value.data!.elementAt(index).shInTime.toString(),
                                         style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w700, color: AppColors.color1C1F37),
                                       ),
                                     /*),*/
@@ -559,8 +559,8 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
                                       style: TextStyle(fontSize: fontSize,color: AppColors.color6B6D7A, fontWeight: FontWeight.w400),
                                     ),
                                     /*Obx(
-                                          ()=>*/ Text("6:00PM"
-                                        /*controller.teamAttendanceResponse.value.data!.elementAt(index).shOutTime.toString()=="" ? "--:--" : controller.teamAttendanceResponse.value.data!.elementAt(index).shOutTime.toString()*/,
+                                          ()=>*/ Text(
+                                        controller.teamAttendanceResponse.value.data!.elementAt(index).shOutTime.toString()=="" ? "--:--" : controller.teamAttendanceResponse.value.data!.elementAt(index).shOutTime.toString(),
                                         style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w700, color: AppColors.color1C1F37),
                                       ),
                                     /*),*/
@@ -585,7 +585,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
   }
 
   getImageUrl(int index) {
-    /*if(controller.teamAttendanceResponse.value.data!=null){
+    if(controller.teamAttendanceResponse.value.data!=null){
       if(controller.teamAttendanceResponse.value.data!.elementAt(index).imagePath==null || controller.teamAttendanceResponse.value.data!.elementAt(index).imagePath==""){
         return AppImages.imgUserProf;
       }else{
@@ -593,9 +593,9 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
       }
     }else{
       return AppImages.imgUserProf;
-    }*/
+    }
 
-    return AppImages.imgUserProf;
+    /*return AppImages.imgUserProf;*/
   }
 
   responsiveContainerUi(BuildContext context, int index) {
@@ -669,7 +669,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
                                 const SizedBox(width: 2.0),
                                 /*Obx(
                                       ()=> */CommonText(
-                                    text: /*controller.setDate(controller.attendanceRegularizeDetails.value.data!.elementAt(index).forDate.toString())*/"11-12-2024",
+                                    text: "12-12-2024"/*controller.setDate(controller.attendanceRegularizeDetails.value.data!.elementAt(index).forDate.toString())*/,
                                     color: Colors.black,
                                     fontSize: fontSize,
                                   ),
@@ -681,7 +681,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
                       ),
 
                       Visibility(
-                        visible: true/*controller.attendanceRegularizeDetails.value.data!.elementAt(index).rowStatus!*/,
+                        visible: controller.attendanceRegularizeDetails.value.data!.elementAt(index).rowStatus!,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
@@ -926,6 +926,23 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
             ),
           ],);
       },);
+  }
+
+  getVisible() {
+    if(controller.teamAttendanceResponse.value.data!=null){
+      return false;
+    }else{
+      return true;
+    }
+  }
+
+  getVis() {
+    if(controller.teamAttendanceResponse.value.data!=null){
+      return true;
+    }else{
+      return false;
+    }
+    /*controller.teamAttendanceResponse.value.data!.isNotEmpty ? true : false*/
   }
 
 }

@@ -223,4 +223,7 @@ class AppImages {
   static const String icCancelReg = 'assets/icon/attendance/svg_cancel.svg';
   static const String svgAbsentReg = 'assets/icon/attendance/svg_absent.svg';
   static const String svgAttendanceLocation = "assets/icon/attendance/svg_team_loc.svg";
+
+  static const String gifLogo = 'assets/icon/gif_otl.gif';
+
 }

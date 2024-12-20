@@ -31,146 +31,130 @@ class DashboardView extends GetView<DashboardController> {
 
     return SafeArea(
         child: Scaffold(
-          appBar: DashAppBar(
-            name: "Hello",
-            designation: controller.userName.value,
-            profileImageUrl: controller.userImageUrl.value,
-            onProfileImageClick: () {
-              Get.toNamed(AppRoutes.drawerRoute);
+      appBar: DashAppBar(
+        name: "Hello",
+        designation: controller.userName.value,
+        profileImageUrl: controller.userImageUrl.value,
+        onProfileImageClick: () {
+          Get.toNamed(AppRoutes.drawerRoute);
+        },
+        actions: [
+          GestureDetector(
+            onTap: () {
+              controller.fetchDataInParallel();
             },
-            actions: [
-              // GestureDetector(
-              //   onTap: () {
-              //     showCupertinoDialog(
-              //       context: context,
-              //       builder: (BuildContext context) {
-              //         return CommonLogoutDialog(
-              //           onLogoutPressed: () {
-              //             PreferenceUtils.setIsLogin(false).then((_) {
-              //               Get.offAllNamed(AppRoutes.loginRoute);
-              //             });
-              //           },
-              //         );
-              //       },
-              //     );
-              //   },
-              //   child: const CommonAppImage(
-              //     height: 20,
-              //     width: 20,
-              //     imagePath: AppImages.icAppLogo,
-              //     //color: AppColors.colorDarkBlue,
-              //   ),
-              // ),
-              // const SizedBox(
-              //   width: 10,
-              // ),
-              GestureDetector(
-                onTap: () {
-                  controller.fetchDataInParallel();
-                },
-                child: const CommonAppImage(
-                  imagePath: AppImages.dashRefreshIcon,
-                  color: AppColors.colorDarkBlue,
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              GestureDetector(
-                onTap: () {},
-                child: const CommonAppImage(
-                  imagePath: AppImages.dashNotificationIcon,
-                  color: AppColors.colorDarkBlue,
-                ),
-              ),
-
-              Visibility(
-                visible: false,
-                child: Stack(
-                  children: [
-                    GestureDetector(
-                      onTap: () {},
-                      child: const Icon(
-                        Icons.notifications,
-                        // Placeholder for your notification icon
-                        color: AppColors.colorBlack,
-                        size: 25.0, // Icon size
-                      ),
-                    ),
-                    Positioned(
-                      left: 14,
-                      bottom: 13,
-                      child: Container(
-                        padding: const EdgeInsets.all(2.0),
-                        // Padding around the badge
-                        decoration: const BoxDecoration(
-                          color: Colors.red, // Badge color (red)
-                          shape: BoxShape.circle, // Circular shape for the badge
-                        ),
-                        constraints: const BoxConstraints(
-                          minWidth: 10.0,
-                          minHeight: 10.0,
-                        ),
-                        child: const Text(
-                          '9+',
-                          style: TextStyle(
-                            color: Colors.white, // Text color inside the badge
-                            fontSize: 10.0, // Font size for the badge text
-                            fontWeight: FontWeight.bold, // Text weight
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],
+            child: const CommonAppImage(
+              imagePath: AppImages.dashRefreshIcon,
+              color: AppColors.colorDarkBlue,
+            ),
           ),
-          // body: IndexedStack(
-          //   index: controller.selectedIndex.value,
-          //   // Maintains state of selected tab
-          //   children: [
-          //     _dashboardUI(context),
-          //     //const ExploreView(),
-          //   ],
-          // ),
-
-          body: _dashboardUI(context),
-          bottomNavigationBar: CommonBottomNavBar(
-            items: [
-              BottomNavItem(
-                label: "Home",
-                selectedIconPath: AppImages.dashFillHomeIcon,
-                unselectedIconPath: AppImages.dashUnFillHomeIcon,
-              ),
-              BottomNavItem(
-                label: "Explore",
-                selectedIconPath: AppImages.dashFillExploreIcon,
-                unselectedIconPath: AppImages.dashUnFillExploreIcon,
-              ),
-              BottomNavItem(
-                label: "Attendance",
-                selectedIconPath: AppImages.dashFillAttendanceIcon,
-                unselectedIconPath: AppImages.dashUnFillAttendanceIcon,
-              ),
-              BottomNavItem(
-                label: "Leave",
-                selectedIconPath: AppImages.dashFillLeaveIcon,
-                unselectedIconPath: AppImages.dashUnFillLeaveIcon,
-              ),
-            ],
-            initialIndex: controller.selectedIndex.value,
-            onTabSelected: controller.onBottomTabSelected,
+          const SizedBox(
+            width: 10,
           ),
-        ));
+          GestureDetector(
+            onTap: () {
+              Get.toNamed(AppRoutes.notificationAnnouncementRoute);
+            },
+            child: const CommonAppImage(
+              imagePath: AppImages.dashNotificationIcon,
+              color: AppColors.colorDarkBlue,
+            ),
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          CommonAppImage(
+            height: 30,
+            width: 30,
+            imagePath: controller.cmpImageUrl.value,
+          ),
+          Visibility(
+            visible: false,
+            child: Stack(
+              children: [
+                GestureDetector(
+                  onTap: () {},
+                  child: const Icon(
+                    Icons.notifications,
+                    // Placeholder for your notification icon
+                    color: AppColors.colorBlack,
+                    size: 25.0, // Icon size
+                  ),
+                ),
+                Positioned(
+                  left: 14,
+                  bottom: 13,
+                  child: Container(
+                    padding: const EdgeInsets.all(2.0),
+                    // Padding around the badge
+                    decoration: const BoxDecoration(
+                      color: Colors.red, // Badge color (red)
+                      shape: BoxShape.circle, // Circular shape for the badge
+                    ),
+                    constraints: const BoxConstraints(
+                      minWidth: 10.0,
+                      minHeight: 10.0,
+                    ),
+                    child: const Text(
+                      '9+',
+                      style: TextStyle(
+                        color: Colors.white, // Text color inside the badge
+                        fontSize: 10.0, // Font size for the badge text
+                        fontWeight: FontWeight.bold, // Text weight
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+      // body: IndexedStack(
+      //   index: controller.selectedIndex.value,
+      //   // Maintains state of selected tab
+      //   children: [
+      //     _dashboardUI(context),
+      //     //const ExploreView(),
+      //   ],
+      // ),
+
+      body: _dashboardUI(context),
+      bottomNavigationBar: CommonBottomNavBar(
+        items: [
+          BottomNavItem(
+            label: "Home",
+            selectedIconPath: AppImages.dashFillHomeIcon,
+            unselectedIconPath: AppImages.dashUnFillHomeIcon,
+          ),
+          BottomNavItem(
+            label: "Explore",
+            selectedIconPath: AppImages.dashFillExploreIcon,
+            unselectedIconPath: AppImages.dashUnFillExploreIcon,
+          ),
+          BottomNavItem(
+            label: "Attendance",
+            selectedIconPath: AppImages.dashFillAttendanceIcon,
+            unselectedIconPath: AppImages.dashUnFillAttendanceIcon,
+          ),
+          BottomNavItem(
+            label: "Leave",
+            selectedIconPath: AppImages.dashFillLeaveIcon,
+            unselectedIconPath: AppImages.dashUnFillLeaveIcon,
+          ),
+        ],
+        initialIndex: controller.selectedIndex.value,
+        onTabSelected: controller.onBottomTabSelected,
+      ),
+    ));
   }
 
   Widget _dashboardUI(BuildContext context) {
     return CommonContainer(
       child: SingleChildScrollView(
         child: Obx(
-              () => Column(
+          () => Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -227,30 +211,30 @@ class DashboardView extends GetView<DashboardController> {
             children: [
               Expanded(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CommonText(
-                        text: 'Working Hours',
-                        color: AppColors.colorDarkBlue,
-                        fontSize: 14,
-                        fontWeight: AppFontWeight.w400,
-                      ),
-                      const SizedBox(height: 2.5),
-                      CommonText(
-                        text: controller.workingHours.value,
-                        color: AppColors.purpleSwatch,
-                        fontSize: 24,
-                        fontWeight: AppFontWeight.w700,
-                      ),
-                      const SizedBox(height: 2.5),
-                      CommonText(
-                        text: controller.todayDayDate.value,
-                        color: AppColors.colorDarkBlue,
-                        fontSize: 14,
-                        fontWeight: AppFontWeight.w400,
-                      ),
-                    ],
-                  )),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CommonText(
+                    text: 'Working Hours',
+                    color: AppColors.colorDarkBlue,
+                    fontSize: 14,
+                    fontWeight: AppFontWeight.w400,
+                  ),
+                  const SizedBox(height: 2.5),
+                  CommonText(
+                    text: controller.workingHours.value,
+                    color: AppColors.purpleSwatch,
+                    fontSize: 24,
+                    fontWeight: AppFontWeight.w700,
+                  ),
+                  const SizedBox(height: 2.5),
+                  CommonText(
+                    text: controller.todayDayDate.value,
+                    color: AppColors.colorDarkBlue,
+                    fontSize: 14,
+                    fontWeight: AppFontWeight.w400,
+                  ),
+                ],
+              )),
               GestureDetector(
                 onTap: () {
                   Get.toNamed(AppRoutes.clockInRoute);
@@ -275,12 +259,12 @@ class DashboardView extends GetView<DashboardController> {
                     child: CommonText(
                       textAlign: TextAlign.center,
                       text: controller.checkInTime.value == '--:--' &&
-                          controller.checkOutTime.value == '--:--'
+                              controller.checkOutTime.value == '--:--'
                           ? 'Check In'
                           : controller.checkInTime.value.isNotEmpty &&
-                          controller.checkOutTime.value.isNotEmpty
-                          ? 'Check In'
-                          : 'Check Out',
+                                  controller.checkOutTime.value.isNotEmpty
+                              ? 'Check In'
+                              : 'Check Out',
                       color: AppColors.colorWhite,
                       fontSize: 14,
                       fontWeight: AppFontWeight.w500,
@@ -460,23 +444,23 @@ class DashboardView extends GetView<DashboardController> {
           const SizedBox(height: 10),
           controller.isLoading.value && controller.statusData.isEmpty
               ? SizedBox(
-              height: Utils.getScreenHeight(context: context) / 3.25,
-              child: Center(child: Utils.commonCircularProgress()))
+                  height: Utils.getScreenHeight(context: context) / 3.25,
+                  child: Center(child: Utils.commonCircularProgress()))
               : controller.statusData.isEmpty
-              ? SizedBox(
-            height: Utils.getScreenHeight(context: context) / 3.25,
-            child: Center(
-              child: CommonText(
-                text: Constants.noDataMsg,
-                color: AppColors.colorDarkBlue,
-                fontSize: 14,
-                fontWeight: AppFontWeight.w400,
-              ),
-            ),
-          )
-              : CommonGridView(
-            statusData: controller.statusData,
-          ),
+                  ? SizedBox(
+                      height: Utils.getScreenHeight(context: context) / 3.25,
+                      child: Center(
+                        child: CommonText(
+                          text: Constants.noDataMsg,
+                          color: AppColors.colorDarkBlue,
+                          fontSize: 14,
+                          fontWeight: AppFontWeight.w400,
+                        ),
+                      ),
+                    )
+                  : CommonGridView(
+                      statusData: controller.statusData,
+                    ),
         ],
       ),
     );

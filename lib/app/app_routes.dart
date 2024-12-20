@@ -8,6 +8,8 @@ import 'package:ultimatix_hrms_flutter/screen/auth/serverconnection/server_conne
 import 'package:ultimatix_hrms_flutter/screen/auth/serverconnection/server_connection_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/drawer/drawer_dash_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/drawer/drawer_dash_view.dart';
+import 'package:ultimatix_hrms_flutter/screen/dashboard/notification_announcement/notification_announcement_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/dashboard/notification_announcement/notification_announcement_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/explore/explore_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/explore/explore_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/leaveApplication/addLeave/addLeave_binding.dart';
@@ -18,6 +20,12 @@ import 'package:ultimatix_hrms_flutter/screen/leaveApplication/leave_application
 import 'package:ultimatix_hrms_flutter/screen/leaveApplication/leave_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/liveTracking/live_tracking_bind.dart';
 import 'package:ultimatix_hrms_flutter/screen/liveTracking/live_tracking_ui.dart';
+import 'package:ultimatix_hrms_flutter/screen/settings/change_password/change_password_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/settings/change_password/change_password_view.dart';
+import 'package:ultimatix_hrms_flutter/screen/settings/feedback/feedback_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/settings/feedback/feedback_view.dart';
+import 'package:ultimatix_hrms_flutter/screen/settings/settings_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/settings/settings_view.dart';
 
 import '../screen/auth/forgotpassword/forgot_pass_binding.dart';
 import '../screen/auth/login/login_binding.dart';
@@ -42,6 +50,8 @@ class AppRoutes {
   //static const geoFencingRoute = '/geo_fencing_route';
   static const dashBoardRoute = '/dash_board_route';
   static const drawerRoute = '/drawer_route';
+  static const notificationAnnouncementRoute =
+      '/notification_announcement_route';
 
   //end region
 
@@ -90,8 +100,10 @@ class AppRoutes {
 
   //end region
 
-  //notification region
-  static const notificationRoute = '/notification_route';
+  //settings region
+  static const settingsRoute = '/settings_route';
+  static const changePasswordRoute = '/change_password_route';
+  static const feedbackRoute = '/feedback_route';
 
   //end region
 
@@ -159,6 +171,26 @@ class AppRoutes {
       name: AppRoutes.leaveRequestDetailRoute,
       binding: LeaveApplicationDetailsBinding(),
       page: () => const LeaveApplicationDetailsView(),
+    ),
+    GetPage(
+      name: AppRoutes.notificationAnnouncementRoute,
+      binding: NotificationAnnouncementBinding(),
+      page: () => const NotificationAnnouncementView(),
+    ),
+    GetPage(
+      name: AppRoutes.settingsRoute,
+      binding: SettingsBinding(),
+      page: () => const SettingsView(),
+    ),
+    GetPage(
+      name: AppRoutes.changePasswordRoute,
+      binding: ChangePasswordBinding(),
+      page: () => const ChangePasswordView(),
+    ),
+    GetPage(
+      name: AppRoutes.feedbackRoute,
+      binding: FeedbackBinding(),
+      page: () => const FeedbackView(),
     ),
   ];
 }

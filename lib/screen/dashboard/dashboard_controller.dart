@@ -54,6 +54,7 @@ class DashboardController extends GetxController {
   RxString weekOffDayLbl = "Week Off".obs;
   RxString weekOffDayValue = "0".obs;
   RxString userImageUrl = "".obs;
+  RxString cmpImageUrl = "".obs;
   RxString userName = "".obs;
   String empID = "";
   String cmpID = "";
@@ -86,7 +87,8 @@ class DashboardController extends GetxController {
 
       Map<String, dynamic> loginData = PreferenceUtils.getLoginDetails();
       userImageUrl.value = loginData['image_Name'] ?? '';
-      userName.value = loginData['emp_Full_Name'] ?? '';
+      cmpImageUrl.value = loginData['cmp_Logo'] ?? '';
+      userName.value = loginData['emp_Sort_Name'] ?? '';
       empID = loginData['emp_ID'].toString();
       cmpID = loginData['cmp_ID'].toString();
 

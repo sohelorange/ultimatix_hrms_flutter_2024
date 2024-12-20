@@ -20,7 +20,7 @@ class DrawerDashController extends GetxController {
   final List<Map<String, dynamic>> exploreItems = [
     {'id': 1, 'icon': AppImages.drawerHomeIcon, 'name': 'Home'},
     {'id': 2, 'icon': AppImages.drawerExploreIcon, 'name': 'Explore'},
-    {'id': 3, 'icon': AppImages.drawerQRIcon, 'name': 'QR Code\nAttendance'},
+    //{'id': 3, 'icon': AppImages.drawerQRIcon, 'name': 'QR Code\nAttendance'},
     {'id': 4, 'icon': AppImages.drawerApprovalsIcon, 'name': 'Approvals'},
     {'id': 5, 'icon': AppImages.drawerSalaryIcon, 'name': 'Salary'},
     {
@@ -89,6 +89,7 @@ class DrawerDashController extends GetxController {
       case 12: // My Team Attendance
         break;
       case 13: // Setting
+      Get.toNamed(AppRoutes.settingsRoute);
         break;
       default:
         AppSnackBar.showGetXCustomSnackBar(

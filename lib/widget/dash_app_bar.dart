@@ -129,6 +129,8 @@ class DashAppBar extends StatelessWidget implements PreferredSizeWidget {
                       fontSize: 16,
                     ),
                     CommonText(
+                      maxLine: 1,
+                      overflow: TextOverflow.ellipsis,
                       text: designation,
                       fontWeight: FontWeight.w700,
                       color: AppColors.colorDarkBlue,

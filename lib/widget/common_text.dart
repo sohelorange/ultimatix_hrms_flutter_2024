@@ -16,6 +16,8 @@ class CommonText extends StatelessWidget {
   TextDecoration? decorationUnderline;
   EdgeInsetsGeometry? padding;
   TextAlign? textAlign;
+  bool? softWrap;
+  TextOverflow? overflow;
 
   CommonText({
     super.key,
@@ -28,6 +30,8 @@ class CommonText extends StatelessWidget {
     this.padding,
     this.textAlign,
     this.underlineColor,
+    this.softWrap,
+    this.overflow,
   });
 
   @override
@@ -38,6 +42,8 @@ class CommonText extends StatelessWidget {
         text,
         maxLines: maxLine,
         textAlign: textAlign,
+        softWrap: softWrap ?? true,
+        overflow: overflow ?? TextOverflow.visible,
         style: AppFonts.dMSansTextStyle().copyWith(
           fontSize: fontSize ?? 14,
           fontWeight: fontWeight ?? AppFontWeight.medium,

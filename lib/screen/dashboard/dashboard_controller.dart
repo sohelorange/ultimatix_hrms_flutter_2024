@@ -140,7 +140,6 @@ class DashboardController extends GetxController {
     if (await Network.isConnected()) {
       try {
         isLoading(true);
-
         await Future.wait([
           fetchDashboardAttendanceHistoryAPICall(),
           fetchDashboardPresentDetailsAPICall(),

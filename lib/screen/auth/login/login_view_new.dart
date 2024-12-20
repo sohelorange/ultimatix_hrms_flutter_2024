@@ -225,6 +225,7 @@ class LoginViewNew extends GetView<LoginController> {
             },
             isLoading: controller.isLoading.value,
             isDisable: controller.isDisable.value),
+
         //CommonButton(buttonText: 'Login', onPressed: () {}, isLoading: false)
       ],
     );
@@ -249,4 +250,5 @@ class LoginViewNew extends GetView<LoginController> {
           controller.passwordController.value.text);
     }
   }*/
+
 }

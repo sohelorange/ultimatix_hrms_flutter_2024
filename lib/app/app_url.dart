@@ -17,9 +17,9 @@ class AppURL {
   static String forgotPassWordURL =
       "${PreferenceUtils.getAppUrl()}api/v1/ForgotPassword";
   static String otpVerificationURL =
-      "${PreferenceUtils.getAppUrl()}api/Login/OTP_Verification";
+      "${PreferenceUtils.getAppUrl()}api/v1/otp/verification";
   static String resetPasswordURL =
-      "${PreferenceUtils.getAppUrl()}api/Login/ResetPassword";
+      "${PreferenceUtils.getAppUrl()}api/v1/ChangePassword";
 
   //end region
 

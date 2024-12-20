@@ -7,6 +7,7 @@ import '../../../app/app_snack_bar.dart';
 import '../../../app/app_url.dart';
 import '../../../utility/constants.dart';
 import '../../../utility/network.dart';
+import '../../../utility/preference_utils.dart';
 
 class ChangePasswordController extends GetxController {
   var isLoading = false.obs;
@@ -55,23 +56,24 @@ class ChangePasswordController extends GetxController {
     } else {
       changePassword(
           currentPasswordController.value.text,
-          changePasswordController.value.text,
-          confirmPasswordController.value.text);
+          changePasswordController.value.text);
     }
   }
 
-  Future<void> changePassword(
-      String currentPass, String changePass, String confirmPass) async {
+  Future<void> changePassword(String oldPass, String newPass) async {
     try {
       isLoading(true);
       isDisable(true);
 
+      Map<String, dynamic> loginData = PreferenceUtils.getLoginDetails();
+      String userName = loginData['login_Name'] ?? '';
+
       // Check if network is available
       if (await Network.isConnected()) {
         Map<String, dynamic> param = {
-          'userName': currentPass,
-          'newPassword': changePass,
-          'confirmPassword': confirmPass,
+          'userName': userName,
+          'oldPassword': oldPass,
+          'newPassword': newPass,
         };
 
         var response = await DioClient().post(AppURL.changePassURL, param);

@@ -158,6 +158,12 @@ class AppImages {
       'assets/applicationIcon/dashboard/dash_week_off_icon.svg';
   static const String dashLogoutIcon =
       'assets/applicationIcon/dashboard/dash_logout_icon.svg';
+  static const String dashNewYearBanner =
+      'assets/applicationIcon/dashboard/dash_new_year_banner.svg';
+  static const String dashBirthdayBanner =
+      'assets/applicationIcon/dashboard/dash_birthday_banner.svg';
+  static const String dashOrgBanner =
+      'assets/applicationIcon/dashboard/dash_org_banner.svg';
 
   //end region
 

@@ -1,18 +1,26 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/app/app_images.dart';
 import 'package:ultimatix_hrms_flutter/app/app_routes.dart';
 import 'package:ultimatix_hrms_flutter/app/app_snack_bar.dart';
+import 'package:ultimatix_hrms_flutter/utility/constants.dart';
 import 'package:ultimatix_hrms_flutter/utility/preference_utils.dart';
+
+import '../../../api/dio_client.dart';
+import '../../../app/app_url.dart';
+import '../../../utility/network.dart';
 
 class DrawerDashController extends GetxController {
   RxString userImageUrl = "".obs;
   RxString userName = "".obs;
   RxString designation = "".obs;
+  var isLoading = false.obs;
+  var isDisable = false.obs;
 
   final List<Map<String, dynamic>> exploreItems = [
     {'id': 1, 'icon': AppImages.drawerHomeIcon, 'name': 'Home'},
     {'id': 2, 'icon': AppImages.drawerExploreIcon, 'name': 'Explore'},
-    {'id': 3, 'icon': AppImages.drawerQRIcon, 'name': 'QR Code\nAttendance'},
+    //{'id': 3, 'icon': AppImages.drawerQRIcon, 'name': 'QR Code\nAttendance'},
     {'id': 4, 'icon': AppImages.drawerApprovalsIcon, 'name': 'Approvals'},
     {'id': 5, 'icon': AppImages.drawerSalaryIcon, 'name': 'Salary'},
     {
@@ -81,6 +89,7 @@ class DrawerDashController extends GetxController {
       case 12: // My Team Attendance
         break;
       case 13: // Setting
+      Get.toNamed(AppRoutes.settingsRoute);
         break;
       default:
         AppSnackBar.showGetXCustomSnackBar(
@@ -97,4 +106,37 @@ class DrawerDashController extends GetxController {
     userName.value = loginData['emp_Full_Name'] ?? '';
     designation.value = loginData['desig_Name'] ?? '';
   }
+
+  Future<void> logout() async {
+    try {
+      isLoading(true);
+      isDisable(true);
+
+      // Check if network is available
+      if (await Network.isConnected()) {
+        Map<String, dynamic> param = {
+          'loginToken': PreferenceUtils.getAuthToken().replaceAll('Bearer ', ''),
+        };
+
+        var response = await DioClient().post(AppURL.logoutURL, param);
+        if (response['code'] == 200 && response['status'] == true) {
+          PreferenceUtils.setIsLogin(false).then((_) {
+            Get.offAllNamed(AppRoutes.loginRoute);
+          });
+          
+          AppSnackBar.showGetXCustomSnackBar(message: response['message'],backgroundColor: Colors.green);
+        } else {
+          AppSnackBar.showGetXCustomSnackBar(message: response['message']);
+        }
+      } else {
+        AppSnackBar.showGetXCustomSnackBar(message: Constants.networkMsg);
+      }
+    } catch (e) {
+      AppSnackBar.showGetXCustomSnackBar(message: e.toString());
+    } finally {
+      isLoading(false);
+      isDisable(false);
+    }
+  }
+
 }

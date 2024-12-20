@@ -13,6 +13,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../api/model/location_track_response.dart';
 import '../../utility/network.dart';
+import '../../utility/preference_utils.dart';
 
 class LiveTrackingController extends GetxController{
 
@@ -21,6 +22,9 @@ class LiveTrackingController extends GetxController{
   RxString userProfile = "".obs;
   RxString userName = "Test User".obs;
   RxString userLocAddress = "".obs;
+
+  RxString empID = "".obs;
+  RxString cmpID = "".obs;
 
   RxString battery = "0%".obs;
   RxDouble distance = 0.0.obs;
@@ -33,7 +37,8 @@ class LiveTrackingController extends GetxController{
   String selectedDate = DateFormat('yyyy-MM-dd').format(DateTime.now()).toString();
 
   @override
-  void onInit() {
+  void onInit() async{
+    getLocalData();
     webController = WebViewController()
       ..enableZoom(false)
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
@@ -73,9 +78,9 @@ class LiveTrackingController extends GetxController{
     //"2024-12-03"
 
     Map<String, dynamic> requestParam = {
-      "empID":"28199",
-      "cmpID":"187",
-      "date":"2024-12-03"
+      "empID":empID.value,
+      "cmpID":cmpID.value,
+      "date":nSelectedDate
     };
 
     await Isolate.spawn<_IsolateApiData>(_getGeoLocationTrackingListByApi, _IsolateApiData(
@@ -86,6 +91,8 @@ class LiveTrackingController extends GetxController{
 
   static void _getGeoLocationTrackingListByApi(_IsolateApiData api) async{
     BackgroundIsolateBinaryMessenger.ensureInitialized(api.token);
+
+    await PreferenceUtils.init();
 
     if(await Network.isConnected()){
       await DioClient().post(api.apiUrl, api.requestData).then((value) {
@@ -229,6 +236,15 @@ class LiveTrackingController extends GetxController{
 
     await webController?.runJavaScript('displayTrack($locList)');
     metersToKilometers(23.011767,72.502564,22.987336,72.495011);
+  }
+
+  getLocalData() {
+    Map<String, dynamic> loginData = PreferenceUtils.getLoginDetails();
+
+    userProfile.value = loginData['image_Name'] ?? '';
+    userName.value = loginData['emp_Full_Name'] ?? '';
+    empID.value = loginData['emp_ID'].toString();
+    cmpID.value = loginData['cmp_ID'].toString();
   }
 }
 

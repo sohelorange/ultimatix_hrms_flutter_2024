@@ -72,6 +72,7 @@ dependencies:
   carousel_slider: ^5.0.0
   unique_identifier: ^0.4.0
   badges: ^3.1.2
+  url_launcher: ^6.3.1
   #local_auth: ^2.3.0
 
 dev_dependencies:
@@ -109,6 +110,8 @@ flutter:
     - assets/applicationIcon/dashboard/
     - assets/applicationIcon/explore/
     - assets/applicationIcon/drawer/
+    - assets/applicationIcon/settings/
+    - assets/applicationIcon/feedback/
     - assets/icon/leaveApplication/
     - assets/map/
     - assets/map/resources/

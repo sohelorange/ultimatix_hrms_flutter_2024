@@ -15,7 +15,11 @@ class DioClient {
     var uri = Uri.parse(baseUrl);
     try {
       var response = await Dio()
-          .get(baseUrl)
+          .get(baseUrl,options: Options(headers: {
+            'Content-Type': 'application/json',
+            'accept': '*/*',
+            'Authorization': PreferenceUtils.getAuthToken()
+            }))
           .timeout(const Duration(seconds: timeOutDuration));
       return _processResponse(response);
     } on SocketException {

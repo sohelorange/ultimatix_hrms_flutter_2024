@@ -22,6 +22,7 @@ class CommonContainer extends StatelessWidget {
       ),
       child: Container(
         height: double.infinity,
+        width: double.infinity,
         decoration: BoxDecoration(
           color: Colors.white, // Background color
           borderRadius: const BorderRadius.only(

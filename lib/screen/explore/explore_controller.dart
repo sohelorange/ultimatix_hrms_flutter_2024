@@ -42,7 +42,7 @@ class ExploreController extends GetxController {
     // Use 'id' to handle navigation dynamically
     switch (selectedItem['id']) {
       case 1: // Clocking
-        Get.offAllNamed(AppRoutes.clockInRoute);
+        Get.toNamed(AppRoutes.clockInRoute);
         break;
       case 2: // Leaves
         Get.toNamed(AppRoutes.leaveApplicationRoute);

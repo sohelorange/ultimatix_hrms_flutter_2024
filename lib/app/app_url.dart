@@ -1,4 +1,3 @@
-
 import '../utility/preference_utils.dart';
 
 class AppURL {
@@ -9,7 +8,8 @@ class AppURL {
 
   //static const String baseURL = "https://hrms.webpayroll.in/mobile_license_new/"; //TODO :Swagger Stage
 
-  static const String baseURL = "https://hrms.webpayroll.in/mobile_license_new/";//TODO : Swagger Live
+  static const String baseURL =
+      "https://hrms.webpayroll.in/mobile_license_new/"; //TODO : Swagger Live
 
   //Auth region
   static const String serverConnectionURL = "${baseURL}api/v1/ServerConnection";
@@ -20,6 +20,7 @@ class AppURL {
       "${PreferenceUtils.getAppUrl()}api/Login/OTP_Verification";
   static String resetPasswordURL =
       "${PreferenceUtils.getAppUrl()}api/Login/ResetPassword";
+
   //end region
 
   //Dashboard region
@@ -28,11 +29,14 @@ class AppURL {
       "${PreferenceUtils.getAppUrl()}api/v1/GetPresentDayDuration";
   static const String geoLocation = 'api/v1/GeoLocationTracking';
   static const String addLocations = "api/v1/AddGeoLocation";
+  static String logoutURL = "${PreferenceUtils.getAppUrl()}api/v1/Logout";
+
   //end region
 
   //ClockIn region
   static String clockInURL = '${PreferenceUtils.getAppUrl()}api/v1/clockin';
   static String clockOutURL = '${PreferenceUtils.getAppUrl()}api/v1/clockout';
+
   //end region
 
   //Leave region
@@ -52,6 +56,7 @@ class AppURL {
       "${PreferenceUtils.getAppUrl()}api/v1/GetShiftDeatails";
   static String getCompOffLeaveURL =
       "${PreferenceUtils.getAppUrl()}api/v1/GetCompOffLeave";
+
   //end region
 
   //Live Tracking region
@@ -61,6 +66,7 @@ class AppURL {
       "${PreferenceUtils.getAppUrl()}api/v1/GeoLocationTrackingList";
   static String addLocationsURL =
       "${PreferenceUtils.getAppUrl()}api/v1/AddGeoLocation";
+
   //end region
 
   //Attendance region
@@ -72,6 +78,7 @@ class AppURL {
       "${PreferenceUtils.getAppUrl()}api/v1/AttendanceRegularizeInsert";
   static String attendanceGetReasonURL =
       "${PreferenceUtils.getAppUrl()}api/v1/GetReason";
+
   //end region
 
   //Medical region
@@ -81,15 +88,25 @@ class AppURL {
       "${PreferenceUtils.getAppUrl()}api/v1/BindMedicalIncident";
   static String medicalInsertURL =
       "${PreferenceUtils.getAppUrl()}api/v1/MedicalInsert";
+
   //end region
 
   //Common region
   static String getStateURL = "${PreferenceUtils.getAppUrl()}api/v1/GetState";
   static String getCityURL = "${PreferenceUtils.getAppUrl()}api/v1/GetCity";
+
   //end region
 
   //Notification region
   static String getNotificationURL =
       "${PreferenceUtils.getAppUrl()}api/v1/GetNotification";
+
+  //end region
+
+  //Settings region
+  static String changePassURL =
+      "${PreferenceUtils.getAppUrl()}api/v1/ChangePassword";
+  static String feedbackURL =
+      "${PreferenceUtils.getAppUrl()}api/v1/AddTicketFeedback";
   //end region
 }

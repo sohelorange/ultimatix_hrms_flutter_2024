@@ -9,8 +9,7 @@ import 'package:ultimatix_hrms_flutter/app/app_snack_bar.dart';
 import 'package:ultimatix_hrms_flutter/app/app_url.dart';
 import 'package:ultimatix_hrms_flutter/screen/leaveApplication/leaveBalance/leave_balance_model.dart';
 
-
-class BalanceController extends GetxController  {
+class BalanceController extends GetxController {
   RxBool isLoading = true.obs;
 
   final List<Color> colors = [
@@ -19,7 +18,6 @@ class BalanceController extends GetxController  {
     AppColors.colorFEFCF7,
     AppColors.colorF8FCFE,
     AppColors.colorFCFBFE
-
   ];
 
   RxInt selectedYear = 0.obs;
@@ -39,15 +37,8 @@ class BalanceController extends GetxController  {
   ].obs;
 
   RxString defaultYearValue = '2024'.obs;
-  RxList<String> yearItems = <String>[
-    '2024',
-    '2025',
-    '2026',
-    '2027',
-    '2028',
-    '2029',
-    '2030'
-  ].obs;
+  RxList<String> yearItems =
+      <String>['2024', '2025', '2026', '2027', '2028', '2029', '2030'].obs;
 
   Rx<Leavebalancemodel> leavebalnceListResponse = Leavebalancemodel().obs;
 
@@ -59,8 +50,7 @@ class BalanceController extends GetxController  {
     RxInt currentMonth = now.month.obs;
 
     debugPrint("yearmon --${currentMonth.value},${currentYear.value}");
-    onLeavebalanceAPI(currentYear.value,currentMonth.value);
-
+    onLeavebalanceAPI(currentYear.value, currentMonth.value);
   }
 
   Future<void> onLeavebalanceAPI(int year, int month) async {
@@ -74,14 +64,17 @@ class BalanceController extends GetxController  {
         "cmpId": 0
       };
 
-      var response = await DioClient().post(AppURL.getLeaveBalanceWithDataURL,requestParam);
+      var response = await DioClient()
+          .post(AppURL.getLeaveBalanceWithDataURL, requestParam);
       debugPrint("res --$response");
 
-      leavebalnceListResponse.value = Leavebalancemodel.fromJson(response) ;
-      if(leavebalnceListResponse.value.code == 200 && leavebalnceListResponse.value.status == true) {
+      leavebalnceListResponse.value = Leavebalancemodel.fromJson(response);
+      if (leavebalnceListResponse.value.code == 200 &&
+          leavebalnceListResponse.value.status == true) {
         debugPrint("leave balance --$leavebalnceListResponse");
-      } else{
-        AppSnackBar.showGetXCustomSnackBar(message: "${leavebalnceListResponse.value.message}" );
+      } else {
+        AppSnackBar.showGetXCustomSnackBar(
+            message: "${leavebalnceListResponse.value.message}");
       }
     } catch (e) {
       debugPrint("Login catch --$e");
@@ -89,5 +82,4 @@ class BalanceController extends GetxController  {
       isLoading.value = false;
     }
   }
-
 }

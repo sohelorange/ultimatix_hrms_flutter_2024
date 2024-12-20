@@ -1,11 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/app/app_routes.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/drawer/drawer_dash_controller.dart';
 import 'package:ultimatix_hrms_flutter/utility/preference_utils.dart';
-import 'package:ultimatix_hrms_flutter/widget/common_alert_dialog.dart';
-import 'package:ultimatix_hrms_flutter/widget/common_logout_dialog.dart';
 import 'package:ultimatix_hrms_flutter/widget/dash_app_bar.dart';
 
 import '../../../app/app_colors.dart';
@@ -28,9 +25,7 @@ class DrawerDashView extends GetView<DrawerDashController> {
         profileImageUrl: controller.userImageUrl.value,
         showEditIcon: false,
         showBackIcon: true,
-        onEditIconClick: () {
-          print("Custom edit icon click action");
-        },
+        onEditIconClick: () {},
         actions: [
           GestureDetector(
             onTap: () {
@@ -56,6 +51,7 @@ class DrawerDashView extends GetView<DrawerDashController> {
                     yesButtonText: 'Yes',
                     noButtonText: 'No',
                     onYesPressed: () {
+                      //controller.logout();
                       PreferenceUtils.setIsLogin(false).then((_) {
                         Get.offAllNamed(AppRoutes.loginRoute);
                       });

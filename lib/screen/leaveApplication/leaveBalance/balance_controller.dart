@@ -2,15 +2,16 @@ import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_rx/get_rx.dart';
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:ultimatix_hrms_flutter/api/dio_client.dart';
+import 'package:ultimatix_hrms_flutter/app/app_colors.dart';
+import 'package:ultimatix_hrms_flutter/app/app_snack_bar.dart';
+import 'package:ultimatix_hrms_flutter/app/app_url.dart';
+import 'package:ultimatix_hrms_flutter/screen/leaveApplication/leaveBalance/leave_balance_model.dart';
 
 
 class BalanceController extends GetxController  {
-  RxBool isLoading = true.obs;import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-  import 'package:ultimatix_hrms_flutter/api/dio_client.dart';
-  import 'package:ultimatix_hrms_flutter/app/app_colors.dart';
-  import 'package:ultimatix_hrms_flutter/app/app_snack_bar.dart';
-  import 'package:ultimatix_hrms_flutter/app/app_url.dart';
-  import 'package:ultimatix_hrms_flutter/screen/leaveApplication/leaveBalance/leave_balance_model.dart';
+  RxBool isLoading = true.obs;
 
   final List<Color> colors = [
     AppColors.colorF9FCFA,

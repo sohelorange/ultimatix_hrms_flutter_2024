@@ -40,8 +40,6 @@ class AppURL {
   //end region
 
   //Leave region
-  static String getLeaveBalanceURL =
-      "${PreferenceUtils.getAppUrl()}api/v1/all/leavebalance";
   static String getLeaveBalanceWithDataURL =
       "${PreferenceUtils.getAppUrl()}api/v1/leavebalance";
   static String getLeaveApplicationRecordsURL =

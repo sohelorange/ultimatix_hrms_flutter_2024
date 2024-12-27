@@ -246,7 +246,13 @@ class DashboardView extends GetView<DashController> {
               )),
               GestureDetector(
                 onTap: () {
-                  Get.toNamed(AppRoutes.clockInRoute);
+                  if(controller.geofence_enable == 1){
+                    Get.toNamed(AppRoutes.geofenceRoute);
+                    print("geo--${controller.geofence_enable}");
+                  } else {
+                    Get.toNamed(AppRoutes.clockInRoute);
+                    print("geo--${controller.geofence_enable}");
+                  }
                 },
                 child: Container(
                   height: 40,
@@ -268,19 +274,19 @@ class DashboardView extends GetView<DashController> {
                     child: CommonText(
                       textAlign: TextAlign.center,
                       text: controller.checkInTime.value == '--:--' &&
-                              controller.checkOutTime.value == '--:--'
+                          controller.checkOutTime.value == '--:--'
                           ? 'Check In'
                           : controller.checkInTime.value.isNotEmpty &&
-                                  controller.checkOutTime.value.isNotEmpty
-                              ? 'Check In'
-                              : 'Check Out',
+                          controller.checkOutTime.value.isNotEmpty
+                          ? 'Check In'
+                          : 'Check Out',
                       color: AppColors.colorWhite,
                       fontSize: 14,
                       fontWeight: AppFontWeight.w500,
                     ),
                   ),
                 ),
-              ),
+              )
               //SizedBox(width: 120,child: CommonButton(buttonText: 'Check In', onPressed: (){}, isLoading: false))
             ],
           ),

@@ -219,8 +219,9 @@ class AppImages {
       'assets/applicationIcon/drawer/drawer_policy_icon.svg';
   static const String drawerTeamAttendanceIcon =
       'assets/applicationIcon/drawer/drawer_team_attendance_icon.svg';
-  static const String drawerSettingIcon =
-      'assets/applicationIcon/drawer/drawer_setting_icon.svg';
+  static const String drawerSettingIcon = 'assets/applicationIcon/drawer/drawer_setting_icon.svg';
+  static const String draweredit = 'assets/applicationIcon/drawer/drawer_edit.png';
+
 
   //end region
 
@@ -391,4 +392,12 @@ class AppImages {
   //region error icon
   static const String svgNoData = 'assets/images/svg_no_data_found.svg';
 //end region
+
+
+//profile icon
+  static const String icprofile2 = 'assets/icon/profileicon/ic_profile.png';
+  static const String iccall = 'assets/icon/profileicon/ic_call.png';
+  static const String iccalander = 'assets/icon/profileicon/ic_calander.png';
+  static const String icaadhar = 'assets/icon/profileicon/ic_aadhar.png';
+
 }

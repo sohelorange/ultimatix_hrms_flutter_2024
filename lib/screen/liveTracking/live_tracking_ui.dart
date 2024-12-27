@@ -144,7 +144,8 @@ class LiveTrackingUi extends GetView<LiveTrackingController> {
                     BoxShadow(
                      color: Color.fromRGBO(0, 0, 0, 0.57), //shadow for button
                      blurRadius: 5,
-                    )],
+                    )
+                    ],
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20.0),
                       topRight: Radius.circular(15.0),
@@ -398,8 +399,7 @@ class LiveTrackingUi extends GetView<LiveTrackingController> {
                                 height: 65,
                                 width: 2,
                                 color: AppColors.color1C1F37.withOpacity(0.3),
-                              )
-                                  : const SizedBox(height: 65, width: 2),
+                              ) : const SizedBox(height: 65, width: 2),
                             ],
                           ),
                           Expanded(

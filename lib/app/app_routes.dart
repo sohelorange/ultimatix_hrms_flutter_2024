@@ -23,8 +23,18 @@ import 'package:ultimatix_hrms_flutter/screen/leave/leave_application_details/le
 import 'package:ultimatix_hrms_flutter/screen/leave/leave_approval_status/leave_approval_status_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/leave/leave_approval_status/leave_approval_status_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/leave/leave_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/geofence/geofence_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/geofence/geofence_view.dart';
+import 'package:ultimatix_hrms_flutter/screen/leaveApplication/addLeave/addLeave_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/leaveApplication/addLeave/addLeave_view.dart';
+import 'package:ultimatix_hrms_flutter/screen/leaveApplication/leave_app_view.dart';
+import 'package:ultimatix_hrms_flutter/screen/leaveApplication/leave_application_details/leave_application_details_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/leaveApplication/leave_application_details/leave_application_details_view.dart';
+import 'package:ultimatix_hrms_flutter/screen/leaveApplication/leave_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/liveTracking/live_tracking_bind.dart';
 import 'package:ultimatix_hrms_flutter/screen/liveTracking/live_tracking_ui.dart';
+import 'package:ultimatix_hrms_flutter/screen/profile/profile_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/profile/profile_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/settings/change_password/change_password_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/settings/change_password/change_password_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/settings/feedback/feedback_binding.dart';
@@ -60,10 +70,13 @@ class AppRoutes {
   //static const geoFencingRoute = '/geo_fencing_route';
   static const dashBoardRoute = '/dash_board_route';
   static const drawerRoute = '/drawer_route';
-  static const notificationAnnouncementRoute =
-      '/notification_announcement_route';
+  static const notificationAnnouncementRoute = '/notification_announcement_route';
 
   //end region
+
+  //profile region
+  static const profileRoute = '/profile_route';
+  // end region
 
   //leave region
   static const leaveApplicationRoute = '/leave_application_route';
@@ -75,6 +88,7 @@ class AppRoutes {
 
   //clock in region
   static const clockInRoute = '/clock_in_route';
+  static const geofenceRoute = '/geofence_route';
 
   //end region
 
@@ -149,6 +163,16 @@ class AppRoutes {
       name: AppRoutes.clockInRoute,
       binding: ClockInOutBinding(),
       page: () => const ClockInOutUi(),
+    ),
+    GetPage(
+      name: AppRoutes.profileRoute,
+      binding: ProfileBinding(),
+      page: () => const ProfileView(),
+    ),
+    GetPage(
+      name: AppRoutes.geofenceRoute,
+      binding: GeofenceBinding(),
+      page: () => const GeofenceView(),
     ),
     GetPage(
       name: AppRoutes.liveTrackingRoute,

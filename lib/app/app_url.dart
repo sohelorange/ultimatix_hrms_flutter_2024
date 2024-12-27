@@ -36,6 +36,13 @@ class AppURL {
   //ClockIn region
   static String clockInURL = '${PreferenceUtils.getAppUrl()}api/v1/clockin';
   static String clockOutURL = '${PreferenceUtils.getAppUrl()}api/v1/clockout';
+  static String geolocationrecords = '${PreferenceUtils.getAppUrl()}api/v1/GeoLocationRecords';
+
+  //end region
+
+  //Employee region
+  static String employeedetails = '${PreferenceUtils.getAppUrl()}api/v1/EmployeeDetails';
+  static String updateemployeedetails = '${PreferenceUtils.getAppUrl()}api/v1/UpdateEmployeeDetails';
 
   //end region
 

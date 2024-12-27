@@ -59,6 +59,8 @@ class DashboardController extends GetxController {
   String empID = "";
   String cmpID = "";
 
+  int geofence_enable = 0;
+
   RxList<Map<String, dynamic>> statusData = <Map<String, dynamic>>[].obs;
 
   final List<String> listEvent = [
@@ -66,6 +68,7 @@ class DashboardController extends GetxController {
     "https://t3.ftcdn.net/jpg/08/95/86/82/360_F_895868299_z8aR16uHjnkrtnUkzohVQ68m26JBNt4f.jpg",
     "https://media.istockphoto.com/id/1774494924/photo/sister-applying-tilaka-to-her-brother-at-home-during-bhai-dooj.jpg?s=612x612&w=0&k=20&c=z2nNx7asAdglLCBIhJwy3JV2qwDVMT5AAyfxrJ5r_XU=",
   ];
+
 
   final NotificationServices _notificationServices = NotificationServices();
 
@@ -91,6 +94,9 @@ class DashboardController extends GetxController {
       userName.value = loginData['emp_Sort_Name'] ?? '';
       empID = loginData['emp_ID'].toString();
       cmpID = loginData['cmp_ID'].toString();
+
+      geofence_enable = loginData['is_Geofence_enable'];
+      print("geofen--${geofence_enable}");
 
       fetchDataInParallel();
 

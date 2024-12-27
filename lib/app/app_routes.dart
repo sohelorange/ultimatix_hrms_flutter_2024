@@ -22,12 +22,7 @@ import 'package:ultimatix_hrms_flutter/screen/leave/leave_approval_status/leave_
 import 'package:ultimatix_hrms_flutter/screen/leave/leave_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/geofence/geofence_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/geofence/geofence_view.dart';
-import 'package:ultimatix_hrms_flutter/screen/leaveApplication/addLeave/addLeave_binding.dart';
-import 'package:ultimatix_hrms_flutter/screen/leaveApplication/addLeave/addLeave_view.dart';
-import 'package:ultimatix_hrms_flutter/screen/leaveApplication/leave_app_view.dart';
-import 'package:ultimatix_hrms_flutter/screen/leaveApplication/leave_application_details/leave_application_details_binding.dart';
-import 'package:ultimatix_hrms_flutter/screen/leaveApplication/leave_application_details/leave_application_details_view.dart';
-import 'package:ultimatix_hrms_flutter/screen/leaveApplication/leave_binding.dart';
+
 import 'package:ultimatix_hrms_flutter/screen/liveTracking/live_tracking_bind.dart';
 import 'package:ultimatix_hrms_flutter/screen/liveTracking/live_tracking_ui.dart';
 import 'package:ultimatix_hrms_flutter/screen/profile/profile_binding.dart';

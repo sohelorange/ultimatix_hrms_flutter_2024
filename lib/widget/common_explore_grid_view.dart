@@ -8,7 +8,7 @@ import 'common_app_image_svg.dart';
 import 'common_text.dart';
 
 class CommonExploreGridView extends StatelessWidget {
-  final List<Map<String, dynamic>> gridItems;
+  final List<dynamic> gridItems; // Updated to dynamic
   final RxInt selectedIndex;
   final void Function(int) onItemTap;
 
@@ -35,57 +35,73 @@ class CommonExploreGridView extends StatelessWidget {
         return Obx(() {
           bool isSelected = selectedIndex.value == index;
 
+          // Check if item is a Map or String and extract necessary values accordingly
+          String name;
+          String iconPath;
+
+          if (gridItems[index] is Map<String, dynamic>) {
+            name = gridItems[index]['name'] ?? '';
+            iconPath = gridItems[index]['icon'] ?? '';
+          } else if (gridItems[index] is String) {
+            name = gridItems[index];
+            iconPath =
+                ''; // Set to empty string or any default value when it's just a string
+          } else {
+            name = '';
+            iconPath = '';
+          }
+
           return GestureDetector(
             onTap: () => onItemTap(index),
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
-                color: isSelected ? AppColors.purpleSwatch : AppColors.colorWhite,
+                color:
+                    isSelected ? AppColors.purpleSwatch : AppColors.colorWhite,
                 borderRadius: BorderRadius.circular(6),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    spreadRadius: 1,
-                    blurRadius: 5,
-                    offset: const Offset(0, 2),
+                    color: Color(0X1C1F370D),
+                    blurRadius: 0.0,
+                    spreadRadius: 1.0,
+                    offset: Offset(0, 0),
                   ),
-                ],
-              ),
+                ],              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   // Icon
-                  gridItems[index]['icon'].toString().isEmpty
+                  iconPath.isEmpty
                       ? CommonAppImageSvg(
-                    imagePath: AppImages.svgAvatar,
-                    height: 20,
-                    width: 20,
-                    color: isSelected ? Colors.white : Colors.black,
-                    fit: BoxFit.cover,
-                  )
+                          imagePath: AppImages.svgAvatar,
+                          height: 20,
+                          width: 20,
+                          color: isSelected ? Colors.white : Colors.black,
+                          fit: BoxFit.cover,
+                        )
                       : CommonAppImageSvg(
-                    imagePath: gridItems[index]['icon'],
-                    height: 20,
-                    width: 20,
-                    color: isSelected
-                        ? AppColors.colorWhite
-                        : AppColors.colorDarkGray,
-                    fit: BoxFit.cover,
-                  ),
+                          imagePath: iconPath,
+                          height: 20,
+                          width: 20,
+                          color: isSelected
+                              ? AppColors.colorWhite
+                              : AppColors.colorDarkGray,
+                          fit: BoxFit.cover,
+                        ),
                   const SizedBox(width: 8),
 
                   // Text with wrap enabled
                   Expanded(
                     child: CommonText(
                       textAlign: TextAlign.start,
-                      text: gridItems[index]['name'],
+                      text: name,
                       color: isSelected
                           ? AppColors.colorWhite
                           : AppColors.colorDarkGray,
                       fontSize: 14,
                       fontWeight: AppFontWeight.w400,
-                      //maxLine: 2,
+                      // maxLine: 2, // You can re-enable text wrapping if needed
                       // softWrap: true, // Allows the text to wrap onto multiple lines
                       // overflow: TextOverflow.visible, // Prevents clipping
                     ),

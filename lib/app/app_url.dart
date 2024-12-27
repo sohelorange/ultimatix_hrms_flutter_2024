@@ -17,9 +17,9 @@ class AppURL {
   static String forgotPassWordURL =
       "${PreferenceUtils.getAppUrl()}api/v1/ForgotPassword";
   static String otpVerificationURL =
-      "${PreferenceUtils.getAppUrl()}api/Login/OTP_Verification";
+      "${PreferenceUtils.getAppUrl()}api/v1/otp/verification";
   static String resetPasswordURL =
-      "${PreferenceUtils.getAppUrl()}api/Login/ResetPassword";
+      "${PreferenceUtils.getAppUrl()}api/v1/ChangePassword";
 
   //end region
 
@@ -47,8 +47,10 @@ class AppURL {
   //end region
 
   //Leave region
-  static String getLeaveBalanceWithDataURL =
+  static String getLeaveBalanceURL =
       "${PreferenceUtils.getAppUrl()}api/v1/leavebalance";
+  static String getLeaveStatusURL =
+      "${PreferenceUtils.getAppUrl()}api/v1/GetLeaveApplicationRecords";
   static String getLeaveApplicationRecordsURL =
       "${PreferenceUtils.getAppUrl()}api/v1/GetLeaveApplicationRecords";
   static String managerApprovalDetailsURL =
@@ -63,6 +65,7 @@ class AppURL {
       "${PreferenceUtils.getAppUrl()}api/v1/GetShiftDeatails";
   static String getCompOffLeaveURL =
       "${PreferenceUtils.getAppUrl()}api/v1/GetCompOffLeave";
+  static String getCancelLeaveURL = "${PreferenceUtils.getAppUrl()}api/v1/LeaveApprovalDetails";
 
   //end region
 

@@ -76,9 +76,9 @@ class _CommonBottomNavBarState extends State<CommonBottomNavBar> {
                           : item.unselectedIconPath,
                       height: 20,
                       width: 20,
-                      color: isSelected
-                          ? AppColors.colorDarkBlue
-                          : AppColors.colorDarkGray,
+                      // color: isSelected
+                      //     ? AppColors.colorDarkBlue
+                      //     : AppColors.colorDarkGray,
                       fit: BoxFit.cover, // Ensures the image fills the space
                     ),
 

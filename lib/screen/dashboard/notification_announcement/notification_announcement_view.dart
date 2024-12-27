@@ -21,7 +21,7 @@ class NotificationAnnouncementView
       appBar: const CommonAppBar(title: 'Notification'),
       body: CommonContainer(
         child: Container(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(16),
           child: Column(
             //mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -65,13 +65,13 @@ class NotificationAnnouncementView
                         padding: const EdgeInsets.all(15),
                         decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(16),
-                          boxShadow: [
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: const [
                             BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 0,
-                              blurRadius: 8,
-                              offset: const Offset(0, 3),
+                              color: Color(0X1C1F370D),
+                              blurRadius: 0.0,
+                              spreadRadius: 1.0,
+                              offset: Offset(0, 0),
                             ),
                           ],
                         ),

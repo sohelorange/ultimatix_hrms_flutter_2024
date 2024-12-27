@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -88,13 +86,5 @@ class AppPermission {
       }
       // You may choose to throw or handle this error further
     }
-  }
-
-  static Future<String> convertFileToBase64(String filePath) async {
-    var file = File(filePath);
-    List<int> bytes = await file.readAsBytes();
-
-    String base64String = base64.encode(bytes);
-    return base64String;
   }
 }

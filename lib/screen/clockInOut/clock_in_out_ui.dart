@@ -345,4 +345,5 @@ class ClockInOutUi extends GetView<ClockInOutController> {
       ],
     );
   }
+
 }

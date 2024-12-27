@@ -29,6 +29,17 @@ class DrawerDashView extends GetView<DrawerDashController> {
         actions: [
           GestureDetector(
             onTap: () {
+              Get.toNamed(AppRoutes.profileRoute);
+            },
+            child: CommonAppImage(
+              imagePath:AppImages.draweredit,
+              height: 20,
+              width: 20,
+              color: AppColors.colorBlack,
+            ).paddingOnly(right: 10),
+          ),
+          GestureDetector(
+            onTap: () {
               /*showCupertinoDialog(
                 context: context,
                 builder: (BuildContext context) {

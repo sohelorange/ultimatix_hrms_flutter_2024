@@ -56,7 +56,6 @@ class BalanceController extends GetxController {
   Future<void> onLeavebalanceAPI(int year, int month) async {
     try {
       isLoading.value = true;
-
       Map<String, dynamic> requestParam = {
         "month": month,
         "year": year,
@@ -82,4 +81,5 @@ class BalanceController extends GetxController {
       isLoading.value = false;
     }
   }
+
 }

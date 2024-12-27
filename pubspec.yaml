@@ -113,6 +113,7 @@ flutter:
     - assets/applicationIcon/settings/
     - assets/applicationIcon/feedback/
     - assets/icon/leaveApplication/
+    - assets/icon/profileicon/
     - assets/map/
     - assets/map/resources/
 

@@ -1,11 +1,17 @@
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/app/app_routes.dart';
 import 'package:ultimatix_hrms_flutter/app/app_snack_bar.dart';
+import 'package:ultimatix_hrms_flutter/utility/preference_utils.dart';
 
 import '../../app/app_images.dart';
 
 class ExploreController extends GetxController {
   // Dynamic list of explore items (can be 5, 10, or any length)
+
+  int geofence_enable = 0;
+
+
+
   final List<Map<String, dynamic>> exploreItems = [
     {'id': 1, 'icon': AppImages.exploreClockingIcon, 'name': 'Clocking'},
     {'id': 2, 'icon': AppImages.exploreLeaveIcon, 'name': 'Leaves'},
@@ -35,14 +41,29 @@ class ExploreController extends GetxController {
 
   final RxInt selectedIndex = 0.obs;
 
+  @override
+  void onInit() {
+    super.onInit();
+    Map<String, dynamic> loginData = PreferenceUtils.getLoginDetails();
+    geofence_enable = loginData['is_Geofence_enable'];
+    print("geofen--${geofence_enable}");
+
+  }
+
   void handleNavigation(int index) {
     // Retrieve the selected item dynamically based on index
     final selectedItem = exploreItems[index];
 
     // Use 'id' to handle navigation dynamically
     switch (selectedItem['id']) {
-      case 1: // Clocking
-        Get.toNamed(AppRoutes.clockInRoute);
+      case 1:// Clocking
+        if(geofence_enable == 1){
+          Get.toNamed(AppRoutes.geofenceRoute);
+          print("geo--${geofence_enable}");
+        } else {
+          Get.toNamed(AppRoutes.clockInRoute);
+          print("geo--${geofence_enable}");
+        }
         break;
       case 2: // Leaves
         Get.toNamed(AppRoutes.leaveApplicationRoute);
@@ -73,4 +94,5 @@ class ExploreController extends GetxController {
             message: 'This feature is under development.');
     }
   }
+
 }

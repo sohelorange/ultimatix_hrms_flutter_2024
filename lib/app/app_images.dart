@@ -3,7 +3,7 @@ class AppImages {
   AppImages._();
 
   // Images
-  static const String icBackGround = 'assets/images/dummy.jpg';
+  static const String icBackGround = 'assets/images/png_default.png';
   static const String icAppLogo = 'assets/images/ic_logo.png';
   static const String icLocationPr = 'assets/images/ic_location_pr.png';
   static const String icUnlock = 'assets/images/ic_unLock.png';
@@ -48,7 +48,6 @@ class AppImages {
   static const String icweekoff = 'assets/images/ic_weekoff.png';
   static const String icWeekOffNew = 'assets/images/ic_weekOff_new.png';
   static const String imgUserProf = 'assets/images/img_profile.png';
-  static const String icDesignation = 'assets/images/ic_designation.png';
   static const String icEditPen = 'assets/images/ic_edit_pen.png';
   static const String icPresentImg = 'assets/images/ic_present.png';
   static const String icWeekOffImg = 'assets/images/ic_week_off.png';
@@ -332,13 +331,9 @@ class AppImages {
   static const String leaveAppSvg = "assets/images/leave_app_svg.svg";
   static const String leaveStatusSvg = "assets/images/leave_status_svg.svg";
   static const String svgLocLive = "assets/images/svg_loc_live.svg";
-  static const String svgPresent = "assets/images/svg_present.svg";
-  static const String svgInTime = "assets/images/svg_in_time.svg";
-  static const String svgOutTime = "assets/images/svg_out_time.svg";
-  static const String svgLateIn = "assets/images/svg_late_in.svg";
-  static const String svgEarlyOut = "assets/images/svg_early_out.svg";
+
   static const String svgShift = "assets/images/svg_shift_time.svg";
-  static const String svgUserLoc = "assets/images/svg_user_loc.svg";
+  //static const String svgUserLoc = "assets/images/svg_user_loc.svg";
   static const String svgAvatar = "assets/images/ic_avatar_logo.svg";
   static const String svgCamera = 'assets/icon/clockInOut/svg_camera.svg';
   static const String svgTime = 'assets/icon/clockInOut/svg_time.svg';
@@ -348,6 +343,7 @@ class AppImages {
   static const String svgClock = 'assets/icon/liveTracking/svg_clock.svg';
   static const String svgDistance = 'assets/icon/liveTracking/svg_distnce.svg';
   static const String svgLocation = 'assets/icon/liveTracking/svg_location.svg';
+  static const String svgUserLocation = 'assets/icon/attendance/svg_user_loc.svg';
   static const String icId = 'assets/icon/attendance/svg_id.svg';
   static const String svgAttendanceEdit = "assets/icon/attendance/svg_edit.svg";
   static const String icPendingReg = 'assets/icon/attendance/svg_pending.svg';
@@ -356,6 +352,23 @@ class AppImages {
   static const String svgAbsentReg = 'assets/icon/attendance/svg_absent.svg';
   static const String svgAttendanceLocation =
       "assets/icon/attendance/svg_team_loc.svg";
+
+  /*User Attendance*/
+  static const String icDesignation = 'assets/icon/attendance/svg_designation.svg';
+  static const String svgPresent = "assets/icon/attendance/svg_present.svg";
+  static const String svgInTime = "assets/icon/attendance/svg_in_time.svg";
+  static const String svgOutTime = "assets/icon/attendance/svg_out_time.svg";
+  static const String svgLateIn = "assets/icon/attendance/svg_late_in.svg";
+  static const String svgEarlyOut = "assets/icon/attendance/svg_early_out.svg";
+  static const String svgCalRegularize = "assets/icon/attendance/svg_cal_regularize.svg";
+  static const String svgReasonRegularize = "assets/icon/attendance/svg_reason_regularize.svg";
+
+  static const String svgPresentAttendance = "assets/icon/attendance/svg_present_reg.svg";
+  static const String svgWeekOffAttendance = "assets/icon/attendance/svg_weekOff_reg.svg";
+  static const String svgAbsentAttendance = "assets/icon/attendance/svg_absent_reg.svg";
+  static const String svgHolidayAttendance = "assets/icon/attendance/svg_holiday_reg.svg";
+  static const String svgOdAttendance = "assets/icon/attendance/svg_od_reg.svg";
+  static const String svgRegAttendance = "assets/icon/attendance/svg_regularize_attendance.svg";
 
   static const String gifLogo = 'assets/icon/gif_otl.gif';
 

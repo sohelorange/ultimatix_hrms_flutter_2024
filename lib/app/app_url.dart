@@ -28,7 +28,7 @@ class AppURL {
   static String clockInOutTimeURL =
       "${PreferenceUtils.getAppUrl()}api/v1/GetPresentDayDuration";
   static const String geoLocation = 'api/v1/GeoLocationTracking';
-  static const String addLocations = "api/v1/AddGeoLocation";
+  static String addLocations = "${PreferenceUtils.getAppUrl()}api/v1/AddGeoLocation";
   static String logoutURL = "${PreferenceUtils.getAppUrl()}api/v1/Logout";
 
   //end region
@@ -82,6 +82,13 @@ class AppURL {
   static String attendanceGetReasonURL =
       "${PreferenceUtils.getAppUrl()}api/v1/GetReason";
 
+  //Attendance Regularize Approval
+  static String attendanceRegularizeApplicationRecord =
+      "${PreferenceUtils.getAppUrl()}api/v1/AttendanceRegularizeApplicationRecord";
+  static String getAttendanceRegularizeApplicationDetails =
+      "${PreferenceUtils.getAppUrl()}api/v1/GetAttendanceRegularizeApplicationDetails";
+  static String attendanceRegularizeApproval =
+      "${PreferenceUtils.getAppUrl()}api/v1/AttendanceRegularizeApproval";
   //end region
 
   //Medical region

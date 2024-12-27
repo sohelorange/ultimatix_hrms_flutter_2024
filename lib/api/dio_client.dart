@@ -49,8 +49,8 @@ class DioClient {
               options: Options(
                 headers: {
                   'Content-Type': 'application/json',
-                  //'Authorization': PreferenceUtils.getAuthToken()
-                  'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJMb2dpbl9JRCI6IjIxNzc2IiwiQ21wX0lEIjoiMTg3IiwiRW1wX0lEIjoiMjgyMDEiLCJEZXB0X0lEIjoiNTA1IiwiQWxwaGFfRW1wX0NvZGUiOiIwMDYwIiwiRW1wX0Z1bGxfTmFtZSI6IjAwNjAgLSBNci4gQVAgVEwgUUExMjMiLCJEZXB0X05hbWUiOiJTb2Z0d2FyZSIsIkRlc2lnTmFtZSI6IlNyLiBRQSBUZXN0ZXIiLCJEZXZpY2VUb2tlbiI6InN0cmluZyIsIm5iZiI6MTczNDMzMDY5OCwiZXhwIjoxNzM2OTIyNjk4LCJpYXQiOjE3MzQzMzA2OTh9.0uSHMch3XEPW2x60voEaGdNR9nTgBcSIg5nhm-qGOow'
+                  'Authorization': PreferenceUtils.getAuthToken()
+                  //'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJMb2dpbl9JRCI6IjIxNzc2IiwiQ21wX0lEIjoiMTg3IiwiRW1wX0lEIjoiMjgyMDEiLCJEZXB0X0lEIjoiNTA1IiwiQWxwaGFfRW1wX0NvZGUiOiIwMDYwIiwiRW1wX0Z1bGxfTmFtZSI6IjAwNjAgLSBNci4gQVAgVEwgUUExMjMiLCJEZXB0X05hbWUiOiJTb2Z0d2FyZSIsIkRlc2lnTmFtZSI6IlNyLiBRQSBUZXN0ZXIiLCJEZXZpY2VUb2tlbiI6InN0cmluZyIsIm5iZiI6MTczNDMzMDY5OCwiZXhwIjoxNzM2OTIyNjk4LCJpYXQiOjE3MzQzMzA2OTh9.0uSHMch3XEPW2x60voEaGdNR9nTgBcSIg5nhm-qGOow'
                 },
               ))
           .timeout(const Duration(seconds: timeOutDuration));
@@ -75,8 +75,8 @@ class DioClient {
               options: Options(
                 headers: {
                   'Content-Type': 'application/json',
-                  //'Authorization': PreferenceUtils.getAuthToken()
-                  'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJMb2dpbl9JRCI6IjIxNzc2IiwiQ21wX0lEIjoiMTg3IiwiRW1wX0lEIjoiMjgyMDEiLCJEZXB0X0lEIjoiNTA1IiwiQWxwaGFfRW1wX0NvZGUiOiIwMDYwIiwiRW1wX0Z1bGxfTmFtZSI6IjAwNjAgLSBNci4gQVAgVEwgUUExMjMiLCJEZXB0X05hbWUiOiJTb2Z0d2FyZSIsIkRlc2lnTmFtZSI6IlNyLiBRQSBUZXN0ZXIiLCJEZXZpY2VUb2tlbiI6InN0cmluZyIsIm5iZiI6MTczNDMzMDY5OCwiZXhwIjoxNzM2OTIyNjk4LCJpYXQiOjE3MzQzMzA2OTh9.0uSHMch3XEPW2x60voEaGdNR9nTgBcSIg5nhm-qGOow'
+                  'Authorization': PreferenceUtils.getAuthToken()
+                  //'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJMb2dpbl9JRCI6IjIxNzc2IiwiQ21wX0lEIjoiMTg3IiwiRW1wX0lEIjoiMjgyMDEiLCJEZXB0X0lEIjoiNTA1IiwiQWxwaGFfRW1wX0NvZGUiOiIwMDYwIiwiRW1wX0Z1bGxfTmFtZSI6IjAwNjAgLSBNci4gQVAgVEwgUUExMjMiLCJEZXB0X05hbWUiOiJTb2Z0d2FyZSIsIkRlc2lnTmFtZSI6IlNyLiBRQSBUZXN0ZXIiLCJEZXZpY2VUb2tlbiI6InN0cmluZyIsIm5iZiI6MTczNDMzMDY5OCwiZXhwIjoxNzM2OTIyNjk4LCJpYXQiOjE3MzQzMzA2OTh9.0uSHMch3XEPW2x60voEaGdNR9nTgBcSIg5nhm-qGOow'
                 },
               ),
               data: payloadObj)
@@ -96,8 +96,8 @@ class DioClient {
   Future<dynamic> post(String url, Map<String, dynamic> requestParam) async {
     var uri = Uri.parse(url);
     log("API is:$url");
-    log("API is:$requestParam");
-    log("API TOKEN:${PreferenceUtils.getAuthToken()}");
+    log("API Param is:$requestParam");
+    log("API Token is:${PreferenceUtils.getAuthToken()}");
     /*var payload = json.encode(requestParam);*/
     try {
       var response = await Dio()
@@ -105,8 +105,9 @@ class DioClient {
           options: Options(
             headers: {
               'Content-Type': 'application/json',
-              //'Authorization': PreferenceUtils.getAuthToken()
-              'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJMb2dpbl9JRCI6IjIxNzc2IiwiQ21wX0lEIjoiMTg3IiwiRW1wX0lEIjoiMjgyMDEiLCJEZXB0X0lEIjoiNTA1IiwiQWxwaGFfRW1wX0NvZGUiOiIwMDYwIiwiRW1wX0Z1bGxfTmFtZSI6IjAwNjAgLSBNci4gQVAgVEwgUUExMjMiLCJEZXB0X05hbWUiOiJTb2Z0d2FyZSIsIkRlc2lnTmFtZSI6IlNyLiBRQSBUZXN0ZXIiLCJEZXZpY2VUb2tlbiI6InN0cmluZyIsIm5iZiI6MTczNDMzMDY5OCwiZXhwIjoxNzM2OTIyNjk4LCJpYXQiOjE3MzQzMzA2OTh9.0uSHMch3XEPW2x60voEaGdNR9nTgBcSIg5nhm-qGOow'
+              'accept': '*/*',
+              'Authorization': PreferenceUtils.getAuthToken()
+              //'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJMb2dpbl9JRCI6IjIxNzc0IiwiQ21wX0lEIjoiMTg3IiwiRW1wX0lEIjoiMjgxOTkiLCJEZXB0X0lEIjoiNTA1IiwiQWxwaGFfRW1wX0NvZGUiOiIwMDU4IiwiRW1wX0Z1bGxfTmFtZSI6IjAwNTggLSBNci4gQVAgQk0iLCJEZXB0X05hbWUiOiJTb2Z0d2FyZSIsIkRlc2lnTmFtZSI6Ik1BTkFHRVIiLCJEZXZpY2VUb2tlbiI6IjZkM2E1YzNlY2UwNGFlNWEiLCJuYmYiOjE3MzUyMTEwMTEsImV4cCI6MTczNzgwMzAxMSwiaWF0IjoxNzM1MjExMDExfQ.zLvbLxT_ly1Qu6nb5S0gimGy1mOmOJdw8m3Hx5plwVk'
             },
           ),
           data: requestParam)

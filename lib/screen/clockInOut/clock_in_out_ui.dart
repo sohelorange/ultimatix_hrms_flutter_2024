@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -154,9 +153,9 @@ class ClockInOutUi extends GetView<ClockInOutController> {
                     Center(
                       child: CommonText(
                         text: 'Select your working mode',
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.colorBlueDark,
+                        fontSize: FontSize.responsiveFontSize(context, 16),
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.color1C1F37,
                       ),
                     ),
                     SizedBox(height: MediaQuery.of(context).size.width * 0.02),
@@ -173,9 +172,9 @@ class ClockInOutUi extends GetView<ClockInOutController> {
                         padding: EdgeInsets.zero,
                         child: CommonText(
                           text: controller.userLocAddress.value,
-                          fontSize: 13,
+                          fontSize: FontSize.responsiveFontSize(context, 12),
                           maxLine: 3,
-                          color: AppColors.colorBlueDark,
+                          color: AppColors.color1C1F37,
                           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                           fontWeight: AppFontWeight.w400,
                         ),
@@ -228,8 +227,8 @@ class ClockInOutUi extends GetView<ClockInOutController> {
             value: items,
             child: CommonText(
               text: items,
-              fontSize: 14,
-              color: AppColors.color9C9BA2,
+              fontSize: FontSize.responsiveFontSize(context, 14),
+              color: AppColors.color1C1F37,
               fontWeight: AppFontWeight.w400,
               padding: const EdgeInsets.only(left: 10, right: 10),
             ),
@@ -252,21 +251,21 @@ class ClockInOutUi extends GetView<ClockInOutController> {
           children: [
             CommonText(
               text: 'Working Hours',
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
+              fontSize: FontSize.responsiveFontSize(context, 14),
+              fontWeight: FontWeight.w400,
               color: AppColors.color1C1F37,
             ),
             CommonText(
               text: controller.totalTime.value,
-              fontSize: 40,
-              fontWeight: FontWeight.bold,
+              fontSize: FontSize.responsiveFontSize(context, 40),
+              fontWeight: FontWeight.w700,
               color: AppColors.color631983,
             ),
             CommonText(
               text: controller.nDate.value,
-              fontSize: 14,
+              fontSize: FontSize.responsiveFontSize(context, 14),
               fontWeight: FontWeight.w500,
-              color: AppColors.color9C9BA2,
+              color: AppColors.color6B6D7A,
             ),
           ],
         ),
@@ -294,14 +293,14 @@ class ClockInOutUi extends GetView<ClockInOutController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'CheckIn',
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(fontSize: FontSize.responsiveFontSize(context, 12),color: AppColors.color6B6D7A,fontWeight: FontWeight.w400),
                     ),
                     const SizedBox(height: 4),
                     Text( //removed obx
                       controller.checkInTime.value,
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: FontSize.responsiveFontSize(context, 12), fontWeight: FontWeight.w700, color: AppColors.color1C1F37,),
                     ),
                   ],
                 ),
@@ -327,14 +326,14 @@ class ClockInOutUi extends GetView<ClockInOutController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'CheckOut',
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(fontSize: FontSize.responsiveFontSize(context, 12),color: AppColors.color6B6D7A,fontWeight: FontWeight.w400),
                     ),
                     const SizedBox(height: 4),
                     Text( //removed obx
                       controller.checkOutTime.value,
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: FontSize.responsiveFontSize(context, 12),color: AppColors.color1C1F37, fontWeight: FontWeight.w700),
                     ),
                   ],
                 ),
@@ -344,5 +343,13 @@ class ClockInOutUi extends GetView<ClockInOutController> {
         ),
       ],
     );
+  }
+}
+
+class FontSize {
+  static double responsiveFontSize(BuildContext context, double fontSize) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double baseWidth = 375.0; // Base screen width
+    return fontSize * (screenWidth / baseWidth);
   }
 }

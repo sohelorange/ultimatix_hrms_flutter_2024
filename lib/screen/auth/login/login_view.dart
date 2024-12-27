@@ -163,7 +163,7 @@ class LoginView extends GetView<LoginController> {
                       ))),
                   onPressed: () {
                     // controller.onLogInAPI();
-                    Get.toNamed(AppRoutes.dashBoardRoute);
+                    Get.toNamed(AppRoutes.attendanceMainRoute);
                   },
                   child: CommonText(
                     text: AppString.login,

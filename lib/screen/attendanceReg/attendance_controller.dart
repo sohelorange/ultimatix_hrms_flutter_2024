@@ -3,6 +3,7 @@ import 'dart:isolate';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:ultimatix_hrms_flutter/app/app_url.dart';
 import 'package:ultimatix_hrms_flutter/utility/preference_utils.dart';
 
@@ -26,6 +27,13 @@ class AttendanceMainController extends GetxController{
 
   RxString empID = "".obs;
   RxString cmpID = "".obs;
+
+  RxString userName = "".obs;
+  RxString userDesignation = "".obs;
+
+  RxString userProfileUrl = "".obs;
+  Rx<num> userEmpId = 0.obs;
+  Rx<num> userCmpId = 0.obs;
 
   Rx<TeamAttendanceResponse> teamAttendanceResponse = TeamAttendanceResponse().obs;
   Rx<AttendanceRegularizeDetails> attendanceRegularizeDetails = AttendanceRegularizeDetails().obs;
@@ -80,14 +88,14 @@ class AttendanceMainController extends GetxController{
 
       for (int i = 0; i < length; i++) {
         if ("${teamAttendanceResponse.value.data?.elementAt(i).empId}" == empID.value) {
-          /*userName.value = teamAttendanceResponse.value.data!.elementAt(i).empFullName.toString();
+          userName.value = teamAttendanceResponse.value.data!.elementAt(i).empFullName.toString();
           userDesignation.value = teamAttendanceResponse.value.data!.elementAt(i).desigName.toString();
           userAddress.value = teamAttendanceResponse.value.data!.elementAt(i).branchAddress.toString();
           userCheckInTime.value = teamAttendanceResponse.value.data!.elementAt(i).shInTime.toString();
           userCheckoutTime.value = teamAttendanceResponse.value.data!.elementAt(i).shOutTime.toString();
           userProfileUrl.value = teamAttendanceResponse.value.data!.elementAt(i).imagePath.toString();
           userEmpId.value = teamAttendanceResponse.value.data!.elementAt(i).empId!;
-          userCmpId.value = teamAttendanceResponse.value.data!.elementAt(i).cmpID!;*/
+          userCmpId.value = teamAttendanceResponse.value.data!.elementAt(i).cmpID!;
           teamAttendanceResponse.value.data?.removeAt(i);
         }
       }
@@ -113,18 +121,18 @@ class AttendanceMainController extends GetxController{
 
     receivePort.listen((message) {
       if(message!=null){
-        isLoading.value = false;
         attendanceRegularizeDetails.value = AttendanceRegularizeDetails.fromJson(message);
+        isLoading.value = false;
       }else{
         isLoading.value = false;
       }
     },);
 
     Map<String, dynamic> requestParam = {
-      "month": 12/*selectedMonth.value*/,
-      "year": 2024/*selectedYear.value*/,
-      "empId": 28201,
-      "cmpId": 187
+      "month": selectedMonth.value,
+      "year": selectedYear.value,
+      "empId": empID.value,
+      "cmpId": cmpID.value
     };
 
     await Isolate.spawn<_IsolateApiData>(
@@ -154,6 +162,30 @@ class AttendanceMainController extends GetxController{
     Map<String, dynamic> loginData = PreferenceUtils.getLoginDetails();
     empID.value = loginData['emp_ID'].toString();
     cmpID.value = loginData['cmp_ID'].toString();
+  }
+
+  String getWeekDay(String? date) {
+    if(date!=null && date!="") {
+      DateFormat inputFormat = DateFormat('MM/dd/yyyy HH:mm:ss');
+      DateTime parsedDate = inputFormat.parse(date);
+      String daysStr = DateFormat('EEEE').format(parsedDate);
+      return daysStr;// Output: 2023-10-01
+    }else{
+      return "";
+    }
+  }
+
+  String setDate(String? date) {
+    if(date!=null && date!=""){
+      DateFormat inputFormat = DateFormat('MM/dd/yyyy HH:mm:ss');
+      // Parse the input string to DateTime
+      DateTime parsedDate = inputFormat.parse(date);
+      // Format the DateTime to the desired output format (MM/dd/yyyy)
+      String formattedDate = DateFormat('MM/dd/yyyy').format(parsedDate);
+      return formattedDate;
+    }else{
+      return "";
+    }
   }
 }
 

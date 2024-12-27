@@ -31,6 +31,11 @@ class ExploreController extends GetxController {
       'icon': AppImages.exploreExitAppIcon,
       'name': 'Exit\nApplication'
     },
+    {
+      'id': 13,
+      'icon': AppImages.svgRegAttendance,
+      'name': 'Regularize Approval'
+    },
   ];
 
   final RxInt selectedIndex = 0.obs;
@@ -67,6 +72,9 @@ class ExploreController extends GetxController {
       case 11: // Claim
         break;
       case 12: // Exit Application
+        break;
+      case 13:
+        Get.toNamed(AppRoutes.regularizeListApprovals);
         break;
       default:
         AppSnackBar.showGetXCustomSnackBar(

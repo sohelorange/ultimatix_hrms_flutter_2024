@@ -1,6 +1,9 @@
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/screen/attendanceReg/attendance_main_bind.dart';
 import 'package:ultimatix_hrms_flutter/screen/attendanceReg/attendance_main_ui.dart';
+import 'package:ultimatix_hrms_flutter/screen/attendanceReg/regularizationListApprovals/regularization_list_approvals_bind.dart';
+import 'package:ultimatix_hrms_flutter/screen/attendanceReg/regularizeApplication/regularize_apply_bind.dart';
+import 'package:ultimatix_hrms_flutter/screen/attendanceReg/regularizeApplication/regularize_apply_ui.dart';
 import 'package:ultimatix_hrms_flutter/screen/auth/forgotpassword/forgot_pass_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/dashboard_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/dashboard_view.dart';
@@ -27,6 +30,11 @@ import 'package:ultimatix_hrms_flutter/screen/settings/feedback/feedback_view.da
 import 'package:ultimatix_hrms_flutter/screen/settings/settings_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/settings/settings_view.dart';
 
+import '../screen/attendanceReg/regularizationListApprovals/regularization_list_approvals_ui.dart';
+import '../screen/attendanceReg/regularizeApprovals/regularization_approval_bind.dart';
+import '../screen/attendanceReg/regularizeApprovals/regularization_approval_ui.dart';
+import '../screen/attendanceReg/userAttendanceRegularize/attendance_user_bind.dart';
+import '../screen/attendanceReg/userAttendanceRegularize/attendance_user_ui.dart';
 import '../screen/auth/forgotpassword/forgot_pass_binding.dart';
 import '../screen/auth/login/login_binding.dart';
 import '../screen/auth/login/login_view_new.dart';
@@ -86,7 +94,9 @@ class AppRoutes {
   //attendance region
   static const attendanceMainRoute = '/attendance_main_route';
   static const userAttendanceRoute = '/user_attendance_route';
-  static const regularizeRequestRoute = '/regularize_request_route';
+  static const regularizeApplyRoute = '/regularize_apply_route';
+  static const regularizeListApprovals = '/regularize_list_approvals';
+  static const regularizeApproval = '/regularize_approval';
 
   //static const regularizationRoute = '/regularization_route';
   //static const regularizationDetailRoute = '/regularization_detail_route';
@@ -146,6 +156,26 @@ class AppRoutes {
       name: AppRoutes.attendanceMainRoute,
       binding: AttendanceMainBinding(),
       page: () => const AttendanceMainUi(),
+    ),
+    GetPage(
+      name: AppRoutes.userAttendanceRoute,
+      binding: AttendanceUserBind(),
+      page: () => const UserAttendanceUi(),
+    ),
+    GetPage(
+      name: AppRoutes.regularizeApplyRoute,
+      binding: RegularizeApplyBinding(),
+      page: () => const RegularizeApplyUi(),
+    ),
+    GetPage(
+      name: AppRoutes.regularizeListApprovals,
+      binding: RegularizationListApprovalsBind(),
+      page: () => const RegularizationListApprovalsUi(),
+    ),
+    GetPage(
+      name: AppRoutes.regularizeApproval,
+      binding: RegularizationApprovalBind(),
+      page: () => const RegularizationApprovalUi(),
     ),
     GetPage(
       name: AppRoutes.exploreTabRoute,

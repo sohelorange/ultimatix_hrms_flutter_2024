@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/attendanceReg/userAttendanceRegularize/attendance_user_controller.dart';
-
 import '../../../app/app_colors.dart';
 import '../../../app/app_font_weight.dart';
 import '../../../app/app_images.dart';
 import '../../../app/app_routes.dart';
+import '../../../app/app_snack_bar.dart';
 import '../../../utility/utils.dart';
 import '../../../widget/common_app_image.dart';
 import '../../../widget/common_text.dart';
@@ -19,6 +17,9 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
@@ -26,7 +27,7 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [AppColors.colorF18700, AppColors.colorF18700], // Gradient colors
+              colors: [AppColors.colorAppBars, AppColors.colorAppBars], // Gradient colors
               begin: Alignment.bottomLeft,
               end: Alignment.topRight,
               stops: [0.3, 0.7], // Stops for the gradient colors
@@ -35,18 +36,26 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
           ),
         ),
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back,color: Colors.white,),
-          onPressed: () {
+        leading: InkWell(
+          onTap: () {
             /*Get.find<UserAttendanceController>().getAttendanceRecordsByApi();*/
             Get.back();
           },
+          child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04, vertical: screenHeight * 0.01),
+              child: SvgPicture.asset(
+                AppImages.icaarrowback,
+                height: 10,
+                width: 10,
+                fit: BoxFit.contain,
+              )
+          ),
         ),
         title: CommonText(
           text: 'Attendance',
           fontWeight: FontWeight.w500,
-          fontSize: 18,
-          color: AppColors.colorWhite,
+          fontSize: screenWidth * 0.045,
+          color: AppColors.colorBlueDark,
         ),
       ),
       body: getView(context),
@@ -59,7 +68,7 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
         Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [AppColors.colorF18700, AppColors.colorF18700], // Gradient colors
+              colors: [AppColors.colorAppBars, AppColors.colorAppBars], // Gradient colors
               begin: Alignment.bottomLeft,
               end: Alignment.topRight,
               stops: [0.3, 0.7], // Stops for the gradient colors
@@ -82,22 +91,6 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
           ) : Column(children: [
 
             Container(
-              padding: const EdgeInsets.all(12.0),
-              width: MediaQuery.of(context).size.width * 0.9,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Obx(()=> Text("${controller.currentMonth.value} Attendance",style: const TextStyle(fontSize: 16.0,fontWeight: FontWeight.w500,color: AppColors.color1C1F37 ),)),
-                  GestureDetector(
-                      onTap: () {
-                        _showYearDialog(context);
-                      },
-                      child: SvgPicture.asset(AppImages.svgCalender))
-                ],
-              ),
-            ),
-
-            Container(
               padding: const EdgeInsets.all(16.0),
               width: MediaQuery.of(context).size.width * 0.9, // Adjust container width as needed
               decoration: BoxDecoration(
@@ -108,7 +101,13 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
                   ),
                 ],
                 borderRadius: BorderRadius.circular(10),
-                color: AppColors.colorF68C1F,
+                gradient: const LinearGradient(
+                  colors: [AppColors.color161F59, AppColors.color631983], // Gradient colors
+                  begin: Alignment.bottomLeft,
+                  end: Alignment.topRight,
+                  stops: [0.4, 0.7], // Stops for the gradient colors
+                  tileMode: TileMode.clamp,
+                ),
               ),
               child: LayoutBuilder(
                 builder: (context, constraints) {
@@ -127,12 +126,6 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
                             width: 50,
                             height: 50,
                             decoration: BoxDecoration(
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Colors.white,
-                                    blurRadius: 5.0,
-                                  ),
-                                ],
                                 border: Border.all(color: AppColors.color1C1F37.withOpacity(0.10)),
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.white
@@ -150,8 +143,7 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Obx(
-                                      ()=> CommonText(
+                                Obx(()=> CommonText(
                                     text: controller.userName.value,
                                     fontWeight: AppFontWeight.w500,
                                     fontSize: fontSize,
@@ -161,7 +153,7 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
                                 const SizedBox(height: 5.0),
                                 Row(
                                   children: [
-                                    const CommonAppImage(imagePath: AppImages.icDesignation),
+                                    SvgPicture.asset(AppImages.icDesignation),
                                     const SizedBox(width: 3.0),
                                     CommonText(
                                       text: controller.userDesignation.value.toString(),
@@ -193,7 +185,7 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
                                 SizedBox(
                                     height: 25,
                                     width: 25,
-                                    child: SvgPicture.asset(AppImages.svgUserLoc)),
+                                    child: SvgPicture.asset(AppImages.svgUserLocation)),
                               ],
                             ),
                           ),
@@ -205,9 +197,55 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
               ),
             ),
             const SizedBox(height: 16.0),
+            GestureDetector(
+              onTap: () {
+                _showYearDialog(context);
+              },
+              child: Container(
+                padding: const EdgeInsets.all(16.0),
+                width: MediaQuery.of(context).size.width * 0.9, // Adjust container width as needed
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.shade300,
+                      blurRadius: 5.0,
+                    ),
+                  ],
+                  borderRadius: BorderRadius.circular(10),
+                  gradient: const LinearGradient(
+                    colors: [AppColors.color161F59, AppColors.color631983], // Gradient colors
+                    begin: Alignment.bottomLeft,
+                    end: Alignment.topRight,
+                    stops: [0.4, 0.7], // Stops for the gradient colors
+                    tileMode: TileMode.clamp,
+                  ),
+                ),
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+
+                    double fontSize = constraints.maxWidth * 0.04;
+
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(AppImages.svgCalender),
+                            const SizedBox(width: 12,),
+                            Text("${controller.currentMonth.value} Attendance",style: const TextStyle(fontSize: 16.0,fontWeight: FontWeight.w500,color: AppColors.colorWhite),),
+                          ],
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ),
+            ),
+            const SizedBox(height: 16.0),
             Expanded(
               child: ListView.builder(
-                itemCount: 1/*controller.attendanceRegularizeDetails.value.data?.length ?? 1*/,
+                itemCount: controller.attendanceRegularizeDetails.value.data?.length ?? 1,
                 itemBuilder: (context, index) {
                   return responsiveContainer(context,index);
                 },
@@ -263,10 +301,10 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.white
                         ),
-                        child: CommonAppImage(
-                          imagePath: getImageUrl(index),
-                          height: 50,
-                          width: 50,
+                        child: SvgPicture.asset(
+                            height: 50,
+                            width: 50,
+                            getImageUrl(index)
                         ),
                       ),
                       const SizedBox(width: 16.0), // Spacer between image and text
@@ -276,25 +314,20 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Obx(
-                                  ()=> CommonText(
-                                text: "Monday"/*controller.getWeekDay(controller.attendanceRegularizeDetails.value.data?.elementAt(index).forDate.toString() ?? "")*//*controller.attendanceRegularizeDetails.value.data?.elementAt(index).empFullName?.trim() ?? ""*/,
+                            CommonText(
+                                text: controller.getWeekDay(controller.attendanceRegularizeDetails.value.data?.elementAt(index).forDate.toString() ?? ""),
                                 fontWeight: AppFontWeight.w500,
                                 fontSize: fontSize,
                                 color: AppColors.color1C1F37,
-                              ),
                             ),
                             const SizedBox(height: 8.0),
                             Row(
                               children: [
-                                Icon(Icons.calendar_month,size: fontSize,),
                                 const SizedBox(width: 2.0),
-                                Obx(
-                                      ()=> CommonText(
-                                    text: "12-12-2024"/*controller.setDate(controller.attendanceRegularizeDetails.value.data!.elementAt(index).forDate.toString())*/,/*controller.attendanceRegularizeDetails.value.data?.elementAt(index).desigName?.trim() ?? "",*/
+                                CommonText(
+                                    text: controller.setDate(controller.attendanceRegularizeDetails.value.data!.elementAt(index).forDate.toString()),
                                     color: AppColors.color6B6D7A,
                                     fontSize: fontSize,
-                                  ),
                                 ),
                               ],
                             )
@@ -303,34 +336,29 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
                       ),
 
                       Visibility(
-                        visible: true/*controller.attendanceRegularizeDetails.value.data!.elementAt(index).rowStatus!*/,
+                        visible: controller.attendanceRegularizeDetails.value.data!.elementAt(index).rowStatus!,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             const SizedBox(height: 8.0),
-                            const CommonAppImage(
+                            controller.attendanceRegularizeDetails.value.data?.elementAt(index).chkBySuperior=="Pending" ?
+                            SvgPicture.asset(
+                                AppImages.icPendingReg,
                                 height: 20,
-                                width: 20,
-                                imagePath: AppImages.icPendingReg
-                            ),
-                            /*controller.attendanceRegularizeDetails.value.data?.elementAt(index).chkBySuperior=="Pending" ?
-                            const CommonAppImage(
-                                height: 20,
-                                width: 20,
-                                imagePath: AppImages.icPendingReg
+                                width: 20
                             ) : controller.attendanceRegularizeDetails.value.data?.elementAt(index).chkBySuperior=="Approved" ?
-                            const CommonAppImage(
+                            SvgPicture.asset(
+                                AppImages.icApproveReg,
                                 height: 20,
-                                width: 20,
-                                imagePath: AppImages.icApproveReg
+                                width: 20
                             ) : controller.attendanceRegularizeDetails.value.data?.elementAt(index).chkBySuperior=="Rejected" ?
-                            const CommonAppImage(
+                            SvgPicture.asset(
+                                AppImages.icCancelReg,
                                 height: 20,
-                                width: 20,
-                                imagePath: AppImages.icCancelReg
-                            ) :*/ GestureDetector(
+                                width: 20
+                            ) : GestureDetector(
                               onTap: () {
-                                /*Get.toNamed(AppRoutes.regularizeRequest, arguments: [
+                                Get.toNamed(AppRoutes.regularizeApplyRoute, arguments: [
                                   {
                                     "Shift1": controller.attendanceRegularizeDetails.value.data?.elementAt(index).shInTime ?? "--:--",
                                     "Shift2": controller.attendanceRegularizeDetails.value.data?.elementAt(index).shOutTime ?? "",
@@ -345,25 +373,24 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
                                     "lateIn": controller.attendanceRegularizeDetails.value.data?.elementAt(index).earlyMinute ?? "--:--",
                                     "earlyOut": controller.attendanceRegularizeDetails.value.data?.elementAt(index).isLeaveApp ?? "--:--",
                                   }
-                                ]);*/
+                                ]);
                               },
-                              child: const CommonAppImage(
-                                  height: 20,
-                                  width: 20,
-                                  imagePath: AppImages.icEditPen
-                              ),
+                              child: SvgPicture.asset(
+                                AppImages.svgAttendanceEdit,
+                                height: 20,
+                                width: 20,),
                             ),
                           ],),
                       )
                     ],
                   ),
 
-                  /*controller.attendanceRegularizeDetails.value.data?.elementAt(index).mainStatus=="W" || controller.attendanceRegularizeDetails.value.data?.elementAt(index).mainStatus=="A" ? const SizedBox(height: 0)
-                      :*/ const SizedBox(height: 16.0),
+                  controller.attendanceRegularizeDetails.value.data?.elementAt(index).mainStatus=="W" || controller.attendanceRegularizeDetails.value.data?.elementAt(index).mainStatus=="A" ? const SizedBox(height: 0)
+                      : const SizedBox(height: 16.0),
 
                   /*Second Row*/
-                  /*controller.attendanceRegularizeDetails.value.data?.elementAt(index).mainStatus=="W" || controller.attendanceRegularizeDetails.value.data?.elementAt(index).mainStatus=="A" ? Container()
-                      :*/ Row(
+                  controller.attendanceRegularizeDetails.value.data?.elementAt(index).mainStatus=="W" || controller.attendanceRegularizeDetails.value.data?.elementAt(index).mainStatus=="A" ? Container()
+                      : Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       // Box 1
@@ -372,15 +399,15 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
                           padding: const EdgeInsets.all(12.0),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: AppColors.colorac6cc
+                              color: AppColors.colorF8F4FA
                           ),
                           child: Row(
                             children: [
-                              const CommonAppImage(
+                              SvgPicture.asset(
                                   height: 20,
                                   width: 20,
-                                  imagePath: AppImages.icacheckinnew
-                              ), // Clock Icon
+                                  AppImages.svgClock
+                              ),// Clock Icon
                               const SizedBox(width: 8.0),
                               Expanded(
                                 child: Column(
@@ -391,14 +418,12 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
                                       'Check in',
                                       style: TextStyle(fontSize: fontSize,color: AppColors.color6B6D7A, fontWeight: FontWeight.w400),
                                     ),
-                                    Obx(
-                                          ()=> Text(
-                                        "10:30AM"/*controller.attendanceRegularizeDetails.value.data?.elementAt(index).shInTime?.trim() ?? ""*/,
+                                    Text(
+                                        controller.attendanceRegularizeDetails.value.data?.elementAt(index).shInTime?.trim() ?? "",
                                         style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w700,
-                                            color:AppColors.color1C1F37
-                                            /*controller.attendanceRegularizeDetails.value.data!.elementAt(index).lateMinute! >
-                                                controller.attendanceRegularizeDetails.value.data!.elementAt(index).lateTime! ? AppColors.colorD33017 : AppColors.color1C1F37*/
-                                        ),
+                                            color:
+                                            controller.attendanceRegularizeDetails.value.data!.elementAt(index).lateMinute! >
+                                                controller.attendanceRegularizeDetails.value.data!.elementAt(index).lateTime! ? AppColors.colorD33017 : AppColors.color1C1F37
                                       ),
                                     ),
                                   ],
@@ -415,15 +440,15 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
                           padding: const EdgeInsets.all(12.0),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: AppColors.colorac6cc
+                              color: AppColors.colorF8F4FA
                           ),
                           child: Row(
                             children: [
-                              const CommonAppImage(
+                              SvgPicture.asset(
                                   height: 20,
                                   width: 20,
-                                  imagePath: AppImages.icacheckinnew
-                              ), // Location Icon
+                                  AppImages.svgClock
+                              ),// Location Icon
                               const SizedBox(width: 8.0),
                               Expanded(
                                 child: Column(
@@ -434,15 +459,13 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
                                       'Check out',
                                       style: TextStyle(fontSize: fontSize,color: AppColors.color6B6D7A, fontWeight: FontWeight.w400),
                                     ),
-                                    Obx(
-                                          ()=> Text(
-                                        "6:00Pm"/*controller.attendanceRegularizeDetails.value.data?.elementAt(index).shOutTime?.trim() ?? ""*/,
+                                    Text(
+                                        controller.attendanceRegularizeDetails.value.data?.elementAt(index).shOutTime?.trim() ?? "",
                                         style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w700,
-                                            color:AppColors.color1C1F37
-                                            /*controller.attendanceRegularizeDetails.value.data!.elementAt(index).lateMinute! >
-                                                controller.attendanceRegularizeDetails.value.data!.elementAt(index).lateTime! ? AppColors.colorD33017 : AppColors.color1C1F37*/
+                                            color:
+                                            controller.attendanceRegularizeDetails.value.data!.elementAt(index).lateMinute! >
+                                                controller.attendanceRegularizeDetails.value.data!.elementAt(index).lateTime! ? AppColors.colorD33017 : AppColors.color1C1F37
                                         ),
-                                      ),
                                     ),
                                   ],
                                 ),
@@ -465,18 +488,19 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
   }
 
   getImageUrl(int index) {
-    /*if(controller.attendanceRegularizeDetails.value.data!.elementAt(index).mainStatus=="A"){
-      return AppImages.icAbsentImg;
+    if(controller.attendanceRegularizeDetails.value.data!.elementAt(index).mainStatus=="A"){
+      return AppImages.svgAbsentAttendance;
     }else if(controller.attendanceRegularizeDetails.value.data!.elementAt(index).mainStatus=="P"){
-      return AppImages.icPresentImg;
+      return AppImages.svgPresentAttendance;
     }else if(controller.attendanceRegularizeDetails.value.data!.elementAt(index).mainStatus=="W"){
-      return AppImages.icWeekOffImg;
+      return AppImages.svgWeekOffAttendance;
     }else if(controller.attendanceRegularizeDetails.value.data!.elementAt(index).mainStatus=="HO"){
-      return AppImages.icHolidayImg;
+      return AppImages.svgHolidayAttendance;
+    }else if(controller.attendanceRegularizeDetails.value.data!.elementAt(index).mainStatus=="OD"){
+      return AppImages.svgOdAttendance;
     }else{
-      return AppImages.icAbsentImg;
-    }*/
-    return AppImages.imgUserProf;
+      return AppImages.svgAbsentAttendance;
+    }
   }
 
   void _showYearDialog(BuildContext context) {
@@ -520,8 +544,8 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
                           }else{
                             if(controller.selectedYear.value!=0){
                               controller.selectedMonth.value = index+1;
-                              /*Fluttertoast.showToast(msg: "Selected: ${controller.selectedYear.toString()}-${controller.selectedMonth.value}");*/
-                              /*controller.callUserAttendanceRegularizationDetails();*/
+                              AppSnackBar.showGetXCustomSnackBar(message: "Selected: ${controller.selectedYear.toString()}-${controller.selectedMonth.value}");
+                              controller.callUserAttendanceRegularizationDetails();
                               controller.selectedYear.value = 0;
                               controller.selectedMonth.value = 0;
                               Navigator.of(context).pop();
@@ -552,7 +576,7 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
                 controller.selectedYear.value = 0;
                 controller.selectedMonth.value = 0;
               },
-              child: const Center(child: Text('Close',style: TextStyle(color: AppColors.color68C1F,fontWeight: FontWeight.w500,fontSize: 18),)),
+              child: const Center(child: Text('Close',style: TextStyle(color: AppColors.color7B1FA2,fontWeight: FontWeight.w500,fontSize: 18),)),
             ),
           ],);
       },);

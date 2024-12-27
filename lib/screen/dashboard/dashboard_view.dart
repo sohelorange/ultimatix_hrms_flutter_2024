@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/app/app_routes.dart';
-import 'package:ultimatix_hrms_flutter/screen/dashboard/dashboard_controller.dart';
 import 'package:ultimatix_hrms_flutter/utility/utils.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_container.dart';
 
@@ -17,8 +16,9 @@ import '../../widget/common_bottom_bar.dart';
 import '../../widget/common_grid_view.dart';
 import '../../widget/common_text.dart';
 import '../../widget/dash_app_bar.dart';
+import 'dash_board_controller.dart';
 
-class DashboardView extends GetView<DashboardController> {
+class DashboardView extends GetView<DashController> {
   const DashboardView({super.key});
 
   //final NotificationServices _notificationServices = NotificationServices();

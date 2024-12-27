@@ -23,8 +23,8 @@ class LiveTrackingController extends GetxController{
   RxString userName = "Test User".obs;
   RxString userLocAddress = "".obs;
 
-  RxString empID = "".obs;
-  RxString cmpID = "".obs;
+  num empId = 0;
+  num cmpId = 0;
 
   RxString battery = "0%".obs;
   RxDouble distance = 0.0.obs;
@@ -36,8 +36,11 @@ class LiveTrackingController extends GetxController{
   Rx<LocationTrackResponse> locationTrackingResponse = LocationTrackResponse().obs;
   String selectedDate = DateFormat('yyyy-MM-dd').format(DateTime.now()).toString();
 
+  dynamic argumentData = Get.arguments;
+
   @override
   void onInit() async{
+
     getLocalData();
     webController = WebViewController()
       ..enableZoom(false)
@@ -78,8 +81,8 @@ class LiveTrackingController extends GetxController{
     //"2024-12-03"
 
     Map<String, dynamic> requestParam = {
-      "empID":empID.value,
-      "cmpID":cmpID.value,
+      "empID":empId,
+      "cmpID":cmpId,
       "date":nSelectedDate
     };
 
@@ -239,12 +242,17 @@ class LiveTrackingController extends GetxController{
   }
 
   getLocalData() {
-    Map<String, dynamic> loginData = PreferenceUtils.getLoginDetails();
+    userName.value = argumentData[0]['username'];
+    empId = argumentData[0]['empId'];
+    cmpId = argumentData[0]['cmpId'];
+    userProfile.value = argumentData[0]['userImage'];
+
+    /*Map<String, dynamic> loginData = PreferenceUtils.getLoginDetails();
 
     userProfile.value = loginData['image_Name'] ?? '';
     userName.value = loginData['emp_Full_Name'] ?? '';
     empID.value = loginData['emp_ID'].toString();
-    cmpID.value = loginData['cmp_ID'].toString();
+    cmpID.value = loginData['cmp_ID'].toString();*/
   }
 }
 

@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -134,9 +137,11 @@ class Utils {
     );
   }
 
-  static Future<XFile?> pickImage({required ImageSource source, required CameraDevice cameraDevice}) async {
+  static Future<XFile?> pickImage(
+      {required ImageSource source, required CameraDevice cameraDevice}) async {
     try {
-      final pickedFile = await ImagePicker().pickImage(source: source, preferredCameraDevice: cameraDevice);
+      final pickedFile = await ImagePicker()
+          .pickImage(source: source, preferredCameraDevice: cameraDevice);
       if (pickedFile != null) {
         // selectedImage.value = File(pickedFile.path);
         debugPrint("SELECTED ::: ${pickedFile.path}");
@@ -171,5 +176,13 @@ class Utils {
     } else {
       return '';
     }
+  }
+
+  static Future<String> convertFileToBase64(String filePath) async {
+    var file = File(filePath);
+    List<int> bytes = await file.readAsBytes();
+
+    String base64String = base64.encode(bytes);
+    return base64String;
   }
 }

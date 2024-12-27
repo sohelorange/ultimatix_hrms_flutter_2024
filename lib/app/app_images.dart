@@ -232,6 +232,7 @@ class AppImages {
       'assets/applicationIcon/settings/settings_call_icon.svg';
   static const String settingsEmailIcon =
       'assets/applicationIcon/settings/settings_email_icon.svg';
+
   //end region
   //region feedback icon
   static const String feedbackTerribleIcon =
@@ -244,6 +245,7 @@ class AppImages {
       'assets/applicationIcon/feedback/feedback_good_icon.svg';
   static const String feedbackGreatIcon =
       'assets/applicationIcon/feedback/feedback_great_icon.svg';
+
   //end region
   // Drawer Icons
   static const String icDrawerHome = 'assets/icon/ic_drawer_home.png';
@@ -352,11 +354,17 @@ class AppImages {
   static const String icApproveReg = 'assets/icon/attendance/svg_approve.svg';
   static const String icCancelReg = 'assets/icon/attendance/svg_cancel.svg';
   static const String svgAbsentReg = 'assets/icon/attendance/svg_absent.svg';
-  static const String svgAttendanceLocation = "assets/icon/attendance/svg_team_loc.svg";
+  static const String svgAttendanceLocation =
+      "assets/icon/attendance/svg_team_loc.svg";
 
   static const String gifLogo = 'assets/icon/gif_otl.gif';
 
   //LeaveApplication icon
+  static const String leaveApprovalIcon =
+      'assets/applicationIcon/leave/leave_approval_icon.svg';
+
+  static const String leaveCalendarIcon =
+      'assets/applicationIcon/leave/leave_calendar_icon.svg';
   static const String icadd2 = 'assets/icon/leaveApplication/ic_add.png';
   static const String icarrowback =
       'assets/icon/leaveApplication/ic_arrowback.png';
@@ -366,4 +374,8 @@ class AppImages {
       'assets/icon/leaveApplication/ic_browsefile.png';
   static const String icavtar = 'assets/icon/leaveApplication/ic_avtar.png';
   static const String icedit = 'assets/icon/leaveApplication/ic_edit.png';
+
+  //region error icon
+  static const String svgNoData = 'assets/images/svg_no_data_found.svg';
+//end region
 }

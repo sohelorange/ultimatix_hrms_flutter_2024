@@ -169,7 +169,7 @@ class CommonInputField extends StatelessWidget {
           isDense: true,
           contentPadding: padding ??
               const EdgeInsets.symmetric(
-                horizontal: 10,
+                horizontal: 0,
                 vertical: 10,
               ),
           enabledBorder: UnderlineInputBorder(

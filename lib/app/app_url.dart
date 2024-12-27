@@ -40,8 +40,10 @@ class AppURL {
   //end region
 
   //Leave region
-  static String getLeaveBalanceWithDataURL =
+  static String getLeaveBalanceURL =
       "${PreferenceUtils.getAppUrl()}api/v1/leavebalance";
+  static String getLeaveStatusURL =
+      "${PreferenceUtils.getAppUrl()}api/v1/GetLeaveApplicationRecords";
   static String getLeaveApplicationRecordsURL =
       "${PreferenceUtils.getAppUrl()}api/v1/GetLeaveApplicationRecords";
   static String managerApprovalDetailsURL =
@@ -56,6 +58,7 @@ class AppURL {
       "${PreferenceUtils.getAppUrl()}api/v1/GetShiftDeatails";
   static String getCompOffLeaveURL =
       "${PreferenceUtils.getAppUrl()}api/v1/GetCompOffLeave";
+  static String getCancelLeaveURL = "${PreferenceUtils.getAppUrl()}api/v1/LeaveApprovalDetails";
 
   //end region
 

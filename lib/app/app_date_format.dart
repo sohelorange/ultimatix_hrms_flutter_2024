@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:ultimatix_hrms_flutter/utility/utils.dart';
 
 class AppDatePicker {
   static String currentDate() {
@@ -32,8 +34,14 @@ class AppDatePicker {
     return strDay;
   }
 
-  static String formatDate(DateTime dateTime) {
-    //DateFormat dateFormat = DateFormat('dd-MMM-yyyy');
+  static String formatDateWithDay(DateTime dateTime) {
+    DateFormat dateFormat = DateFormat('dd/MM/yyyy, EEEE');
+    //DateFormat dateFormat = DateFormat('dd/MM/yyyy');
+    String selected = dateFormat.format(dateTime);
+    return selected;
+  }
+
+  static String formatDateWithDDMMYYYY(DateTime dateTime) {
     DateFormat dateFormat = DateFormat('dd/MM/yyyy');
     String selected = dateFormat.format(dateTime);
     return selected;
@@ -73,7 +81,7 @@ class AppDatePicker {
     );
 
     if (selected != null) {
-      controller.text = formatDate(selected);
+      controller.text = formatDateWithDay(selected);
     }
   }
 
@@ -89,7 +97,7 @@ class AppDatePicker {
     );
 
     if (selected != null) {
-      controller.text = formatDate(selected);
+      controller.text = formatDateWithDay(selected);
     }
   }
 
@@ -104,7 +112,7 @@ class AppDatePicker {
     );
 
     if (selected != null) {
-      controller.text = formatDate(selected);
+      controller.text = formatDateWithDay(selected);
     }
   }
 
@@ -118,7 +126,7 @@ class AppDatePicker {
   }
 
   static String convertDateFormatInputOutputDate(String inputDate) {
-    DateFormat inputParser = DateFormat('dd/MM/yyyy HH:mm');
+    DateFormat inputParser = DateFormat(Utils.commonUTCDateFormat);
     DateFormat outputParser = DateFormat('dd/MM/yyyy');
     var date = inputParser.parse(inputDate);
     String outPutData = outputParser.format(date);
@@ -131,5 +139,22 @@ class AppDatePicker {
     var date = inputParser.parse(inputDate);
     String outPutData = outputParser.format(date);
     return outPutData;
+  }
+
+  static void allDateEnable1(
+      BuildContext context, Rx<TextEditingController> controller) async {
+    final DateTime? selected = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1999),
+      lastDate: DateTime(int.parse(currentYear()), 12, 31),
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
+    );
+
+    if (selected != null) {
+      String formattedDate = formatDateWithDDMMYYYY(selected);
+      controller.value.text = formattedDate; // Update the text field
+      print("Selected Date: $formattedDate"); // Debugging the selected date
+    }
   }
 }

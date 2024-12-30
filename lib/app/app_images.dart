@@ -370,6 +370,8 @@ class AppImages {
   static const String svgHolidayAttendance = "assets/icon/attendance/svg_holiday_reg.svg";
   static const String svgOdAttendance = "assets/icon/attendance/svg_od_reg.svg";
   static const String svgRegAttendance = "assets/icon/attendance/svg_regularize_attendance.svg";
+  static const String svgAttendanceLocation =
+      "assets/icon/attendance/svg_team_loc.svg";
 
   static const String gifLogo = 'assets/icon/gif_otl.gif';
 
@@ -400,4 +402,8 @@ class AppImages {
   static const String iccalander = 'assets/icon/profileicon/ic_calander.png';
   static const String icaadhar = 'assets/icon/profileicon/ic_aadhar.png';
 
+
+  //region error icon
+  static const String svgNoData = 'assets/images/svg_no_data_found.svg';
+//end region
 }

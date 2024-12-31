@@ -17,6 +17,9 @@ class DrawerDashController extends GetxController {
   var isLoading = false.obs;
   var isDisable = false.obs;
 
+  RxString empID = "".obs;
+  RxString cmpID = "".obs;
+
   final List<Map<String, dynamic>> exploreItems = [
     {'id': 1, 'icon': AppImages.drawerHomeIcon, 'name': 'Home'},
     {'id': 2, 'icon': AppImages.drawerExploreIcon, 'name': 'Explore'},
@@ -76,7 +79,14 @@ class DrawerDashController extends GetxController {
       case 6: // Photo Gallery
         break;
       case 7: // Live Tracking
-        Get.toNamed(AppRoutes.liveTrackingRoute);
+        Get.toNamed(AppRoutes.liveTrackingRoute, arguments: [
+          {
+            "username": userName.value,
+            "empId": int.parse(empID.value),
+            "cmpId": int.parse(cmpID.value),
+            "userImage": userImageUrl.value
+          }
+        ]);
         break;
       case 8: // Birthday & Anniversary
         break;
@@ -105,6 +115,8 @@ class DrawerDashController extends GetxController {
     userImageUrl.value = loginData['image_Name'] ?? '';
     userName.value = loginData['emp_Full_Name'] ?? '';
     designation.value = loginData['desig_Name'] ?? '';
+    empID.value = loginData['emp_ID'].toString();
+    cmpID.value = loginData['cmp_ID'].toString();
   }
 
   Future<void> logout() async {

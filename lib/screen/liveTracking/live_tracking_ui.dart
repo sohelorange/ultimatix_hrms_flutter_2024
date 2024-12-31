@@ -380,7 +380,7 @@ class LiveTrackingUi extends GetView<LiveTrackingController> {
                   shadowColor: AppColors.colorBlack,
                   elevation: 2,
                   color: AppColors.colorWhite,
-                  child: ListView.builder(
+                  child: controller.locationTrackingResponse.value.data?.isNotEmpty==true ? ListView.builder(
                     itemCount: controller.locationTrackingResponse.value.data?.length ?? 0,
                     shrinkWrap: true,
                     padding: EdgeInsets.all(screenWidth * 0.03),
@@ -426,7 +426,10 @@ class LiveTrackingUi extends GetView<LiveTrackingController> {
                         ],
                       );
                     },
-                  ),
+                  ) : SizedBox(
+                    width: screenWidth,
+                    child: const Text("No Data Found",textAlign: TextAlign.center,),
+                  ).marginOnly(bottom: screenHeight * 0.08)
                 ).marginOnly(top: screenHeight * 0.02, left: 20, right: 20),
               ],
             ),

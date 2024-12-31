@@ -62,10 +62,10 @@ class DrawerDashView extends GetView<DrawerDashController> {
                     yesButtonText: 'Yes',
                     noButtonText: 'No',
                     onYesPressed: () {
-                      //controller.logout();
-                      PreferenceUtils.setIsLogin(false).then((_) {
-                        Get.offAllNamed(AppRoutes.loginRoute);
-                      });
+                      controller.logout();
+                      // PreferenceUtils.setIsLogin(false).then((_) {
+                      //   Get.offAllNamed(AppRoutes.loginRoute);
+                      // });
                     },
                   );
                 },

@@ -66,6 +66,7 @@ class AppURL {
   static String getCompOffLeaveURL =
       "${PreferenceUtils.getAppUrl()}api/v1/GetCompOffLeave";
   static String getCancelLeaveURL = "${PreferenceUtils.getAppUrl()}api/v1/LeaveApprovalDetails";
+  static String insertCancelLeaveURL = "${PreferenceUtils.getAppUrl()}api/v1/LeaveCancellationApplication";
 
   //end region
 

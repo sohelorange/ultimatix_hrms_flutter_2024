@@ -15,11 +15,12 @@ class DioClient {
     var uri = Uri.parse(baseUrl);
     try {
       var response = await Dio()
-          .get(baseUrl,options: Options(headers: {
-            'Content-Type': 'application/json',
-            'accept': '*/*',
-            'Authorization': PreferenceUtils.getAuthToken()
-            }))
+          .get(baseUrl,
+              options: Options(headers: {
+                'Content-Type': 'application/json',
+                'accept': '*/*',
+                'Authorization': PreferenceUtils.getAuthToken()
+              }))
           .timeout(const Duration(seconds: timeOutDuration));
       return _processResponse(response);
     } on SocketException {
@@ -30,7 +31,6 @@ class DioClient {
     } on DioException catch (error) {
       throw handleError(error);
     }
-
   }
 
   //TODO : API CALL GET QUERY API
@@ -102,15 +102,15 @@ class DioClient {
     try {
       var response = await Dio()
           .post(url,
-          options: Options(
-            headers: {
-              'Content-Type': 'application/json',
-              'accept': '*/*',
-              'Authorization': PreferenceUtils.getAuthToken()
-              //'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJMb2dpbl9JRCI6IjIxNzc0IiwiQ21wX0lEIjoiMTg3IiwiRW1wX0lEIjoiMjgxOTkiLCJEZXB0X0lEIjoiNTA1IiwiQWxwaGFfRW1wX0NvZGUiOiIwMDU4IiwiRW1wX0Z1bGxfTmFtZSI6IjAwNTggLSBNci4gQVAgQk0iLCJEZXB0X05hbWUiOiJTb2Z0d2FyZSIsIkRlc2lnTmFtZSI6Ik1BTkFHRVIiLCJEZXZpY2VUb2tlbiI6IjZkM2E1YzNlY2UwNGFlNWEiLCJuYmYiOjE3MzUyMTEwMTEsImV4cCI6MTczNzgwMzAxMSwiaWF0IjoxNzM1MjExMDExfQ.zLvbLxT_ly1Qu6nb5S0gimGy1mOmOJdw8m3Hx5plwVk'
-            },
-          ),
-          data: requestParam)
+              options: Options(
+                headers: {
+                  'Content-Type': 'application/json',
+                  'accept': '*/*',
+                  'Authorization': PreferenceUtils.getAuthToken()
+                  //'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJMb2dpbl9JRCI6IjIxNzc0IiwiQ21wX0lEIjoiMTg3IiwiRW1wX0lEIjoiMjgxOTkiLCJEZXB0X0lEIjoiNTA1IiwiQWxwaGFfRW1wX0NvZGUiOiIwMDU4IiwiRW1wX0Z1bGxfTmFtZSI6IjAwNTggLSBNci4gQVAgQk0iLCJEZXB0X05hbWUiOiJTb2Z0d2FyZSIsIkRlc2lnTmFtZSI6Ik1BTkFHRVIiLCJEZXZpY2VUb2tlbiI6IjZkM2E1YzNlY2UwNGFlNWEiLCJuYmYiOjE3MzUyMTEwMTEsImV4cCI6MTczNzgwMzAxMSwiaWF0IjoxNzM1MjExMDExfQ.zLvbLxT_ly1Qu6nb5S0gimGy1mOmOJdw8m3Hx5plwVk'
+                },
+              ),
+              data: requestParam)
           .timeout(const Duration(seconds: timeOutDuration));
       return _processResponse(response);
     } on SocketException {
@@ -118,6 +118,35 @@ class DioClient {
     } on TimeoutException {
       throw ApiNotRespondingException(
           'API not responded in time', uri.toString());
+    } on DioException catch (error) {
+      throw handleError(error);
+    }
+  }
+
+  Future<dynamic> postQuery(String url, {Map<String, dynamic>? queryParams}) async {
+    var uri = Uri.parse(url);
+    log("API is:$url");
+    log("API Token is:${PreferenceUtils.getAuthToken()}");
+
+    try {
+      var response = await Dio()
+          .post(
+        uri.toString(), // Use the URI string directly
+        queryParameters: queryParams, // Pass query parameters
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'accept': '*/*',
+            'Authorization': PreferenceUtils.getAuthToken(),
+          },
+        ),
+      ).timeout(const Duration(seconds: timeOutDuration));
+
+      return _processResponse(response);
+    } on SocketException {
+      throw FetchDataException('No Internet connection', uri.toString());
+    } on TimeoutException {
+      throw ApiNotRespondingException('API not responded in time', uri.toString());
     } on DioException catch (error) {
       throw handleError(error);
     }
@@ -134,7 +163,7 @@ class DioClient {
             utf8.decode(response.bodyBytes), response.request!.url.toString());
       case 401:
       case 403:
-      //case 404:
+        //case 404:
         //PreferenceUtils.clearAllPreferences();
         //PreferenceUtils.setIsLogin(false);
         //Get.offAll(() =>const LoginViewNewScreen());
@@ -156,7 +185,7 @@ class DioClient {
               error.requestOptions.uri.toString());
         case 401:
         case 403:
-        //case 404:
+          //case 404:
           //PreferenceUtils.clearAllPreferences();
           //PreferenceUtils.setIsLogin(false);
           //Get.offAll(() =>const LoginViewNewScreen());

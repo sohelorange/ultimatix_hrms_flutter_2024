@@ -89,7 +89,7 @@ class DrawerDashController extends GetxController {
       case 12: // My Team Attendance
         break;
       case 13: // Setting
-      Get.toNamed(AppRoutes.settingsRoute);
+        Get.toNamed(AppRoutes.settingsRoute);
         break;
       default:
         AppSnackBar.showGetXCustomSnackBar(
@@ -115,16 +115,19 @@ class DrawerDashController extends GetxController {
       // Check if network is available
       if (await Network.isConnected()) {
         Map<String, dynamic> param = {
-          'loginToken': PreferenceUtils.getAuthToken().replaceAll('Bearer ', ''),
+          'loginToken':
+              PreferenceUtils.getAuthToken().replaceAll('Bearer ', '').trim(),
         };
 
-        var response = await DioClient().post(AppURL.logoutURL, param);
+        var response =
+            await DioClient().postQuery(AppURL.logoutURL, queryParams: param);
         if (response['code'] == 200 && response['status'] == true) {
           PreferenceUtils.setIsLogin(false).then((_) {
             Get.offAllNamed(AppRoutes.loginRoute);
           });
-          
-          AppSnackBar.showGetXCustomSnackBar(message: response['message'],backgroundColor: Colors.green);
+
+          AppSnackBar.showGetXCustomSnackBar(
+              message: response['message'], backgroundColor: Colors.green);
         } else {
           AppSnackBar.showGetXCustomSnackBar(message: response['message']);
         }
@@ -138,5 +141,4 @@ class DrawerDashController extends GetxController {
       isDisable(false);
     }
   }
-
 }

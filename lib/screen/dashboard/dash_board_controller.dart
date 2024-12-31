@@ -312,10 +312,8 @@ class DashController extends GetxController {
       String deviceName = await getDeviceName();
 
       Map<String, dynamic> param = {
-        "empID": empID,
-        "cmpID": cmpID,
-        // "empID": '28201',
-        // "cmpID": '187',
+        "empID": 0,
+        "cmpID": 0,
         "latitude": lat,
         "longitude": lon,
         "trackingDate": DateFormat('dd/MM/yyyy').format(DateTime.now()),

@@ -157,7 +157,7 @@ class LeaveStatusView extends GetView<LeaveStatusController> {
                 controller.onLeaveBalanceAPI(
                     controller.fromAPIDt.value, controller.toAPIDt.value);
               },
-              isLoading: controller.isLoading.value),
+              isLoading: false),
         ).paddingOnly(top: 18)
       ],
     );

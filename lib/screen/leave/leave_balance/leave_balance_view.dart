@@ -53,11 +53,51 @@ class LeaveBalanceView extends GetView<LeaveBalanceController> {
   }
 
   Widget _leaveBalanceUI(BuildContext context) {
+    // Get the current year and month or selected ones
+    final int currentYear = DateTime.now().year;
+    final int currentMonth = DateTime.now().month;
+
+    // Get selected year, using controller's selected value if available
+    final String selectedYear = controller.selectedYearIndex.value == -1
+        ? currentYear.toString()
+        : (currentYear + controller.selectedYearIndex.value).toString();
+
+    // Get the selected month or current month
+    final String selectedMonth = controller.selectedMonthIndex.value == -1
+        ? [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December'
+          ][currentMonth - 1] // Convert month index to name
+        : [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December'
+          ][controller.selectedMonthIndex.value];
+
     return CommonGradientButton(
-      text: 'Leave Balance',
+      text: 'Leave Balance for $selectedMonth $selectedYear',
       imagePath: AppImages.leaveCalendarIcon, // Change the icon as needed
       onTap: () {
-        _showYearDialog(context); // Define your on-tap behavior here
+        controller.showYearDialog(context); // Define your on-tap behavior here
       },
     );
   }
@@ -166,101 +206,6 @@ class LeaveBalanceView extends GetView<LeaveBalanceController> {
               ), // Your widget inside the Container
             );
           }),
-    );
-  }
-
-  void _showYearDialog(BuildContext context) {
-    controller.selectedYear.value = 0;
-    controller.selectedMonth.value = 0;
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Select Year'),
-          content: SizedBox(
-            height: MediaQuery.of(context).size.height *
-                0.3, // 40% of screen height
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                int crossAxisCount;
-                if (constraints.maxWidth < 400) {
-                  crossAxisCount = 2; // For smaller screens
-                } else if (constraints.maxWidth < 800) {
-                  crossAxisCount = 3; // For medium screens
-                } else {
-                  crossAxisCount = 4; // For larger screens
-                }
-
-                return Obx(
-                  () => GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: crossAxisCount,
-                        crossAxisSpacing: 16.0,
-                        mainAxisSpacing: 16.0,
-                        childAspectRatio: 2),
-                    itemCount: controller.selectedYear.value == 0
-                        ? 6
-                        : controller.items.length, // Total years
-                    itemBuilder: (context, index) {
-                      final year = DateTime.now().year + index;
-                      return GestureDetector(
-                        onTap: () {
-                          if (controller.selectedYear.value == 0) {
-                            controller.selectedYear.value = year;
-                          } else {
-                            if (controller.selectedYear.value != 0) {
-                              controller.selectedMonth.value = index + 1;
-                              controller.onLeaveBalanceAPI(
-                                  controller.selectedYear.value,
-                                  controller.selectedMonth.value);
-                              controller.selectedYear.value = 0;
-                              controller.selectedMonth.value = 0;
-                              Navigator.of(context).pop();
-                            }
-                          }
-                        },
-                        child: Card(
-                          child: Center(
-                            child: Obx(
-                              () => Text(
-                                controller.selectedYear.value == 0
-                                    ? year.toString()
-                                    : controller.items
-                                        .elementAt(index)
-                                        .toString(),
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                );
-              },
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                controller.selectedYear.value = 0;
-                controller.selectedMonth.value = 0;
-              },
-              child: const Center(
-                  child: Text(
-                'Close',
-                style: TextStyle(
-                    color: AppColors.color68C1F,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18),
-              )),
-            ),
-          ],
-        );
-      },
     );
   }
 }

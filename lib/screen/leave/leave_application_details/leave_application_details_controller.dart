@@ -400,7 +400,8 @@ class LeaveApplicationDetailsController extends GetxController {
   var isDeleteLoading = false.obs;
   var isDisable = false.obs;
 
-  late RxList<String> leaveTypesDay = <String>[].obs; // Initialize
+  //late RxList<String> leaveTypesDay = <String>[].obs; // Initialize
+  var leaveTypesDay = <String>["Full Day", "First Half", "Second Half"].obs;
   RxString? selectedLeaveTypesDay =
       ''.obs; // Initialize as an empty observable string
   Rx<TextEditingController> reasonController = TextEditingController().obs;
@@ -410,25 +411,32 @@ class LeaveApplicationDetailsController extends GetxController {
       LeaveApplicationDetailsResponse().obs;
   RxBool isLoading = true.obs;
 
+  RxBool isCancelLoading = false.obs;
+  RxBool isCancelDisable = false.obs;
+
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     final leaveData = Get.arguments['leaveData'] as Data;
-    leaveApprovalId.value = leaveData.leaveApprovalId.toString();
-    leaveAppId.value = leaveData.leaveApplicationId.toString();
-    leaveId.value = leaveData.leaveId.toString();
-    leaveStatus.value = leaveData.appStatus!;
-    leaveAppStatus.value = leaveData.applicationStatus!;
-    leaveType.value = leaveData.leaveCode!;
-    leaveFromDt.value = leaveData.fromDate!;
-    leaveToDt.value = leaveData.toDate!;
-    leavePeriod.value = leaveData.leaveAppDays.toString();
-    leaveReason.value = leaveData.leaveReason!;
+    // Safely assign values with null checks
+    leaveApprovalId.value = leaveData.leaveApprovalId?.toString() ?? '';
+    leaveAppId.value = leaveData.leaveApplicationId?.toString() ?? '';
+    leaveId.value = leaveData.leaveId?.toString() ?? '';
+    leaveStatus.value = leaveData.appStatus ?? '';
+    leaveAppStatus.value = leaveData.applicationStatus ?? '';
+    leaveType.value = leaveData.leaveCode ?? '';
+    leaveFromDt.value = leaveData.fromDate ?? '';
+    leaveToDt.value = leaveData.toDate ?? '';
+    leavePeriod.value = leaveData.leaveAppDays?.toString() ?? '0';
+    leaveReason.value = leaveData.leaveReason ?? '';
 
-    if (int.parse(leaveApprovalId.value) != 0) {
-      getCancelLeaveDetailsAPI(int.parse(leaveId.value),
-          int.parse(leaveAppId.value), int.parse(leaveApprovalId.value));
+    if (leaveApprovalId.value.isNotEmpty && leaveApprovalId.value != '0') {
+      getCancelLeaveDetailsAPI(
+        int.tryParse(leaveId.value) ?? 0,
+        int.tryParse(leaveAppId.value) ?? 0,
+        int.tryParse(leaveApprovalId.value) ?? 0,
+      );
     }
   }
 
@@ -532,36 +540,88 @@ class LeaveApplicationDetailsController extends GetxController {
       try {
         isLoading.value = true;
 
-        Map<String, dynamic> loginData = PreferenceUtils.getLoginDetails();
-        String empID = loginData['emp_ID'].toString();
-        String cmpID = loginData['cmp_ID'].toString();
-        String loginID = loginData['login_ID'].toString();
+        // Retrieve login details safely
+        final loginData = PreferenceUtils.getLoginDetails();
+        final empID = loginData['emp_ID']?.toString() ?? '';
+        final cmpID = loginData['cmp_ID']?.toString() ?? '';
+        final loginID = loginData['login_ID']?.toString() ?? '';
 
-        Map<String, dynamic> requestParam = {
+        final requestParam = {
           "cmpId": cmpID,
           "leaveId": leaveID,
           "loginId": loginID,
           "leaveAppId": leaveAppID,
           "leaveApprId": leaveApprID,
-          "empId": empID
+          "empId": empID,
         };
 
-        var response =
+        final response =
             await DioClient().post(AppURL.getCancelLeaveURL, requestParam);
-
         leaveDetailsListResponse.value =
             LeaveApplicationDetailsResponse.fromJson(response);
+
         if (leaveDetailsListResponse.value.code == 200 &&
             leaveDetailsListResponse.value.status == true) {
-          debugPrint("leave details response --$leaveDetailsListResponse");
+          debugPrint("Leave details response: \$leaveDetailsListResponse");
         } else {
           AppSnackBar.showGetXCustomSnackBar(
-              message: "${leaveDetailsListResponse.value.message}");
+            message: leaveDetailsListResponse.value.message ?? "Unknown error.",
+          );
         }
       } catch (e) {
-        AppSnackBar.showGetXCustomSnackBar(message: e.toString());
+        AppSnackBar.showGetXCustomSnackBar(message: "Error: \$e");
       } finally {
         isLoading.value = false;
+      }
+    } else {
+      AppSnackBar.showGetXCustomSnackBar(message: Constants.networkMsg);
+    }
+  }
+
+  Future<void> insertCancelLeaveDetailsAPI(int leaveID, int leaveAppID,
+      int leaveApprID, Map<String, dynamic> leaveData) async {
+    if (await Network.isConnected()) {
+      try {
+        isCancelLoading.value = true;
+
+        // Retrieve login details safely
+        final loginData = PreferenceUtils.getLoginDetails();
+        final empID = loginData['emp_ID']?.toString() ?? '';
+        final cmpID = loginData['cmp_ID']?.toString() ?? '';
+        final loginID = loginData['login_ID']?.toString() ?? '';
+
+        final requestParam = {
+          "empID": empID,
+          "cmpID": cmpID,
+          "leaveID": leaveID,
+          "leaveAppID": leaveAppID,
+          "leaveApprID": leaveApprID,
+          "strDetails": leaveData,
+          "compOffDate": "",
+          "loginID": loginID,
+          "imeiNo": PreferenceUtils.getDeviceID()
+        };
+
+        final response =
+            await DioClient().post(AppURL.insertCancelLeaveURL, requestParam);
+        if (response['code'] == 200 && response['status'] == true) {
+          if (leaveApprovalId.value.isNotEmpty &&
+              leaveApprovalId.value != '0') {
+            getCancelLeaveDetailsAPI(
+              int.tryParse(leaveId.value) ?? 0,
+              int.tryParse(leaveAppId.value) ?? 0,
+              int.tryParse(leaveApprovalId.value) ?? 0,
+            );
+          }
+          //AppSnackBar.showGetXCustomSnackBar(
+          //    message: response['message'], backgroundColor: Colors.green);
+        } else {
+          AppSnackBar.showGetXCustomSnackBar(message: response['message']);
+        }
+      } catch (e) {
+        AppSnackBar.showGetXCustomSnackBar(message: "Error: \$e");
+      } finally {
+        isCancelLoading.value = false;
       }
     } else {
       AppSnackBar.showGetXCustomSnackBar(message: Constants.networkMsg);

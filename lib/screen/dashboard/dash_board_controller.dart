@@ -96,13 +96,15 @@ class DashController extends GetxController {
     "https://media.istockphoto.com/id/1774494924/photo/sister-applying-tilaka-to-her-brother-at-home-during-bhai-dooj.jpg?s=612x612&w=0&k=20&c=z2nNx7asAdglLCBIhJwy3JV2qwDVMT5AAyfxrJ5r_XU=",
   ];
 
+  int geofence_enable = 0;
+
   @override
   onInit() async{
     super.onInit();
 
     log("Now Dash Controller initialized");
-    await fetchDataInParallel();
     await getLoginDetails();
+    await fetchDataInParallel();
     await initDatabase();
 
     imeiNo = await getImeiNo() ?? "";
@@ -127,6 +129,9 @@ class DashController extends GetxController {
     userName.value = loginData['emp_Sort_Name'] ?? '';
     empID = loginData['emp_ID'].toString();
     cmpID = loginData['cmp_ID'].toString();
+
+    geofence_enable = loginData['is_Geofence_enable'] ?? 0;
+    print("geofen--${geofence_enable}");
   }
 
   @override
@@ -307,10 +312,8 @@ class DashController extends GetxController {
       String deviceName = await getDeviceName();
 
       Map<String, dynamic> param = {
-        "empID": empID,
-        "cmpID": cmpID,
-        // "empID": '28201',
-        // "cmpID": '187',
+        "empID": 0,
+        "cmpID": 0,
         "latitude": lat,
         "longitude": lon,
         "trackingDate": DateFormat('dd/MM/yyyy').format(DateTime.now()),

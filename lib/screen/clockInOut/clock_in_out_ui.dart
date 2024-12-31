@@ -344,6 +344,7 @@ class ClockInOutUi extends GetView<ClockInOutController> {
       ],
     );
   }
+
 }
 
 class FontSize {

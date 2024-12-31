@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/app/app_routes.dart';
 import 'package:ultimatix_hrms_flutter/utility/utils.dart';
+import 'package:ultimatix_hrms_flutter/widget/common_button.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_container.dart';
 
 import '../../app/app_colors.dart';
@@ -175,6 +176,14 @@ class DashboardView extends GetView<DashController> {
               const SizedBox(
                 height: 15,
               ),
+              _buildAttendanceRegulation(),
+              const SizedBox(
+                height: 15,
+              ),
+              _buildMyKPA(),
+              const SizedBox(
+                height: 15,
+              ),
             ],
           ),
         ),
@@ -237,7 +246,13 @@ class DashboardView extends GetView<DashController> {
               )),
               GestureDetector(
                 onTap: () {
-                  Get.toNamed(AppRoutes.clockInRoute);
+                  if(controller.geofence_enable == 1){
+                    Get.toNamed(AppRoutes.geofenceRoute);
+                    print("geo--${controller.geofence_enable}");
+                  } else {
+                    Get.toNamed(AppRoutes.clockInRoute);
+                    print("geo--${controller.geofence_enable}");
+                  }
                 },
                 child: Container(
                   height: 40,
@@ -259,19 +274,19 @@ class DashboardView extends GetView<DashController> {
                     child: CommonText(
                       textAlign: TextAlign.center,
                       text: controller.checkInTime.value == '--:--' &&
-                              controller.checkOutTime.value == '--:--'
+                          controller.checkOutTime.value == '--:--'
                           ? 'Check In'
                           : controller.checkInTime.value.isNotEmpty &&
-                                  controller.checkOutTime.value.isNotEmpty
-                              ? 'Check In'
-                              : 'Check Out',
+                          controller.checkOutTime.value.isNotEmpty
+                          ? 'Check In'
+                          : 'Check Out',
                       color: AppColors.colorWhite,
                       fontSize: 14,
                       fontWeight: AppFontWeight.w500,
                     ),
                   ),
                 ),
-              ),
+              )
               //SizedBox(width: 120,child: CommonButton(buttonText: 'Check In', onPressed: (){}, isLoading: false))
             ],
           ),
@@ -412,12 +427,27 @@ class DashboardView extends GetView<DashController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CommonText(
-            textAlign: TextAlign.start,
-            text: 'Upcoming Holiday & Event',
-            color: AppColors.colorDarkBlue,
-            fontSize: 16,
-            fontWeight: AppFontWeight.w500,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CommonText(
+                textAlign: TextAlign.center,
+                text: 'Announcement',
+                color: AppColors.colorDarkBlue,
+                fontSize: 16,
+                fontWeight: AppFontWeight.w500,
+              ),
+              GestureDetector(
+                onTap: () {},
+                child: CommonText(
+                  textAlign: TextAlign.center,
+                  text: 'View All',
+                  color: AppColors.purpleSwatch,
+                  fontSize: 12,
+                  fontWeight: AppFontWeight.w500,
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 10),
           CommonCarouselBanner(
@@ -461,6 +491,158 @@ class DashboardView extends GetView<DashController> {
                   : CommonGridView(
                       statusData: controller.statusData,
                     ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAttendanceRegulation() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CommonText(
+            textAlign: TextAlign.center,
+            text: 'Attendance Regulation',
+            color: AppColors.colorDarkBlue,
+            fontSize: 16,
+            fontWeight: AppFontWeight.w500,
+          ),
+          const SizedBox(height: 10),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            decoration: BoxDecoration(
+              color: AppColors.lightBackground,
+              // Gray color for unselected
+              borderRadius: BorderRadius.circular(10),
+              // boxShadow: const [
+              //   BoxShadow(
+              //     color: Color(0X1C1F370D),
+              //     blurRadius: 4.0,
+              //     spreadRadius: 1.0,
+              //     offset: Offset(0, 0),
+              //   ),
+              // ],
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CommonText(
+                        textAlign: TextAlign.center,
+                        text: 'Target',
+                        color: AppColors.colorDarkBlue,
+                        fontSize: 16,
+                        fontWeight: AppFontWeight.w400,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      CommonText(
+                        textAlign: TextAlign.center,
+                        text: '5,00,000.00',
+                        color: AppColors.colorDarkGray,
+                        fontSize: 14,
+                        fontWeight: AppFontWeight.w500,
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  width: 125,
+                  height: 40,
+                  child: CommonButton(
+                      buttonText: 'Regularize',
+                      onPressed: () {},
+                      isLoading: false),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMyKPA() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CommonText(
+            textAlign: TextAlign.center,
+            text: 'My KAP',
+            color: AppColors.colorDarkBlue,
+            fontSize: 16,
+            fontWeight: AppFontWeight.w500,
+          ),
+          const SizedBox(height: 10),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            decoration: BoxDecoration(
+              color: AppColors.lightBackground,
+              // Gray color for unselected
+              borderRadius: BorderRadius.circular(10),
+              // boxShadow: const [
+              //   BoxShadow(
+              //     color: Color(0X1C1F370D),
+              //     blurRadius: 4.0,
+              //     spreadRadius: 1.0,
+              //     offset: Offset(0, 0),
+              //   ),
+              // ],
+            ),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CommonText(
+                      textAlign: TextAlign.center,
+                      text: 'Target',
+                      color: AppColors.colorDarkBlue,
+                      fontSize: 16,
+                      fontWeight: AppFontWeight.w400,
+                    ),
+                    CommonText(
+                      textAlign: TextAlign.center,
+                      text: '5,00,000.00',
+                      color: AppColors.colorDarkGray,
+                      fontSize: 14,
+                      fontWeight: AppFontWeight.w500,
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CommonText(
+                      textAlign: TextAlign.center,
+                      text: 'Actual',
+                      color: AppColors.colorDarkBlue,
+                      fontSize: 16,
+                      fontWeight: AppFontWeight.w400,
+                    ),
+                    CommonText(
+                      textAlign: TextAlign.center,
+                      text: '2,00,000.00',
+                      color: AppColors.colorDarkGray,
+                      fontSize: 14,
+                      fontWeight: AppFontWeight.w500,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );

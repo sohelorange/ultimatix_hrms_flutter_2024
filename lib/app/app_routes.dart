@@ -15,14 +15,21 @@ import 'package:ultimatix_hrms_flutter/screen/dashboard/notification_announcemen
 import 'package:ultimatix_hrms_flutter/screen/dashboard/notification_announcement/notification_announcement_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/explore/explore_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/explore/explore_view.dart';
-import 'package:ultimatix_hrms_flutter/screen/leaveApplication/addLeave/addLeave_binding.dart';
-import 'package:ultimatix_hrms_flutter/screen/leaveApplication/addLeave/addLeave_view.dart';
-import 'package:ultimatix_hrms_flutter/screen/leaveApplication/leave_app_view.dart';
-import 'package:ultimatix_hrms_flutter/screen/leaveApplication/leave_application_details/leave_application_details_binding.dart';
-import 'package:ultimatix_hrms_flutter/screen/leaveApplication/leave_application_details/leave_application_details_view.dart';
-import 'package:ultimatix_hrms_flutter/screen/leaveApplication/leave_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/leave/add_leave/add_leave_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/leave/add_leave/add_leave_view.dart';
+import 'package:ultimatix_hrms_flutter/screen/leave/leave_app_view.dart';
+import 'package:ultimatix_hrms_flutter/screen/leave/leave_application_details/leave_application_details_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/leave/leave_application_details/leave_application_details_view.dart';
+import 'package:ultimatix_hrms_flutter/screen/leave/leave_approval_status/leave_approval_status_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/leave/leave_approval_status/leave_approval_status_view.dart';
+import 'package:ultimatix_hrms_flutter/screen/leave/leave_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/geofence/geofence_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/geofence/geofence_view.dart';
+
 import 'package:ultimatix_hrms_flutter/screen/liveTracking/live_tracking_bind.dart';
 import 'package:ultimatix_hrms_flutter/screen/liveTracking/live_tracking_ui.dart';
+import 'package:ultimatix_hrms_flutter/screen/profile/profile_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/profile/profile_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/settings/change_password/change_password_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/settings/change_password/change_password_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/settings/feedback/feedback_binding.dart';
@@ -58,20 +65,25 @@ class AppRoutes {
   //static const geoFencingRoute = '/geo_fencing_route';
   static const dashBoardRoute = '/dash_board_route';
   static const drawerRoute = '/drawer_route';
-  static const notificationAnnouncementRoute =
-      '/notification_announcement_route';
+  static const notificationAnnouncementRoute = '/notification_announcement_route';
 
   //end region
+
+  //profile region
+  static const profileRoute = '/profile_route';
+  // end region
 
   //leave region
   static const leaveApplicationRoute = '/leave_application_route';
   static const leaveRequestDetailRoute = '/leave_request_detail_route';
   static const addLeaveRoute = '/add_leave_route';
+  static const leaveApprovalRoute = '/leave__approval_route';
 
   //end region
 
   //clock in region
   static const clockInRoute = '/clock_in_route';
+  static const geofenceRoute = '/geofence_route';
 
   //end region
 
@@ -148,6 +160,16 @@ class AppRoutes {
       page: () => const ClockInOutUi(),
     ),
     GetPage(
+      name: AppRoutes.profileRoute,
+      binding: ProfileBinding(),
+      page: () => const ProfileView(),
+    ),
+    GetPage(
+      name: AppRoutes.geofenceRoute,
+      binding: GeofenceBinding(),
+      page: () => const GeofenceView(),
+    ),
+    GetPage(
       name: AppRoutes.liveTrackingRoute,
       binding: LiveTrackingBinding(),
       page: () => const LiveTrackingUi(),
@@ -194,13 +216,18 @@ class AppRoutes {
     ),
     GetPage(
       name: AppRoutes.addLeaveRoute,
-      binding: AddleaveBinding(),
-      page: () => const AddleaveView(),
+      binding: AddLeaveBinding(),
+      page: () => const AddLeaveView(),
     ),
     GetPage(
       name: AppRoutes.leaveRequestDetailRoute,
       binding: LeaveApplicationDetailsBinding(),
       page: () => const LeaveApplicationDetailsView(),
+    ),
+    GetPage(
+      name: AppRoutes.leaveApprovalRoute,
+      binding: LeaveApprovalStatusBinding(),
+      page: () => const LeaveApprovalStatusView(),
     ),
     GetPage(
       name: AppRoutes.notificationAnnouncementRoute,

@@ -56,7 +56,6 @@ class NotificationAnnouncementController extends GetxController {
         AppSnackBar.showGetXCustomSnackBar(message: Constants.networkMsg);
       }
     } catch (e) {
-      print(e);
       AppSnackBar.showGetXCustomSnackBar(message: e.toString());
     } finally {
       isLoading(false);

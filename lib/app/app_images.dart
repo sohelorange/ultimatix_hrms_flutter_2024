@@ -157,6 +157,12 @@ class AppImages {
       'assets/applicationIcon/dashboard/dash_week_off_icon.svg';
   static const String dashLogoutIcon =
       'assets/applicationIcon/dashboard/dash_logout_icon.svg';
+  static const String dashNewYearBanner =
+      'assets/applicationIcon/dashboard/dash_new_year_banner.svg';
+  static const String dashBirthdayBanner =
+      'assets/applicationIcon/dashboard/dash_birthday_banner.svg';
+  static const String dashOrgBanner =
+      'assets/applicationIcon/dashboard/dash_org_banner.svg';
 
   //end region
 
@@ -213,8 +219,9 @@ class AppImages {
       'assets/applicationIcon/drawer/drawer_policy_icon.svg';
   static const String drawerTeamAttendanceIcon =
       'assets/applicationIcon/drawer/drawer_team_attendance_icon.svg';
-  static const String drawerSettingIcon =
-      'assets/applicationIcon/drawer/drawer_setting_icon.svg';
+  static const String drawerSettingIcon = 'assets/applicationIcon/drawer/drawer_setting_icon.svg';
+  static const String draweredit = 'assets/applicationIcon/drawer/drawer_edit.png';
+
 
   //end region
 
@@ -225,6 +232,7 @@ class AppImages {
       'assets/applicationIcon/settings/settings_call_icon.svg';
   static const String settingsEmailIcon =
       'assets/applicationIcon/settings/settings_email_icon.svg';
+
   //end region
   //region feedback icon
   static const String feedbackTerribleIcon =
@@ -237,6 +245,7 @@ class AppImages {
       'assets/applicationIcon/feedback/feedback_good_icon.svg';
   static const String feedbackGreatIcon =
       'assets/applicationIcon/feedback/feedback_great_icon.svg';
+
   //end region
   // Drawer Icons
   static const String icDrawerHome = 'assets/icon/ic_drawer_home.png';
@@ -342,7 +351,8 @@ class AppImages {
   static const String icApproveReg = 'assets/icon/attendance/svg_approve.svg';
   static const String icCancelReg = 'assets/icon/attendance/svg_cancel.svg';
   static const String svgAbsentReg = 'assets/icon/attendance/svg_absent.svg';
-  static const String svgAttendanceLocation = "assets/icon/attendance/svg_team_loc.svg";
+  static const String svgAttendanceLocation =
+      "assets/icon/attendance/svg_team_loc.svg";
 
   /*User Attendance*/
   static const String icDesignation = 'assets/icon/attendance/svg_designation.svg';
@@ -364,6 +374,11 @@ class AppImages {
   static const String gifLogo = 'assets/icon/gif_otl.gif';
 
   //LeaveApplication icon
+  static const String leaveApprovalIcon =
+      'assets/applicationIcon/leave/leave_approval_icon.svg';
+
+  static const String leaveCalendarIcon =
+      'assets/applicationIcon/leave/leave_calendar_icon.svg';
   static const String icadd2 = 'assets/icon/leaveApplication/ic_add.png';
   static const String icarrowback =
       'assets/icon/leaveApplication/ic_arrowback.png';
@@ -373,4 +388,15 @@ class AppImages {
       'assets/icon/leaveApplication/ic_browsefile.png';
   static const String icavtar = 'assets/icon/leaveApplication/ic_avtar.png';
   static const String icedit = 'assets/icon/leaveApplication/ic_edit.png';
+
+  //region error icon
+  static const String svgNoData = 'assets/images/svg_no_data_found.svg';
+//end region
+
+
+//profile icon
+  static const String icprofile2 = 'assets/icon/profileicon/ic_profile.png';
+  static const String iccall = 'assets/icon/profileicon/ic_call.png';
+  static const String iccalander = 'assets/icon/profileicon/ic_calander.png';
+  static const String icaadhar = 'assets/icon/profileicon/ic_aadhar.png';
 }

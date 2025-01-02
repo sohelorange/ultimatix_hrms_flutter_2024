@@ -25,6 +25,15 @@ class PreferenceUtils {
     return _prefsInstance!.setBool(Constants.isThemePref, isTheme);
   }
 
+  static bool getIsClocking() {
+    return _prefsInstance?.getBool(Constants.isClockingPref) ?? false;
+  }
+
+  static Future<bool> setIsClocking(bool isClockingPref) {
+    ArgumentError.checkNotNull(isClockingPref, Constants.isClockingPref);
+    return _prefsInstance!.setBool(Constants.isClockingPref, isClockingPref);
+  }
+
   static String getFCMId() {
     return _prefsInstance?.getString(Constants.fcmIdPref) ?? '';
   }

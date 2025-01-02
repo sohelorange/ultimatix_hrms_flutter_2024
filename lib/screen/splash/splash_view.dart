@@ -57,15 +57,15 @@ class SplashView extends GetView<SplashController> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center, // Center content horizontally
           children: [
-            const CommonAppImage(
-              imagePath: AppImages.icAppLogo,
-              height: 30,
-              width: 30,
-              fit: BoxFit.fill,
-            ),
-            const SizedBox(width: 10), // Add space between image and text
+            // const CommonAppImage(
+            //   imagePath: AppImages.icAppLogo,
+            //   height: 30,
+            //   width: 30,
+            //   fit: BoxFit.fill,
+            // ),
+            // const SizedBox(width: 10), // Add space between image and text
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CommonText(

@@ -99,7 +99,7 @@ class CommonGridView extends StatelessWidget {
                         CommonText(
                           textAlign: TextAlign.start,
                           text: statusData[index]['name'],
-                          color: AppColors.color6B6D7A,
+                          color: AppColors.colorDarkBlue,
                           fontSize: 16,
                           fontWeight: AppFontWeight.w400,
                         ),
@@ -107,7 +107,7 @@ class CommonGridView extends StatelessWidget {
                         CommonText(
                           textAlign: TextAlign.start,
                           text: statusData[index]['count'].toString(),
-                          color: AppColors.colorDarkBlue,
+                          color: AppColors.colorDarkBlue.withOpacity(0.5),
                           fontSize: 12,
                           fontWeight: AppFontWeight.w400,
                         ),

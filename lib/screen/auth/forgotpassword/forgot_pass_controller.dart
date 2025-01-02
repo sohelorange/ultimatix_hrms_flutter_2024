@@ -119,7 +119,7 @@ class ForgotPassController extends GetxController {
   void verifyOTPValidationWithAPI() {
     if (verifyOTP.value == 0) {
       AppSnackBar.showGetXCustomSnackBar(
-          message: 'Please enter 6 digit passcode.');
+          message: 'Please enter 4 digit passcode.');
     } else {
       verifyPass(forgotPassController.value.text, verifyOTP.value);
     }

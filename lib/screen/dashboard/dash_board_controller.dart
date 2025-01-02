@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:ui';
 
 import 'package:battery_plus/battery_plus.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:ultimatix_hrms_flutter/database/database_helper.dart';
 import 'package:ultimatix_hrms_flutter/database/ultimatix_dao.dart';
 import 'package:ultimatix_hrms_flutter/database/ultimatix_db.dart';
-import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 
 import '../../api/dio_client.dart';
 import '../../app/app_colors.dart';
@@ -24,7 +23,6 @@ import '../../app/app_images.dart';
 import '../../app/app_routes.dart';
 import '../../app/app_snack_bar.dart';
 import '../../app/app_url.dart';
-import '../../database/clock_in_out_entity.dart';
 import '../../database/clock_response.dart';
 import '../../database/location_entity.dart';
 import '../../utility/constants.dart';
@@ -32,34 +30,20 @@ import '../../utility/network.dart';
 import '../../utility/preference_utils.dart';
 import '../../utility/utils.dart';
 
-
 class DashController extends GetxController {
+  late UltimatixDao localDao;
+  late UltimatixDb database;
+
+  RxBool isLoading = false.obs;
+  RxBool isViewMore = false.obs;
 
   RxString address = ''.obs;
-
-  RxBool punchIn = false.obs;
-
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   RxString checkInTime = "--:--".obs;
   RxString checkOutTime = "--:--".obs;
   RxString workingHours = "00:00".obs;
   RxString nDate = "Friday,Oct 15,2024".obs;
 
   RxInt selectedIndex = 0.obs;
-  final List<Widget> pages = [];
-
-  RxString textPosition = "".obs;
-  RxString txtCheckInOut = "".obs;
-
-  late StreamSubscription<Position> positionStream;
-
-  RxBool isLoading = false.obs;
-
-  String? token = "";
-
-  late UltimatixDao localDao;
-  late UltimatixDb database;
 
   RxString presentDayLbl = "Present".obs;
   RxString presentDayValue = "0".obs;
@@ -75,34 +59,60 @@ class DashController extends GetxController {
   RxString weekOffDayValue = "0".obs;
   RxString todayDayDate = "".obs;
 
-  late Timer? timer1;
-
-  final Battery _battery = Battery();
-  String imeiNo = "";
-
-  RxString companyImageUrl = "".obs;
-
   RxString currentMonthYear = "".obs;
   RxString userImageUrl = "".obs;
   RxString cmpImageUrl = "".obs;
   RxString userName = "".obs;
-  String empID = "";
-  String cmpID = "";
-  RxList<Map<String, dynamic>> statusData = <Map<String, dynamic>>[].obs;
+  RxString empID = "".obs;
+  RxString cmpID = "".obs;
 
-  final List<String> listEvent = [
+  int isGeofenceEnable = 0;
+
+  RxList<Map<String, dynamic>> attendanceStatusData =
+      <Map<String, dynamic>>[].obs;
+
+  final List<String> bannerListData = [
     "https://www.shutterstock.com/image-vector/happy-diwali-celebration-background-festival-600nw-2523970115.jpg",
     "https://t3.ftcdn.net/jpg/08/95/86/82/360_F_895868299_z8aR16uHjnkrtnUkzohVQ68m26JBNt4f.jpg",
     "https://media.istockphoto.com/id/1774494924/photo/sister-applying-tilaka-to-her-brother-at-home-during-bhai-dooj.jpg?s=612x612&w=0&k=20&c=z2nNx7asAdglLCBIhJwy3JV2qwDVMT5AAyfxrJ5r_XU=",
   ];
 
-  int geofence_enable = 0;
+  //Tracking Related Field
+  late Timer? timer1;
+  final Battery _battery = Battery();
+  List<List<double>> coordinates = [];
+  List<LocationEntity> localGeoLocationList = [];
+  RxString textPosition = "".obs;
+  String city = "";
+  String area = "";
+  String imeiNo = "";
+
+  ValueNotifier<bool> checkInOutStatus = ValueNotifier<bool>(false);
+
+  void onBottomTabSelected(int index) {
+    selectedIndex.value = index;
+
+    switch (index) {
+      case 0:
+        Get.offAllNamed(AppRoutes.dashBoardRoute);
+        break;
+      case 1:
+        Get.toNamed(AppRoutes.exploreTabRoute);
+        break;
+      case 2:
+        Get.toNamed(AppRoutes.attendanceMainRoute);
+        break;
+      case 3:
+        Get.toNamed(AppRoutes.leaveApplicationRoute);
+        break;
+    }
+  }
 
   @override
-  onInit() async{
+  onInit() async {
     super.onInit();
+    checkInOutStatus.value = PreferenceUtils.getIsClocking();
 
-    log("Now Dash Controller initialized");
     await getLoginDetails();
     await fetchDataInParallel();
     await initDatabase();
@@ -110,28 +120,8 @@ class DashController extends GetxController {
     imeiNo = await getImeiNo() ?? "";
     todayDayDate.value = getTodayFormattedDate();
 
-    currentMonthYear.value = "${DateFormat('MMMM').format(DateTime.now())} ${DateTime.now().year} Attendance";
-    /*initializeService();*/
-  }
-
-  String getTodayFormattedDate() {
-    DateTime now = DateTime.now();
-    //String formattedDate = DateFormat("E, MMM d, yyyy").format(now);//Short Name Day
-    String formattedDate =
-    DateFormat("EEEE, MMM d, yyyy").format(now); // Full Name Day
-    return formattedDate;
-  }
-
-  Future<void> getLoginDetails() async{
-    Map<String, dynamic> loginData = PreferenceUtils.getLoginDetails();
-    userImageUrl.value = loginData['image_Name'] ?? '';
-    cmpImageUrl.value = loginData['cmp_Logo'] ?? '';
-    userName.value = loginData['emp_Sort_Name'] ?? '';
-    empID = loginData['emp_ID'].toString();
-    cmpID = loginData['cmp_ID'].toString();
-
-    geofence_enable = loginData['is_Geofence_enable'] ?? 0;
-    print("geofen--${geofence_enable}");
+    currentMonthYear.value =
+        "${DateFormat('MMMM').format(DateTime.now())} ${DateTime.now().year} Attendance";
   }
 
   @override
@@ -140,6 +130,24 @@ class DashController extends GetxController {
     super.dispose();
   }
 
+  //TODO: dashboard normal field
+  String getTodayFormattedDate() {
+    DateTime now = DateTime.now();
+    //String formattedDate = DateFormat("E, MMM d, yyyy").format(now);//Short Name Day
+    String formattedDate =
+        DateFormat("EEEE, MMM d, yyyy").format(now); // Full Name Day
+    return formattedDate;
+  }
+
+  Future<void> getLoginDetails() async {
+    Map<String, dynamic> loginData = PreferenceUtils.getLoginDetails();
+    userImageUrl.value = loginData['image_Name'] ?? '';
+    cmpImageUrl.value = loginData['cmp_Logo'] ?? '';
+    userName.value = loginData['emp_Sort_Name'] ?? '';
+    empID.value = loginData['emp_ID'].toString();
+    cmpID.value = loginData['cmp_ID'].toString();
+    isGeofenceEnable = loginData['is_Geofence_enable'] ?? 0;
+  }
 
   Future<void> fetchDataInParallel() async {
     if (await Network.isConnected()) {
@@ -188,7 +196,7 @@ class DashController extends GetxController {
               onDutyDayValue.value.isNotEmpty &&
               holidayDayValue.value.isNotEmpty &&
               weekOffDayValue.value.isNotEmpty) {
-            statusData.value = [
+            attendanceStatusData.value = [
               {
                 'color': const Color(0XFF34A853),
                 'icon': AppImages.dashPresentIcon,
@@ -240,7 +248,6 @@ class DashController extends GetxController {
 
   Future<void> fetchDashboardPresentDetailsAPICall() async {
     try {
-
       var response = await DioClient().getQueryParam(AppURL.clockInOutTimeURL);
 
       if (response['code'] == 200 && response['status'] == true) {
@@ -266,7 +273,7 @@ class DashController extends GetxController {
 
             // Format duration as hh:mm
             workingHours.value =
-            '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}';
+                '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}';
           } else {
             // Default to '00:00' if First_In_Time is null
             workingHours.value = '00:00';
@@ -275,17 +282,21 @@ class DashController extends GetxController {
           // Handle First_In_Time Display
           checkInTime.value = firstInTime.isNotEmpty
               ? AppDatePicker.convertDateTimeFormat(
-              firstInTime, Utils.commonUTCDateFormat, 'hh:mm a')
+                  firstInTime, Utils.commonUTCDateFormat, 'hh:mm a')
               : 'N/A';
 
           // Handle Last_Out_Time Display
           checkOutTime.value = lastOutTime.isNotEmpty
               ? AppDatePicker.convertDateTimeFormat(
-              lastOutTime, Utils.commonUTCDateFormat, 'hh:mm a')
+                  lastOutTime, Utils.commonUTCDateFormat, 'hh:mm a')
               : 'N/A';
         }
       } else {
-        AppSnackBar.showGetXCustomSnackBar(message: response['message']);
+        if (response['code'] != 204 && response['status'] == false) {
+          AppSnackBar.showGetXCustomSnackBar(message: response['message']);
+        } else {
+          //Empty
+        }
       }
     } catch (e) {
       if (kDebugMode) {
@@ -294,11 +305,141 @@ class DashController extends GetxController {
     }
   }
 
+  void setDataToUi(ClockResponse response) {
+    checkInTime.value = extractTime(response.data?.elementAt(0).firstInTime);
+    checkOutTime.value = extractTime(response.data?.elementAt(0).lastOutTime);
+    workingHours.value = response.data!.elementAt(0).duration!.trim();
+    nDate.value = extractDate(response.data!.elementAt(0).forDate);
+    isLoading.value = false;
+  }
 
-  Future<String> getBatteryPercentage() async{
-    log("get battery percentage");
+  String extractTime(String? firstInTime) {
+    if (firstInTime != null) {
+      String dateTimeString = firstInTime;
+      DateTime dateTime = DateTime.parse(dateTimeString);
+      String timeString = dateTime.toLocal().toString().split(' ')[1];
+      return timeString.replaceAll('.000', '');
+    } else {
+      return "--:--";
+    }
+  }
+
+  String extractDate(String? date) {
+    if (date != null) {
+      String dateTimeString = date;
+      DateTime dateTime = DateTime.parse(dateTimeString);
+      return DateFormat('EEE, MMM dd, yyyy').format(dateTime);
+    } else {
+      return "00:00";
+    }
+  }
+
+  //TODO: dashboard use for live tracking field
+  Future<void> initDatabase() async {
+    localDao = await DatabaseHelper.localDao;
+    await getAllLocationRecords().then(
+      (value) {
+        syncAllGeoLocationRecord();
+      },
+    );
+    await initializeService();
+  }
+
+  closeDb() async {
+    await database.close();
+  }
+
+  Future<String> getBatteryPercentage() async {
     final level = await _battery.batteryLevel;
     return level.toString();
+  }
+
+  Future<void> handleLocationPermission() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      AppSnackBar.showGetXCustomSnackBar(
+          message: 'Location permissions are denied');
+      permission = await Geolocator.requestPermission();
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      AppSnackBar.showGetXCustomSnackBar(
+          message:
+              'Location permissions are permanently denied, we cannot request permissions.');
+      permission = await Geolocator.requestPermission();
+    }
+  }
+
+  Future<void> initializeService() async {
+    await checkGpsEnabled();
+    final service = FlutterBackgroundService();
+
+    await service.configure(
+        iosConfiguration: IosConfiguration(),
+        androidConfiguration: AndroidConfiguration(
+            onStart: onStartOne,
+            isForegroundMode: true,
+            autoStartOnBoot: true));
+
+    await service.startService();
+  }
+
+  Future<void> checkGpsEnabled() async {
+    bool gpsEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!gpsEnabled) {
+      Geolocator.openLocationSettings();
+    }
+    checkLocationPermission();
+  }
+
+  Future<void> checkLocationPermission() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied ||
+        permission != LocationPermission.always) {
+      AppSnackBar.showGetXCustomSnackBar(
+          message: 'Allow location all time in permission');
+      openAppSettings();
+    }
+  }
+
+  Future<void> getAllLocationRecords() async {
+    if (localGeoLocationList.isNotEmpty) {
+      localGeoLocationList.clear();
+    }
+    localGeoLocationList.addAll(await localDao.getAllRecordsFromDb());
+  }
+
+  void syncAllGeoLocationRecord() async {
+    if (localGeoLocationList.isNotEmpty) {
+      for (var element in localGeoLocationList) {
+        addGeoLocationByAPICall(element.latitude, element.longitude, 0.0);
+      }
+    }
+  }
+
+  Future<void> getAddress(double latitude, double longitude) async {
+    try {
+      List<Placemark> address =
+          await placemarkFromCoordinates(latitude, longitude);
+      Placemark place = address[0];
+      city = place.locality.toString();
+      area = place.subLocality.toString();
+      textPosition.value =
+          "${place.name}, ${place.street}, ${place.subLocality}, ${place.locality}, ${place.administrativeArea}, ${place.country}, ${place.postalCode}";
+    } catch (e) {
+      e.printError();
+    }
+  }
+
+  Future<String> getDeviceName() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    return androidInfo.model.toString();
+  }
+
+  Future<String?> getImeiNo() async {
+    return ""; /*await UniqueIdentifier.serial;*/
   }
 
   Future<void> addGeoLocationByAPICall(
@@ -327,186 +468,36 @@ class DashController extends GetxController {
       };
 
       await DioClient().post(AppURL.addLocations, param).then(
-            (value) {
-              if(value!=null) {
-                Map<String, dynamic> jsonResponse = value;
-                if (jsonResponse['code'] == 200) {
-                  log("successfully data stored for location");
-                } else if (jsonResponse['code'] == 401) {
-                  AppSnackBar.showGetXCustomSnackBar(
-                      message: '${jsonResponse['message']}',
-                      backgroundColor: AppColors.colorF45A42);
-                } else {
-                  debugPrint("Other status code");
-                }
-              }
+        (value) {
+          if (value != null) {
+            Map<String, dynamic> jsonResponse = value;
+            if (jsonResponse['code'] == 200) {
+              log("successfully data stored for location");
+            } else if (jsonResponse['code'] == 401) {
+              AppSnackBar.showGetXCustomSnackBar(
+                  message: '${jsonResponse['message']}',
+                  backgroundColor: AppColors.colorF45A42);
+            } else {
+              debugPrint("Other status code");
+            }
+          }
         },
       );
     } else {
       AppSnackBar.showGetXCustomSnackBar(message: Constants.networkMsg);
     }
   }
-
-  void setDataToUi(ClockResponse response) {
-    checkInTime.value = extractTime(response.data?.elementAt(0).firstInTime);
-    checkOutTime.value = extractTime(response.data?.elementAt(0).lastOutTime);
-    workingHours.value = response.data!.elementAt(0).duration!.trim();
-    nDate.value = extractDate(response.data!.elementAt(0).forDate);
-    isLoading.value = false;
-  }
-
-  String extractTime(String? firstInTime) {
-    if(firstInTime!=null){
-      String dateTimeString = firstInTime;
-      DateTime dateTime = DateTime.parse(dateTimeString);
-      String timeString =  dateTime.toLocal().toString().split(' ')[1];
-      return timeString.replaceAll('.000', '');
-    }else{return "--:--";}
-  }
-
-  String extractDate(String? date){
-    if(date!=null) {
-      String dateTimeString = date;
-      DateTime dateTime = DateTime.parse(dateTimeString);
-      return DateFormat('EEE, MMM dd, yyyy').format(dateTime);
-    }else{
-      return "00:00";
-    }
-  }
-
-  Future<void> initDatabase() async{
-    /*database = await $FloorUltimatixDb.databaseBuilder('ultimatix_db.db').build();
-    localDao = database.localDao;*/
-
-    localDao = await DatabaseHelper.localDao;
-    await getAllLocationRecords().then((value) {
-      syncAllGeoLocationRecord();
-    },);
-
-    await initializeService();
-  }
-
-  closeDb() async{
-    await database.close();
-  }
-
-  Future<void> handleLocationPermission() async {
-    LocationPermission permission = await Geolocator.checkPermission();
-
-    if (permission == LocationPermission.denied) {
-      AppSnackBar.showGetXCustomSnackBar(
-          message: 'Location permissions are denied');
-      permission = await Geolocator.requestPermission();
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      AppSnackBar.showGetXCustomSnackBar(
-          message:
-          'Location permissions are permanently denied, we cannot request permissions.');
-      permission = await Geolocator.requestPermission();
-    }
-  }
-
-  Future<void> initializeService() async{
-    await checkGpsEnabled();
-    final service = FlutterBackgroundService();
-
-    await service.configure(
-        iosConfiguration: IosConfiguration(),
-        androidConfiguration: AndroidConfiguration(onStart: onStartOne, isForegroundMode: true, autoStartOnBoot: true)
-    );
-
-    await service.startService();
-  }
-
-  Future<void> checkGpsEnabled() async{
-    bool gpsEnabled = await Geolocator.isLocationServiceEnabled();
-    if(!gpsEnabled){
-      Geolocator.openLocationSettings();
-    }
-    checkLocationPermission();
-  }
-
-  Future<void> checkLocationPermission() async{
-    LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied || permission != LocationPermission.always) {
-      AppSnackBar.showGetXCustomSnackBar(
-          message: 'Allow location all time in permission');
-      openAppSettings();
-    }
-  }
-
-  List<List<double>> coordinates = [];
-  List<LocationEntity> localGeoLocationList = [];
-
-  Future<void> getAllLocationRecords() async{
-    if(localGeoLocationList.isNotEmpty){localGeoLocationList.clear();}
-    localGeoLocationList.addAll(await localDao.getAllRecordsFromDb());
-  }
-
-  void syncAllGeoLocationRecord() async{
-    if(localGeoLocationList.isNotEmpty) {
-      for (var element in localGeoLocationList) {
-        addGeoLocationByAPICall(element.latitude, element.longitude,0.0);
-      }
-    }
-  }
-
-  String city = "";
-  String area = "";
-
-  Future<void> getAddress(double latitude,double longitude) async{
-    try {
-      List<Placemark> address = await placemarkFromCoordinates(
-          latitude, longitude);
-      Placemark place = address[0];
-      city = place.locality.toString();
-      area = place.subLocality.toString();
-      textPosition.value =
-      "${place.name}, ${place.street}, ${place.subLocality}, ${place.locality}, ${place
-          .administrativeArea}, ${place.country}, ${place.postalCode}";
-    }catch(e){
-      e.printError();
-    }
-  }
-
-  Future<String> getDeviceName() async{
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-    return androidInfo.model.toString();
-  }
-
-  Future<String?> getImeiNo() async{
-    return "";/*await UniqueIdentifier.serial;*/
-  }
-
-  void onBottomTabSelected(int index) {
-    selectedIndex.value = index;
-
-    switch (index) {
-      case 0:
-        Get.offAllNamed(AppRoutes.dashBoardRoute);
-        break;
-      case 1:
-        Get.toNamed(AppRoutes.exploreTabRoute);
-        break;
-      case 2:
-        Get.toNamed(AppRoutes.attendanceMainRoute);
-        break;
-      case 3:
-        Get.toNamed(AppRoutes.leaveApplicationRoute);
-        break;
-    }
-  }
 }
 
 final _viewModelController = Get.put(DashController());
+
 late Timer timer;
 
 @pragma('vm:entry-point')
 void onStartOne(ServiceInstance service) async {
-
   log("OnStart Method");
+  DartPluginRegistrant.ensureInitialized();
+
   /*_viewModelController.initDatabase();*/
 
   if (service is AndroidServiceInstance) {
@@ -529,10 +520,11 @@ void onStartOne(ServiceInstance service) async {
     timer = Timer.periodic(const Duration(seconds: 30), (timer) async {
       log("Service running****");
       if (await service.isForegroundService()) {
-        service.setForegroundNotificationInfo(title: "Locate ME", content: "Updated at${DateTime.now()}");
-        try{
+        service.setForegroundNotificationInfo(
+            title: "Locate ME", content: "Updated at${DateTime.now()}");
+        try {
           insertDataToStorage();
-        }catch(e){
+        } catch (e) {
           e.printError(info: "Getting Error while collecting locations");
         }
       }
@@ -540,22 +532,40 @@ void onStartOne(ServiceInstance service) async {
   }
 }
 
-void insertDataToStorage() async{
+void insertDataToStorage() async {
   LocationPermission permission = await Geolocator.checkPermission();
   bool gpsEnabled = await Geolocator.isLocationServiceEnabled();
 
-  if(permission != LocationPermission.always || !gpsEnabled){
+  if (permission != LocationPermission.always || !gpsEnabled) {
     _viewModelController.checkGpsEnabled();
-  }else{
-    if(await Network.isConnected()){
-      await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best).then((value) {
-        _viewModelController.addGeoLocationByAPICall(value.latitude,value.longitude,value.accuracy);
-      },);
-    }else{
-      await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best).then((value) {
-        _viewModelController.localDao.insertLocations(LocationEntity(latitude: value.latitude, longitude: value.longitude, dateTime: DateTime.now().toString(), gpsOff: false));
-      },);
+  } else {
+    if (await Network.isConnected()) {
+      await Geolocator.getCurrentPosition(
+          locationSettings: const LocationSettings(
+        accuracy: LocationAccuracy.best, // Use LocationSettings for accuracy
+        //distanceFilter:
+        //100, // Optional: minimum distance (in meters) to move before updates
+      )).then(
+        (value) {
+          _viewModelController.addGeoLocationByAPICall(
+              value.latitude, value.longitude, value.accuracy);
+        },
+      );
+    } else {
+      await Geolocator.getCurrentPosition(
+          locationSettings: const LocationSettings(
+        accuracy: LocationAccuracy.best, // Use LocationSettings for accuracy
+        //distanceFilter:
+        //100, // Optional: minimum distance (in meters) to move before updates
+      )).then(
+        (value) {
+          _viewModelController.localDao.insertLocations(LocationEntity(
+              latitude: value.latitude,
+              longitude: value.longitude,
+              dateTime: DateTime.now().toString(),
+              gpsOff: false));
+        },
+      );
     }
   }
 }
-

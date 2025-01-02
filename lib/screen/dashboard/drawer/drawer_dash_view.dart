@@ -31,7 +31,7 @@ class DrawerDashView extends GetView<DrawerDashController> {
             onTap: () {
               Get.toNamed(AppRoutes.profileRoute);
             },
-            child: CommonAppImage(
+            child:  const CommonAppImage(
               imagePath:AppImages.draweredit,
               height: 20,
               width: 20,

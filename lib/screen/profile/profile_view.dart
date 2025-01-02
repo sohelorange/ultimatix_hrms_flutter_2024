@@ -47,8 +47,6 @@ class ProfileView extends GetView<ProfileController> {
                   height:
                   Utils.getScreenHeight(context: context) / 3.25,
                   child: Center(child: Utils.commonCircularProgress()))
-              // : controller.profilemodelResponse.value.data == null
-              //     ? Text('No data found')
                   : Scaffold(
                 appBar: AppBar(
                   surfaceTintColor: Colors.transparent,
@@ -455,4 +453,5 @@ class ProfileView extends GetView<ProfileController> {
       ],
     );
   }
+
 }

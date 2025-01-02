@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:floor/floor.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 import 'package:ultimatix_hrms_flutter/database/ultimatix_dao.dart';

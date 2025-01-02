@@ -38,6 +38,8 @@ class LiveTrackingController extends GetxController{
 
   dynamic argumentData = Get.arguments;
 
+  RxString nDate = DateFormat('yyyy-MM-dd').format(DateTime.now()).toString().obs;
+
   @override
   void onInit() async{
 

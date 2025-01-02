@@ -150,12 +150,12 @@ class RegularizeApplyController extends GetxController{
               Match? match = regExp.firstMatch(respMessage);
 
               if (match != null) {
+                Get.find<UserAttendanceController>().callUserAttendanceRegularizationDetails(DateTime.now().year,DateTime.now().month);
                 String attendanceMessage = match.group(1) ?? '';
-                Get.find<UserAttendanceController>().callUserAttendanceRegularizationDetails();
                 Get.back();
                 AppSnackBar.showGetXCustomSnackBar(message:attendanceMessage);
               }else{
-                Get.find<UserAttendanceController>().callUserAttendanceRegularizationDetails();
+                Get.find<UserAttendanceController>().callUserAttendanceRegularizationDetails(DateTime.now().year,DateTime.now().month);
                 Get.back();
                 AppSnackBar.showGetXCustomSnackBar(message:jsonResponse["data"]);
               }

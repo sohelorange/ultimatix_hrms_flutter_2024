@@ -7,7 +7,9 @@ import '../../app/app_colors.dart';
 import '../../app/app_font_weight.dart';
 import '../../app/app_images.dart';
 import '../../utility/utils.dart';
+import '../../widget/common_app_bar.dart';
 import '../../widget/common_app_image.dart';
+import '../../widget/common_container.dart';
 import '../../widget/common_text.dart';
 
 class ClockInOutUi extends GetView<ClockInOutController> {
@@ -15,106 +17,21 @@ class ClockInOutUi extends GetView<ClockInOutController> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [AppColors.colorAppBars, AppColors.colorAppBars], // Gradient colors
-          begin: Alignment.bottomLeft,
-          end: Alignment.topRight,
-          stops: [0.8, 0.9], // Stops for the gradient colors
-          tileMode: TileMode.clamp,
-        ),
+    return SafeArea(
+      child: Scaffold(
+      appBar: const CommonAppBar(
+        title: 'Regularization Approvals',
       ),
-      child: AnnotatedRegion(
-        value: const SystemUiOverlayStyle(
-          statusBarBrightness: Brightness.light,
-          statusBarIconBrightness: Brightness.dark,
-          statusBarColor: Colors.transparent,
-        ),
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: GestureDetector(
-            onTap: () {
-              Utils.closeKeyboard(context);
-            },
-            child: SafeArea(
-              child: Obx(
-                    ()=> IgnorePointer(
-                  ignoring: controller.isLoading.isTrue,
-                  child: Stack(
-                    children: [
-                      Scaffold(
-                        appBar: AppBar(
-                          surfaceTintColor: Colors.transparent,
-                          elevation: 0,
-                          flexibleSpace: Container(
-                            decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [AppColors.colorAppBars, AppColors.colorAppBars], // Gradient colors
-                                begin: Alignment.bottomLeft,
-                                end: Alignment.topRight,
-                                stops: [0.3, 0.7], // Stops for the gradient colors
-                                tileMode: TileMode.clamp,
-                              ),
-                            ),
-                          ),
-                          centerTitle: true,
-                          leading: InkWell(
-                            splashColor: AppColors.colorWhite,
-                            onTap: () {
-                              Get.back();
-                            },
-                            customBorder: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 15, top: 10, bottom: 10, right: 15),
-                              child: SvgPicture.asset(AppImages.icaarrowback,width: 12,height: 12,fit: BoxFit.contain,),
-                            ),
-                          ),
-                          title: CommonText(
-                            text: 'Clocking',
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                            color: AppColors.colorBlueDark,
-                          ),
-                        ),
-                        body: getClockInOutView(context),
-                      ),
-                      controller.isLoading.isTrue
-                          ? ColoredBox(
-                        color: AppColors.colorBlack.withOpacity(0.6),
-                        child: Center(
-                          child: Utils.commonCircularProgress(),
-                        ),
-                      ) : const Offstage(),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
+      body: CommonContainer(
+        child: getClockInOutView(context),
       ),
-    );
+    ));
   }
 
   getClockInOutView(BuildContext context) {
     return Obx(()=>
         Stack(
           children: [
-            Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [AppColors.colorAppBars, AppColors.colorAppBars], // Gradient colors
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.topRight,
-                  stops: [0.3, 0.7], // Stops for the gradient colors
-                  tileMode: TileMode.clamp,
-                ),
-              ),
-              height: Utils.getScreenHeight(context: context) / 15,
-            ),
             Container(
               height: Utils.getScreenHeight(context: context), // remove fixed height
               width: Utils.getScreenWidth(context: context),
@@ -200,7 +117,7 @@ class ClockInOutUi extends GetView<ClockInOutController> {
                   ],
                 ),
               ),
-            ).marginOnly(top: 10),
+            ).marginOnly(top: 2),
           ],
         ),
     );

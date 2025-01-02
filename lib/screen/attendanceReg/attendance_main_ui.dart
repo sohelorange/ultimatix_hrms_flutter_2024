@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/screen/attendanceReg/attendance_controller.dart';
-
 import '../../app/app_colors.dart';
 import '../../app/app_font_weight.dart';
 import '../../app/app_images.dart';
 import '../../app/app_routes.dart';
-import '../../app/app_snack_bar.dart';
 import '../../utility/utils.dart';
+import '../../widget/common_app_bar.dart';
 import '../../widget/common_app_image.dart';
+import '../../widget/common_container.dart';
+import '../../widget/common_gradient_button.dart';
 import '../../widget/common_text.dart';
 
 
@@ -18,55 +19,24 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-
-    return Scaffold(
-      appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
-        elevation: 0,
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [AppColors.colorAppBars, AppColors.colorAppBars], // Gradient colors
-              begin: Alignment.bottomLeft,
-              end: Alignment.topRight,
-              stops: [0.3, 0.7], // Stops for the gradient colors
-              tileMode: TileMode.clamp,
-            ),
+    return SafeArea(
+      child: Scaffold(
+        appBar: const CommonAppBar(
+          title: 'Attendance',
+        ),
+        body: CommonContainer(
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            child: getView(context),
           ),
         ),
-        centerTitle: true,
-        leading: InkWell(
-          splashColor: AppColors.colorWhite,
-          onTap: () {
-            Get.back();
-          },
-          child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04, vertical: screenHeight * 0.01),
-              child: SvgPicture.asset(
-                AppImages.icaarrowback,
-                height: 10,
-                width: 10,
-                fit: BoxFit.contain,
-              )
-          ),
-        ),
-        title: CommonText(
-          text: 'Attendance',
-          fontWeight: FontWeight.w500,
-          fontSize: screenWidth * 0.045,
-          color: AppColors.colorBlueDark,
-        ),
-      ),
-      body: getView(context),
-    );
+     ));
   }
 
   getView(BuildContext context) {
     return Stack(
       children: [
-        Container(
+        /*Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [AppColors.colorAppBars, AppColors.colorAppBars], // Gradient colors
@@ -77,7 +47,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
             ),
           ),
           height: Utils.getScreenHeight(context: context) / 15,
-        ),
+        ),*/
         Container(
           height: Utils.getScreenHeight(context: context),
           width: Utils.getScreenWidth(context: context),
@@ -92,7 +62,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
             )
                 : Column(
               children: [
-                SizedBox(height: MediaQuery.of(context).size.width * 0.05,),
+                /*SizedBox(height: MediaQuery.of(context).size.width * 0.05,),*/
                 GestureDetector(
                   onTap: () {
                     if(controller.teamAttendanceResponse.value.data!.isNotEmpty){
@@ -111,14 +81,20 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
                     padding: const EdgeInsets.all(16.0),
                     width: MediaQuery.of(context).size.width * 0.9, // Adjust container width as needed
                     decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.shade300,
-                            blurRadius: 5.0,
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0X1C1F370D),
+                          // Light gray color for shadow
+                          blurRadius: 4.0,
+                          // Increase the blur for a more spread-out shadow
+                          spreadRadius: 1.0,
+                          // Small spread to create a more pronounced shadow
+                          offset: Offset(
+                              0, 0), // Offset to simulate elevation effect (vertical shadow)
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(6),
+                      color: Colors.white,
                     ),
                     child: LayoutBuilder(
                       builder: (context, constraints) {
@@ -311,19 +287,9 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
 
                 Visibility(
                   visible: controller.teamAttendanceResponse.value.data?.isEmpty==true ? true : false,
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text("My Attendance",style: TextStyle(color: Colors.black,fontSize: 14,fontWeight: FontWeight.w500),),
-                        GestureDetector(
-                            onTap: () {
-                              _showYearDialog(context);
-                            },
-                            child: SvgPicture.asset(AppImages.svgCalender))
-                      ],
-                    ),
+                  child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.9, // Adjust container width as needed
+                      child: _attendanceUi(context)
                   ),
                 ),
                 Visibility(
@@ -332,7 +298,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
                     child: ListView.builder(
                       itemCount: controller.attendanceRegularizeDetails.value.data?.length ?? 1,
                       itemBuilder: (context, index) {
-                        return responsiveContainerUi(context,index);
+                        return getUserAttendanceUi(context,index);
                       },
                     ),
                   ),
@@ -356,7 +322,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
                     child: ListView.builder(
                       itemCount: controller.teamAttendanceResponse.value.data?.length, // Number of items in the list
                       itemBuilder: (context, index) {
-                        return responsiveContainer(context,index);
+                        return getTeamAttendanceUi(context,index);
                       },
                     ),
                   ),
@@ -370,21 +336,27 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
     /*);*/
   }
 
-  responsiveContainer(BuildContext context, int index) {
+  getTeamAttendanceUi(BuildContext context, int index) {
     return Column(
       children: [
         Container(
           padding: const EdgeInsets.all(16.0),
           width: MediaQuery.of(context).size.width * 0.9, // Adjust container width as needed
           decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.shade300,
-                  blurRadius: 5.0,
-                ),
-              ],
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white
+            boxShadow: const [
+              BoxShadow(
+                color: Color(0X1C1F370D),
+                // Light gray color for shadow
+                blurRadius: 4.0,
+                // Increase the blur for a more spread-out shadow
+                spreadRadius: 1.0,
+                // Small spread to create a more pronounced shadow
+                offset: Offset(
+                    0, 0), // Offset to simulate elevation effect (vertical shadow)
+              ),
+            ],
+            borderRadius: BorderRadius.circular(6),
+            color: Colors.white,
           ),
           child: LayoutBuilder(
             builder: (context, constraints) {
@@ -588,21 +560,27 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
     }
   }
 
-  responsiveContainerUi(BuildContext context, int index) {
+  getUserAttendanceUi(BuildContext context, int index) {
     return Column(
       children: [
         Container(
           padding: const EdgeInsets.all(16.0),
           width: MediaQuery.of(context).size.width * 0.9, // Adjust container width as needed
           decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.shade300,
-                  blurRadius: 5.0,
-                ),
-              ],
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white
+            boxShadow: const [
+              BoxShadow(
+                color: Color(0X1C1F370D),
+                // Light gray color for shadow
+                blurRadius: 4.0,
+                // Increase the blur for a more spread-out shadow
+                spreadRadius: 1.0,
+                // Small spread to create a more pronounced shadow
+                offset: Offset(
+                    0, 0), // Offset to simulate elevation effect (vertical shadow)
+              ),
+            ],
+            borderRadius: BorderRadius.circular(6),
+            color: Colors.white,
           ),
           child: LayoutBuilder(
             builder: (context, constraints) {
@@ -818,84 +796,56 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
     }
   }
 
-  void _showYearDialog(BuildContext context) {
-    controller.selectedYear.value = 0;
-    controller.selectedMonth.value = 0;
+  Widget _attendanceUi(BuildContext context) {
+    // Get the current year and month or selected ones
+    final int currentYear = DateTime.now().year;
+    final int currentMonth = DateTime.now().month;
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Select Year'),
-          content: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.3, // 40% of screen height
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                int crossAxisCount;
-                if (constraints.maxWidth < 400) {
-                  crossAxisCount = 2; // For smaller screens
-                } else if (constraints.maxWidth < 800) {
-                  crossAxisCount = 3; // For medium screens
-                } else {
-                  crossAxisCount = 4; // For larger screens
-                }
+    // Get selected year, using controller's selected value if available
+    final String selectedYear = controller.selectedYearIndex.value == -1
+        ? currentYear.toString()
+        : (currentYear + controller.selectedYearIndex.value).toString();
 
-                return Obx(
-                      ()=> GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: crossAxisCount,
-                        crossAxisSpacing: 16.0,
-                        mainAxisSpacing: 16.0,
-                        childAspectRatio: 2
-                    ),
-                    itemCount: controller.selectedYear.value==0 ? 6 : controller.items.length, // Total years
-                    itemBuilder: (context, index) {
-                      final year = DateTime.now().year + index;
-                      return GestureDetector(
-                        onTap: () {
-                          if(controller.selectedYear.value==0) {
-                            controller.selectedYear.value = year;
-                          }else{
-                            if(controller.selectedYear.value!=0){
-                              controller.selectedMonth.value = index+1;
-                              AppSnackBar.showGetXCustomSnackBar(message: "Selected: ${controller.selectedYear.toString()}-${controller.selectedMonth.value}");
-                              controller.getUserAttendanceRecords();
-                              controller.selectedYear.value = 0;
-                              controller.selectedMonth.value = 0;
-                              Navigator.of(context).pop();
-                            }
-                          }
-                        },
-                        child: Card(
-                          child: Center(
-                            child: Obx(
-                                  ()=> Text(
-                                controller.selectedYear.value==0 ? year.toString() : controller.items.value.elementAt(index).toString(),
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                );
-              },
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                controller.selectedYear.value = 0;
-                controller.selectedMonth.value = 0;
-              },
-              child: const Center(child: Text('Close',style: TextStyle(color: AppColors.color68C1F,fontWeight: FontWeight.w500,fontSize: 18),)),
-            ),
-          ],);
-      },);
+    // Get the selected month or current month
+    final String selectedMonth = controller.selectedMonthIndex.value == -1
+        ? [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ][currentMonth - 1] // Convert month index to name
+        : [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ][controller.selectedMonthIndex.value];
+
+    return CommonGradientButton(
+      text: '$selectedMonth $selectedYear Attendance',
+      imagePath: AppImages.leaveCalendarIcon, // Change the icon as needed
+      onTap: () {
+        controller.showYearDialog(context); // Define your on-tap behavior here
+      },
+    );
   }
+
 
   checkVisible() {
     if(controller.teamAttendanceResponse.value.data!=null){

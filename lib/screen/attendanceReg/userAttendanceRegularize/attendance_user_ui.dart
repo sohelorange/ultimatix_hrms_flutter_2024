@@ -6,9 +6,11 @@ import '../../../app/app_colors.dart';
 import '../../../app/app_font_weight.dart';
 import '../../../app/app_images.dart';
 import '../../../app/app_routes.dart';
-import '../../../app/app_snack_bar.dart';
 import '../../../utility/utils.dart';
+import '../../../widget/common_app_bar.dart';
 import '../../../widget/common_app_image.dart';
+import '../../../widget/common_container.dart';
+import '../../../widget/common_gradient_button.dart';
 import '../../../widget/common_text.dart';
 
 class UserAttendanceUi extends GetView<UserAttendanceController>{
@@ -17,66 +19,23 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-
-    return Scaffold(
-      appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
-        elevation: 0,
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [AppColors.colorAppBars, AppColors.colorAppBars], // Gradient colors
-              begin: Alignment.bottomLeft,
-              end: Alignment.topRight,
-              stops: [0.3, 0.7], // Stops for the gradient colors
-              tileMode: TileMode.clamp,
-            ),
+    return SafeArea(
+      child: Scaffold(
+        appBar: const CommonAppBar(
+          title: 'Attendance',
+        ),
+        body: CommonContainer(
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            child: getView(context),
           ),
         ),
-        centerTitle: true,
-        leading: InkWell(
-          onTap: () {
-            /*Get.find<UserAttendanceController>().getAttendanceRecordsByApi();*/
-            Get.back();
-          },
-          child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04, vertical: screenHeight * 0.01),
-              child: SvgPicture.asset(
-                AppImages.icaarrowback,
-                height: 10,
-                width: 10,
-                fit: BoxFit.contain,
-              )
-          ),
-        ),
-        title: CommonText(
-          text: 'Attendance',
-          fontWeight: FontWeight.w500,
-          fontSize: screenWidth * 0.045,
-          color: AppColors.colorBlueDark,
-        ),
-      ),
-      body: getView(context),
-    );
+    ));
   }
 
   getView(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [AppColors.colorAppBars, AppColors.colorAppBars], // Gradient colors
-              begin: Alignment.bottomLeft,
-              end: Alignment.topRight,
-              stops: [0.3, 0.7], // Stops for the gradient colors
-              tileMode: TileMode.clamp,
-            ),
-          ),
-          height: Utils.getScreenHeight(context: context) / 15,
-        ),
         Container(
           height: Utils.getScreenHeight(context: context),
           width: Utils.getScreenWidth(context: context),
@@ -91,23 +50,13 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
           ) : Column(children: [
 
             Container(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+              margin: const EdgeInsets.all(10),
               width: MediaQuery.of(context).size.width * 0.9, // Adjust container width as needed
               decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.shade300,
-                    blurRadius: 5.0,
-                  ),
-                ],
+                gradient: AppColors.gradientBackground,
+                // Assign default if null
                 borderRadius: BorderRadius.circular(10),
-                gradient: const LinearGradient(
-                  colors: [AppColors.color161F59, AppColors.color631983], // Gradient colors
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.topRight,
-                  stops: [0.4, 0.7], // Stops for the gradient colors
-                  tileMode: TileMode.clamp,
-                ),
               ),
               child: LayoutBuilder(
                 builder: (context, constraints) {
@@ -196,51 +145,11 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
                 },
               ),
             ),
-            const SizedBox(height: 16.0),
-            GestureDetector(
-              onTap: () {
-                _showYearDialog(context);
-              },
-              child: Container(
-                padding: const EdgeInsets.all(16.0),
-                width: MediaQuery.of(context).size.width * 0.9, // Adjust container width as needed
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.shade300,
-                      blurRadius: 5.0,
-                    ),
-                  ],
-                  borderRadius: BorderRadius.circular(10),
-                  gradient: const LinearGradient(
-                    colors: [AppColors.color161F59, AppColors.color631983], // Gradient colors
-                    begin: Alignment.bottomLeft,
-                    end: Alignment.topRight,
-                    stops: [0.4, 0.7], // Stops for the gradient colors
-                    tileMode: TileMode.clamp,
-                  ),
-                ),
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
 
-                    double fontSize = constraints.maxWidth * 0.04;
-
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(AppImages.svgCalender),
-                            const SizedBox(width: 12,),
-                            Text("${controller.currentMonth.value} Attendance",style: const TextStyle(fontSize: 16.0,fontWeight: FontWeight.w500,color: AppColors.colorWhite),),
-                          ],
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 0),
+              width: MediaQuery.of(context).size.width * 0.9, // Adjust container width as needed
+              child: _attendanceUi(context)
             ),
             const SizedBox(height: 16.0),
             Expanded(
@@ -265,14 +174,20 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
           padding: const EdgeInsets.all(16.0),
           width: MediaQuery.of(context).size.width * 0.9, // Adjust container width as needed
           decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.shade300,
-                  blurRadius: 5.0,
-                ),
-              ],
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white
+            boxShadow: const [
+              BoxShadow(
+                color: Color(0X1C1F370D),
+                // Light gray color for shadow
+                blurRadius: 4.0,
+                // Increase the blur for a more spread-out shadow
+                spreadRadius: 1.0,
+                // Small spread to create a more pronounced shadow
+                offset: Offset(
+                    0, 0), // Offset to simulate elevation effect (vertical shadow)
+              ),
+            ],
+            borderRadius: BorderRadius.circular(6),
+            color: Colors.white,
           ),
           child: LayoutBuilder(
             builder: (context, constraints) {
@@ -503,82 +418,54 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
     }
   }
 
-  void _showYearDialog(BuildContext context) {
-    controller.selectedYear.value = 0;
-    controller.selectedMonth.value = 0;
+  Widget _attendanceUi(BuildContext context) {
+    // Get the current year and month or selected ones
+    final int currentYear = DateTime.now().year;
+    final int currentMonth = DateTime.now().month;
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Select Year'),
-          content: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.3, // 40% of screen height
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                int crossAxisCount;
-                if (constraints.maxWidth < 400) {
-                  crossAxisCount = 2; // For smaller screens
-                } else if (constraints.maxWidth < 800) {
-                  crossAxisCount = 3; // For medium screens
-                } else {
-                  crossAxisCount = 4; // For larger screens
-                }
+    // Get selected year, using controller's selected value if available
+    final String selectedYear = controller.selectedYearIndex.value == -1
+        ? currentYear.toString()
+        : (currentYear + controller.selectedYearIndex.value).toString();
 
-                return Obx(
-                      ()=> GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: crossAxisCount,
-                        crossAxisSpacing: 16.0,
-                        mainAxisSpacing: 16.0,
-                        childAspectRatio: 2
-                    ),
-                    itemCount: controller.selectedYear.value==0 ? 6 : controller.items.length, // Total years
-                    itemBuilder: (context, index) {
-                      final year = DateTime.now().year + index;
-                      return GestureDetector(
-                        onTap: () {
-                          if(controller.selectedYear.value==0) {
-                            controller.selectedYear.value = year;
-                          }else{
-                            if(controller.selectedYear.value!=0){
-                              controller.selectedMonth.value = index+1;
-                              AppSnackBar.showGetXCustomSnackBar(message: "Selected: ${controller.selectedYear.toString()}-${controller.selectedMonth.value}");
-                              controller.callUserAttendanceRegularizationDetails();
-                              controller.selectedYear.value = 0;
-                              controller.selectedMonth.value = 0;
-                              Navigator.of(context).pop();
-                            }
-                          }
-                        },
-                        child: Card(
-                          child: Center(
-                            child: Obx(
-                                  ()=> Text(
-                                controller.selectedYear.value==0 ? year.toString() : controller.items.value.elementAt(index).toString(),
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                );
-              },
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                controller.selectedYear.value = 0;
-                controller.selectedMonth.value = 0;
-              },
-              child: const Center(child: Text('Close',style: TextStyle(color: AppColors.color7B1FA2,fontWeight: FontWeight.w500,fontSize: 18),)),
-            ),
-          ],);
-      },);
+    // Get the selected month or current month
+    final String selectedMonth = controller.selectedMonthIndex.value == -1
+        ? [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ][currentMonth - 1] // Convert month index to name
+        : [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ][controller.selectedMonthIndex.value];
+
+    return CommonGradientButton(
+      text: '$selectedMonth $selectedYear Attendance',
+      imagePath: AppImages.leaveCalendarIcon, // Change the icon as needed
+      onTap: () {
+        controller.showYearDialog(context); // Define your on-tap behavior here
+      },
+    );
   }
+
 }

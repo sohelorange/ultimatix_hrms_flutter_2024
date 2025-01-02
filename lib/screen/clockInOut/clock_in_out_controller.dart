@@ -15,6 +15,7 @@ import 'package:ultimatix_hrms_flutter/database/ultimatix_dao.dart';
 import 'package:ultimatix_hrms_flutter/database/ultimatix_db.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:ultimatix_hrms_flutter/utility/network.dart';
+import '../../utility/preference_utils.dart';
 import '../../utility/utils.dart';
 
 
@@ -298,6 +299,9 @@ class ClockInOutController extends GetxController with GetSingleTickerProviderSt
 
   /*This method is call the api with parameters*/
   static void _callApi(_IsolateApiData isolateData) async{
+    BackgroundIsolateBinaryMessenger.ensureInitialized(isolateData.token);
+
+    await PreferenceUtils.init();
       await DioClient().postFormData(isolateData.apiUrl,isolateData.formData).then((value) {
         if (value != null) {
           isolateData.answerPort.send("Api data getting success");

@@ -9,6 +9,8 @@ import '../../../app/app_colors.dart';
 import '../../../app/app_font_weight.dart';
 import '../../../app/app_images.dart';
 import '../../../utility/utils.dart';
+import '../../../widget/common_app_bar.dart';
+import '../../../widget/common_container.dart';
 import '../../../widget/common_text.dart';
 
 class RegularizationListApprovalsUi extends GetView<RegularizationListApprovalsController>{
@@ -16,65 +18,23 @@ class RegularizationListApprovalsUi extends GetView<RegularizationListApprovalsC
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-
-    return Scaffold(
-      appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
-        elevation: 0,
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [AppColors.colorAppBars, AppColors.colorAppBars], // Gradient colors
-              begin: Alignment.bottomLeft,
-              end: Alignment.topRight,
-              stops: [0.3, 0.7], // Stops for the gradient colors
-              tileMode: TileMode.clamp,
-            ),
+    return SafeArea(
+      child: Scaffold(
+        appBar: const CommonAppBar(
+          title: 'Regularization Approvals',
+        ),
+        body: CommonContainer(
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            child: getView(context),
           ),
         ),
-        centerTitle: true,
-        leading: InkWell(
-          onTap: () {
-            Get.back();
-          },
-          child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04, vertical: screenHeight * 0.01),
-              child: SvgPicture.asset(
-                AppImages.icaarrowback,
-                height: 10,
-                width: 10,
-                fit: BoxFit.contain,
-              )
-          ),
-        ),
-        title: CommonText(
-          text: 'Regularization Approvals',
-          fontWeight: FontWeight.w500,
-          fontSize: screenWidth * 0.045,
-          color: AppColors.colorBlueDark,
-        ),
-      ),
-      body: getView(context),
-    );
+      ));
   }
 
   getView(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [AppColors.colorAppBars, AppColors.colorAppBars], // Gradient colors
-              begin: Alignment.bottomLeft,
-              end: Alignment.topRight,
-              stops: [0.3, 0.7], // Stops for the gradient colors
-              tileMode: TileMode.clamp,
-            ),
-          ),
-          height: Utils.getScreenHeight(context: context) / 15,
-        ),
         Container(
           height: Utils.getScreenHeight(context: context),
           width: Utils.getScreenWidth(context: context),
@@ -113,14 +73,20 @@ class RegularizationListApprovalsUi extends GetView<RegularizationListApprovalsC
             padding: const EdgeInsets.all(16.0),
             width: MediaQuery.of(context).size.width * 0.9, // Adjust container width as needed
             decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.shade300,
-                    blurRadius: 5.0,
-                  ),
-                ],
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0X1C1F370D),
+                  // Light gray color for shadow
+                  blurRadius: 4.0,
+                  // Increase the blur for a more spread-out shadow
+                  spreadRadius: 1.0,
+                  // Small spread to create a more pronounced shadow
+                  offset: Offset(
+                      0, 0), // Offset to simulate elevation effect (vertical shadow)
+                ),
+              ],
+              borderRadius: BorderRadius.circular(6),
+              color: Colors.white,
             ),
             child: LayoutBuilder(
               builder: (context, constraints) {
@@ -295,17 +261,6 @@ class RegularizationListApprovalsUi extends GetView<RegularizationListApprovalsC
   }
 
   getImageUrl(int index) {
-    /*if(controller.attendanceRegularizeDetails.value.data!.elementAt(index).mainStatus=="A"){
-      return AppImages.icAbsentImg;
-    }else if(controller.attendanceRegularizeDetails.value.data!.elementAt(index).mainStatus=="P"){
-      return AppImages.icPresentImg;
-    }else if(controller.attendanceRegularizeDetails.value.data!.elementAt(index).mainStatus=="W"){
-      return AppImages.icWeekOffImg;
-    }else if(controller.attendanceRegularizeDetails.value.data!.elementAt(index).mainStatus=="HO"){
-      return AppImages.icHolidayImg;
-    }else{
-      return AppImages.icAbsentImg;
-    }*/
     return AppImages.svgAvatar;
   }
 }

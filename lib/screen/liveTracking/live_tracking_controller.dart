@@ -17,7 +17,7 @@ import '../../utility/preference_utils.dart';
 
 class LiveTrackingController extends GetxController{
 
-  RxBool isLoadingOnUi = true.obs;
+  RxBool isLoadingOnUi = false.obs;
   late WebViewController? webController;
   RxString userProfile = "".obs;
   RxString userName = "Test User".obs;
@@ -38,6 +38,8 @@ class LiveTrackingController extends GetxController{
 
   dynamic argumentData = Get.arguments;
 
+  RxString nDate = DateFormat('yyyy-MM-dd').format(DateTime.now()).toString().obs;
+
   @override
   void onInit() async{
 
@@ -56,6 +58,8 @@ class LiveTrackingController extends GetxController{
 
 
   void getGeoLocationTrackingList(String nSelectedDate) async{
+    isLoadingOnUi.value = true;
+
     var receivePort = ReceivePort();
 
     var rootToken = RootIsolateToken.instance!;

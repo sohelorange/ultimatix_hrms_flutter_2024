@@ -69,6 +69,9 @@ class DioClient {
   Future<dynamic> postFormData(String url, FormData payloadObj) async {
     var uri = Uri.parse(url);
     /*var payload = json.encode(payloadObj);*/
+    log("API is:$url");
+    log("API Param is:$payloadObj");
+    log("API Token is:${PreferenceUtils.getAuthToken()}");
     try {
       var response = await Dio()
           .post(url,

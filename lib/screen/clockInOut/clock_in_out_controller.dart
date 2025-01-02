@@ -16,6 +16,7 @@ import 'package:ultimatix_hrms_flutter/database/ultimatix_db.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:ultimatix_hrms_flutter/utility/network.dart';
 import 'package:ultimatix_hrms_flutter/utility/preference_utils.dart';
+import '../../utility/preference_utils.dart';
 import '../../utility/utils.dart';
 
 class ClockInOutController extends GetxController
@@ -345,6 +346,11 @@ class ClockInOutController extends GetxController
         .postFormData(isolateData.apiUrl, isolateData.formData)
         .then(
       (value) {
+  static void _callApi(_IsolateApiData isolateData) async{
+    BackgroundIsolateBinaryMessenger.ensureInitialized(isolateData.token);
+
+    await PreferenceUtils.init();
+      await DioClient().postFormData(isolateData.apiUrl,isolateData.formData).then((value) {
         if (value != null) {
           isolateData.answerPort.send("Api data getting success");
         } else {

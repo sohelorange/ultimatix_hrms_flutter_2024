@@ -113,7 +113,8 @@ class DrawerDashController extends GetxController {
     super.onInit();
     Map<String, dynamic> loginData = PreferenceUtils.getLoginDetails();
     userImageUrl.value = loginData['image_Name'] ?? '';
-    userName.value = loginData['emp_Full_Name'] ?? '';
+    //userName.value = loginData['emp_Full_Name'] ?? '';
+    userName.value = loginData['emp_Sort_Name'] ?? '';
     designation.value = loginData['desig_Name'] ?? '';
     empID.value = loginData['emp_ID'].toString();
     cmpID.value = loginData['cmp_ID'].toString();

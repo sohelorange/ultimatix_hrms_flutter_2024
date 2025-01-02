@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/app/app_routes.dart';
+import 'package:ultimatix_hrms_flutter/utility/preference_utils.dart';
 import 'package:ultimatix_hrms_flutter/utility/utils.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_button.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_container.dart';
@@ -21,8 +22,6 @@ import 'dash_board_controller.dart';
 
 class DashboardView extends GetView<DashController> {
   const DashboardView({super.key});
-
-  //final NotificationServices _notificationServices = NotificationServices();
 
   @override
   Widget build(BuildContext context) {
@@ -176,13 +175,19 @@ class DashboardView extends GetView<DashController> {
               const SizedBox(
                 height: 15,
               ),
-              _buildAttendanceRegulation(),
-              const SizedBox(
-                height: 15,
+              Visibility(visible: false, child: _buildAttendanceRegulation()),
+              const Visibility(
+                visible: false,
+                child: SizedBox(
+                  height: 15,
+                ),
               ),
-              _buildMyKPA(),
-              const SizedBox(
-                height: 15,
+              Visibility(visible: false, child: _buildMyKPA()),
+              const Visibility(
+                visible: false,
+                child: SizedBox(
+                  height: 15,
+                ),
               ),
             ],
           ),
@@ -246,12 +251,10 @@ class DashboardView extends GetView<DashController> {
               )),
               GestureDetector(
                 onTap: () {
-                  if(controller.geofence_enable == 1){
+                  if (controller.isGeofenceEnable == 1) {
                     Get.toNamed(AppRoutes.geofenceRoute);
-                    print("geo--${controller.geofence_enable}");
                   } else {
                     Get.toNamed(AppRoutes.clockInRoute);
-                    print("geo--${controller.geofence_enable}");
                   }
                 },
                 child: Container(
@@ -270,19 +273,45 @@ class DashboardView extends GetView<DashController> {
                     borderRadius: BorderRadius.circular(6),
                     color: AppColors.purpleSwatch,
                   ),
+                  // child: Center(
+                  //   child: CommonText(
+                  //     textAlign: TextAlign.center,
+                  //     text: controller.checkInTime.value == '--:--' &&
+                  //             controller.checkOutTime.value == '--:--'
+                  //         ? 'Check In'
+                  //         : controller.checkInTime.value.isNotEmpty &&
+                  //                 controller.checkOutTime.value.isNotEmpty
+                  //             ? 'Check In'
+                  //             : 'Check Out',
+                  //     color: AppColors.colorWhite,
+                  //     fontSize: 14,
+                  //     fontWeight: AppFontWeight.w500,
+                  //   ),
+                  // ),
+
                   child: Center(
-                    child: CommonText(
-                      textAlign: TextAlign.center,
-                      text: controller.checkInTime.value == '--:--' &&
-                          controller.checkOutTime.value == '--:--'
-                          ? 'Check In'
-                          : controller.checkInTime.value.isNotEmpty &&
-                          controller.checkOutTime.value.isNotEmpty
-                          ? 'Check In'
-                          : 'Check Out',
-                      color: AppColors.colorWhite,
-                      fontSize: 14,
-                      fontWeight: AppFontWeight.w500,
+                    // child: CommonText(
+                    //   textAlign: TextAlign.center,
+                    //   text: controller.checkInOutStatus.value
+                    //       ? 'Check Out'
+                    //       : 'Check In',
+                    //   color: AppColors.colorWhite,
+                    //   fontSize: 14,
+                    //   fontWeight: AppFontWeight.w500,
+                    // ),
+                    child: ValueListenableBuilder<bool>(
+                      valueListenable: controller.checkInOutStatus,
+                      builder: (context, value, child) {
+                        return CommonText(
+                          textAlign: TextAlign.center,
+                          text: PreferenceUtils.getIsClocking()
+                              ? 'Check Out'
+                              : 'Check In',
+                          color: AppColors.colorWhite,
+                          fontSize: 14,
+                          fontWeight: AppFontWeight.w500,
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -408,16 +437,116 @@ class DashboardView extends GetView<DashController> {
             ],
           ),
           const SizedBox(height: 15),
-          CommonText(
-            //textAlign: TextAlign.center,
-            maxLine: 5,
-            text: controller.address.value,
-            color: AppColors.colorDarkBlue,
-            fontSize: 14,
-            fontWeight: AppFontWeight.w400,
-          )
+          // AnimatedContainer(
+          //   duration: const Duration(milliseconds: 300),
+          //   constraints: BoxConstraints(
+          //     maxHeight: controller.isViewMore.value
+          //         ? 50
+          //         : 50, // Adjust max height for collapsed view
+          //   ),
+          //   child: SingleChildScrollView(
+          //     child: CommonText(
+          //       //textAlign: TextAlign.center,
+          //       maxLine: controller.isViewMore.value ? null : 2,
+          //       overflow: controller.isViewMore.value
+          //           ? TextOverflow.visible
+          //           : TextOverflow.ellipsis,
+          //       text: controller.address.value,
+          //       color: AppColors.colorDarkBlue,
+          //       fontSize: 14,
+          //       fontWeight: AppFontWeight.w400,
+          //     ),
+          //   ),
+          // ),
+          // Align(
+          //   alignment: Alignment.bottomRight,
+          //   child: GestureDetector(
+          //     onTap: () {
+          //       controller.isViewMore.value = !controller.isViewMore.value;
+          //     },
+          //     child: CommonText(
+          //       textAlign: TextAlign.center,
+          //       text: controller.isViewMore.value ? 'View Less' : 'View More',
+          //       color: AppColors.purpleSwatch,
+          //       fontSize: 12,
+          //       fontWeight: AppFontWeight.w500,
+          //     ).paddingOnly(top: 10, bottom: 10),
+          //   ),
+          // )
+          _buildViewMore(Get.context!),
         ],
       ),
+    );
+  }
+
+  Widget _buildViewMore(BuildContext context) {
+    // Helper function to determine if "View More" should be shown
+    bool shouldShowViewMore(String text, TextStyle style, double maxWidth) {
+      final TextPainter textPainter = TextPainter(
+        text: TextSpan(text: text, style: style),
+        maxLines: 2,
+        textDirection: TextDirection.ltr,
+      )..layout(maxWidth: maxWidth);
+
+      return textPainter.didExceedMaxLines;
+    }
+
+    // Get the maxWidth for the text
+    final double maxWidth = MediaQuery.of(context).size.width -
+        32; // Adjust for padding or other constraints
+
+    // TextStyle used for the `address` text
+    final TextStyle textStyle = TextStyle(
+      fontSize: 14,
+      fontWeight: AppFontWeight.w400,
+      color: AppColors.colorDarkBlue,
+    );
+
+    // Check if the "View More" button should be shown
+    bool showViewMore =
+        shouldShowViewMore(controller.address.value, textStyle, maxWidth);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          constraints: BoxConstraints(
+            maxHeight: controller.isViewMore.value ? 50 : 50,
+          ),
+          child: SingleChildScrollView(
+            physics: controller.isViewMore.value
+                ? null
+                : const NeverScrollableScrollPhysics(),
+            child: CommonText(
+              maxLine: controller.isViewMore.value ? null : 2,
+              overflow: controller.isViewMore.value
+                  ? TextOverflow.visible
+                  : TextOverflow.ellipsis,
+              text: controller.address.value,
+              color: AppColors.colorDarkBlue,
+              fontSize: 14,
+              fontWeight: AppFontWeight.w400,
+            ),
+          ),
+        ),
+        if (showViewMore)
+          Align(
+            alignment: Alignment.bottomRight,
+            child: GestureDetector(
+              onTap: () {
+                controller.isViewMore.value = !controller.isViewMore.value;
+              },
+              child: CommonText(
+                textAlign: TextAlign.center,
+                text: controller.isViewMore.value ? 'View Less' : 'View More',
+                color: AppColors.purpleSwatch,
+                fontSize: 12,
+                fontWeight: AppFontWeight.w500,
+              ).paddingOnly(top: 10, bottom: 10),
+            ),
+          ),
+      ],
     );
   }
 
@@ -437,21 +566,24 @@ class DashboardView extends GetView<DashController> {
                 fontSize: 16,
                 fontWeight: AppFontWeight.w500,
               ),
-              GestureDetector(
-                onTap: () {},
-                child: CommonText(
-                  textAlign: TextAlign.center,
-                  text: 'View All',
-                  color: AppColors.purpleSwatch,
-                  fontSize: 12,
-                  fontWeight: AppFontWeight.w500,
+              Visibility(
+                visible: false,
+                child: GestureDetector(
+                  onTap: () {},
+                  child: CommonText(
+                    textAlign: TextAlign.center,
+                    text: 'View All',
+                    color: AppColors.purpleSwatch,
+                    fontSize: 12,
+                    fontWeight: AppFontWeight.w500,
+                  ),
                 ),
               ),
             ],
           ),
           const SizedBox(height: 10),
           CommonCarouselBanner(
-            images: controller.listEvent,
+            images: controller.bannerListData,
           ),
         ],
       ),
@@ -466,17 +598,17 @@ class DashboardView extends GetView<DashController> {
         children: [
           CommonText(
             textAlign: TextAlign.start,
-            text: controller.currentMonthYear + ' Attendance',
+            text: controller.currentMonthYear.value,
             color: AppColors.colorDarkBlue,
             fontSize: 16,
             fontWeight: AppFontWeight.w500,
           ),
           const SizedBox(height: 10),
-          controller.isLoading.value && controller.statusData.isEmpty
+          controller.isLoading.value && controller.attendanceStatusData.isEmpty
               ? SizedBox(
                   height: Utils.getScreenHeight(context: context) / 3.25,
                   child: Center(child: Utils.commonCircularProgress()))
-              : controller.statusData.isEmpty
+              : controller.attendanceStatusData.isEmpty
                   ? SizedBox(
                       height: Utils.getScreenHeight(context: context) / 3.25,
                       child: Center(
@@ -489,7 +621,7 @@ class DashboardView extends GetView<DashController> {
                       ),
                     )
                   : CommonGridView(
-                      statusData: controller.statusData,
+                      statusData: controller.attendanceStatusData,
                     ),
         ],
       ),

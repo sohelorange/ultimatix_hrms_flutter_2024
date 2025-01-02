@@ -27,6 +27,7 @@ class Constants {
 
   //TODO : Pref Constants
   static const String appUrlPref = 'appUrlPref';
+  static const String isClockingPref = 'isClockingPref';
   static const String isThemePref = 'isThemePref';
   static const String isLoginPref = 'isLoginPref';
   static const String fcmIdPref = 'fcmIdPref';

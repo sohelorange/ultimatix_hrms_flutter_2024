@@ -105,7 +105,7 @@ class _CommonBottomNavBarState extends State<CommonBottomNavBar> {
                         text: item.label,
                         fontWeight: FontWeight.w400,
                         color: isSelected
-                            ? AppColors.colorDarkBlue
+                            ? AppColors.colorPurple
                             : AppColors.colorDarkGray,
                         fontSize: 10),
                     //Text(

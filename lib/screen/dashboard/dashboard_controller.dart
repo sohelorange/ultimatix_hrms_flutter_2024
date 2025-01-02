@@ -7,7 +7,6 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -59,7 +58,7 @@ class DashboardController extends GetxController {
   String empID = "";
   String cmpID = "";
 
-  int geofence_enable = 0;
+  int isGeofenceEnable = 0;
 
   RxList<Map<String, dynamic>> statusData = <Map<String, dynamic>>[].obs;
 
@@ -69,14 +68,17 @@ class DashboardController extends GetxController {
     "https://media.istockphoto.com/id/1774494924/photo/sister-applying-tilaka-to-her-brother-at-home-during-bhai-dooj.jpg?s=612x612&w=0&k=20&c=z2nNx7asAdglLCBIhJwy3JV2qwDVMT5AAyfxrJ5r_XU=",
   ];
 
-
   final NotificationServices _notificationServices = NotificationServices();
+
+  ValueNotifier<bool> checkInOutStatus = ValueNotifier<bool>(false);
 
   @override
   void onInit() async {
     // TODO: implement onInit
     super.onInit();
     try {
+      checkInOutStatus.value = PreferenceUtils.getIsClocking();
+
       _getCurrentLocation().then((value) => {
             _notificationServices.requestNotificationPermission(),
             _notificationServices.firebaseInit(Get.context!),
@@ -95,8 +97,7 @@ class DashboardController extends GetxController {
       empID = loginData['emp_ID'].toString();
       cmpID = loginData['cmp_ID'].toString();
 
-      geofence_enable = loginData['is_Geofence_enable'];
-      print("geofen--${geofence_enable}");
+      isGeofenceEnable = loginData['is_Geofence_enable'];
 
       fetchDataInParallel();
 
@@ -113,7 +114,9 @@ class DashboardController extends GetxController {
       );
       initializeService();*/
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
@@ -588,7 +591,11 @@ class DashboardController extends GetxController {
 
     // If permission is granted, get the location
     Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+        locationSettings: const LocationSettings(
+      accuracy: LocationAccuracy.high, // Use LocationSettings for accuracy
+      //distanceFilter:
+      //100, // Optional: minimum distance (in meters) to move before updates
+    ));
 
     location.value =
         'Latitude: ${position.latitude}, Longitude: ${position.longitude}';

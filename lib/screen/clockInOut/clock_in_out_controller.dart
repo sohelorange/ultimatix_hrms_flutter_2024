@@ -16,11 +16,11 @@ import 'package:ultimatix_hrms_flutter/database/ultimatix_db.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:ultimatix_hrms_flutter/utility/network.dart';
 import '../../utility/preference_utils.dart';
+import 'package:ultimatix_hrms_flutter/utility/preference_utils.dart';
 import '../../utility/utils.dart';
 
-
-class ClockInOutController extends GetxController with GetSingleTickerProviderStateMixin{
-
+class ClockInOutController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   RxString defaultValue = 'Working From Home'.obs;
 
   RxList<String> items = <String>[
@@ -46,7 +46,7 @@ class ClockInOutController extends GetxController with GetSingleTickerProviderSt
   RxString nDate = "".obs;
 
   @override
-  void onInit() async{
+  void onInit() async {
     WidgetsFlutterBinding.ensureInitialized();
     nDate.value = extractDate();
 
@@ -56,7 +56,7 @@ class ClockInOutController extends GetxController with GetSingleTickerProviderSt
     super.onInit();
   }
 
-  String extractDate(){
+  String extractDate() {
     DateTime now = DateTime.now();
     String dateTimeString = now.toString();
     DateTime dateTime = DateTime.parse(dateTimeString);
@@ -68,12 +68,12 @@ class ClockInOutController extends GetxController with GetSingleTickerProviderSt
     localDao = database.localDao;
   }
 
-  closeDb() async{
+  closeDb() async {
     await database.close();
   }
 
   /*Getting the In/Out Record from Db then show data in ui*/
-  void getClockInOutRecord(String s, bool isImage) async{
+  void getClockInOutRecord(String s, bool isImage) async {
     isLoading.value = true;
 
     var receivePort = ReceivePort();
@@ -209,13 +209,14 @@ class ClockInOutController extends GetxController with GetSingleTickerProviderSt
   }
 
   /*This will update the ui as well as store & update the data in local db after getting api success response*/
-  void checkInOutEvent() async{
-      isCheckIn.value = !isCheckIn.value;
-      if(isCheckIn.value) {
-        _storeDataToDb();
-      }else{
-        updateClockInOut("00:00","101");
-      }
+  void checkInOutEvent() async {
+    isCheckIn.value = !isCheckIn.value;
+    PreferenceUtils.setIsClocking(isCheckIn.value);
+    if (isCheckIn.value) {
+      _storeDataToDb();
+    } else {
+      updateClockInOut("00:00", "101");
+    }
   }
 
   /*This method is collecting the geolocation lat long, then getting address by _getAddressByLoc method*/

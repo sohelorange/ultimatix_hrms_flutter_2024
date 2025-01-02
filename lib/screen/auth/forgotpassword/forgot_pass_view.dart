@@ -129,10 +129,6 @@ class ForgotPassView extends GetView<ForgotPassController> {
           length: 4,
           onFilled: (value) {
             controller.verifyOTP.value = int.parse(value);
-            if (kDebugMode) {
-              print(value);
-              print(controller.verifyOTP.value);
-            }
           },
           size: const Size(70, 60),
           spaceBetween: 13,

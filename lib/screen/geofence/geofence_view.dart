@@ -196,9 +196,11 @@ class GeofenceView extends GetView<GeofenceController> {
                                   height: 40,
                                   width: 40,
                                 ).paddingOnly(left: 10, right: 10, top: 5),
-
                                 CommonText(
-                                  text: controller.isWithinRadius.value ?'Entered: ${controller.geolocationrecordmodel.value.data![0].geoLocation}':
+                                  text: controller.isWithinRadius.value ?'Entered: ${
+                                      controller.geolocationrecordmodel.value.data != null ?
+                                      controller.geolocationrecordmodel.value.data![0].geoLocation :
+                                      'No data Available'}':
                                   'You are Outside of Geofence',
                                   fontWeight: FontWeight.w500,
                                   fontSize: 14,

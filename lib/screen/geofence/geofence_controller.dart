@@ -144,7 +144,13 @@ class GeofenceController extends GetxController {
     );
 
     // Update the observable based on the condition
-    isWithinRadius.value = distance <= radius.value;
+    if (distance <= radius.value) {
+      isWithinRadius.value = true;
+      return;
+    }
+
+    // isWithinRadius.value = distance <= radius.value;
+    isWithinRadius.value = false;
 
     print('Calculkate distance ${distance}, ${radius.value},${isWithinRadius.value}');
 
@@ -152,14 +158,6 @@ class GeofenceController extends GetxController {
 
   Future<void> ongeolocartionrecordsAPI() async {
     try {
-      // isLoading.value = true;
-
-      // Map<String, dynamic> requestParam = {
-      //   "month": month,
-      //   "year": year,
-      //   "empId": 0,
-      //   "cmpId": 0
-      // };
 
       var response = await DioClient().getQueryParam(AppURL.geolocationrecords);
       debugPrint("res --$response");
@@ -168,15 +166,46 @@ class GeofenceController extends GetxController {
 
       if(geolocationrecordmodel.value.code == 200 && geolocationrecordmodel.value.status == true) {
 
-        geolocationrecordmodel.value.data!.forEach((element){
+        for(var i = 0; i < geolocationrecordmodel.value.data!.length; i++ ){
+          final location = geolocationrecordmodel.value.data![i];
+
           marker.add(
             Marker(
-              markerId: MarkerId('marker_'),
+                markerId: MarkerId('marker_$i'),
+                position: LatLng(double.parse(location.latitude!), double.parse(location.longitude!)),
+                infoWindow: InfoWindow(
+                  title: location.geoLocation,
+                  // snippet: 'Lat: ${location.latitude}, Lng: ${location.longitude}',
+                ),
+                icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueViolet)
+            ),
+          );
+
+          radius.value = location.meter!;
+          debugPrint("geo meter --${radius.value}");
+          debugPrint("location --${i}");
+          circles.add(
+            Circle(
+              circleId: CircleId('circle_$i'),
+              center: LatLng(double.parse(location.latitude!), double.parse(location.longitude!)),
+              radius: location.meter!.toDouble(), // Radius in meters
+              fillColor: AppColors.color7B1FA2.withOpacity(0.3),
+              strokeColor: AppColors.colorAppPurple,
+              strokeWidth: 2,
+            ),
+          );
+        }
+
+        /*  geolocationrecordmodel.value.data!.forEach((element){
+          marker.add(
+            Marker(
+              markerId: MarkerId('marker_$element'),
               position: LatLng(double.parse(element.latitude!), double.parse(element.longitude!)),
               infoWindow: InfoWindow(
-                title: 'Location',
+                title: element.geoLocation,
                 // snippet: 'Lat: ${location.latitude}, Lng: ${location.longitude}',
               ),
+                icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueViolet)
             ),
           );
 
@@ -193,8 +222,10 @@ class GeofenceController extends GetxController {
               strokeWidth: 2,
             ),
           );
-        });
+        });*/
         debugPrint("geo record --${response}");
+
+        checkIfInsideCircle(currentPosition.value.latitude,currentPosition.value.longitude);
 
       } else{
         AppSnackBar.showGetXCustomSnackBar(message: "${geolocationrecordmodel.value.message}" );

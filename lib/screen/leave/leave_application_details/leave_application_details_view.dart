@@ -404,12 +404,16 @@ class LeaveApplicationDetailsView
                       "period": data.leavePeriod,
                     };
 
+                    List<Map<String, dynamic>> strDetailsList = [
+                      leaveData,
+                    ];
+
                     if (leaveData.isNotEmpty) {
                       controller.insertCancelLeaveDetailsAPI(
                           int.parse(controller.leaveId.value),
                           int.parse(controller.leaveAppId.value),
                           int.parse(controller.leaveApprovalId.value),
-                          leaveData);
+                          strDetailsList);
                       // Print the created array with the current data
                       if (kDebugMode) {
                         print("Updated data at index $index: ${[leaveData]}");

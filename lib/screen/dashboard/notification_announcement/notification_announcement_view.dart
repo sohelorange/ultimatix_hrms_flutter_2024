@@ -20,20 +20,19 @@ class NotificationAnnouncementView
         child: Scaffold(
       appBar: const CommonAppBar(title: 'Notification'),
       body: CommonContainer(
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            //mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CommonText(
-                text: 'ORGANIZATION ANNOUNCEMENT',
-                color: AppColors.colorDarkBlue,
-                fontSize: 16,
-                fontWeight: AppFontWeight.w700,
-              ),
-              Obx(() => _notificationUI()),
-            ],
-          ),
+        child: Column(
+          //mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(height: 10,),
+            CommonText(
+              text: 'ORGANIZATION ANNOUNCEMENT',
+              color: AppColors.colorDarkBlue,
+              fontSize: 16,
+              fontWeight: AppFontWeight.w700,
+            ),
+            const SizedBox(height: 10,),
+            Obx(() => _notificationUI()),
+          ],
         ),
       ),
     ));
@@ -61,7 +60,7 @@ class NotificationAnnouncementView
                     if (index < controller.notificationList.length) {
                       return Container(
                         margin: const EdgeInsets.symmetric(
-                            horizontal: 5, vertical: 10),
+                            horizontal: 10, vertical: 10),
                         padding: const EdgeInsets.all(15),
                         decoration: BoxDecoration(
                           color: Colors.white,

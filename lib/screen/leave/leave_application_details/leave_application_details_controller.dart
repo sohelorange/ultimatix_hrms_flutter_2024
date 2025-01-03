@@ -431,7 +431,9 @@ class LeaveApplicationDetailsController extends GetxController {
     leavePeriod.value = leaveData.leaveAppDays?.toString() ?? '0';
     leaveReason.value = leaveData.leaveReason ?? '';
 
-    if (leaveApprovalId.value.isNotEmpty && leaveApprovalId.value != '0') {
+    if (leaveAppStatus.value == 'A' &&
+        leaveApprovalId.value.isNotEmpty &&
+        leaveApprovalId.value != '0') {
       getCancelLeaveDetailsAPI(
         int.tryParse(leaveId.value) ?? 0,
         int.tryParse(leaveAppId.value) ?? 0,
@@ -579,7 +581,7 @@ class LeaveApplicationDetailsController extends GetxController {
   }
 
   Future<void> insertCancelLeaveDetailsAPI(int leaveID, int leaveAppID,
-      int leaveApprID, Map<String, dynamic> leaveData) async {
+      int leaveApprID, List<Map<String, dynamic>> strDetailsList) async {
     if (await Network.isConnected()) {
       try {
         isCancelLoading.value = true;
@@ -596,7 +598,7 @@ class LeaveApplicationDetailsController extends GetxController {
           "leaveID": leaveID,
           "leaveAppID": leaveAppID,
           "leaveApprID": leaveApprID,
-          "strDetails": leaveData,
+          "strDetails": strDetailsList,
           "compOffDate": "",
           "loginID": loginID,
           "imeiNo": PreferenceUtils.getDeviceID()

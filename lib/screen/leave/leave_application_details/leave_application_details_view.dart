@@ -110,7 +110,7 @@ class LeaveApplicationDetailsView
                 boxShadow: const [
                   BoxShadow(
                     color: Color(0X1C1F370D),
-                    blurRadius: 0.0,
+                    blurRadius: 4.0,
                     spreadRadius: 1.0,
                     offset: Offset(0, 0),
                   ),
@@ -289,7 +289,7 @@ class LeaveApplicationDetailsView
         boxShadow: const [
           BoxShadow(
             color: Color(0X1C1F370D),
-            blurRadius: 0.0,
+            blurRadius: 4.0,
             spreadRadius: 1.0,
             offset: Offset(0, 0),
           ),
@@ -408,7 +408,7 @@ class LeaveApplicationDetailsView
                       leaveData,
                     ];
 
-                    if (leaveData.isNotEmpty) {
+                    if (strDetailsList.isNotEmpty) {
                       controller.insertCancelLeaveDetailsAPI(
                           int.parse(controller.leaveId.value),
                           int.parse(controller.leaveAppId.value),

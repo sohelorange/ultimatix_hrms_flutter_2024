@@ -81,6 +81,7 @@ class AddLeaveView extends GetView<AddLeaveController> {
                     ),
                   );
                 }).toList(),
+                menuMaxHeight: 250,
                 onChanged: (LeaveData? newValue) {
                   // controller.selectedDropdownLeave.value = newValue;
                   // if (newValue != null) {

@@ -54,8 +54,7 @@ class ChangePasswordController extends GetxController {
       AppSnackBar.showGetXCustomSnackBar(
           message: 'Confirm password & Change Password does not same.');
     } else {
-      changePassword(
-          currentPasswordController.value.text,
+      changePassword(currentPasswordController.value.text,
           changePasswordController.value.text);
     }
   }
@@ -83,7 +82,12 @@ class ChangePasswordController extends GetxController {
           AppSnackBar.showGetXCustomSnackBar(
               message: response['message'], backgroundColor: Colors.green);
         } else {
-          AppSnackBar.showGetXCustomSnackBar(message: response['message']);
+          if (response['code'] == 204 && response['status'] == false) {
+            AppSnackBar.showGetXCustomSnackBar(message: response['data'].toString().replaceAll('#False#', '.'));
+          } else {
+            //AppSnackBar.showGetXCustomSnackBar(message: response['message']);
+            AppSnackBar.showGetXCustomSnackBar(message: response['data'].toString().replaceAll('#False#', '.'));
+          }
         }
       } else {
         AppSnackBar.showGetXCustomSnackBar(message: Constants.networkMsg);

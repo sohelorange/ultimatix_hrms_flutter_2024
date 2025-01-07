@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ultimatix_hrms_flutter/utility/utils.dart';
 
 class AppDatePicker {
+  static String currentUTCFormatDate() {
+    DateFormat dateFormat = DateFormat(Utils.commonUTCDateFormat);
+    String currentDate = dateFormat.format(DateTime.now());
+    return currentDate;
+  }
+
   static String currentDate() {
     DateFormat dateFormat = DateFormat('dd/MM/yyyy');
     String currentDate = dateFormat.format(DateTime.now());
@@ -141,20 +146,15 @@ class AppDatePicker {
     return outPutData;
   }
 
-  static void allDateEnable1(
-      BuildContext context, Rx<TextEditingController> controller) async {
-    final DateTime? selected = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1999),
-      lastDate: DateTime(int.parse(currentYear()), 12, 31),
-      initialEntryMode: DatePickerEntryMode.calendarOnly,
-    );
+  static String firstDayOfYear() {
+    DateFormat dateFormat = DateFormat('dd/MM/yyyy');
+    DateTime firstDay = DateTime(DateTime.now().year, 1, 1);
+    return dateFormat.format(firstDay);
+  }
 
-    if (selected != null) {
-      String formattedDate = formatDateWithDDMMYYYY(selected);
-      controller.value.text = formattedDate; // Update the text field
-      print("Selected Date: $formattedDate"); // Debugging the selected date
-    }
+  static String lastDayOfYear() {
+    DateFormat dateFormat = DateFormat('dd/MM/yyyy');
+    DateTime lastDay = DateTime(DateTime.now().year, 12, 31);
+    return dateFormat.format(lastDay);
   }
 }

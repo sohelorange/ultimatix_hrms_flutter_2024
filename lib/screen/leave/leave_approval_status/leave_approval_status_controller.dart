@@ -19,7 +19,8 @@ class LeaveApprovalStatusController extends GetxController {
     getManagerApprovalDetailsAPI(leaveId);
   }
 
-  Rx<LeaveApprovalStatusModel> leaveApprovalResponse = LeaveApprovalStatusModel().obs;
+  Rx<LeaveApprovalStatusModel> leaveApprovalResponse =
+      LeaveApprovalStatusModel().obs;
 
   Future<void> getManagerApprovalDetailsAPI(int leaveId) async {
     if (await Network.isConnected()) {
@@ -42,7 +43,8 @@ class LeaveApprovalStatusController extends GetxController {
         var response = await DioClient()
             .post(AppURL.managerApprovalDetailsURL, requestParam);
 
-        leaveApprovalResponse.value = LeaveApprovalStatusModel.fromJson(response);
+        leaveApprovalResponse.value =
+            LeaveApprovalStatusModel.fromJson(response);
         if (leaveApprovalResponse.value.code == 200 &&
             leaveApprovalResponse.value.status == true) {
           debugPrint("leave balance --$leaveApprovalResponse");

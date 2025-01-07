@@ -5,7 +5,6 @@ import 'package:ultimatix_hrms_flutter/app/app_routes.dart';
 import 'package:ultimatix_hrms_flutter/screen/leave/leave_balance/leave_balance_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/leave/leave_controller.dart';
 import 'package:ultimatix_hrms_flutter/screen/leave/leave_status/leave_status_view.dart';
-import 'package:ultimatix_hrms_flutter/utility/utils.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_container.dart';
 
 import '../../app/app_colors.dart';
@@ -16,110 +15,6 @@ class LeaveAppView extends GetView<LeaveController> {
 
   @override
   Widget build(BuildContext context) {
-    // return Container(
-    //   decoration: const BoxDecoration(
-    //     gradient: LinearGradient(
-    //       colors: [AppColors.colorAppBars, AppColors.colorAppBars],
-    //       // Gradient colors
-    //       begin: Alignment.bottomLeft,
-    //       end: Alignment.topRight,
-    //       stops: [0.8, 0.9],
-    //       // Stops for the gradient colors
-    //       tileMode: TileMode.clamp,
-    //     ),
-    //   ),
-    //   child: AnnotatedRegion(
-    //     value: const SystemUiOverlayStyle(
-    //       statusBarBrightness: Brightness.light,
-    //       statusBarIconBrightness: Brightness.dark,
-    //       statusBarColor: Colors.transparent,
-    //     ),
-    //     child: MaterialApp(
-    //       debugShowCheckedModeBanner: false,
-    //       home: GestureDetector(
-    //         onTap: () {
-    //           Utils.closeKeyboard(context);
-    //         },
-    //         child: SafeArea(
-    //           child: Stack(
-    //             children: [
-    //               Scaffold(
-    //                 appBar: AppBar(
-    //                   surfaceTintColor: Colors.transparent,
-    //                   elevation: 0,
-    //                   flexibleSpace: Container(
-    //                     decoration: const BoxDecoration(
-    //                       gradient: LinearGradient(
-    //                         colors: [
-    //                           AppColors.colorAppBars,
-    //                           AppColors.colorAppBars
-    //                         ],
-    //                         // Gradient colors
-    //                         begin: Alignment.bottomLeft,
-    //                         end: Alignment.topRight,
-    //                         stops: [0.3, 0.7],
-    //                         // Stops for the gradient colors
-    //                         tileMode: TileMode.clamp,
-    //                       ),
-    //                     ),
-    //                   ),
-    //                   centerTitle: true,
-    //                   leading: InkWell(
-    //                     splashColor: AppColors.colorWhite,
-    //                     onTap: () {
-    //                       Get.back();
-    //                     },
-    //                     customBorder: RoundedRectangleBorder(
-    //                       borderRadius: BorderRadius.circular(10),
-    //                     ),
-    //                     child: const Padding(
-    //                       padding: EdgeInsets.only(
-    //                           left: 15, top: 10, bottom: 10, right: 15),
-    //                       child: CommonAppImage(
-    //                         imagePath: AppImages.icarrowback,
-    //                         height: 10,
-    //                         width: 10,
-    //                         fit: BoxFit.contain,
-    //                       ),
-    //                     ),
-    //                   ),
-    //                   title: CommonText(
-    //                     text: 'Leave',
-    //                     fontWeight: FontWeight.w500,
-    //                     fontSize: 18,
-    //                     color: AppColors.colorBlack,
-    //                   ),
-    //                   actions: [
-    //                     InkWell(
-    //                       splashColor: AppColors.colorWhite,
-    //                       onTap: () {
-    //                         Get.toNamed(AppRoutes.addLeaveRoute);
-    //                       },
-    //                       radius: 10,
-    //                       borderRadius: BorderRadius.circular(30),
-    //                       child: Padding(
-    //                         padding: const EdgeInsets.all(16),
-    //                         child: CommonAppImage(
-    //                           height: 20,
-    //                           width: 20,
-    //                           imagePath: AppImages.icadd2,
-    //                           fit: BoxFit.contain,
-    //                         ),
-    //                       ),
-    //                     ),
-    //                   ],
-    //                   // bottom: tabBarView(),
-    //                 ),
-    //                 body: getLeaveView(context),
-    //               ),
-    //             ],
-    //           ),
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
-
     return SafeArea(
         child: Scaffold(
       appBar: CommonAppBar(

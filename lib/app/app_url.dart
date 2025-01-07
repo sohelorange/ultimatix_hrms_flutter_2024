@@ -28,7 +28,8 @@ class AppURL {
   static String clockInOutTimeURL =
       "${PreferenceUtils.getAppUrl()}api/v1/GetPresentDayDuration";
   static const String geoLocation = 'api/v1/GeoLocationTracking';
-  static String addLocations = "${PreferenceUtils.getAppUrl()}api/v1/AddGeoLocation";
+  static String addLocations =
+      "${PreferenceUtils.getAppUrl()}api/v1/AddGeoLocation";
   static String logoutURL = "${PreferenceUtils.getAppUrl()}api/v1/Logout";
 
   //end region
@@ -36,13 +37,16 @@ class AppURL {
   //ClockIn region
   static String clockInURL = '${PreferenceUtils.getAppUrl()}api/v1/clockin';
   static String clockOutURL = '${PreferenceUtils.getAppUrl()}api/v1/clockout';
-  static String geolocationrecords = '${PreferenceUtils.getAppUrl()}api/v1/GeoLocationRecords';
+  static String geolocationrecords =
+      '${PreferenceUtils.getAppUrl()}api/v1/GeoLocationRecords';
 
   //end region
 
   //Employee region
-  static String employeedetails = '${PreferenceUtils.getAppUrl()}api/v1/EmployeeDetails';
-  static String updateemployeedetails = '${PreferenceUtils.getAppUrl()}api/v1/UpdateEmployeeDetails';
+  static String employeedetails =
+      '${PreferenceUtils.getAppUrl()}api/v1/EmployeeDetails';
+  static String updateemployeedetails =
+      '${PreferenceUtils.getAppUrl()}api/v1/UpdateEmployeeDetails';
 
   //end region
 
@@ -65,8 +69,20 @@ class AppURL {
       "${PreferenceUtils.getAppUrl()}api/v1/GetShiftDeatails";
   static String getCompOffLeaveURL =
       "${PreferenceUtils.getAppUrl()}api/v1/GetCompOffLeave";
-  static String getCancelLeaveURL = "${PreferenceUtils.getAppUrl()}api/v1/LeaveApprovalDetails";
-  static String insertCancelLeaveURL = "${PreferenceUtils.getAppUrl()}api/v1/LeaveCancellationApplication";
+  static String getCancelLeaveURL =
+      "${PreferenceUtils.getAppUrl()}api/v1/LeaveApprovalDetails";
+  static String insertCancelLeaveURL =
+      "${PreferenceUtils.getAppUrl()}api/v1/LeaveCancellationApplication";
+
+  //end region
+
+  //approval region
+  static String managerApprovalCount =
+      "${PreferenceUtils.getAppUrl()}api/v1/GetDashboardApplicationsCount";
+  static String managerApprovalLeaveURL =
+      "${PreferenceUtils.getAppUrl()}api/v1/LeaveApplicationRecords";
+  static String managerApprovalInsertURL =
+      "${PreferenceUtils.getAppUrl()}api/v1/LeaveApproval";
 
   //end region
 
@@ -97,6 +113,7 @@ class AppURL {
       "${PreferenceUtils.getAppUrl()}api/v1/GetAttendanceRegularizeApplicationDetails";
   static String attendanceRegularizeApproval =
       "${PreferenceUtils.getAppUrl()}api/v1/AttendanceRegularizeApproval";
+
   //end region
 
   //Medical region
@@ -126,5 +143,5 @@ class AppURL {
       "${PreferenceUtils.getAppUrl()}api/v1/ChangePassword";
   static String feedbackURL =
       "${PreferenceUtils.getAppUrl()}api/v1/AddTicketFeedback";
-  //end region
+//end region
 }

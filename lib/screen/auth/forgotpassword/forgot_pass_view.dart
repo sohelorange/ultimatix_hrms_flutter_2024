@@ -1,12 +1,13 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_verification_code_field/flutter_verification_code_field.dart';
+import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'package:get/get.dart';
+import 'package:pin_input_text_field/pin_input_text_field.dart';
 import 'package:ultimatix_hrms_flutter/app/app_colors.dart';
 import 'package:ultimatix_hrms_flutter/app/app_font_weight.dart';
 import 'package:ultimatix_hrms_flutter/app/app_images.dart';
 import 'package:ultimatix_hrms_flutter/app/app_strings.dart';
 import 'package:ultimatix_hrms_flutter/screen/auth/forgotpassword/forgot_pass_controller.dart';
+import 'package:ultimatix_hrms_flutter/utility/utils.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_app_image.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_text.dart';
 
@@ -125,14 +126,61 @@ class ForgotPassView extends GetView<ForgotPassController> {
         const SizedBox(
           height: 40,
         ),
-        VerificationCodeField(
-          length: 4,
-          onFilled: (value) {
-            controller.verifyOTP.value = int.parse(value);
+        PinInputTextField(
+          pinLength: 4,
+          decoration: UnderlineDecoration(
+            textStyle: TextStyle(
+                fontSize: 24,
+                fontWeight: AppFontWeight.w500,
+                color: AppColors.colorBlack),
+            colorBuilder: const FixedColorBuilder(AppColors.colorPurple),
+          ),
+          keyboardType: TextInputType.number,
+          autoFocus: true,
+          cursor: Cursor(
+            width: 2,
+            color: AppColors.colorPurple,
+            enabled: true,
+          ),
+          onChanged: (pin) {
+            if (pin.isEmpty) {
+              controller.verifyOTP.value = 0;
+            } else {
+              controller.verifyOTP.value = int.parse(pin);
+            }
+
+            if (pin.length == 4) {
+              Utils.closeKeyboard(Get.context!);
+            }
           },
-          size: const Size(70, 60),
-          spaceBetween: 13,
-          matchingPattern: RegExp(r'^\d+$'),
+          onSubmit: (pin) {
+            if (pin.isEmpty) {
+              controller.verifyOTP.value = 0;
+            } else {
+              controller.verifyOTP.value = int.parse(pin);
+            }
+          },
+        ),
+        Visibility(
+          visible: false,
+          child: Center(
+            child: VerificationCode(
+              textStyle:
+                  const TextStyle(fontSize: 20.0, color: AppColors.colorBlack),
+              keyboardType: TextInputType.number,
+              //underlineColor: Colors.amber,
+              digitsOnly: true,
+              length: 4,
+              cursorColor: AppColors.colorPurple,
+              onCompleted: (String value) {
+                controller.verifyOTP.value = int.parse(value);
+              },
+              onEditing: (bool value) {
+                //if (!value) FocusScope.of(Get.context!).unfocus();
+              },
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+            ),
+          ),
         ),
         const SizedBox(
           height: 30,

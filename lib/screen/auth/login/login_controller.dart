@@ -151,10 +151,8 @@ class LoginController extends GetxController {
 
         var response = await DioClient().post(AppURL.loginURL, param);
         if (response['code'] == 200 && response['status'] == true) {
-          PreferenceUtils.setLoginUserID(
-              loginIDController.value.text);
-          PreferenceUtils.setLoginUserPassword(
-              passwordController.value.text);
+          PreferenceUtils.setLoginUserID(loginIDController.value.text);
+          PreferenceUtils.setLoginUserPassword(passwordController.value.text);
 
           PreferenceUtils.setAuthToken('Bearer ${response['data']['token']}');
 

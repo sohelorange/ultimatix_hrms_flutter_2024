@@ -73,6 +73,7 @@ class DrawerDashController extends GetxController {
       case 3: // QR Code Attendance
         break;
       case 4: // Approvals
+        Get.toNamed(AppRoutes.managerApprovalRoute);
         break;
       case 5: // Salary
         break;

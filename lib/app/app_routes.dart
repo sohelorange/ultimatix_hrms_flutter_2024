@@ -28,6 +28,11 @@ import 'package:ultimatix_hrms_flutter/screen/geofence/geofence_view.dart';
 
 import 'package:ultimatix_hrms_flutter/screen/liveTracking/live_tracking_bind.dart';
 import 'package:ultimatix_hrms_flutter/screen/liveTracking/live_tracking_ui.dart';
+import 'package:ultimatix_hrms_flutter/screen/manager_approval/leave_manager_approval_details/leave_manager_approval_details_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/manager_approval/leave_manager_approval_details/leave_manager_approval_details_view.dart';
+import 'package:ultimatix_hrms_flutter/screen/manager_approval/leave_manager_approval_details/leave_manager_approval_edit_details/leave_manager_approval_edit_details_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/manager_approval/manager_approval_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/manager_approval/manager_approval_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/profile/profile_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/profile/profile_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/settings/change_password/change_password_binding.dart';
@@ -47,6 +52,9 @@ import '../screen/auth/login/login_binding.dart';
 import '../screen/auth/login/login_view_new.dart';
 import '../screen/clockInOut/clock_in_out_bind.dart';
 import '../screen/clockInOut/clock_in_out_ui.dart';
+import '../screen/manager_approval/leave_manager_approval/leave_manager_approval_binding.dart';
+import '../screen/manager_approval/leave_manager_approval/leave_manager_approval_view.dart';
+import '../screen/manager_approval/leave_manager_approval_details/leave_manager_approval_edit_details/leave_manager_approval_edit_details_view.dart';
 import '../screen/splash/splash_view.dart';
 
 /// All routes for app pages are defined here
@@ -65,12 +73,14 @@ class AppRoutes {
   //static const geoFencingRoute = '/geo_fencing_route';
   static const dashBoardRoute = '/dash_board_route';
   static const drawerRoute = '/drawer_route';
-  static const notificationAnnouncementRoute = '/notification_announcement_route';
+  static const notificationAnnouncementRoute =
+      '/notification_announcement_route';
 
   //end region
 
   //profile region
   static const profileRoute = '/profile_route';
+
   // end region
 
   //leave region
@@ -81,6 +91,15 @@ class AppRoutes {
 
   //end region
 
+  //approval region
+  static const managerApprovalRoute = '/manager_approval_route';
+  static const leaveManagerApprovalRoute = '/leave_manager_approval_route';
+  static const leaveManagerApprovalDetailsRoute =
+      '/leave_manager_approval_details_route';
+  static const leaveManagerApprovalEditDetailsRoute =
+      '/leave_manager_approval_edit_details_route';
+
+  //end region
   //clock in region
   static const clockInRoute = '/clock_in_route';
   static const geofenceRoute = '/geofence_route';
@@ -248,6 +267,26 @@ class AppRoutes {
       name: AppRoutes.feedbackRoute,
       binding: FeedbackBinding(),
       page: () => const FeedbackView(),
+    ),
+    GetPage(
+      name: AppRoutes.managerApprovalRoute,
+      binding: ManagerApprovalBinding(),
+      page: () => const ManagerApprovalView(),
+    ),
+    GetPage(
+      name: AppRoutes.leaveManagerApprovalRoute,
+      binding: LeaveManagerApprovalBinding(),
+      page: () => const LeaveManagerApprovalView(),
+    ),
+    GetPage(
+      name: AppRoutes.leaveManagerApprovalDetailsRoute,
+      binding: LeaveManagerApprovalDetailsBinding(),
+      page: () => const LeaveManagerApprovalDetailsView(),
+    ),
+    GetPage(
+      name: AppRoutes.leaveManagerApprovalEditDetailsRoute,
+      binding: LeaveManagerApprovalEditDetailsBinding(),
+      page: () => const LeaveManagerApprovalEditDetailsView(),
     ),
   ];
 }

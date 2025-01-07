@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -23,61 +22,60 @@ class ServerConnectionController extends GetxController {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return GestureDetector(
-          onTap: () {
-            Utils.closeKeyboard(context);
-          },
-          child: AlertDialog(
-            surfaceTintColor: Colors.white,
-            titlePadding: EdgeInsets.zero,
-            actionsPadding: const EdgeInsets.only(bottom: 20, top: 10),
-            content: SizedBox(
-              height: 250,
-              child: Column(
-                children: [
-                  const CommonAppImage(
-                    imagePath: AppImages.icserverright,
-                    height: 50,
-                    width: 50,
-                    fit: BoxFit.fill,
-                  ).paddingOnly(top: 20),
-                  CommonText(
-                    padding: const EdgeInsets.only(top: 10),
-                    text: AppString.successText,
-                    fontSize: 16,
-                    color: AppColors.colorBlack,
-                    fontWeight: AppFontWeight.regular,
-                  ).paddingOnly(top: 20),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.width / 8,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor: WidgetStateColor.resolveWith(
-                                (states) => AppColors.colorPurple,
-                          ),
-                          shape:
-                          WidgetStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ))),
-                      onPressed: () {
-                        Get.back();
-                        // controller.onLogInAPI();
-                        //Get.toNamed(AppRoutes.dashBoard);
-                      },
-                      child: CommonText(
-                        text: AppString.ok,
-                        color: AppColors.colorWhite,
-                        fontSize: 16,
-                        fontWeight: AppFontWeight.w400,
+            onTap: () {
+              Utils.closeKeyboard(context);
+            },
+            child: AlertDialog(
+              surfaceTintColor: Colors.white,
+              titlePadding: EdgeInsets.zero,
+              actionsPadding: const EdgeInsets.only(bottom: 20, top: 10),
+              content: SizedBox(
+                height: 250,
+                child: Column(
+                  children: [
+                    const CommonAppImage(
+                      imagePath: AppImages.icserverright,
+                      height: 50,
+                      width: 50,
+                      fit: BoxFit.fill,
+                    ).paddingOnly(top: 20),
+                    CommonText(
+                      padding: const EdgeInsets.only(top: 10),
+                      text: AppString.successText,
+                      fontSize: 16,
+                      color: AppColors.colorBlack,
+                      fontWeight: AppFontWeight.regular,
+                    ).paddingOnly(top: 20),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.width / 8,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: WidgetStateColor.resolveWith(
+                              (states) => AppColors.colorPurple,
+                            ),
+                            shape:
+                                WidgetStateProperty.all<RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ))),
+                        onPressed: () {
+                          Get.back();
+                          // controller.onLogInAPI();
+                          //Get.toNamed(AppRoutes.dashBoard);
+                        },
+                        child: CommonText(
+                          text: AppString.ok,
+                          color: AppColors.colorWhite,
+                          fontSize: 16,
+                          fontWeight: AppFontWeight.w400,
+                        ),
                       ),
-                    ),
-                  ).paddingOnly(left: 30, right: 20, top: 20),
-                ],
+                    ).paddingOnly(left: 30, right: 20, top: 20),
+                  ],
+                ),
               ),
-            ),
-          )
-        );
+            ));
       },
     );
   }

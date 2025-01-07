@@ -73,7 +73,7 @@ class LeaveApprovalStatusView extends GetView<LeaveApprovalStatusController> {
   getView(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        double padding = constraints.maxWidth > 600 ? 20.0 : 10.0;
+        //double padding = constraints.maxWidth > 600 ? 20.0 : 10.0;
         double width = MediaQuery.of(context).size.width;
 
         return Obx(() {

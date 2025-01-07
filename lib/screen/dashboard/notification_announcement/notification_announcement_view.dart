@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ultimatix_hrms_flutter/app/app_images.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/notification_announcement/notification_announcement_controller.dart';
-import 'package:ultimatix_hrms_flutter/utility/constants.dart';
+import 'package:ultimatix_hrms_flutter/widget/common_app_image_svg.dart';
 
 import '../../../app/app_colors.dart';
 import '../../../app/app_font_weight.dart';
@@ -23,122 +24,133 @@ class NotificationAnnouncementView
         child: Column(
           //mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             CommonText(
               text: 'ORGANIZATION ANNOUNCEMENT',
               color: AppColors.colorDarkBlue,
               fontSize: 16,
               fontWeight: AppFontWeight.w700,
             ),
-            const SizedBox(height: 10,),
-            Obx(() => _notificationUI()),
+            const SizedBox(
+              height: 10,
+            ),
+            Obx(() => _notificationUI(context)),
           ],
         ),
       ),
     ));
   }
 
-  Widget _notificationUI() {
-    return controller.isLoading.value && controller.notificationList.isEmpty
+  Widget _notificationUI(BuildContext context) {
+    return controller.isLoading.isTrue
         ? Expanded(child: Center(child: Utils.commonCircularProgress()))
-        : controller.notificationList.isEmpty
+        : controller.leaveBalListResponse.value.data != null
             ? Expanded(
-                child: Center(
-                  child: Text(controller.statusCode == 0
-                      ? Constants.timeOutMsg
-                      : controller.statusCode == 204
-                          ? Constants.noDataMsg
-                          : Constants.somethingWrongMsg),
-                ),
-              )
-            : Expanded(
                 child: ListView.builder(
                   shrinkWrap: true,
                   //controller: _scrollController,
-                  itemCount: controller.notificationList.length + 1,
+                  itemCount: controller.leaveBalListResponse.value.data!.length,
                   itemBuilder: (context, index) {
-                    if (index < controller.notificationList.length) {
-                      return Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 10),
-                        padding: const EdgeInsets.all(15),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Color(0X1C1F370D),
-                              blurRadius: 0.0,
-                              spreadRadius: 1.0,
-                              offset: Offset(0, 0),
-                            ),
-                          ],
-                        ),
-                        child:
-                            _listUI(index), // Your widget inside the Container
-                      );
-                    } else {
-                      if (controller.isLoading.value) {
-                        return Utils.commonCircularProgress();
-                      } else {
-                        return const SizedBox(); // Return an empty SizedBox if no more data to fetch
-                      }
-                    }
+                    return Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
+                      padding: const EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0X1C1F370D),
+                            blurRadius: 4.0,
+                            spreadRadius: 1.0,
+                            offset: Offset(0, 0),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CommonText(
+                            text: controller.leaveBalListResponse.value
+                                    .data![index].docTitle!
+                                    .toString()
+                                    .isNotEmpty
+                                ? controller.leaveBalListResponse.value
+                                    .data![index].docTitle!
+                                    .toString()
+                                : 'N/A',
+                            color: AppColors.colorDarkBlue,
+                            fontSize: 16,
+                            fontWeight: AppFontWeight.w500,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          CommonText(
+                            text: 'Description',
+                            color: AppColors.purpleSwatch,
+                            fontSize: 14,
+                            fontWeight: AppFontWeight.w500,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          CommonText(
+                            text: controller.leaveBalListResponse.value
+                                    .data![index].description!
+                                    .toString()
+                                    .isNotEmpty
+                                ? controller.leaveBalListResponse.value
+                                    .data![index].description!
+                                    .toString()
+                                : 'N/A',
+                            color: AppColors.colorDarkBlue,
+                            fontSize: 14,
+                            fontWeight: AppFontWeight.w400,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          CommonText(
+                            text: controller.leaveBalListResponse.value
+                                    .data![index].docFromDate!
+                                    .toString()
+                                    .isNotEmpty
+                                ? controller.leaveBalListResponse.value
+                                    .data![index].docFromDate!
+                                    .toString()
+                                : 'N/A',
+                            color: AppColors.purpleSwatch,
+                            fontSize: 12,
+                            fontWeight: AppFontWeight.w400,
+                          ),
+                        ],
+                      ), // Your widget inside the Container
+                    );
                   },
                 ),
-              );
-  }
-
-  Widget _listUI(int index) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CommonText(
-          text: controller.notificationList[index]['Doc_Title']
-              .toString()
-              .isNotEmpty
-              ? controller.notificationList[index]['Doc_Title'].toString()
-              : 'N/A',
-          color: AppColors.colorDarkBlue,
-          fontSize: 16,
-          fontWeight: AppFontWeight.w500,
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        CommonText(
-          text: 'Description',
-          color: AppColors.purpleSwatch,
-          fontSize: 14,
-          fontWeight: AppFontWeight.w500,
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        CommonText(
-          text: controller.notificationList[index]['Description']
-                  .toString()
-                  .isNotEmpty
-              ? controller.notificationList[index]['Description'].toString()
-              : 'N/A',
-          color: AppColors.colorDarkBlue,
-          fontSize: 14,
-          fontWeight: AppFontWeight.w400,
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        CommonText(
-          text: controller.notificationList[index]['Doc_FromDate']
-              .toString()
-              .isNotEmpty
-              ? controller.notificationList[index]['Doc_FromDate'].toString()
-              : 'N/A',
-          color: AppColors.purpleSwatch,
-          fontSize: 12,
-          fontWeight: AppFontWeight.w400,
-        ),
-      ],
-    );
+              )
+            : Expanded(
+                child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CommonAppImageSvg(
+                      imagePath: AppImages.svgNoData,
+                      height: 100,
+                      width: MediaQuery.sizeOf(context).width),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CommonText(
+                    text: controller.leaveBalListResponse.value.message!,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 16,
+                    color: AppColors.colorDarkBlue,
+                  ),
+                ],
+              ));
   }
 }

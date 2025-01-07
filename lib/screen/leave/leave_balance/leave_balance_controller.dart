@@ -13,6 +13,7 @@ import 'package:ultimatix_hrms_flutter/widget/common_year_month_grid_view.dart';
 import '../../../utility/preference_utils.dart';
 
 class LeaveBalanceController extends GetxController {
+  RxInt selectedYear = DateTime.now().year.obs;
   final RxInt selectedYearIndex = RxInt(-1); // Default to -1 (no selection yet)
   final RxInt selectedMonthIndex =
       RxInt(-1); // Default to -1 (no selection yet)
@@ -76,17 +77,17 @@ class LeaveBalanceController extends GetxController {
   }
 
   void showYearDialog(BuildContext context) {
-    final int currentYear = DateTime.now().year;
+    final int currentYear = DateTime.now().year - 15;
 
     // Generate a list of years dynamically
     final List<Map<String, dynamic>> yearItems = List.generate(
-      20,
+      50,
       (index) => {'name': (currentYear + index).toString()},
     );
 
     // Set default to current year if no selection has been made yet
     if (selectedYearIndex.value == -1) {
-      selectedYearIndex.value = 0; // Default to the current year
+      selectedYearIndex.value = 15; // Default to the current year
     }
 
     showDialog(
@@ -117,8 +118,9 @@ class LeaveBalanceController extends GetxController {
                     selectedYearIndex.value = index;
 
                     Get.back(); // Close the year dialog
-                    final selectedYear = currentYear + selectedYearIndex.value;
-                    showMonthDialog(context, selectedYear);
+                    //final selectedYear = currentYear + selectedYearIndex.value;
+                    selectedYear.value = currentYear + selectedYearIndex.value;
+                    showMonthDialog(context, selectedYear.value);
                   },
                 );
               },

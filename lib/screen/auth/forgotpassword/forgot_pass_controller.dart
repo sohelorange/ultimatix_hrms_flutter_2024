@@ -117,16 +117,22 @@ class ForgotPassController extends GetxController {
   }
 
   void verifyOTPValidationWithAPI() {
-    if (verifyOTP.value == 0) {
+    String otpString = verifyOTP.value.toString();
+
+    if (otpString.isEmpty) {
       AppSnackBar.showGetXCustomSnackBar(
-          message: 'Please enter 4 digit passcode.');
+        message: 'Please enter 4-digit passcode.',
+      );
+    } else if (otpString.length != 4) {
+      AppSnackBar.showGetXCustomSnackBar(
+        message: 'Please enter a valid 4-digit passcode.',
+      );
     } else {
       verifyPass(forgotPassController.value.text, verifyOTP.value);
     }
   }
 
-  Future<void> resetPass(
-      String userName, String newPass) async {
+  Future<void> resetPass(String userName, String newPass) async {
     try {
       isLoading(true);
       isDisable(true);
@@ -146,7 +152,16 @@ class ForgotPassController extends GetxController {
           AppSnackBar.showGetXCustomSnackBar(
               message: response['message'], backgroundColor: Colors.green);
         } else {
-          AppSnackBar.showGetXCustomSnackBar(message: response['message']);
+          if (response['code'] == 204 && response['status'] == false) {
+            AppSnackBar.showGetXCustomSnackBar(
+                message:
+                    response['data'].toString().replaceAll('#False#', '.'));
+          } else {
+            //AppSnackBar.showGetXCustomSnackBar(message: response['message']);
+            AppSnackBar.showGetXCustomSnackBar(
+                message:
+                    response['data'].toString().replaceAll('#False#', '.'));
+          }
         }
       } else {
         AppSnackBar.showGetXCustomSnackBar(message: Constants.networkMsg);

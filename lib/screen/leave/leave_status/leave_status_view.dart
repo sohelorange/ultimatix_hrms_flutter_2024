@@ -171,7 +171,7 @@ class LeaveStatusView extends GetView<LeaveStatusController> {
           //physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
             return Container(
-                margin: const EdgeInsets.symmetric(horizontal: 1, vertical: 10),
+                margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                 padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
                   color: AppColors.colorWhite,
@@ -179,7 +179,7 @@ class LeaveStatusView extends GetView<LeaveStatusController> {
                   boxShadow: const [
                     BoxShadow(
                       color: Color(0X1C1F370D),
-                      blurRadius: 0.0,
+                      blurRadius: 4.0,
                       spreadRadius: 1.0,
                       offset: Offset(0, 0),
                     ),

@@ -41,17 +41,17 @@ class LeaveApplicationDetailsModel {
   int? leaveApprovalID;
   String? fromDate;
   String? toDate;
-  double? leavePeriod;  // Change to double
+  double? leavePeriod; // Change to double
   String? leaveName;
   String? leaveAssignAs;
   String? approvalComments;
   String? forDate;
-  double? leaveUsed;    // Change to double
+  double? leaveUsed; // Change to double
   int? tranID;
   int? isApprove;
-  double? actualLeaveDay;  // Change to double
-  double? leavECANCELPERIOD;  // Change to double
-  double? remaiNLEAVEPERIOD;  // Change to double
+  double? actualLeaveDay; // Change to double
+  double? leavECANCELPERIOD; // Change to double
+  double? remaiNLEAVEPERIOD; // Change to double
   String? remaiNDAY;
   String? dayType;
   String? comment;
@@ -86,17 +86,22 @@ class LeaveApplicationDetailsModel {
     leaveApprovalID = json['leave_Approval_ID'];
     fromDate = json['from_Date'];
     toDate = json['to_Date'];
-    leavePeriod = json['leave_Period'].toDouble();  // Use toDouble() if it's an integer
+    leavePeriod =
+        json['leave_Period'].toDouble(); // Use toDouble() if it's an integer
     leaveName = json['leave_Name'];
     leaveAssignAs = json['leave_Assign_As'];
     approvalComments = json['approval_Comments'];
     forDate = json['for_Date'];
-    leaveUsed = json['leave_Used'].toDouble();  // Use toDouble() if it's an integer
+    leaveUsed =
+        json['leave_Used'].toDouble(); // Use toDouble() if it's an integer
     tranID = json['tran_ID'];
     isApprove = json['is_Approve'];
-    actualLeaveDay = json['actual_Leave_Day'].toDouble();  // Use toDouble() if it's an integer
-    leavECANCELPERIOD = json['leavE_CANCEL_PERIOD'].toDouble();  // Use toDouble() if it's an integer
-    remaiNLEAVEPERIOD = json['remaiN_LEAVE_PERIOD'].toDouble();  // Use toDouble() if it's an integer
+    actualLeaveDay = json['actual_Leave_Day']
+        .toDouble(); // Use toDouble() if it's an integer
+    leavECANCELPERIOD = json['leavE_CANCEL_PERIOD']
+        .toDouble(); // Use toDouble() if it's an integer
+    remaiNLEAVEPERIOD = json['remaiN_LEAVE_PERIOD']
+        .toDouble(); // Use toDouble() if it's an integer
     remaiNDAY = json['remaiN_DAY'];
     dayType = json['day_Type'];
     comment = json['comment'];

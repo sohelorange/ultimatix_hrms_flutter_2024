@@ -1,9 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
-import 'package:get/get_utils/get_utils.dart';
 import 'package:ultimatix_hrms_flutter/app/app_colors.dart';
 import 'package:ultimatix_hrms_flutter/app/app_font_weight.dart';
 import 'package:ultimatix_hrms_flutter/app/app_routes.dart';
@@ -30,20 +26,21 @@ class ServerConnectionView extends GetView<ServerConnectionController> {
             children: [
               Center(
                 child: Padding(
-                  padding: EdgeInsets.only(top: MediaQuery.of(context).size.width / 4),
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.width / 4),
                   child: const CommonAppImage(
                     imagePath: AppImages.icserverlogo,
                     height: 200,
                     width: 200,
                     fit: BoxFit.fill,
                   ),
-                ) ,
+                ),
               ),
               Row(
                 children: [
                   CommonText(
                     padding:
-                    const EdgeInsets.only(top: 3, bottom: 12, left: 12),
+                        const EdgeInsets.only(top: 3, bottom: 12, left: 12),
                     text: AppString.serverConnection,
                     color: AppColors.colorBlack,
                     fontSize: 20,
@@ -64,12 +61,12 @@ class ServerConnectionView extends GetView<ServerConnectionController> {
                 child: ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor: WidgetStateColor.resolveWith(
-                            (states) => AppColors.colorPurple,
+                        (states) => AppColors.colorPurple,
                       ),
                       shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ))),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ))),
                   onPressed: () {
                     controller.serverConnectionDialog(context);
                     //Get.toNamed(AppRoutes.dashBoard);
@@ -83,12 +80,11 @@ class ServerConnectionView extends GetView<ServerConnectionController> {
                 ),
               ).paddingOnly(left: 30, right: 30, top: 20),
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   Get.toNamed(AppRoutes.loginRoute);
                 },
-                child:  CommonText(
-                  padding:
-                  const EdgeInsets.only(top: 20, bottom: 12, left: 12),
+                child: CommonText(
+                  padding: const EdgeInsets.only(top: 20, bottom: 12, left: 12),
                   text: AppString.cancel,
                   color: AppColors.colorPurple,
                   fontSize: 18,

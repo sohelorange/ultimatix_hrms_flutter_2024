@@ -250,5 +250,4 @@ class LoginViewNew extends GetView<LoginController> {
           controller.passwordController.value.text);
     }
   }*/
-
 }

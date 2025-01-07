@@ -55,12 +55,12 @@ class LeaveStatusController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fromDateController.value.text = AppDatePicker.currentDate();
+    fromDateController.value.text = AppDatePicker.firstDayOfYear();
     formattedFromDate.value = fromDateController.value.text;
     fromAPIDt.value = AppDatePicker.convertDateTimeFormat(
         formattedFromDate.value, 'dd/MM/yyyy', 'yyyy-MM-dd');
 
-    toDateController.value.text = AppDatePicker.currentDate();
+    toDateController.value.text = AppDatePicker.lastDayOfYear();
     formattedToDate.value = toDateController.value.text;
     toAPIDt.value = AppDatePicker.convertDateTimeFormat(
         formattedToDate.value, 'dd/MM/yyyy', 'yyyy-MM-dd');

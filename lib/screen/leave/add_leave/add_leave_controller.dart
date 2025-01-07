@@ -228,6 +228,8 @@ class AddLeaveController extends GetxController {
         var response =
             await DioClient().post(AppURL.leaveApplicationURL, param);
 
+        print(response);
+
         if (response['code'] == 200 && response['status'] == true) {
           final data = response['data'];
           // if (data != null && data is List && data.isNotEmpty) {
@@ -286,6 +288,7 @@ class AddLeaveController extends GetxController {
             } else if (data[0].containsKey('Result')) {
               // Handle second response type
               final result = data[0]['Result']?.toString() ?? '';
+              periodController.value.clear();
               toDateController.value.clear();
               leaveTypesDay.clear();
               selectedLeaveTypesDay!.value = '';
@@ -349,6 +352,9 @@ class AddLeaveController extends GetxController {
           "strType": "I"
         };
 
+        print("Binary : $attachment");
+        print("Doc name :$docName");
+
         var response =
             await DioClient().post(AppURL.leaveApplicationURL, param);
 
@@ -370,7 +376,7 @@ class AddLeaveController extends GetxController {
                     Get.put(LeaveStatusController());
 
                 controller.onLeaveBalanceAPI(
-                    controller.fromAPIDt.value,  controller.toAPIDt.value);
+                    controller.fromAPIDt.value, controller.toAPIDt.value);
 
                 AppSnackBar.showGetXCustomSnackBar(
                     message: result.split('#')[0],
@@ -411,7 +417,8 @@ class AddLeaveController extends GetxController {
       AppSnackBar.showGetXCustomSnackBar(message: 'Please select to time.');
     } else if (toDateController.value.text.isEmpty) {
       AppSnackBar.showGetXCustomSnackBar(message: 'Please select to date.');
-    } else if (selectedDropdownLeaveID.value != '1481' && selectedLeaveTypesDay!.value.isEmpty) {
+    } else if (selectedDropdownLeaveID.value != '1481' &&
+        selectedLeaveTypesDay!.value.isEmpty) {
       AppSnackBar.showGetXCustomSnackBar(message: 'Please select leave type.');
     } else if (isFractional(periodController.value.text)) {
       AppSnackBar.showGetXCustomSnackBar(
@@ -422,9 +429,9 @@ class AddLeaveController extends GetxController {
       AppSnackBar.showGetXCustomSnackBar(message: 'Please select attachment.');
     } else {
       String strValue = '';
-      if(selectedDropdownLeaveID.value == '1481'){
+      if (selectedDropdownLeaveID.value == '1481') {
         strValue = hourController.value.text;
-      }else{
+      } else {
         strValue = periodController.value.text;
       }
 

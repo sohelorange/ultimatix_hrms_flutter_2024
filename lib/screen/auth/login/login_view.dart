@@ -186,7 +186,6 @@ class LoginView extends GetView<LoginController> {
                               borderRadius: BorderRadius.circular(10.0),
                               side: const BorderSide(color: Colors.black)))),
                   onPressed: () {
-                    print('server redirect');
                     Get.offAllNamed(AppRoutes.serverRoute);
                   },
                   child: Row(

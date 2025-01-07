@@ -54,13 +54,13 @@ class LeaveBalanceView extends GetView<LeaveBalanceController> {
 
   Widget _leaveBalanceUI(BuildContext context) {
     // Get the current year and month or selected ones
-    final int currentYear = DateTime.now().year;
+    //final int currentYear = DateTime.now().year;
     final int currentMonth = DateTime.now().month;
 
     // Get selected year, using controller's selected value if available
-    final String selectedYear = controller.selectedYearIndex.value == -1
-        ? currentYear.toString()
-        : (currentYear + controller.selectedYearIndex.value).toString();
+    // final String selectedYear = controller.selectedYearIndex.value == -1
+    //     ? currentYear.toString()
+    //     : (currentYear + controller.selectedYearIndex.value).toString();
 
     // Get the selected month or current month
     final String selectedMonth = controller.selectedMonthIndex.value == -1
@@ -94,10 +94,10 @@ class LeaveBalanceView extends GetView<LeaveBalanceController> {
           ][controller.selectedMonthIndex.value];
 
     return CommonGradientButton(
-      text: 'Leave Balance for $selectedMonth $selectedYear',
-      imagePath: AppImages.leaveCalendarIcon, // Change the icon as needed
+      text: '$selectedMonth ${controller.selectedYear.toString()} Balance',
+      imagePath: AppImages.leaveCalendarIcon,
       onTap: () {
-        controller.showYearDialog(context); // Define your on-tap behavior here
+        controller.showYearDialog(context);
       },
     );
   }
@@ -112,7 +112,7 @@ class LeaveBalanceView extends GetView<LeaveBalanceController> {
             Color cardColor =
                 controller.colors[index % controller.colors.length];
             return Container(
-              margin: const EdgeInsets.symmetric(horizontal: 1, vertical: 10),
+              margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: cardColor,
@@ -121,7 +121,7 @@ class LeaveBalanceView extends GetView<LeaveBalanceController> {
                   BoxShadow(
                     //color: Color(0X1C1F370D),
                     color: cardColor,
-                    blurRadius: 0.0,
+                    blurRadius: 4.0,
                     spreadRadius: 1.0,
                     offset: const Offset(0, 0),
                   ),

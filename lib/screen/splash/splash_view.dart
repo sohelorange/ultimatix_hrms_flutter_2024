@@ -29,33 +29,40 @@ class SplashView extends GetView<SplashController> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            /*const CommonAppImage(
-              imagePath: AppImages.icAppLogo,
-              height: 80,
-              width: 80,
-              fit: BoxFit.fill,
-            ),*/
-            Image.asset(AppImages.gifLogo,filterQuality: FilterQuality.high,repeat: ImageRepeat.repeat,gaplessPlayback: true,),
-            /*CommonText(
-              padding: const EdgeInsets.only(top: 10),
-              text: AppString.orangeTechnoLabPvt,
-              color: AppColors.color1C1F37,
-              fontSize: AppDimensions.fontSizeLarge,
-              fontWeight: AppFontWeight.w400,
+            Image.asset(
+              AppImages.gifLogo,
+              filterQuality: FilterQuality.low,
+              repeat: ImageRepeat.repeat,
+              gaplessPlayback: true,
             ),
-            CommonText(
-              text: AppString.payrollHRMS,
-              color: AppColors.color1C1F37,
-              fontSize: AppDimensions.fontSizeExtraLarge,
-              fontWeight: AppFontWeight.w700,
-            ),*/
+
+            // const CommonAppImage(
+            //   imagePath: AppImages.icAppLogo,
+            //   height: 80,
+            //   width: 80,
+            //   fit: BoxFit.fill,
+            // ),
+            // CommonText(
+            //   padding: const EdgeInsets.only(top: 10),
+            //   text: AppString.orangeTechnoLabPvt,
+            //   color: AppColors.color1C1F37,
+            //   fontSize: AppDimensions.fontSizeLarge,
+            //   fontWeight: AppFontWeight.w400,
+            // ),
+            // CommonText(
+            //   text: AppString.payrollHRMS,
+            //   color: AppColors.color1C1F37,
+            //   fontSize: AppDimensions.fontSizeExtraLarge,
+            //   fontWeight: AppFontWeight.w700,
+            // ),
           ],
         ),
       ),
       bottomNavigationBar: SizedBox(
         height: 60,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center, // Center content horizontally
+          mainAxisAlignment: MainAxisAlignment.center,
+          // Center content horizontally
           children: [
             // const CommonAppImage(
             //   imagePath: AppImages.icAppLogo,

@@ -36,18 +36,6 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
   getView(BuildContext context) {
     return Stack(
       children: [
-        /*Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [AppColors.colorAppBars, AppColors.colorAppBars], // Gradient colors
-              begin: Alignment.bottomLeft,
-              end: Alignment.topRight,
-              stops: [0.3, 0.7], // Stops for the gradient colors
-              tileMode: TileMode.clamp,
-            ),
-          ),
-          height: Utils.getScreenHeight(context: context) / 15,
-        ),*/
         Container(
           height: Utils.getScreenHeight(context: context),
           width: Utils.getScreenWidth(context: context),
@@ -79,6 +67,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
                   },
                   child: Container(
                     padding: const EdgeInsets.all(16.0),
+                    margin: const EdgeInsets.all(10),
                     width: MediaQuery.of(context).size.width * 0.9, // Adjust container width as needed
                     decoration: BoxDecoration(
                       boxShadow: const [
@@ -120,7 +109,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
                                           blurRadius: 5.0,
                                         ),
                                       ],
-                                      border: Border.all(color: AppColors.color1C1F37.withOpacity(0.10)),
+                                      border: Border.all(color: AppColors.color1C1F37.withAlpha((0.10 * 255).toInt())),
                                       borderRadius: BorderRadius.circular(10),
                                       color: Colors.white
                                   ),
@@ -307,7 +296,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
                 Visibility(
                   visible: controller.teamAttendanceResponse.value.data?.isNotEmpty==true ? true : false,
                   child: const Padding(
-                    padding: EdgeInsets.all(20),
+                    padding: EdgeInsets.all(10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -333,7 +322,6 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
         )
       ],
     );
-    /*);*/
   }
 
   getTeamAttendanceUi(BuildContext context, int index) {
@@ -341,6 +329,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
       children: [
         Container(
           padding: const EdgeInsets.all(16.0),
+          margin: const EdgeInsets.all(10),
           width: MediaQuery.of(context).size.width * 0.9, // Adjust container width as needed
           decoration: BoxDecoration(
             boxShadow: const [
@@ -382,7 +371,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
                                 blurRadius: 5.0,
                               ),
                             ],
-                            border: Border.all(color: AppColors.color1C1F37.withOpacity(0.10)),
+                            border: Border.all(color: AppColors.color1C1F37.withAlpha((0.10 * 255).toInt())),
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.white
                         ),
@@ -543,7 +532,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
             },
           ),
         ),
-        SizedBox(height: MediaQuery.of(context).size.width * 0.03,),
+        /*SizedBox(height: MediaQuery.of(context).size.width * 0.03,),*/
       ],
     );
   }
@@ -565,6 +554,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
       children: [
         Container(
           padding: const EdgeInsets.all(16.0),
+          margin: const EdgeInsets.all(10),
           width: MediaQuery.of(context).size.width * 0.9, // Adjust container width as needed
           decoration: BoxDecoration(
             boxShadow: const [
@@ -674,10 +664,11 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
                                     "halfFullDay": controller.attendanceRegularizeDetails.value.data?.elementAt(index).pDays ?? "--:--",
                                     "cancellationLateIn": controller.attendanceRegularizeDetails.value.data?.elementAt(index).isCancelLateIn ?? "--:--",
                                     "cancellationEarlyOut": controller.attendanceRegularizeDetails.value.data?.elementAt(index).isCancelEarlyOut ?? "--:--",
-                                    "inTime1": controller.attendanceRegularizeDetails.value.data?.elementAt(index).leaveCode ?? "--:--",
-                                    "outTime1": controller.attendanceRegularizeDetails.value.data?.elementAt(index).rowID ?? "--:--",
+                                    "inTime1": controller.attendanceRegularizeDetails.value.data?.elementAt(index).shInTime ?? "--:--",
+                                    "outTime1": controller.attendanceRegularizeDetails.value.data?.elementAt(index).shOutTime ?? "--:--",
                                     "lateIn": controller.attendanceRegularizeDetails.value.data?.elementAt(index).earlyMinute ?? "--:--",
                                     "earlyOut": controller.attendanceRegularizeDetails.value.data?.elementAt(index).isLeaveApp ?? "--:--",
+                                    "UiName": "AttendanceMainUi"
                                   }
                                 ]);
                               },
@@ -797,14 +788,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
   }
 
   Widget _attendanceUi(BuildContext context) {
-    // Get the current year and month or selected ones
-    final int currentYear = DateTime.now().year;
     final int currentMonth = DateTime.now().month;
-
-    // Get selected year, using controller's selected value if available
-    final String selectedYear = controller.selectedYearIndex.value == -1
-        ? currentYear.toString()
-        : (currentYear + controller.selectedYearIndex.value).toString();
 
     // Get the selected month or current month
     final String selectedMonth = controller.selectedMonthIndex.value == -1
@@ -838,14 +822,13 @@ class AttendanceMainUi extends GetView<AttendanceMainController>{
     ][controller.selectedMonthIndex.value];
 
     return CommonGradientButton(
-      text: '$selectedMonth $selectedYear Attendance',
+      text: '$selectedMonth ${controller.selectedYear.toString()} Attendance',
       imagePath: AppImages.leaveCalendarIcon, // Change the icon as needed
       onTap: () {
         controller.showYearDialog(context); // Define your on-tap behavior here
       },
     );
   }
-
 
   checkVisible() {
     if(controller.teamAttendanceResponse.value.data!=null){

@@ -66,7 +66,7 @@ class Data {
   // int? incBankACNo;
   String? ifscCode;
   String? panNo;
-  // String? aadharCardNo;
+  String? aadharCardNo;
   String? uANNo;
   String? bloodGroup;
   // String? eSICNo;
@@ -131,7 +131,7 @@ class Data {
         // this.incBankACNo,
         this.ifscCode,
         this.panNo,
-        // this.aadharCardNo,
+        this.aadharCardNo,
         this.uANNo,
         this.bloodGroup,
         // this.eSICNo,
@@ -197,7 +197,7 @@ class Data {
     // incBankACNo = json['Inc_Bank_AC_No'];
     ifscCode = json['Ifsc_Code'];
     panNo = json['Pan_No'];
-    // aadharCardNo = json['Aadhar_Card_No'];
+    aadharCardNo = json['Aadhar_Card_No'];
     uANNo = json['UAN_No'];
     bloodGroup = json['Blood_Group'];
     // eSICNo = json['ESIC_No'];
@@ -264,7 +264,7 @@ class Data {
     // data['Inc_Bank_AC_No'] = this.incBankACNo;
     data['Ifsc_Code'] = this.ifscCode;
     data['Pan_No'] = this.panNo;
-    // data['Aadhar_Card_No'] = this.aadharCardNo;
+    data['Aadhar_Card_No'] = this.aadharCardNo;
     data['UAN_No'] = this.uANNo;
     data['Blood_Group'] = this.bloodGroup;
     // data['ESIC_No'] = this.eSICNo;

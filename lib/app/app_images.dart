@@ -382,6 +382,10 @@ class AppImages {
   static const String iccall = 'assets/icon/profileicon/ic_call.png';
   static const String iccalander = 'assets/icon/profileicon/ic_calander.png';
   static const String icaadhar = 'assets/icon/profileicon/ic_aadhar.png';
+  static const String icemail = 'assets/icon/profileicon/ic_email.png';
+  static const String icblood = 'assets/icon/profileicon/ic_blood.png';
+  static const String icbirth = 'assets/icon/profileicon/ic_birth.png';
+  static const String icpan = 'assets/icon/profileicon/ic_pan.png';
 
 
   //region error icon

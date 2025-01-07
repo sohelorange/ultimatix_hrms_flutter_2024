@@ -40,11 +40,6 @@ class GeofenceController extends GetxController {
     Map<String, dynamic> loginData = PreferenceUtils.getLoginDetails();
     userImageUrl.value = loginData['image_Name'] ?? '';
 
-    // distance.value = calculateDistance(
-    //     currentPosition.value,LatLng(23.105404, 72.5563849));
-
-
-
   }
 
   // Method to set GoogleMapController
@@ -74,9 +69,6 @@ class GeofenceController extends GetxController {
 
       mapController.animateCamera(CameraUpdate.newLatLngZoom(currentPosition.value, 17));
 
-      // double distance= calculateDistance(currentPosition.value,LatLng(23.105404, 72.5563849));
-
-
     } catch (e) {
       print("Error getting location: $e");
     }finally{
@@ -94,7 +86,6 @@ class GeofenceController extends GetxController {
         infoWindow: InfoWindow(title: "You are here"),
       ),
     );
-    // _addMarkersAndCircles();
     ongeolocartionrecordsAPI();
     update();
   }

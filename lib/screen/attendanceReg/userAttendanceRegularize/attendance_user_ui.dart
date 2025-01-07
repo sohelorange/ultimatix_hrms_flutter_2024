@@ -50,7 +50,7 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
           ) : Column(children: [
 
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+              padding: const EdgeInsets.all(16.0),
               margin: const EdgeInsets.all(10),
               width: MediaQuery.of(context).size.width * 0.9, // Adjust container width as needed
               decoration: BoxDecoration(
@@ -85,34 +85,40 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
                               fit: BoxFit.contain,
                             ),
                           ),
-                          const SizedBox(width: 16.0), // Spacer between image and text
+                          const SizedBox(width: 14.0), // Spacer between image and text
                           // Column for Texts
                           Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Obx(()=> CommonText(
-                                    text: controller.userName.value,
-                                    fontWeight: AppFontWeight.w500,
-                                    fontSize: fontSize,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                const SizedBox(height: 5.0),
-                                Row(
-                                  children: [
-                                    SvgPicture.asset(AppImages.icDesignation),
-                                    const SizedBox(width: 3.0),
-                                    CommonText(
-                                      text: controller.userDesignation.value.toString(),
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w400,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              height: 45,
+                              alignment: Alignment.center,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  /*const SizedBox(height: 5.0),*/
+                                  Obx(()=> CommonText(
+                                      text: controller.userName.value,
+                                      fontWeight: AppFontWeight.w500,
                                       fontSize: fontSize,
+                                      color: Colors.white,
                                     ),
-                                  ],
-                                ),
-                              ],
+                                  ),
+                                  /*const SizedBox(height: 5.0),*/
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(AppImages.icDesignation),
+                                      const SizedBox(width: 3.0),
+                                      CommonText(
+                                        text: controller.userDesignation.value.toString(),
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: fontSize,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
 
@@ -151,7 +157,7 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
               width: MediaQuery.of(context).size.width * 0.9, // Adjust container width as needed
               child: _attendanceUi(context)
             ),
-            const SizedBox(height: 16.0),
+            /*const SizedBox(height: 16.0),*/
             Expanded(
               child: ListView.builder(
                 itemCount: controller.attendanceRegularizeDetails.value.data?.length ?? 1,
@@ -172,6 +178,7 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
       children: [
         Container(
           padding: const EdgeInsets.all(16.0),
+          margin: const EdgeInsets.all(10),
           width: MediaQuery.of(context).size.width * 0.9, // Adjust container width as needed
           decoration: BoxDecoration(
             boxShadow: const [
@@ -283,10 +290,11 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
                                     "halfFullDay": controller.attendanceRegularizeDetails.value.data?.elementAt(index).pDays ?? "--:--",
                                     "cancellationLateIn": controller.attendanceRegularizeDetails.value.data?.elementAt(index).isCancelLateIn ?? "--:--",
                                     "cancellationEarlyOut": controller.attendanceRegularizeDetails.value.data?.elementAt(index).isCancelEarlyOut ?? "--:--",
-                                    "inTime1": controller.attendanceRegularizeDetails.value.data?.elementAt(index).leaveCode ?? "--:--",
-                                    "outTime1": controller.attendanceRegularizeDetails.value.data?.elementAt(index).rowID ?? "--:--",
+                                    "inTime1": controller.attendanceRegularizeDetails.value.data?.elementAt(index).shInTime ?? "--:--",
+                                    "outTime1": controller.attendanceRegularizeDetails.value.data?.elementAt(index).shOutTime ?? "--:--",
                                     "lateIn": controller.attendanceRegularizeDetails.value.data?.elementAt(index).earlyMinute ?? "--:--",
                                     "earlyOut": controller.attendanceRegularizeDetails.value.data?.elementAt(index).isLeaveApp ?? "--:--",
+                                    "UiName": "AttendanceUserUi"
                                   }
                                 ]);
                               },
@@ -397,7 +405,7 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
             },
           ),
         ),
-        SizedBox(height: MediaQuery.of(context).size.width * 0.03,),
+        /*SizedBox(height: MediaQuery.of(context).size.width * 0.03,),*/
       ],
     );
   }
@@ -419,14 +427,7 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
   }
 
   Widget _attendanceUi(BuildContext context) {
-    // Get the current year and month or selected ones
-    final int currentYear = DateTime.now().year;
     final int currentMonth = DateTime.now().month;
-
-    // Get selected year, using controller's selected value if available
-    final String selectedYear = controller.selectedYearIndex.value == -1
-        ? currentYear.toString()
-        : (currentYear + controller.selectedYearIndex.value).toString();
 
     // Get the selected month or current month
     final String selectedMonth = controller.selectedMonthIndex.value == -1
@@ -460,7 +461,7 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
     ][controller.selectedMonthIndex.value];
 
     return CommonGradientButton(
-      text: '$selectedMonth $selectedYear Attendance',
+      text: '$selectedMonth ${controller.selectedYear.toString()} Attendance',
       imagePath: AppImages.leaveCalendarIcon, // Change the icon as needed
       onTap: () {
         controller.showYearDialog(context); // Define your on-tap behavior here

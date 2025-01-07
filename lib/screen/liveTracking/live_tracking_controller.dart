@@ -12,6 +12,7 @@ import 'package:ultimatix_hrms_flutter/app/app_url.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../api/model/location_track_response.dart';
+import '../../utility/isolates_class.dart';
 import '../../utility/network.dart';
 import '../../utility/preference_utils.dart';
 
@@ -90,13 +91,13 @@ class LiveTrackingController extends GetxController{
       "date":nSelectedDate
     };
 
-    await Isolate.spawn<_IsolateApiData>(_getGeoLocationTrackingListByApi, _IsolateApiData(
+    await Isolate.spawn<IsolatePostApiData>(_getGeoLocationTrackingListByApi, IsolatePostApiData(
         token: rootToken, requestData: requestParam,
         answerPort: receivePort.sendPort, apiUrl: AppURL.getGeoLocationTrackingList
     ));
   }
 
-  static void _getGeoLocationTrackingListByApi(_IsolateApiData api) async{
+  static void _getGeoLocationTrackingListByApi(IsolatePostApiData api) async{
     BackgroundIsolateBinaryMessenger.ensureInitialized(api.token);
 
     await PreferenceUtils.init();
@@ -147,11 +148,11 @@ class LiveTrackingController extends GetxController{
 
     if(await Geolocator.isLocationServiceEnabled()){
       var rootToken = RootIsolateToken.instance!;
-      await Isolate.spawn<_IsolateData>(_getAddressByLoc, _IsolateData(token: rootToken, answerPort: receivePort.sendPort,),);
+      await Isolate.spawn<IsolateLocationData>(_getAddressByLoc, IsolateLocationData(token: rootToken, answerPort: receivePort.sendPort,),);
     }
   }
 
-  static void _getAddressByLoc(_IsolateData isolateData) async{
+  static void _getAddressByLoc(IsolateLocationData isolateData) async{
     try{
       BackgroundIsolateBinaryMessenger.ensureInitialized(isolateData.token);
       var geoLocation = await Geolocator.getCurrentPosition(locationSettings: const LocationSettings(accuracy: LocationAccuracy.bestForNavigation));
@@ -250,29 +251,5 @@ class LiveTrackingController extends GetxController{
     empId = argumentData[0]['empId'];
     cmpId = argumentData[0]['cmpId'];
     userProfile.value = argumentData[0]['userImage'];
-
-    /*Map<String, dynamic> loginData = PreferenceUtils.getLoginDetails();
-
-    userProfile.value = loginData['image_Name'] ?? '';
-    userName.value = loginData['emp_Full_Name'] ?? '';
-    empID.value = loginData['emp_ID'].toString();
-    cmpID.value = loginData['cmp_ID'].toString();*/
   }
-}
-
-class _IsolateData {
-  final RootIsolateToken token;
-  final SendPort answerPort;
-
-  _IsolateData({required this.token, required this.answerPort,});
-}
-
-
-class _IsolateApiData {
-  final RootIsolateToken token;
-  final Map<String, dynamic> requestData;
-  final SendPort answerPort;
-  final String apiUrl;
-
-  _IsolateApiData({required this.token, required this.requestData, required this.answerPort, required this.apiUrl});
 }

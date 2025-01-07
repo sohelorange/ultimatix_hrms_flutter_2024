@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ultimatix_hrms_flutter/screen/attendanceReg/attendance_controller.dart';
 
 import '../../../api/dio_client.dart';
 import '../../../api/model/get_reason_response.dart';
@@ -61,9 +62,11 @@ class RegularizeApplyController extends GetxController{
   num cancellationLateIn = 0;
   num cancellationEarlyOut = 0;
 
+  late String uiName;
+
   @override
   void onInit() {
-
+    log("Ui name is:1");
     shiftTime.value = argumentData[0]['Shift1'] +" "+ argumentData[0]['Shift2'];
 
 
@@ -82,6 +85,9 @@ class RegularizeApplyController extends GetxController{
     lateIn = argumentData[0]['lateIn'].toString() ?? "--:--";
     earlyOut = argumentData[0]['earlyOut'].toString() ?? "--:--";
 
+    uiName = argumentData[0]['UiName'].toString();
+
+    log("The Ui name is :$uiName");
 
     inTime2.value = argumentData[0]['Shift1']; //TODO: check condition in native 28-11-2024
 
@@ -150,14 +156,10 @@ class RegularizeApplyController extends GetxController{
               Match? match = regExp.firstMatch(respMessage);
 
               if (match != null) {
-                Get.find<UserAttendanceController>().callUserAttendanceRegularizationDetails(DateTime.now().year,DateTime.now().month);
                 String attendanceMessage = match.group(1) ?? '';
-                Get.back();
-                AppSnackBar.showGetXCustomSnackBar(message:attendanceMessage);
+                goBack(attendanceMessage);
               }else{
-                Get.find<UserAttendanceController>().callUserAttendanceRegularizationDetails(DateTime.now().year,DateTime.now().month);
-                Get.back();
-                AppSnackBar.showGetXCustomSnackBar(message:jsonResponse["data"]);
+                goBack(jsonResponse["data"]);
               }
             }else{
               log("Server data getting empty");
@@ -228,6 +230,20 @@ class RegularizeApplyController extends GetxController{
       }else{
         inTime2.value = "$formattedTime ${time.period.name}";
       }
+    }
+  }
+
+  void goBack(String message) {
+    if(uiName=="AttendanceMainUi"){
+      Get.find<AttendanceMainController>().getUserAttendanceRecords(DateTime.now().year,DateTime.now().month);
+      Get.back();
+      AppSnackBar.showGetXCustomSnackBar(message:message);
+    }else if(uiName=="AttendanceUserUi"){
+      Get.find<UserAttendanceController>().callUserAttendanceRegularizationDetails(DateTime.now().year,DateTime.now().month);
+      Get.back();
+      AppSnackBar.showGetXCustomSnackBar(message:message);
+    }else{
+      Get.back();
     }
   }
 

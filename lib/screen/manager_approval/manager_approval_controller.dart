@@ -27,6 +27,8 @@ class ManagerApprovalController extends GetxController {
 
   RxBool isLoading = true.obs;
 
+  RxString errorMsg = ''.obs;
+
   void handleNavigation(int index) {
     final selectedItem = exploreItems[index];
     switch (selectedItem['id']) {
@@ -119,7 +121,7 @@ class ManagerApprovalController extends GetxController {
           claimCount.value =
               leaveManagerApprovalResponse.value.data!.claimAppCnt.toString();
           travelCount.value =
-              leaveManagerApprovalResponse.value.data!.leaveAppCnt.toString();
+              leaveManagerApprovalResponse.value.data!.travelAppCnt.toString();
           exitCount.value =
               leaveManagerApprovalResponse.value.data!.exitApproval.toString();
 
@@ -180,7 +182,22 @@ class ManagerApprovalController extends GetxController {
               message: "${leaveManagerApprovalResponse.value.message}");
         }
       } catch (e) {
-        AppSnackBar.showGetXCustomSnackBar(message: e.toString());
+        if (e.toString().contains('FetchDataException')) {
+          errorMsg.value = 'Internal server error';
+        } else if (e.toString().contains('BadRequestException')) {
+          errorMsg.value = 'Bad request';
+        } else if (e.toString().contains('ApiNotRespondingException')) {
+          errorMsg.value = 'Api not working';
+        } else if (e.toString().contains('UnAuthorizedException')) {
+          errorMsg.value = 'Un authorized';
+        } else if (e.toString().contains('SocketException')) {
+          errorMsg.value = Constants.somethingWrongMsg;
+        } else if (e.toString().contains('TimeOutException')) {
+          errorMsg.value = Constants.timeOutMsg;
+        }else{
+          errorMsg.value = Constants.somethingWrongMsg;
+        }
+        //AppSnackBar.showGetXCustomSnackBar(message: e.toString());
       } finally {
         isLoading.value = false;
       }

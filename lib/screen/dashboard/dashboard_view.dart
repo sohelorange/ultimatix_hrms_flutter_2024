@@ -63,10 +63,44 @@ class DashboardView extends GetView<DashController> {
           const SizedBox(
             width: 10,
           ),
-          CommonAppImage(
-            height: 30,
-            width: 30,
-            imagePath: controller.cmpImageUrl.value,
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              // Adjust radius
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 0,
+                  blurRadius: 0,
+                  offset: const Offset(0, 0), // Shadow position
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(4),
+              child: controller.cmpImageUrl.value.isEmpty
+                  ? const CommonAppImageSvg(
+                      imagePath: AppImages.svgAvatar, // Default SVG image
+                      height: 30,
+                      width: 30,
+                      fit: BoxFit.cover, // Ensures the image fills the space
+                    )
+                  : CommonAppImageSvg(
+                      imagePath:
+                          controller.cmpImageUrl.value, // Use profile image URL
+                      height: 30,
+                      width: 30,
+                      fit: BoxFit.cover, // Ensures the image fills the space
+                    ),
+            ),
+          ),
+          Visibility(
+            visible: false,
+            child: CommonAppImage(
+              height: 30,
+              width: 30,
+              imagePath: controller.cmpImageUrl.value,
+            ),
           ),
           Visibility(
             visible: false,

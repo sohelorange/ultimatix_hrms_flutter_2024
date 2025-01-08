@@ -1,5 +1,10 @@
+import 'dart:async';
+
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:ultimatix_hrms_flutter/api/dio_client.dart';
 import 'package:ultimatix_hrms_flutter/app/app_date_format.dart';
 import 'package:ultimatix_hrms_flutter/app/app_routes.dart';
@@ -37,6 +42,122 @@ class LeaveManagerApprovalEditDetailsController extends GetxController {
   var isDialogLoading = false.obs;
   var isDisable = false.obs;
 
+  var isLoading = false.obs;
+  Timer? debounce;
+
+  Rx<TextEditingController> fromDateController = TextEditingController().obs;
+  Rx<TextEditingController> periodController = TextEditingController().obs;
+  Rx<TextEditingController> toDateController = TextEditingController().obs;
+  Rx<TextEditingController> reasonController = TextEditingController().obs;
+
+  Rx<TextEditingController> fromTimeController = TextEditingController().obs;
+  Rx<TextEditingController> hourController = TextEditingController().obs;
+  Rx<TextEditingController> toTimeController = TextEditingController().obs;
+
+  FocusNode fromDtFocus = FocusNode();
+  FocusNode periodFocus = FocusNode();
+  FocusNode toDtFocus = FocusNode();
+  FocusNode reasonFocus = FocusNode();
+
+  FocusNode fromTimeFocus = FocusNode();
+  FocusNode hourFocus = FocusNode();
+  FocusNode toTimeFocus = FocusNode();
+
+  RxInt leaveTypesAttachment = 0.obs;
+
+  late RxList<String> leaveTypesDay = <String>[].obs; // Initialize
+  RxString? selectedLeaveTypesDay =
+      ''.obs; // Initialize as an empty observable string
+
+  RxString attachment = ''.obs;
+  RxString docName = ''.obs;
+  RxString extension = ''.obs;
+
+  late RxList<String> leaveHalfDay = <String>[].obs; // Initialize
+  RxString? selectedLeaveHalfDay = ''.obs;
+  RxString? selectedAPILeaveHalfDay = ''.obs;
+
+  bool isFractional(String text) {
+    final double? value = double.tryParse(text);
+    if (value == null) return false;
+    return value % 1 != 0;
+  }
+
+  void parseLeaveDates(String leaveDates) {
+    leaveHalfDay.clear(); // Clear previous values
+
+    if (leaveDates.isNotEmpty) {
+      // Split the dates and format them
+      leaveDates.split(';').forEach((date) {
+        date = date.trim();
+        if (date.isNotEmpty) {
+          try {
+            // Normalize date string to remove extra spaces
+            date = date.replaceAll(RegExp(r'\s+'), ' ');
+
+            // Parse and format the date
+            final parsedDate = DateFormat("MMM dd yyyy").parse(date);
+            leaveHalfDay.add(DateFormat("dd/MM/yyyy").format(parsedDate));
+          } catch (e) {
+            // Handle any parsing errors
+            if (kDebugMode) {
+              print("Error parsing date: $date");
+            }
+          }
+        }
+      });
+    }
+
+    // Set the default selected value to the last item or '0' if the list is empty
+    selectedLeaveHalfDay?.value =
+        leaveHalfDay.isNotEmpty ? leaveHalfDay.last : '0';
+
+    // Convert the selected value to ISO 8601 format (yyyy-MM-ddTHH:mm:ss)
+    if (selectedLeaveHalfDay?.value != '0') {
+      final selectedDate = DateFormat("dd/MM/yyyy")
+          .parse(selectedLeaveHalfDay?.value ?? ''); // Parse to DateTime
+      final isoDate = DateFormat("yyyy-MM-ddTHH:mm:ss").format(selectedDate);
+      selectedAPILeaveHalfDay?.value = isoDate;
+    } else {
+      selectedAPILeaveHalfDay?.value = '';
+    }
+  }
+
+  List<String> _getDropdownItems(double period) {
+    if (period % 1 == 0) {
+      return ['Full Day'];
+    } else if (period % 1 != 0) {
+      return ['First Half', 'Second Half'];
+    } else {
+      return ['Full Day'];
+    }
+  }
+
+  String convertToISOFormat(String date) {
+    DateFormat inputFormat = DateFormat("dd/MM/yyyy, EEEE");
+    DateFormat outputFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    DateTime parsedDate = inputFormat.parse(date);
+    return outputFormat.format(parsedDate);
+  }
+
+  String convertToHourFormat(String date) {
+    DateFormat inputFormat = DateFormat("dd/MM/yyyy, EEEE");
+    DateFormat outputFormat = DateFormat("yyyy-MM-dd");
+    DateTime parsedDate = inputFormat.parse(date);
+    return outputFormat.format(parsedDate);
+  }
+
+  Future<String?> filePickerFun() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      String filePath = result.files.single.path!;
+      docName.value = result.files.single.name;
+      extension.value = ".${result.files.single.extension}";
+      attachment.value = await Utils.convertFileToBase64(filePath);
+    }
+    return null;
+  }
+
   @override
   void onInit() {
     // TODO: implement onInit
@@ -51,10 +172,19 @@ class LeaveManagerApprovalEditDetailsController extends GetxController {
     leaveEmpName.value = leaveData.empFullName ?? '';
     leaveName.value = leaveData.leaveName ?? '';
     leaveType.value = leaveData.leaveType ?? '';
+
     leaveFromDt.value = leaveData.fromDate ?? '';
-    leaveToDt.value = leaveData.toDate ?? '';
+    fromDateController.value.text = AppDatePicker.convertDateTimeFormat(
+        leaveFromDt.value, Utils.commonUTCDateFormat, 'dd/MM/yyyy, EEEE');
+
     leavePeriod.value = leaveData.leavePeriod?.toString() ?? '0';
+    periodController.value.text = leavePeriod.value;
+
+    leaveToDt.value = leaveData.toDate ?? '';
+
     leaveReason.value = leaveData.leaveReason ?? '';
+    reasonController.value.text = leaveReason.value;
+
     leaveStatus.value = leaveData.applicationStatus ?? '';
     leaveAppStatus.value = leaveData.leaveApplicationStatus ?? '';
     userImageUrl.value = leaveData.imagePath ?? '';
@@ -62,6 +192,17 @@ class LeaveManagerApprovalEditDetailsController extends GetxController {
     leaveFrdRej.value = leaveData.isFwdLeaveRej?.toString() ?? '0';
     leaveFinalApproval.value = leaveData.finalApprover?.toString() ?? '0';
     leaveEmpID.value = leaveData.empID?.toString() ?? '0';
+
+    if (periodController.value.text.isNotEmpty && leaveId.value != '1481') {
+      getEmployeeLeavePeriod(
+          fromDateController.value.text,
+          periodController.value.text,
+          toDateController.value.text,
+          selectedLeaveTypesDay!.value,
+          reasonController.value.text,
+          attachment.value,
+          docName.value);
+    }
   }
 
   void showApprovalDialog() {
@@ -77,7 +218,7 @@ class LeaveManagerApprovalEditDetailsController extends GetxController {
       onConfirm: () async {
         final comment = commentController.text.trim();
         if (comment.isNotEmpty) {
-          insertManagerApprovalLeave(comment, 'A');
+          insertManagerApprovalLeave(comment, 'A', '');
           //Get.back();
           //Get.offAndToNamed(AppRoutes.leaveManagerApprovalRoute);
         } else {
@@ -106,7 +247,7 @@ class LeaveManagerApprovalEditDetailsController extends GetxController {
         final comment =
             commentController.text.trim(); // Get the entered comment
         if (comment.isNotEmpty) {
-          insertManagerApprovalLeave(comment, 'R');
+          insertManagerApprovalLeave(comment, 'R', '');
           //Get.back();
         } else {
           AppSnackBar.showGetXCustomSnackBar(message: 'Please enter a comment');
@@ -118,9 +259,138 @@ class LeaveManagerApprovalEditDetailsController extends GetxController {
     ));
   }
 
-  Future<void> insertManagerApprovalLeave(String reason, String status) async {
+  Future<void> getEmployeeLeavePeriod(
+      String fromDate,
+      String period,
+      String toDate,
+      String assignAs,
+      String reason,
+      String attachment,
+      String docName) async {
     try {
-      isDialogLoading.value = true; // Show loader
+      isLoading(true);
+      isDisable(true);
+
+      // Check if network is available
+      if (await Network.isConnected()) {
+        Map<String, dynamic> loginData = PreferenceUtils.getLoginDetails();
+        String loginID = loginData['login_ID'].toString();
+
+        Map<String, dynamic> param = {
+          "leavAppID": leaveApplicationID.value,
+          "leaveID": leaveId.value,
+          "fromDate": convertToISOFormat(fromDate),
+          "period": period,
+          "todate": convertToISOFormat(fromDate),
+          "assignAs": assignAs,
+          "comment": reason,
+          "hLeaveDate": convertToISOFormat(fromDate),
+          "intime": convertToISOFormat(fromDate),
+          "outTime": convertToISOFormat(fromDate),
+          "loginID": loginID,
+          "attachement": attachment,
+          "docName": docName,
+          "compoffLeaveDates": "",
+          "strType": "V"
+        };
+
+        var response =
+            await DioClient().post(AppURL.leaveApplicationURL, param);
+
+        print(response);
+
+        if (response['code'] == 200 && response['status'] == true) {
+          final data = response['data'];
+          // if (data != null && data is List && data.isNotEmpty) {
+          //   final record = data[0];
+          //   String toDate = record['to_date']?.toString() ?? '';
+          //   String convertToDate = AppDatePicker.convertDateTimeFormat(
+          //       toDate, Utils.commonUTCDateFormat, 'dd/MM/yyyy, EEEE');
+          //   toDateController.value.text = convertToDate;
+          //
+          //   String inputText =
+          //       periodController.value.text; // Get the text input
+          //   leaveTypesDay.value =
+          //       _getDropdownItems(double.tryParse(inputText)!);
+          //   if (leaveTypesDay.length == 1) {
+          //     selectedLeaveTypesDay?.value = leaveTypesDay.first;
+          //   } else {
+          //     selectedLeaveTypesDay?.value = leaveTypesDay.first;
+          //   }
+          // }
+
+          if (data != null && data is List && data.isNotEmpty) {
+            Utils.closeKeyboard(Get.context!);
+            if (data[0].containsKey('From_date')) {
+              // Handle first response type
+              final record = data[0];
+              String toDate = record['to_date']?.toString() ?? '';
+              String convertToDate = AppDatePicker.convertDateTimeFormat(
+                  toDate, Utils.commonUTCDateFormat, 'dd/MM/yyyy, EEEE');
+              toDateController.value.text = convertToDate;
+
+              String inputText =
+                  periodController.value.text; // Get the text input
+              leaveTypesDay.value =
+                  _getDropdownItems(double.tryParse(inputText)!);
+              if (leaveTypesDay.length == 1) {
+                selectedLeaveTypesDay?.value = leaveTypesDay.first;
+              }
+              // else if (leaveTypesDay.length > 1) {
+              //   selectedLeaveTypesDay?.value = '';
+              // }
+              else {
+                selectedLeaveTypesDay?.value = leaveTypesDay.first;
+              }
+
+              double period =
+                  double.tryParse(periodController.value.text) ?? 0.0;
+
+              if (period % 1 == 0) {
+                leaveHalfDay.clear(); // Clear previous values
+                selectedLeaveHalfDay?.value = '';
+                selectedAPILeaveHalfDay!.value = '';
+              } else {
+                String leaveDates = record['leave_dates']?.toString() ?? '';
+                parseLeaveDates(leaveDates);
+              }
+            } else if (data[0].containsKey('Result')) {
+              // Handle second response type
+              final result = data[0]['Result']?.toString() ?? '';
+              periodController.value.clear();
+              toDateController.value.clear();
+              leaveTypesDay.clear();
+              selectedLeaveTypesDay!.value = '';
+              leaveHalfDay.clear();
+              selectedLeaveHalfDay?.value = '';
+              selectedAPILeaveHalfDay!.value = '';
+              if (result.contains('False')) {
+                AppSnackBar.showGetXCustomSnackBar(
+                    message: result.split('#')[0]);
+              } else {
+                AppSnackBar.showGetXCustomSnackBar(message: result);
+              }
+            }
+          }
+        } else {
+          AppSnackBar.showGetXCustomSnackBar(message: response['message']);
+        }
+      } else {
+        AppSnackBar.showGetXCustomSnackBar(message: Constants.networkMsg);
+      }
+    } catch (e) {
+      AppSnackBar.showGetXCustomSnackBar(message: e.toString());
+    } finally {
+      isLoading(false);
+      isDisable(false);
+    }
+  }
+
+  Future<void> insertManagerApprovalLeave(
+      String reason, String status, String period) async {
+    try {
+      isDialogLoading.value = true;
+      isDisable.value = true;
 
       // Check if network is available
       if (await Network.isConnected()) {
@@ -135,7 +405,7 @@ class LeaveManagerApprovalEditDetailsController extends GetxController {
           "leaveID": leaveId.value,
           "leaveAppID": leaveApplicationID.value,
           "fromDate": leaveFromDt.value,
-          "period": leavePeriod.value,
+          "period": period,
           "toDate": leaveToDt.value,
           "assignAs": leaveType.value,
           "comment": reason,
@@ -196,6 +466,50 @@ class LeaveManagerApprovalEditDetailsController extends GetxController {
       AppSnackBar.showGetXCustomSnackBar(message: e.toString());
     } finally {
       isDialogLoading.value = false; // Hide loader
+      isDisable.value = false;
+    }
+  }
+
+  void validationWithAPI() {
+    if (leaveId.value.isEmpty) {
+      AppSnackBar.showGetXCustomSnackBar(message: 'Please select leave type.');
+    } else if (fromDateController.value.text.isEmpty) {
+      AppSnackBar.showGetXCustomSnackBar(message: 'Please select from date.');
+    } else if (leaveId.value == '1481' &&
+        fromTimeController.value.text.isEmpty) {
+      AppSnackBar.showGetXCustomSnackBar(message: 'Please select from time.');
+    } else if (leaveId.value != '1481' && periodController.value.text.isEmpty) {
+      AppSnackBar.showGetXCustomSnackBar(message: 'Please enter period.');
+    } else if (leaveId.value == '1481' && hourController.value.text.isEmpty) {
+      AppSnackBar.showGetXCustomSnackBar(message: 'Please enter no of hours.');
+    } else if (leaveId.value == '1481' && toTimeController.value.text.isEmpty) {
+      AppSnackBar.showGetXCustomSnackBar(message: 'Please select to time.');
+    } else if (toDateController.value.text.isEmpty) {
+      AppSnackBar.showGetXCustomSnackBar(message: 'Please select to date.');
+    } else if (leaveId.value != '1481' &&
+        selectedLeaveTypesDay!.value.isEmpty) {
+      AppSnackBar.showGetXCustomSnackBar(message: 'Please select leave type.');
+    } else if (isFractional(periodController.value.text) &&
+        selectedLeaveHalfDay!.value.toString().isEmpty) {
+      AppSnackBar.showGetXCustomSnackBar(
+          message: 'Please select half day date.');
+    } else if (reasonController.value.text.isEmpty) {
+      AppSnackBar.showGetXCustomSnackBar(message: 'Please enter reason.');
+    } else if (leaveTypesAttachment.value == 1 && attachment.value.isEmpty) {
+      AppSnackBar.showGetXCustomSnackBar(message: 'Please select attachment.');
+    } else {
+      String strValue = '';
+      if (leaveId.value == '1481') {
+        strValue = hourController.value.text;
+      } else {
+        strValue = periodController.value.text;
+      }
+
+      insertManagerApprovalLeave(
+        reasonController.value.text,
+        'A',
+        strValue,
+      );
     }
   }
 }

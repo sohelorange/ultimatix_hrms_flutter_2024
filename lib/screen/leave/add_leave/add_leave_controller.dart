@@ -201,6 +201,7 @@ class AddLeaveController extends GetxController {
       String docName) async {
     try {
       isLoading(true);
+      isDisable(true);
 
       // Check if network is available
       if (await Network.isConnected()) {
@@ -227,8 +228,6 @@ class AddLeaveController extends GetxController {
 
         var response =
             await DioClient().post(AppURL.leaveApplicationURL, param);
-
-        print(response);
 
         if (response['code'] == 200 && response['status'] == true) {
           final data = response['data'];
@@ -313,6 +312,7 @@ class AddLeaveController extends GetxController {
       AppSnackBar.showGetXCustomSnackBar(message: e.toString());
     } finally {
       isLoading(false);
+      isDisable(false);
     }
   }
 
@@ -351,9 +351,6 @@ class AddLeaveController extends GetxController {
           "compoffLeaveDates": "",
           "strType": "I"
         };
-
-        print("Binary : $attachment");
-        print("Doc name :$docName");
 
         var response =
             await DioClient().post(AppURL.leaveApplicationURL, param);
@@ -420,7 +417,8 @@ class AddLeaveController extends GetxController {
     } else if (selectedDropdownLeaveID.value != '1481' &&
         selectedLeaveTypesDay!.value.isEmpty) {
       AppSnackBar.showGetXCustomSnackBar(message: 'Please select leave type.');
-    } else if (isFractional(periodController.value.text)) {
+    } else if (isFractional(periodController.value.text) &&
+        selectedLeaveHalfDay!.value.toString().isEmpty) {
       AppSnackBar.showGetXCustomSnackBar(
           message: 'Please select half day date.');
     } else if (reasonController.value.text.isEmpty) {

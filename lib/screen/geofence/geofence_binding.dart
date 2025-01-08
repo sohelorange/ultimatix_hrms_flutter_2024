@@ -6,6 +6,5 @@ class GeofenceBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => GeofenceController());
-
   }
 }

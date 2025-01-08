@@ -27,7 +27,7 @@ class LeaveManagerApprovalDetailsView
         title: 'Leave Approvals',
         actions: [
           Visibility(
-            visible: false,
+            visible: true,
             child: IconButton(
                 onPressed: () {
                   Get.toNamed(AppRoutes.leaveManagerApprovalEditDetailsRoute,
@@ -210,6 +210,21 @@ class LeaveManagerApprovalDetailsView
                   ),
                   CommonText(
                     text: '${controller.leavePeriod.value} Days',
+                    fontWeight: AppFontWeight.w400,
+                    fontSize: 14,
+                    color: AppColors.colorDarkBlue,
+                  ).paddingOnly(top: 5),
+                  Divider(
+                    color: AppColors.colorBlack.withOpacity(0.2),
+                  ),
+                  CommonText(
+                    text: 'Days Available',
+                    fontWeight: AppFontWeight.w400,
+                    fontSize: 12,
+                    color: AppColors.color6B6D7A,
+                  ),
+                  CommonText(
+                    text: controller.leaveType.value,
                     fontWeight: AppFontWeight.w400,
                     fontSize: 14,
                     color: AppColors.colorDarkBlue,

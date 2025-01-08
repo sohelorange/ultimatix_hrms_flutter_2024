@@ -1,28 +1,28 @@
-class GeoLocationrecordList {
+class GeoFenceModel {
   bool? status;
   int? code;
   String? message;
   List<Data>? data;
 
-  GeoLocationrecordList({this.status, this.code, this.message, this.data});
+  GeoFenceModel({this.status, this.code, this.message, this.data});
 
-  GeoLocationrecordList.fromJson(Map<String, dynamic> json) {
+  GeoFenceModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     code = json['code'];
     message = json['message'];
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['code'] = this.code;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['code'] = code;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -43,14 +43,14 @@ class Data {
 
   Data(
       {this.empGeoLocationID,
-        this.empID,
-        this.cmpID,
-        this.effectiveDate,
-        this.geoLocationID,
-        this.meter,
-        this.geoLocation,
-        this.latitude,
-        this.longitude});
+      this.empID,
+      this.cmpID,
+      this.effectiveDate,
+      this.geoLocationID,
+      this.meter,
+      this.geoLocation,
+      this.latitude,
+      this.longitude});
 
   Data.fromJson(Map<String, dynamic> json) {
     empGeoLocationID = json['Emp_Geo_Location_ID'];
@@ -65,16 +65,16 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Emp_Geo_Location_ID'] = this.empGeoLocationID;
-    data['Emp_ID'] = this.empID;
-    data['Cmp_ID'] = this.cmpID;
-    data['Effective_Date'] = this.effectiveDate;
-    data['Geo_Location_ID'] = this.geoLocationID;
-    data['Meter'] = this.meter;
-    data['Geo_Location'] = this.geoLocation;
-    data['Latitude'] = this.latitude;
-    data['Longitude'] = this.longitude;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Emp_Geo_Location_ID'] = empGeoLocationID;
+    data['Emp_ID'] = empID;
+    data['Cmp_ID'] = cmpID;
+    data['Effective_Date'] = effectiveDate;
+    data['Geo_Location_ID'] = geoLocationID;
+    data['Meter'] = meter;
+    data['Geo_Location'] = geoLocation;
+    data['Latitude'] = latitude;
+    data['Longitude'] = longitude;
     return data;
   }
 }

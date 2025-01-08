@@ -31,8 +31,8 @@ class DrawerDashView extends GetView<DrawerDashController> {
             onTap: () {
               Get.toNamed(AppRoutes.profileRoute);
             },
-            child:  const CommonAppImage(
-              imagePath:AppImages.draweredit,
+            child: const CommonAppImage(
+              imagePath: AppImages.draweredit,
               height: 20,
               width: 20,
               color: AppColors.colorBlack,
@@ -40,36 +40,57 @@ class DrawerDashView extends GetView<DrawerDashController> {
           ),
           GestureDetector(
             onTap: () {
-              /*showCupertinoDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return CommonLogoutDialog(
-                    onLogoutPressed: () {
-                      PreferenceUtils.setIsLogin(false).then((_) {
-                        Get.offAllNamed(AppRoutes.loginRoute);
-                      });
-                    },
-                  );
-                },
-              );*/
+              // showCupertinoDialog(
+              //   context: context,
+              //   builder: (BuildContext context) {
+              //     return CommonLogoutDialog(
+              //       onLogoutPressed: () {
+              //         PreferenceUtils.setIsLogin(false).then((_) {
+              //           Get.offAllNamed(AppRoutes.loginRoute);
+              //         });
+              //       },
+              //     );
+              //   },
+              // );
 
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return CommonMaterialDialog(
-                    title: 'Logout',
-                    message: 'Are you sure you want to\nsign out?',
-                    yesButtonText: 'Yes',
-                    noButtonText: 'No',
-                    onYesPressed: () {
-                      controller.logout();
-                      // PreferenceUtils.setIsLogin(false).then((_) {
-                      //   Get.offAllNamed(AppRoutes.loginRoute);
-                      // });
-                    },
-                  );
+              // showDialog(
+              //   context: context,
+              //   builder: (BuildContext context) {
+              //     return CommonMaterialDialog(
+              //       title: 'Logout',
+              //       message: 'Are you sure you want to\nsign out?',
+              //       yesButtonText: 'Yes',
+              //       noButtonText: 'No',
+              //       onConfirm: () {
+              //         controller.logout();
+              //         // PreferenceUtils.setIsLogin(false).then((_) {
+              //         //   Get.offAllNamed(AppRoutes.loginRoute);
+              //         // });
+              //       },
+              //       onCancel: () {
+              //         Get.back();
+              //       },
+              //       isLoading: controller.isLoading,
+              //     );
+              //   },
+              // );
+
+              Get.dialog(CommonMaterialDialog(
+                title: 'Logout',
+                message: 'Are you sure you want to\nsign out?',
+                yesButtonText: 'Yes',
+                noButtonText: 'No',
+                onConfirm: () {
+                  controller.logout();
+                  // PreferenceUtils.setIsLogin(false).then((_) {
+                  //   Get.offAllNamed(AppRoutes.loginRoute);
+                  // });
                 },
-              );
+                onCancel: () {
+                  Get.back();
+                },
+                isLoading: controller.isLoading,
+              ));
             },
             child: const CommonAppImage(
               imagePath: AppImages.dashLogoutIcon,

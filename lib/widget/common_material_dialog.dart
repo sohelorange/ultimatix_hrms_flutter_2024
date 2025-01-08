@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/app/app_colors.dart';
+import 'package:ultimatix_hrms_flutter/utility/utils.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_button.dart';
 
 import '../app/app_dimensions.dart';
@@ -12,22 +13,23 @@ class CommonMaterialDialog extends StatelessWidget {
   final String message;
   final String yesButtonText;
   final String noButtonText;
-  final VoidCallback? onYesPressed;
-  final VoidCallback? onNoPressed;
+  final VoidCallback onConfirm; // Callback for confirm button
+  final VoidCallback onCancel; // Callback for cancel button
+  final RxBool isLoading;
 
-  const CommonMaterialDialog({
-    super.key,
-    required this.title,
-    required this.message,
-    required this.yesButtonText,
-    required this.noButtonText,
-    this.onYesPressed,
-    this.onNoPressed,
-  });
+  const CommonMaterialDialog(
+      {super.key,
+      required this.title,
+      required this.message,
+      required this.yesButtonText,
+      required this.noButtonText,
+      required this.onConfirm,
+      required this.onCancel,
+      required this.isLoading});
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
+    return Obx(()=> AlertDialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20), // Rounded corners
       ),
@@ -68,20 +70,22 @@ class CommonMaterialDialog extends StatelessWidget {
           const SizedBox(height: 24),
 
           // Vertical Buttons
-          Column(
+          isLoading.value
+              ? Center(child: Utils.commonCircularProgress()) // Loader
+              : Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // Yes Button
               CommonButton(
                   buttonText: yesButtonText,
-                  onPressed: onYesPressed ?? () {},
+                  onPressed: onConfirm,
                   isLoading: false),
 
               const SizedBox(height: 20), // Space between buttons
 
               // No Button
               TextButton(
-                onPressed: onNoPressed ?? () => Get.back(),
+                onPressed: onCancel,
                 child: CommonText(
                   text: noButtonText,
                   color: AppColors.purpleSwatch,
@@ -93,6 +97,6 @@ class CommonMaterialDialog extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ));
   }
 }

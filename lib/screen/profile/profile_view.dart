@@ -107,349 +107,449 @@ class ProfileView extends GetView<ProfileController> {
   getProfileView(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [AppColors.colorAppBars, AppColors.colorAppBars],
-              // Gradient colors
-              begin: Alignment.bottomLeft,
-              end: Alignment.topRight,
-              stops: [0.3, 0.7],
-              // Stops for the gradient colors
-              tileMode: TileMode.clamp,
-            ),
-          ),
-          height: Utils.getScreenHeight(context: context) / 15,
-        ),
-        Container(
-            height: Utils.getScreenHeight(context: context),
-            width: Utils.getScreenWidth(context: context),
-            decoration: const BoxDecoration(
-                color: AppColors.colorWhite,
-                borderRadius: BorderRadius.all(Radius.circular(25.0))),
-            child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                        height: 150,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [AppColors.color161F59, AppColors.color631983],
-                            begin: Alignment.bottomLeft,
-                            end: Alignment.topRight,
-                            stops: [0.3, 0.7],
-                            // Stops for the gradient colors
-                            tileMode: TileMode.clamp,
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Row(
+        SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                    height: 100,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [AppColors.color161F59, AppColors.color631983],
+                        begin: Alignment.bottomLeft,
+                        end: Alignment.topRight,
+                        stops: [0.3, 0.7],
+                        // Stops for the gradient colors
+                        tileMode: TileMode.clamp,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        GestureDetector(
+                            onTap: () {
+                              controller.getGallaryview(context);
+                            },
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10.0),
+                                child: CommonAppImage(
+                                  imagePath: controller.profileImage.value.isEmpty
+                                      ? controller.userImageUrl.value
+                                      :controller.profileImage.value,
+                                  height: 80,
+                                  width: 80,
+                                  fit: BoxFit.cover,
+                                )).paddingOnly(left: 10)),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            GestureDetector(
-                              onTap: () {
-                                controller.getGallaryview(context);
-                              },
-                              child: CommonAppImage(
-                                imagePath: controller.userImageUrl.value.isEmpty
-                                    ? AppImages.icprofile2
-                                    : controller.userImageUrl.value,
-                                height: 100,
-                                width: 100,
-                                fit: BoxFit.fill,
-                              ).paddingOnly(left: 10),
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                CommonText(
-                                  // text: 'test',
-                                  text: controller.profilemodelResponse.value
-                                      .data![0].empFullName!,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 20,
-                                  color: AppColors.colorWhite,
-                                ).paddingOnly(left: 20, top: 30),
-                                CommonText(
-                                  text: controller
-                                      .profilemodelResponse.value.data![0].empCode!,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14,
-                                  color: AppColors.colorWhite,
-                                ).paddingOnly(
-                                  left: 10,
-                                ),
-                              ],
-                            )
+                            CommonText(
+                              text: controller.profilemodelResponse.value.data![0].empFullName!,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 20,
+                              maxLine: 3,
+                              color: AppColors.colorWhite,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                            ).paddingOnly(top: 10, right: 10),
+                            CommonText(
+                              text: controller.profilemodelResponse.value.data![0].empCode!,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14,
+                              color: AppColors.colorWhite,
+                            ).paddingOnly(left: 15)
                           ],
-                        )).paddingOnly(left: 20, right: 20, top: 20),
-                    CommonText(
-                      padding: const EdgeInsets.only(left: 15),
-                      text: 'Designation',
-                      color: AppColors.color6B6D7A,
-                      fontSize: 12,
-                      fontWeight: AppFontWeight.w400,
-                    ).paddingOnly(top: 20, right: 20),
-                    CommonText(
-                      padding: const EdgeInsets.only(left: 15),
-                      text:
-                      controller.profilemodelResponse.value.data![0].desigName!,
-                      color: AppColors.colorBlack,
-                      fontSize: 14,
-                      fontWeight: AppFontWeight.w400,
-                    ).paddingOnly(top: 5, right: 20),
-                    CommonText(
-                      padding: const EdgeInsets.only(left: 15),
-                      text: 'Reporting Manager',
-                      color: AppColors.color6B6D7A,
-                      fontSize: 12,
-                      fontWeight: AppFontWeight.w400,
-                    ).paddingOnly(top: 20, right: 20),
-                    CommonText(
-                      padding: const EdgeInsets.only(left: 15),
-                      text: controller.profilemodelResponse.value.data![0].empFullNameSuperior!,
-                      color: AppColors.colorBlack,
-                      fontSize: 14,
-                      fontWeight: AppFontWeight.w400,
-                    ).paddingOnly(top: 5, right: 20),
-                    CommonText(
-                      padding: const EdgeInsets.only(left: 15),
-                      text: 'Personal Information',
-                      color: AppColors.colorBlack,
-                      fontSize: 17,
-                      fontWeight: AppFontWeight.w500,
-                    ).paddingOnly(top: 20, right: 20),
-                    Container(
-                        height: Utils.getScreenHeight(context: context) / 3,
-                        child: Card(
-                            elevation: 4,
-                            color: AppColors.colorWhite,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Column(
+                        )
+                      ],
+                    )).paddingOnly(left: 5, right: 5),
+                CommonText(
+                  padding: const EdgeInsets.only(left: 10),
+                  text: 'Designation',
+                  color: AppColors.color6B6D7A,
+                  fontSize: 12,
+                  fontWeight: AppFontWeight.w400,
+                ).paddingOnly(top: 20, right: 20),
+                CommonText(
+                  padding: const EdgeInsets.only(left: 10),
+                  text: controller.profilemodelResponse.value.data![0].desigName!,
+                  color: AppColors.colorBlack,
+                  fontSize: 14,
+                  fontWeight: AppFontWeight.w400,
+                ).paddingOnly(top: 5, right: 20),
+                CommonText(
+                  padding: const EdgeInsets.only(left: 10),
+                  text: 'Reporting Manager',
+                  color: AppColors.color6B6D7A,
+                  fontSize: 12,
+                  fontWeight: AppFontWeight.w400,
+                ).paddingOnly(top: 20, right: 20),
+                CommonText(
+                  padding: const EdgeInsets.only(left: 10),
+                  text: controller
+                      .profilemodelResponse.value.data![0].empFullNameSuperior!,
+                  color: AppColors.colorBlack,
+                  fontSize: 14,
+                  fontWeight: AppFontWeight.w400,
+                ).paddingOnly(top: 5, right: 20),
+                CommonText(
+                  padding: const EdgeInsets.only(left: 10),
+                  text: 'Personal Information',
+                  color: AppColors.colorBlack,
+                  fontSize: 16,
+                  fontWeight: AppFontWeight.w500,
+                ).paddingOnly(top: 20, right: 20),
+                Container(
+                    height: Utils.getScreenHeight(context: context) / 2.5,
+                    decoration: BoxDecoration(
+                      color: AppColors.colorWhite,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Card(
+                        elevation: 4,
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      child: CommonAppImage(
-                                        imagePath: AppImages.iccalander,
-                                        height: 25,
-                                        width: 25,
-                                        fit: BoxFit.fill,
-                                      ).paddingOnly(left: 10),
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        CommonText(
-                                          text: 'Date of Joining',
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 15,
-                                          color: AppColors.colorBlack,
-                                        ).paddingOnly(left: 20, top: 5),
-                                        CommonText(
-                                          text: controller.profilemodelResponse
-                                              .value.data![0].dateOfJoin!,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                          color: AppColors.colorBlack,
-                                        ).paddingOnly(
-                                          left: 20,
-                                        ),
-                                      ],
+                                Card(
+                                    color: AppColors.colorF8F4FA,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),),
+                                    child: Container(
+                                      height: 40,
+                                      width: 40,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: AppColors.colorF8F4FA, // Background color
+                                      ),
+                                      child: Center(
+                                        child: CommonAppImage(
+                                          imagePath: AppImages.iccalander,
+                                          height: 20,
+                                          width: 20,
+                                        ).paddingOnly(left: 10, right: 10),
+                                      ),
                                     )
-                                  ],
-                                ).paddingOnly(left: 10, right: 10, top: 10),
-                                Row(
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Container(
-                                      child: CommonAppImage(
-                                        imagePath: AppImages.iccall,
-                                        height: 30,
-                                        width: 30,
-                                        fit: BoxFit.fill,
-                                      ).paddingOnly(left: 10),
+                                    CommonText(
+                                      text: 'Date of Joining',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15,
+                                      color: AppColors.colorBlack,
+                                    ).paddingOnly(left: 5, top: 5),
+                                    CommonText(
+                                      text: controller.profilemodelResponse.value
+                                          .data![0].dateOfJoin!,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14,
+                                      color: AppColors.colorBlack,
+                                    ).paddingOnly(
+                                      left: 5,
                                     ),
-                                    Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        CommonText(
-                                          text: 'UAN Number',
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 15,
-                                          color: AppColors.colorBlack,
-                                        ).paddingOnly(left: 20, top: 5),
-                                        CommonText(
-                                          text: controller.profilemodelResponse
-                                              .value.data![0].uANNo!,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                          color: AppColors.colorBlack,
-                                        ).paddingOnly(
-                                          left: 20,
-                                        ),
-                                      ],
-                                    )
                                   ],
-                                ).paddingOnly(left: 10, right: 10, top: 10),
-                                Row(
+                                ),
+                                Card(
+                                    color: AppColors.colorF8F4FA,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),),
+                                    child: Container(
+                                      height: 40,
+                                      width: 40,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: AppColors.colorF8F4FA, // Background color
+                                      ),
+                                      child: Center(
+                                        child: CommonAppImage(
+                                          imagePath: AppImages.icbirth,
+                                          height: 20,
+                                          width: 20,
+                                        ).paddingOnly(left: 10, right: 10),
+                                      ),
+                                    )
+                                ).paddingOnly(left: 10),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Container(
-                                      child: CommonAppImage(
-                                        imagePath: AppImages.icaadhar,
-                                        height: 25,
-                                        width: 25,
-                                        fit: BoxFit.fill,
-                                      ).paddingOnly(left: 10),
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        CommonText(
-                                          text: 'Aadhar Card Number',
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 15,
-                                          color: AppColors.colorBlack,
-                                        ).paddingOnly(left: 20, top: 5),
-                                        CommonText(
-                                          text: '362501478779',
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                          color: AppColors.colorBlack,
-                                        ).paddingOnly(
-                                          left: 20,
-                                        ),
-                                      ],
-                                    )
+                                    CommonText(
+                                      text: 'Date of Birth',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15,
+                                      color: AppColors.colorBlack,
+                                    ).paddingOnly(left: 10, top: 5),
+                                    CommonText(
+                                      text: controller.profilemodelResponse.value.data![0].dOB!,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14,
+                                      color: AppColors.colorBlack,
+                                    ).paddingOnly(left: 10,),
                                   ],
-                                ).paddingOnly(left: 10, right: 10, top: 10),
-                                Row(
-                                  children: [
-                                    Container(
-                                      child: CommonAppImage(
-                                        imagePath: AppImages.iccall,
-                                        height: 30,
-                                        width: 30,
-                                        fit: BoxFit.fill,
-                                      ).paddingOnly(left: 10),
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        CommonText(
-                                          text: 'Mobile Number',
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 15,
-                                          color: AppColors.colorBlack,
-                                        ).paddingOnly(left: 20, top: 5),
-                                        CommonText(
-                                          text: controller.profilemodelResponse
-                                              .value.data![0].mobileNo!,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                          color: AppColors.colorBlack,
-                                        ).paddingOnly(
-                                          left: 20,
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ).paddingOnly(left: 10, right: 10, top: 10),
-                                Row(
-                                  children: [
-                                    Container(
-                                      child: CommonAppImage(
-                                        imagePath: AppImages.iccall,
-                                        height: 30,
-                                        width: 30,
-                                        fit: BoxFit.fill,
-                                      ).paddingOnly(left: 10),
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        CommonText(
-                                          text: 'Personal Email',
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 15,
-                                          color: AppColors.colorBlack,
-                                        ).paddingOnly(left: 20, top: 5),
-                                        CommonText(
-                                          text: controller.profilemodelResponse
-                                              .value.data![0].workEmail!,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                          color: AppColors.colorBlack,
-                                        ).paddingOnly(
-                                          left: 20,
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ).paddingOnly(left: 10, right: 10, top: 10),
+                                )
                               ],
-                            )).paddingOnly(right: 20, top: 5)).paddingOnly(left: 20, right: 5, top: 5),
-                    CommonText(
-                      padding: const EdgeInsets.only(left: 15),
-                      text: 'Bank Information',
-                      color: AppColors.colorBlack,
-                      fontSize: 17,
-                      fontWeight: AppFontWeight.w500,
-                    ).paddingOnly(top: 20, right: 20),
-                    Container(
-                        height: Utils.getScreenHeight(context: context) / 9,
-                        child: Card(
-                            elevation: 4,
-                            color: AppColors.colorWhite,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Column(
+                            ).paddingOnly(left: 10, right: 10, top: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      child: CommonAppImage(
-                                        imagePath: AppImages.iccall,
-                                        height: 30,
-                                        width: 30,
-                                        fit: BoxFit.fill,
-                                      ).paddingOnly(left: 10),
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        CommonText(
-                                          text: 'PAN Number',
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 15,
-                                          color: AppColors.colorBlack,
-                                        ).paddingOnly(left: 20, top: 5),
-                                        CommonText(
-                                          text: controller.profilemodelResponse
-                                              .value.data![0].panNo!,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                          color: AppColors.colorBlack,
-                                        ).paddingOnly(
-                                          left: 20,
-                                        ),
-                                      ],
+                                Card(
+                                    color: AppColors.colorF8F4FA,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),),
+                                    child: Container(
+                                      height: 40,
+                                      width: 40,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: AppColors.colorF8F4FA, // Background color
+                                      ),
+                                      child: Center(
+                                        child: CommonAppImage(
+                                          imagePath: AppImages.iccalander,
+                                          height: 20,
+                                          width: 20,
+                                        ).paddingOnly(left: 10, right: 10),
+                                      ),
                                     )
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CommonText(
+                                      text: 'UAN Number',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15,
+                                      color: AppColors.colorBlack,
+                                    ).paddingOnly(left: 5, top: 5),
+                                    CommonText(
+                                      text: controller.profilemodelResponse.value
+                                          .data![0].uANNo!,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14,
+                                      color: AppColors.colorBlack,
+                                    ).paddingOnly(
+                                      left: 5,
+                                    ),
                                   ],
-                                ).paddingOnly(left: 10, right: 10, top: 10),
+                                ),
+                                Card(
+                                    color: AppColors.colorF8F4FA,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),),
+                                    child: Container(
+                                      height: 40,
+                                      width: 40,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          color: AppColors.colorF8F4FA// Background color
+                                      ),
+                                      child: Center(
+                                        child: CommonAppImage(
+                                          imagePath: AppImages.icblood,
+                                          height: 20,
+                                          width: 20,
+                                        ).paddingOnly(left: 10, right: 10),
+                                      ),
+                                    )
+                                ).paddingOnly(left: 20),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CommonText(
+                                      text: 'Blood Group',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15,
+                                      color: AppColors.colorBlack,
+                                    ).paddingOnly(left: 10, top: 5),
+                                    CommonText(
+                                      text: controller.profilemodelResponse.value
+                                          .data![0].bloodGroup!,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14,
+                                      color: AppColors.colorBlack,
+                                    ).paddingOnly(left: 10),
+                                  ],
+                                )
                               ],
-                            )).paddingOnly(right: 20, top: 5))
-                        .paddingOnly(left: 20, right: 5, top: 5),
-                  ],
-                ))).marginOnly(top: 10),
+                            ).paddingOnly(left: 10, right: 10, top: 10),
+                            Row(
+                              children: [
+                                Card(
+                                    color: AppColors.colorF8F4FA,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),),
+                                    child: Container(
+                                      height: 40,
+                                      width: 40,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: AppColors.colorF8F4FA, // Background color
+                                      ),
+                                      child: Center(
+                                        child: CommonAppImage(
+                                          imagePath: AppImages.icaadhar,
+                                          height: 20,
+                                          width: 20,
+                                        ).paddingOnly(left: 10, right: 10),
+                                      ),
+                                    )
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CommonText(
+                                      text: 'Aadhar Card Number',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15,
+                                      color: AppColors.colorBlack,
+                                    ).paddingOnly(left: 5, top: 5),
+                                    CommonText(
+                                      text: controller.profilemodelResponse.value.data != null
+                                          ? '--:--'
+                                          : controller.profilemodelResponse.value.data![0].aadharCardNo!,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14,
+                                      color: AppColors.colorBlack,
+                                    ).paddingOnly(
+                                      left: 5,
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ).paddingOnly(left: 10, right: 10, top: 10),
+                            Row(
+                              children: [
+                                Card(
+                                    color: AppColors.colorF8F4FA,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),),
+                                    child: Container(
+                                      height: 40,
+                                      width: 40,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: AppColors.colorF8F4FA, // Background color
+                                      ),
+                                      child: Center(
+                                        child: CommonAppImage(
+                                          imagePath: AppImages.iccall,
+                                          height: 20,
+                                          width: 20,
+                                        ).paddingOnly(left: 10, right: 10),
+                                      ),
+                                    )
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CommonText(
+                                      text: 'Mobile Number',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15,
+                                      color: AppColors.colorBlack,
+                                    ).paddingOnly(left: 5, top: 5),
+                                    CommonText(
+                                      text: controller.profilemodelResponse.value
+                                          .data![0].mobileNo!,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14,
+                                      color: AppColors.colorBlack,
+                                    ).paddingOnly(
+                                      left: 5,
+                                    ),
+                                  ],
+                                ),
+                                Card(
+                                    color: AppColors.colorF8F4FA,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),),
+                                    child: Container(
+                                      height: 40,
+                                      width: 40,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: AppColors.colorF8F4FA, // Background color
+                                      ),
+                                      child: Center(
+                                        child: CommonAppImage(
+                                          imagePath: AppImages.icpan,
+                                          height: 20,
+                                          width: 20,
+                                        ).paddingOnly(left: 10, right: 10),
+                                      ),
+                                    )
+                                ).paddingOnly(left: 10),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CommonText(
+                                      text: 'PAN Number',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15,
+                                      color: AppColors.colorBlack,
+                                    ).paddingOnly(left: 10, top: 5),
+                                    CommonText(
+                                      text: controller. profilemodelResponse.value.data![0].panNo!,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14,
+                                      color: AppColors.colorBlack,
+                                    ).paddingOnly(left: 10),
+                                  ],
+                                )
+                              ],
+                            ).paddingOnly(left: 10, right: 10, top: 10),
+                            Row(
+                              children: [
+                                Card(
+                                    color: AppColors.colorF8F4FA,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),),
+                                    child: Container(
+                                      height: 40,
+                                      width: 40,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: AppColors.colorF8F4FA, // Background color
+                                      ),
+                                      child: Center(
+                                        child: CommonAppImage(
+                                          imagePath: AppImages.icemail,
+                                          height: 20,
+                                          width: 20,
+                                        ).paddingOnly(left: 10, right: 10),
+                                      ),
+                                    )
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CommonText(
+                                      text: 'Personal Email',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15,
+                                      color: AppColors.colorBlack,
+                                    ).paddingOnly(left: 5, top: 5),
+                                    CommonText(
+                                      text: controller.profilemodelResponse.value
+                                          .data![0].workEmail!,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14,
+                                      color: AppColors.colorBlack,
+                                    ).paddingOnly(
+                                      left: 5,
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ).paddingOnly(left: 10, right: 10, top: 10),
+                          ],
+                        )
+                    )
+                ).paddingOnly(top: 5),
+              ],
+            )).marginOnly(top: 10),
       ],
     );
   }

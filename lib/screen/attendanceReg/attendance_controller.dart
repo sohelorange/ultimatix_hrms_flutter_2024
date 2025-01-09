@@ -16,8 +16,8 @@ import '../../app/app_url.dart';
 class AttendanceMainController extends GetxController {
   RxBool isLoading = true.obs;
   RxString userAddress = "".obs;
-  RxString userCheckInTime = "10:00 AM".obs;
-  RxString userCheckoutTime = "6:00 PM".obs;
+  RxString userCheckInTime = "--:--".obs;
+  RxString userCheckoutTime = "--:--".obs;
   RxString empID = "".obs;
   RxString cmpID = "".obs;
   RxString userName = "".obs;
@@ -92,8 +92,8 @@ class AttendanceMainController extends GetxController {
       userName.value = userData.empFullName!;
       userDesignation.value = userData.desigName!;
       userAddress.value = userData.branchAddress!;
-      userCheckInTime.value = userData.shInTime!;
-      userCheckoutTime.value = userData.shOutTime!;
+      userCheckInTime.value = userData.status=='' ? "--:--" : userData.status!;
+      userCheckoutTime.value = userData.status2=='' ? "--:--" : userData.status2!;
       userProfileUrl.value = userData.imagePath!;
       userEmpId.value = userData.empId!;
       userCmpId.value = userData.cmpID!;
@@ -186,16 +186,77 @@ class AttendanceMainController extends GetxController {
   }
 
   void showYearDialog(BuildContext context) {
-    _showDialog(
-      context,
-      'Select Year',
-      _generateYearItems(),
-      selectedYearIndex,
-          (index) {
-        selectedYearIndex.value = index;
-        Get.back();
-        selectedYear.value = DateTime.now().year - 15 + index;
-        showMonthDialog(context, selectedYear.value);
+    final int currentYear = DateTime.now().year;
+
+    // Generate a list of years from (currentYear - 10) to (currentYear + 2)
+    final List<Map<String, dynamic>> yearItems = List.generate(
+      13, // Total of 13 years (10 previous + current year + 2 future)
+          (index) => {'name': (currentYear - 10 + index).toString()},
+    );
+
+    // Set default to current year if no selection has been made yet
+    if (selectedYearIndex.value == -1) {
+      selectedYearIndex.value = 10; // Default to the current year
+    }
+
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Select Year'),
+          content: SizedBox(
+            height: MediaQuery.of(context).size.height *
+                0.3, // 30% of screen height
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return CommonYearMonthGridView(
+                  gridItems: yearItems,
+                  selectedIndex: selectedYearIndex,
+                  onItemTap: (index) {
+                    selectedYearIndex.value = index;
+
+                    Get.back(); // Close the year dialog
+                    selectedYear.value =
+                        currentYear - 10 + selectedYearIndex.value;
+                    showMonthDialog(context, selectedYear.value);
+                  },
+                );
+              },
+            ),
+          ),
+          actions: [
+            Row(
+              children: [
+                Expanded(
+                  child: CommonButton(
+                    buttonText: 'Next',
+                    onPressed: () {
+                      if (selectedYearIndex.value >= 0) {
+                        Get.back();
+                        final selectedYear =
+                            currentYear - 10 + selectedYearIndex.value;
+                        showMonthDialog(context, selectedYear);
+                      }
+                    },
+                    isLoading: false,
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: CommonButton(
+                    buttonText: 'Close',
+                    onPressed: () {
+                      Get.back();
+                    },
+                    isLoading: false,
+                  ),
+                ),
+              ],
+            )
+          ],
+        );
       },
     );
   }

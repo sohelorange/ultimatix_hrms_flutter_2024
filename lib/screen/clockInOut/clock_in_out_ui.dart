@@ -39,7 +39,8 @@ class ClockInOutUi extends GetView<ClockInOutController> {
   Widget _buildClockInOutView(BuildContext context) {
     return Stack(
       children: [
-        Container(
+        controller.isLoading.isTrue ? const Center(child: CircularProgressIndicator())
+        : Container(
           width: Utils.getScreenWidth(context: context),
           decoration: const BoxDecoration(
             color: Colors.white,
@@ -56,6 +57,7 @@ class ClockInOutUi extends GetView<ClockInOutController> {
                 SizedBox(height: _responsiveHeight(context, 0.02)),
                 _buildDropdownWidget(context),
                 SizedBox(height: _responsiveHeight(context, 0.02)),
+                controller.defaultValue.value=='Other' ? _buildInputText(context) : Container(),
                 _buildCardContainer(context, controller.userLocAddress.value),
                 SizedBox(height: _responsiveHeight(context, 0.02)),
                 _buildWorkHourWidget(context),
@@ -126,8 +128,12 @@ class ClockInOutUi extends GetView<ClockInOutController> {
           borderRadius: BorderRadius.all(Radius.circular(8.0)),
         ),
       ),
-      child: DropdownButton<String>(
-        value: controller.defaultValue.value,
+      child: controller.items.isEmpty
+          ? Container() :
+      DropdownButton<String>(
+        value: controller.defaultValue.value.isNotEmpty
+            ? controller.defaultValue.value
+            : null,
         hint: const Text('Select an option'),
         isExpanded: true,
         underline: const SizedBox(),
@@ -144,7 +150,9 @@ class ClockInOutUi extends GetView<ClockInOutController> {
           );
         }).toList(),
         onChanged: (String? newValue) {
-          controller.defaultValue.value = newValue!;
+          if (newValue != null) {
+            controller.defaultValue.value = newValue;
+          }
         },
       ),
     );
@@ -211,7 +219,7 @@ class ClockInOutUi extends GetView<ClockInOutController> {
         ),
       ),
       onPressed: () {
-        controller.imageCapture();
+        controller.checkWorkTypeValidation();
       },
       splashColor: AppColors.colorLightPurple2,
     );
@@ -255,6 +263,45 @@ class ClockInOutUi extends GetView<ClockInOutController> {
         ],
       ),
     );
+  }
+
+  _buildInputText(BuildContext context) {
+    return Column(
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width > 600 ? 500 : MediaQuery.of(context).size.width - 32,
+            padding: const EdgeInsets.only(
+                left: 15, right: 15),
+            child: TextField(
+              controller: controller.textDescriptionController,
+              decoration: InputDecoration(
+                hintText: "Enter Reason",
+                hintStyle: const TextStyle(
+                    color: AppColors.color1C1F37),
+                border: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                      color: AppColors.color6B6D7A
+                          .withOpacity(
+                          0.12)), // Default grey underline
+                ),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                      color: AppColors.color6B6D7A
+                          .withOpacity(
+                          0.12)), // Grey when enabled
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                      color: AppColors.color6B6D7A
+                          .withOpacity(
+                          0.12)), // Blue when focused
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: _responsiveHeight(context, 0.02)),
+        ],
+      );
   }
 }
 

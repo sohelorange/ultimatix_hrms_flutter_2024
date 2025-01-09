@@ -8,6 +8,8 @@ import 'package:ultimatix_hrms_flutter/utility/preference_utils.dart';
 
 import '../../../api/dio_client.dart';
 import '../../../app/app_url.dart';
+import '../../../database/ultimatix_dao.dart';
+import '../../../database/ultimatix_db.dart';
 import '../../../utility/network.dart';
 
 class DrawerDashController extends GetxController {
@@ -19,6 +21,9 @@ class DrawerDashController extends GetxController {
 
   RxString empID = "".obs;
   RxString cmpID = "".obs;
+
+  late UltimatixDb database;
+  late UltimatixDao localDao;
 
   final List<Map<String, dynamic>> exploreItems = [
     {'id': 1, 'icon': AppImages.drawerHomeIcon, 'name': 'Home'},
@@ -112,6 +117,7 @@ class DrawerDashController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+    initDatabase();
     Map<String, dynamic> loginData = PreferenceUtils.getLoginDetails();
     userImageUrl.value = loginData['image_Name'] ?? '';
     //userName.value = loginData['emp_Full_Name'] ?? '';
@@ -119,6 +125,24 @@ class DrawerDashController extends GetxController {
     designation.value = loginData['desig_Name'] ?? '';
     empID.value = loginData['emp_ID'].toString();
     cmpID.value = loginData['cmp_ID'].toString();
+  }
+
+  Future<void> initDatabase() async {
+    database =
+    await $FloorUltimatixDb.databaseBuilder('ultimatix_db.db').build();
+    localDao = database.localDao;
+  }
+
+  closeDb() async {
+    await database.close();
+  }
+
+  void deleteRecord() async {
+    await localDao.deleteAllRecords();
+  }
+
+  void deleteAllLocations() async {
+    await localDao.deleteAllLocations();
   }
 
   Future<void> logout() async {
@@ -136,7 +160,11 @@ class DrawerDashController extends GetxController {
         var response =
             await DioClient().postQuery(AppURL.logoutURL, queryParams: param);
         if (response['code'] == 200 && response['status'] == true) {
+          deleteRecord();
+          deleteAllLocations();
+
           PreferenceUtils.setIsLogin(false).then((_) {
+            closeDb();
             Get.offAllNamed(AppRoutes.loginRoute);
           });
 

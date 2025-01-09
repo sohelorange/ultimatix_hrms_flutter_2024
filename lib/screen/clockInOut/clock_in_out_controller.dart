@@ -9,24 +9,23 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:ultimatix_hrms_flutter/api/dio_client.dart';
+import 'package:ultimatix_hrms_flutter/app/app_colors.dart';
 import 'package:ultimatix_hrms_flutter/app/app_url.dart';
 import 'package:ultimatix_hrms_flutter/database/clock_in_out_entity.dart';
 import 'package:ultimatix_hrms_flutter/database/ultimatix_dao.dart';
 import 'package:ultimatix_hrms_flutter/database/ultimatix_db.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:ultimatix_hrms_flutter/utility/network.dart';
+import '../../app/app_snack_bar.dart';
 import '../../utility/isolates_class.dart';
 import '../../utility/preference_utils.dart';
 import '../../utility/utils.dart';
 
 class ClockInOutController extends GetxController
     with GetSingleTickerProviderStateMixin {
-  RxString defaultValue = 'Working From Home'.obs;
+  RxString defaultValue = ''.obs;
 
-  RxList<String> items = <String>[
-    'Working From Home',
-    'Working From Office',
-  ].obs;
+  RxList<String> items = <String>[].obs;
 
   RxBool isCheckIn = false.obs;
   RxBool isLoading = false.obs;
@@ -45,11 +44,15 @@ class ClockInOutController extends GetxController
   RxString totalTime = "00:00".obs;
   RxString nDate = "".obs;
 
+  TextEditingController textDescriptionController = TextEditingController();
+  RxBool isShow = true.obs;
+
   @override
   void onInit() async {
     WidgetsFlutterBinding.ensureInitialized();
     nDate.value = extractDate();
 
+    getTypeForWork();
     getBgGeoLocation();
     await initDatabase();
     getClockInOutRecord("101", true);
@@ -217,7 +220,7 @@ class ClockInOutController extends GetxController
   void imageCapture() async {
     selectedImage.value?.absolute.delete();
     var image = await Utils.pickImage(
-        source: ImageSource.camera, cameraDevice: CameraDevice.front);
+        source: ImageSource.camera, cameraDevice: CameraDevice.rear);
     if (image != null) {
       selectedImage.value = File(image.path);
       clockInOutByApi();
@@ -356,5 +359,83 @@ class ClockInOutController extends GetxController
         }
       },
     );
+  }
+
+  getTypeForWork() async {
+    isLoading.value = true;
+
+    Map<String, dynamic> requestParam = {"ReasonType": "MA"};
+
+    var receivePort = ReceivePort();
+    receivePort.listen(
+      (message) {
+        if (message != null) {
+          setToUi(message);
+        }else {
+          isLoading.value = false;
+          log("This is response getting null");
+        }
+      },
+    );
+
+    var rootToken = RootIsolateToken.instance!;
+    if (await Network.isConnected()) {
+      Isolate.spawn(
+          _getReasonApi,
+          IsolateGetApiData(
+              token: rootToken,
+              answerPort: receivePort.sendPort,
+              apiUrl: AppURL.attendanceGetReasonURL,
+              requestParam: requestParam));
+    }
+  }
+
+  static void _getReasonApi(IsolateGetApiData isolateGetApiData) async{
+    BackgroundIsolateBinaryMessenger.ensureInitialized(isolateGetApiData.token);
+
+    await PreferenceUtils.init();
+    await DioClient()
+        .getQueryParam(isolateGetApiData.apiUrl,queryParams: isolateGetApiData.requestParam)
+        .then(
+          (value) {
+          if (value != null) {
+            isolateGetApiData.answerPort.send(value);
+          } else {
+            isolateGetApiData.answerPort.send(null);
+          }
+      },
+    );
+  }
+
+  void setToUi(message) {
+    Map<String, dynamic> mes = message;
+
+    List<dynamic> data = mes['data'];
+
+    for (var item in data) {
+      items.add(item['Reason_Name'].toString().trim());
+    }
+    /*defaultValue.value = items.elementAt(0);*/
+    isLoading.value = false;
+  }
+
+  void checkWorkTypeValidation(){
+    if(defaultValue.value.isEmpty || defaultValue.value==''){
+      AppSnackBar.showGetXCustomSnackBar(message:"Please select your working mode",backgroundColor: AppColors.colorRed);
+    }else{
+      if(defaultValue.value=="Other"){
+        checkValidation();
+      }else{
+        imageCapture();
+      }
+    }
+  }
+
+  void checkValidation() {
+    if(textDescriptionController.text.isEmpty || textDescriptionController.text==''){
+      AppSnackBar.showGetXCustomSnackBar(message:"Please enter reason",backgroundColor: AppColors.colorRed);
+    }else{
+      imageCapture();
+    }
   }
 }

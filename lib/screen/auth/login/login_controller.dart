@@ -145,8 +145,8 @@ class LoginController extends GetxController {
         Map<String, dynamic> param = {
           'userName': username,
           'password': password,
-          'imeiNo': '',
-          'deviceID': PreferenceUtils.getDeviceID(),
+          'imeiNo': PreferenceUtils.getDeviceID(),
+          'deviceID': PreferenceUtils.getFCMId(),
         };
 
         var response = await DioClient().post(AppURL.loginURL, param);

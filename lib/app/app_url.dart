@@ -43,11 +43,14 @@ class AppURL {
   //end region
 
   //Employee region
-  static String employeedetails =
+  static String getEmployeeDetailsURL =
       '${PreferenceUtils.getAppUrl()}api/v1/EmployeeDetails';
-  static String updateemployeedetails =
+  static String updateEmployeeDetailsURL =
       '${PreferenceUtils.getAppUrl()}api/v1/UpdateEmployeeDetails';
-
+  static String getEmployeeFavDetailsURL =
+      '${PreferenceUtils.getAppUrl()}api/v1/EmployeeFavDetails';
+  static String getEmployeeFamilyDetailsURL =
+      '${PreferenceUtils.getAppUrl()}api/v1/EmployeeChildrenDetails_List';
   //end region
 
   //Leave region

@@ -123,16 +123,20 @@ class GeofenceView extends GetView<GeofenceController> {
                               borderRadius: BorderRadius.circular(10),
                               child: controller.userImageUrl.value.isEmpty
                                   ? const CommonAppImageSvg(
-                                      imagePath: AppImages.svgAvatar,
+                                      imagePath: AppImages
+                                          .svgAvatar, // Default SVG image
                                       height: 40,
                                       width: 40,
-                                      fit: BoxFit.cover,
+                                      fit: BoxFit
+                                          .cover, // Ensures the image fills the space
                                     )
-                                  : Image.network(
-                                      controller.userImageUrl.value,
+                                  : CommonAppImageSvg(
+                                      imagePath: controller.userImageUrl.value,
+                                      // Use profile image URL
                                       height: 40,
                                       width: 40,
-                                      fit: BoxFit.cover,
+                                      fit: BoxFit
+                                          .cover, // Ensures the image fills the space
                                     ),
                             ),
                           ),

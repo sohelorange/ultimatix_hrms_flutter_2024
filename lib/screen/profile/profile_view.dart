@@ -1,557 +1,659 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/app/app_font_weight.dart';
 import 'package:ultimatix_hrms_flutter/app/app_routes.dart';
 import 'package:ultimatix_hrms_flutter/screen/profile/profile_controller.dart';
 import 'package:ultimatix_hrms_flutter/utility/utils.dart';
+import 'package:ultimatix_hrms_flutter/widget/common_app_image_svg.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_text.dart';
 
 import '../../app/app_colors.dart';
 import '../../app/app_images.dart';
-import '../../widget/common_app_image.dart';
+import '../../widget/common_app_bar.dart';
+import '../../widget/common_container.dart';
 
 class ProfileView extends GetView<ProfileController> {
   const ProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [AppColors.colorAppBars, AppColors.colorAppBars],
-          // Gradient colors
-          begin: Alignment.bottomLeft,
-          end: Alignment.topRight,
-          stops: const [0.8, 0.9],
-          // Stops for the gradient colors
-          tileMode: TileMode.clamp,
-        ),
+    return SafeArea(
+        child: Scaffold(
+      appBar: const CommonAppBar(
+        title: 'Profile',
       ),
-      child: AnnotatedRegion(
-        value: const SystemUiOverlayStyle(
-          statusBarBrightness: Brightness.light,
-          statusBarIconBrightness: Brightness.dark,
-          statusBarColor: Colors.transparent,
-        ),
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: GestureDetector(
-            onTap: () {
-              Utils.closeKeyboard(context);
-            },
-            child: SafeArea(
-              child: controller.isLoading.isTrue
-                  ? SizedBox(
-                  height:
-                  Utils.getScreenHeight(context: context) / 3.25,
-                  child: Center(child: Utils.commonCircularProgress()))
-                  : Scaffold(
-                appBar: AppBar(
-                  surfaceTintColor: Colors.transparent,
-                  elevation: 0,
-                  flexibleSpace: Container(
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          AppColors.colorAppBars,
-                          AppColors.colorAppBars
-                        ],
-                        // Gradient colors
-                        begin: Alignment.bottomLeft,
-                        end: Alignment.topRight,
-                        stops: [0.3, 0.7],
-                        // Stops for the gradient colors
-                        tileMode: TileMode.clamp,
-                      ),
-                    ),
-                  ),
-                  centerTitle: true,
-                  leading: InkWell(
-                    splashColor: AppColors.colorWhite,
-                    onTap: () {
-                      Get.back();
-                    },
-                    customBorder: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.only(
-                          left: 15, top: 10, bottom: 10, right: 15),
-                      child: CommonAppImage(
-                        imagePath: AppImages.icarrowback,
-                        height: 10,
-                        width: 10,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                  ),
-                  title: CommonText(
-                    text: 'Profile',
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18,
-                    color: AppColors.colorBlack,
-                  ),
-                  // bottom: tabBarView(),
-                ),
-                body: getProfileView(context),
-              ),
-            ),
-          ),
+      body: CommonContainer(
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          child: Obx(() => controller.isLoading.isTrue
+              ? Center(child: Utils.commonCircularProgress())
+              : controller.profilePersonalModelResponse.value.data != null
+                  ? _getProfileView(context)
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        CommonAppImageSvg(
+                            imagePath: AppImages.svgNoData,
+                            height: 100,
+                            width: MediaQuery.sizeOf(context).width),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        CommonText(
+                          text: controller.profilePersonalModelResponse.value
+                                      .message !=
+                                  null
+                              ? controller
+                                  .profilePersonalModelResponse.value.message!
+                              : 'Something Went Wrong',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
+                          color: AppColors.colorDarkBlue,
+                        ),
+                      ],
+                    )),
         ),
       ),
     ));
   }
 
-  getProfileView(BuildContext context) {
-    return Stack(
+  _getProfileView(BuildContext context) {
+    return SingleChildScrollView(
+        child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+        Container(
+          height: 100,
+          decoration: BoxDecoration(
+            gradient: AppColors.gradientBackground,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Row(
+              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                    height: 100,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [AppColors.color161F59, AppColors.color631983],
-                        begin: Alignment.bottomLeft,
-                        end: Alignment.topRight,
-                        stops: [0.3, 0.7],
-                        // Stops for the gradient colors
-                        tileMode: TileMode.clamp,
+                  height: 80,
+                  width: 80,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    // Adjust radius
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withValues(alpha: 0.5),
+                        spreadRadius: 0,
+                        blurRadius: 0,
+                        offset: const Offset(0, 0), // Shadow position
                       ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        GestureDetector(
-                            onTap: () {
-                              controller.getGallaryview(context);
-                            },
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10.0),
-                                child: CommonAppImage(
-                                  imagePath: controller.profileImage.value.isEmpty
-                                      ? controller.userImageUrl.value
-                                      :controller.profileImage.value,
-                                  height: 80,
-                                  width: 80,
-                                  fit: BoxFit.cover,
-                                )).paddingOnly(left: 10)),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CommonText(
-                              text: controller.profilemodelResponse.value.data![0].empFullName!,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 20,
-                              maxLine: 3,
-                              color: AppColors.colorWhite,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                            ).paddingOnly(top: 10, right: 10),
-                            CommonText(
-                              text: controller.profilemodelResponse.value.data![0].empCode!,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              color: AppColors.colorWhite,
-                            ).paddingOnly(left: 15)
-                          ],
-                        )
-                      ],
-                    )).paddingOnly(left: 5, right: 5),
-                CommonText(
-                  padding: const EdgeInsets.only(left: 10),
-                  text: 'Designation',
-                  color: AppColors.color6B6D7A,
-                  fontSize: 12,
-                  fontWeight: AppFontWeight.w400,
-                ).paddingOnly(top: 20, right: 20),
-                CommonText(
-                  padding: const EdgeInsets.only(left: 10),
-                  text: controller.profilemodelResponse.value.data![0].desigName!,
-                  color: AppColors.colorBlack,
-                  fontSize: 14,
-                  fontWeight: AppFontWeight.w400,
-                ).paddingOnly(top: 5, right: 20),
-                CommonText(
-                  padding: const EdgeInsets.only(left: 10),
-                  text: 'Reporting Manager',
-                  color: AppColors.color6B6D7A,
-                  fontSize: 12,
-                  fontWeight: AppFontWeight.w400,
-                ).paddingOnly(top: 20, right: 20),
-                CommonText(
-                  padding: const EdgeInsets.only(left: 10),
-                  text: controller
-                      .profilemodelResponse.value.data![0].empFullNameSuperior!,
-                  color: AppColors.colorBlack,
-                  fontSize: 14,
-                  fontWeight: AppFontWeight.w400,
-                ).paddingOnly(top: 5, right: 20),
-                CommonText(
-                  padding: const EdgeInsets.only(left: 10),
-                  text: 'Personal Information',
-                  color: AppColors.colorBlack,
-                  fontSize: 16,
-                  fontWeight: AppFontWeight.w500,
-                ).paddingOnly(top: 20, right: 20),
-                Container(
-                    height: Utils.getScreenHeight(context: context) / 2.5,
-                    decoration: BoxDecoration(
-                      color: AppColors.colorWhite,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Card(
-                        elevation: 4,
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Card(
-                                    color: AppColors.colorF8F4FA,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),),
-                                    child: Container(
-                                      height: 40,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: AppColors.colorF8F4FA, // Background color
-                                      ),
-                                      child: Center(
-                                        child: CommonAppImage(
-                                          imagePath: AppImages.iccalander,
-                                          height: 20,
-                                          width: 20,
-                                        ).paddingOnly(left: 10, right: 10),
-                                      ),
-                                    )
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CommonText(
-                                      text: 'Date of Joining',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 15,
-                                      color: AppColors.colorBlack,
-                                    ).paddingOnly(left: 5, top: 5),
-                                    CommonText(
-                                      text: controller.profilemodelResponse.value
-                                          .data![0].dateOfJoin!,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
-                                      color: AppColors.colorBlack,
-                                    ).paddingOnly(
-                                      left: 5,
-                                    ),
-                                  ],
-                                ),
-                                Card(
-                                    color: AppColors.colorF8F4FA,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),),
-                                    child: Container(
-                                      height: 40,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: AppColors.colorF8F4FA, // Background color
-                                      ),
-                                      child: Center(
-                                        child: CommonAppImage(
-                                          imagePath: AppImages.icbirth,
-                                          height: 20,
-                                          width: 20,
-                                        ).paddingOnly(left: 10, right: 10),
-                                      ),
-                                    )
-                                ).paddingOnly(left: 10),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CommonText(
-                                      text: 'Date of Birth',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 15,
-                                      color: AppColors.colorBlack,
-                                    ).paddingOnly(left: 10, top: 5),
-                                    CommonText(
-                                      text: controller.profilemodelResponse.value.data![0].dOB!,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
-                                      color: AppColors.colorBlack,
-                                    ).paddingOnly(left: 10,),
-                                  ],
-                                )
-                              ],
-                            ).paddingOnly(left: 10, right: 10, top: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Card(
-                                    color: AppColors.colorF8F4FA,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),),
-                                    child: Container(
-                                      height: 40,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: AppColors.colorF8F4FA, // Background color
-                                      ),
-                                      child: Center(
-                                        child: CommonAppImage(
-                                          imagePath: AppImages.iccalander,
-                                          height: 20,
-                                          width: 20,
-                                        ).paddingOnly(left: 10, right: 10),
-                                      ),
-                                    )
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CommonText(
-                                      text: 'UAN Number',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 15,
-                                      color: AppColors.colorBlack,
-                                    ).paddingOnly(left: 5, top: 5),
-                                    CommonText(
-                                      text: controller.profilemodelResponse.value
-                                          .data![0].uANNo!,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
-                                      color: AppColors.colorBlack,
-                                    ).paddingOnly(
-                                      left: 5,
-                                    ),
-                                  ],
-                                ),
-                                Card(
-                                    color: AppColors.colorF8F4FA,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),),
-                                    child: Container(
-                                      height: 40,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
-                                          color: AppColors.colorF8F4FA// Background color
-                                      ),
-                                      child: Center(
-                                        child: CommonAppImage(
-                                          imagePath: AppImages.icblood,
-                                          height: 20,
-                                          width: 20,
-                                        ).paddingOnly(left: 10, right: 10),
-                                      ),
-                                    )
-                                ).paddingOnly(left: 20),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CommonText(
-                                      text: 'Blood Group',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 15,
-                                      color: AppColors.colorBlack,
-                                    ).paddingOnly(left: 10, top: 5),
-                                    CommonText(
-                                      text: controller.profilemodelResponse.value
-                                          .data![0].bloodGroup!,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
-                                      color: AppColors.colorBlack,
-                                    ).paddingOnly(left: 10),
-                                  ],
-                                )
-                              ],
-                            ).paddingOnly(left: 10, right: 10, top: 10),
-                            Row(
-                              children: [
-                                Card(
-                                    color: AppColors.colorF8F4FA,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),),
-                                    child: Container(
-                                      height: 40,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: AppColors.colorF8F4FA, // Background color
-                                      ),
-                                      child: Center(
-                                        child: CommonAppImage(
-                                          imagePath: AppImages.icaadhar,
-                                          height: 20,
-                                          width: 20,
-                                        ).paddingOnly(left: 10, right: 10),
-                                      ),
-                                    )
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CommonText(
-                                      text: 'Aadhar Card Number',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 15,
-                                      color: AppColors.colorBlack,
-                                    ).paddingOnly(left: 5, top: 5),
-                                    CommonText(
-                                      text: controller.profilemodelResponse.value.data != null
-                                          ? '--:--'
-                                          : controller.profilemodelResponse.value.data![0].aadharCardNo!,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
-                                      color: AppColors.colorBlack,
-                                    ).paddingOnly(
-                                      left: 5,
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ).paddingOnly(left: 10, right: 10, top: 10),
-                            Row(
-                              children: [
-                                Card(
-                                    color: AppColors.colorF8F4FA,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),),
-                                    child: Container(
-                                      height: 40,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: AppColors.colorF8F4FA, // Background color
-                                      ),
-                                      child: Center(
-                                        child: CommonAppImage(
-                                          imagePath: AppImages.iccall,
-                                          height: 20,
-                                          width: 20,
-                                        ).paddingOnly(left: 10, right: 10),
-                                      ),
-                                    )
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CommonText(
-                                      text: 'Mobile Number',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 15,
-                                      color: AppColors.colorBlack,
-                                    ).paddingOnly(left: 5, top: 5),
-                                    CommonText(
-                                      text: controller.profilemodelResponse.value
-                                          .data![0].mobileNo!,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
-                                      color: AppColors.colorBlack,
-                                    ).paddingOnly(
-                                      left: 5,
-                                    ),
-                                  ],
-                                ),
-                                Card(
-                                    color: AppColors.colorF8F4FA,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),),
-                                    child: Container(
-                                      height: 40,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: AppColors.colorF8F4FA, // Background color
-                                      ),
-                                      child: Center(
-                                        child: CommonAppImage(
-                                          imagePath: AppImages.icpan,
-                                          height: 20,
-                                          width: 20,
-                                        ).paddingOnly(left: 10, right: 10),
-                                      ),
-                                    )
-                                ).paddingOnly(left: 10),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CommonText(
-                                      text: 'PAN Number',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 15,
-                                      color: AppColors.colorBlack,
-                                    ).paddingOnly(left: 10, top: 5),
-                                    CommonText(
-                                      text: controller. profilemodelResponse.value.data![0].panNo!,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
-                                      color: AppColors.colorBlack,
-                                    ).paddingOnly(left: 10),
-                                  ],
-                                )
-                              ],
-                            ).paddingOnly(left: 10, right: 10, top: 10),
-                            Row(
-                              children: [
-                                Card(
-                                    color: AppColors.colorF8F4FA,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),),
-                                    child: Container(
-                                      height: 40,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: AppColors.colorF8F4FA, // Background color
-                                      ),
-                                      child: Center(
-                                        child: CommonAppImage(
-                                          imagePath: AppImages.icemail,
-                                          height: 20,
-                                          width: 20,
-                                        ).paddingOnly(left: 10, right: 10),
-                                      ),
-                                    )
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CommonText(
-                                      text: 'Personal Email',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 15,
-                                      color: AppColors.colorBlack,
-                                    ).paddingOnly(left: 5, top: 5),
-                                    CommonText(
-                                      text: controller.profilemodelResponse.value
-                                          .data![0].workEmail!,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
-                                      color: AppColors.colorBlack,
-                                    ).paddingOnly(
-                                      left: 5,
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ).paddingOnly(left: 10, right: 10, top: 10),
-                          ],
-                        )
-                    )
-                ).paddingOnly(top: 5),
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: controller.userImageUrl.value.isEmpty
+                        ? const CommonAppImageSvg(
+                            imagePath: AppImages.svgAvatar, // Default SVG image
+                            height: 80,
+                            width: 80,
+                            fit: BoxFit
+                                .cover, // Ensures the image fills the space
+                          )
+                        : CommonAppImageSvg(
+                            imagePath: controller.userImageUrl.value,
+                            // Use profile image URL
+                            height: 80,
+                            width: 80,
+                            fit: BoxFit
+                                .cover, // Ensures the image fills the space
+                          ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CommonText(
+                        textAlign: TextAlign.start,
+                        text: controller.profilePersonalModelResponse.value
+                            .data![0].empFullName!,
+                        color: AppColors.colorWhite,
+                        fontSize: 20,
+                        fontWeight: AppFontWeight.w700,
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      CommonText(
+                        textAlign: TextAlign.start,
+                        text: controller.profilePersonalModelResponse.value
+                            .data![0].empCode!,
+                        color: AppColors.colorWhite,
+                        fontSize: 14,
+                        fontWeight: AppFontWeight.w500,
+                      )
+                    ],
+                  ),
+                ),
               ],
-            )).marginOnly(top: 10),
+            ),
+          ),
+        ),
+        CommonText(
+          text: 'Designation',
+          color: AppColors.color6B6D7A,
+          fontSize: 12,
+          fontWeight: AppFontWeight.w400,
+        ).paddingOnly(top: 15),
+        CommonText(
+          text:
+              controller.profilePersonalModelResponse.value.data![0].desigName!,
+          color: AppColors.colorDarkBlue,
+          fontSize: 14,
+          fontWeight: AppFontWeight.w400,
+        ).paddingOnly(top: 5),
+        CommonText(
+          text: 'Reporting Manager',
+          color: AppColors.color6B6D7A,
+          fontSize: 12,
+          fontWeight: AppFontWeight.w400,
+        ).paddingOnly(top: 15),
+        CommonText(
+          text: controller
+              .profilePersonalModelResponse.value.data![0].empFullNameSuperior!,
+          color: AppColors.colorDarkBlue,
+          fontSize: 14,
+          fontWeight: AppFontWeight.w400,
+        ).paddingOnly(top: 5),
+        _personalInformation(),
+        _bankInformation(),
+        _favouriteInformation(),
+        _familyInformation(),
+        _assetInformation()
+      ],
+    ));
+  }
+
+  Widget _personalInformation() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CommonText(
+          text: 'Personal Information',
+          color: AppColors.colorBlack,
+          fontSize: 16,
+          fontWeight: AppFontWeight.w500,
+        ).paddingOnly(top: 15),
+        Container(
+            //height: Utils.getScreenHeight(context: context) / 2.5,
+            margin: const EdgeInsets.symmetric(horizontal: 1, vertical: 5),
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0X1C1F370D),
+                  blurRadius: 4.0,
+                  spreadRadius: 1.0,
+                  offset: Offset(0, 0),
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: _employeeDetails(
+                          AppImages.leaveCalendarIcon,
+                          'Date Of Joining',
+                          controller.profilePersonalModelResponse.value.data![0]
+                                  .dateOfJoin ??
+                              ''),
+                    ),
+                    Expanded(
+                      child: _employeeDetails(
+                          AppImages.leaveCalendarIcon,
+                          'Blood Group',
+                          controller.profilePersonalModelResponse.value.data![0]
+                                  .bloodGroup ??
+                              ''),
+                    ),
+                  ],
+                ).paddingSymmetric(horizontal: 10),
+                _employeeDetails(
+                        AppImages.leaveCalendarIcon,
+                        'Guardian Name',
+                        controller.profilePersonalModelResponse.value.data![0]
+                                .grdName ??
+                            '')
+                    .paddingOnly(left: 10, right: 10, top: 10),
+                _employeeDetails(
+                        AppImages.leaveCalendarIcon,
+                        'UAN Number',
+                        controller.maskNumber(controller
+                                .profilePersonalModelResponse
+                                .value
+                                .data![0]
+                                .uANNo ??
+                            ''))
+                    .paddingOnly(left: 10, right: 10, top: 10),
+                _employeeDetails(
+                        AppImages.leaveCalendarIcon,
+                        'Aadhar Card Number',
+                        controller.maskNumber(controller
+                                .profilePersonalModelResponse
+                                .value
+                                .data![0]
+                                .aadharCardNo ??
+                            ''))
+                    .paddingOnly(left: 10, right: 10, top: 10),
+                _employeeDetails(
+                        AppImages.leaveCalendarIcon,
+                        'PAN Number',
+                        controller.maskNumber(controller
+                                .profilePersonalModelResponse
+                                .value
+                                .data![0]
+                                .panNo ??
+                            ''))
+                    .paddingOnly(left: 10, right: 10, top: 10),
+                _employeeDetails(
+                        AppImages.leaveCalendarIcon,
+                        'Contact No',
+                        controller.maskNumber(controller
+                                .profilePersonalModelResponse
+                                .value
+                                .data![0]
+                                .mobileNo ??
+                            ''))
+                    .paddingOnly(left: 10, right: 10, top: 10),
+                _employeeDetails(
+                        AppImages.leaveCalendarIcon,
+                        'Email Id',
+                        controller.maskNumber(controller
+                                .profilePersonalModelResponse
+                                .value
+                                .data![0]
+                                .workEmail ??
+                            ''))
+                    .paddingOnly(left: 10, right: 10, top: 10),
+                _employeeDetails(AppImages.leaveCalendarIcon, 'Address',
+                        '${controller.profilePersonalModelResponse.value.data![0].street1 ?? ''},${controller.profilePersonalModelResponse.value.data![0].city ?? ''},${controller.profilePersonalModelResponse.value.data![0].state ?? ''},${controller.profilePersonalModelResponse.value.data![0].zipCode ?? '' '.'}')
+                    .paddingOnly(left: 10, right: 10, top: 10)
+              ],
+            )).paddingOnly(top: 10),
       ],
     );
   }
 
+  Widget _bankInformation() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CommonText(
+          text: 'Bank Information',
+          color: AppColors.colorBlack,
+          fontSize: 16,
+          fontWeight: AppFontWeight.w500,
+        ).paddingOnly(top: 15),
+        Container(
+            //height: Utils.getScreenHeight(context: context) / 2.5,
+            margin: const EdgeInsets.symmetric(horizontal: 1, vertical: 5),
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0X1C1F370D),
+                  blurRadius: 4.0,
+                  spreadRadius: 1.0,
+                  offset: Offset(0, 0),
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                _employeeDetails(
+                        AppImages.leaveCalendarIcon,
+                        'Bank Name',
+                        controller.profilePersonalModelResponse.value.data![0]
+                                .bankBranchName ??
+                            '')
+                    .paddingOnly(left: 10, right: 10, top: 10),
+                _employeeDetails(
+                  AppImages.leaveCalendarIcon,
+                  'Account Number',
+                  controller.maskNumber(controller.profilePersonalModelResponse
+                          .value.data![0].incBankACNo ??
+                      ''),
+                ).paddingOnly(left: 10, right: 10, top: 10),
+                _employeeDetails(
+                        AppImages.leaveCalendarIcon,
+                        'IFSC Code',
+                        controller.profilePersonalModelResponse.value.data![0]
+                                .ifscCode ??
+                            '')
+                    .paddingOnly(left: 10, right: 10, top: 10),
+              ],
+            )).paddingOnly(top: 10),
+      ],
+    );
+  }
+
+  Widget _favouriteInformation() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CommonText(
+          text: 'Favourite Information',
+          color: AppColors.colorBlack,
+          fontSize: 16,
+          fontWeight: AppFontWeight.w500,
+        ).paddingOnly(top: 15),
+        Container(
+            //height: Utils.getScreenHeight(context: context) / 2.5,
+            margin: const EdgeInsets.symmetric(horizontal: 1, vertical: 5),
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0X1C1F370D),
+                  blurRadius: 4.0,
+                  spreadRadius: 1.0,
+                  offset: Offset(0, 0),
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                _employeeDetails(
+                        AppImages.leaveCalendarIcon,
+                        'Favourite Sport',
+                        controller.profileFavoriteModelResponse.value.data![0]
+                                .empFavSportName ??
+                            '')
+                    .paddingOnly(left: 10, right: 10, top: 10),
+                _employeeDetails(
+                        AppImages.leaveCalendarIcon,
+                        'Hobby',
+                        controller.profileFavoriteModelResponse.value.data![0]
+                                .empHobbyName ??
+                            '')
+                    .paddingOnly(left: 10, right: 10, top: 10),
+                _employeeDetails(
+                        AppImages.leaveCalendarIcon,
+                        'Favourite Food',
+                        controller.profileFavoriteModelResponse.value.data![0]
+                                .empFavFood ??
+                            '')
+                    .paddingOnly(left: 10, right: 10, top: 10),
+                _employeeDetails(
+                        AppImages.leaveCalendarIcon,
+                        'Favourite Restaurant',
+                        controller.profileFavoriteModelResponse.value.data![0]
+                                .empFavRestro ??
+                            '')
+                    .paddingOnly(left: 10, right: 10, top: 10),
+                _employeeDetails(
+                        AppImages.leaveCalendarIcon,
+                        'Favourite Travel Destination',
+                        controller.profileFavoriteModelResponse.value.data![0]
+                                .empFavTrvDestination ??
+                            '')
+                    .paddingOnly(left: 10, right: 10, top: 10),
+                _employeeDetails(
+                        AppImages.leaveCalendarIcon,
+                        'Favourite Festival',
+                        controller.profileFavoriteModelResponse.value.data![0]
+                                .empFavFestival ??
+                            '')
+                    .paddingOnly(left: 10, right: 10, top: 10),
+                _employeeDetails(
+                        AppImages.leaveCalendarIcon,
+                        'Favourite Sport Person',
+                        controller.profileFavoriteModelResponse.value.data![0]
+                                .empFavSportPerson ??
+                            '')
+                    .paddingOnly(left: 10, right: 10, top: 10),
+                _employeeDetails(
+                        AppImages.leaveCalendarIcon,
+                        'Favourite Singer',
+                        controller.profileFavoriteModelResponse.value.data![0]
+                                .empFavSinger ??
+                            '')
+                    .paddingOnly(left: 10, right: 10, top: 10),
+              ],
+            )).paddingOnly(top: 10),
+      ],
+    );
+  }
+
+  Widget _familyInformation() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            CommonText(
+              text: 'Family Information',
+              color: AppColors.colorBlack,
+              fontSize: 16,
+              fontWeight: AppFontWeight.w500,
+            ),
+            IconButton(
+              onPressed: () {},
+              highlightColor: Colors.transparent,
+              icon: const Icon(
+                //size: 20,
+                Icons.add,
+                color: AppColors.colorBlack,
+              ),
+            )
+          ],
+        ),
+        Container(
+            //height: Utils.getScreenHeight(context: context) / 2.5,
+            margin: const EdgeInsets.symmetric(horizontal: 1, vertical: 5),
+            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 4),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0X1C1F370D),
+                  blurRadius: 4.0,
+                  spreadRadius: 1.0,
+                  offset: Offset(0, 0),
+                ),
+              ],
+            ),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: controller.profileFamilyModelResponse.value.data != null &&
+                      controller
+                          .profileFamilyModelResponse.value.data!.isNotEmpty
+                  ? DataTable(
+                      columns: const [
+                        DataColumn(label: Text('Name')),
+                        DataColumn(label: Text('Relationship')),
+                        DataColumn(label: Text('Dependent')),
+                        DataColumn(label: Text('View')),
+                      ],
+                      rows: controller.profileFamilyModelResponse.value.data!
+                          .map((person) {
+                        return DataRow(cells: [
+                          DataCell(Text(person.name ?? '')),
+                          DataCell(Text(person.relationship ?? '')),
+                          DataCell(
+                              Text(person.isDependant == 1 ? 'Yes' : 'No')),
+                          DataCell(
+                            IconButton(
+                              icon: const Icon(Icons.visibility),
+                              onPressed: () {
+                                Get.toNamed(
+                                  AppRoutes.familyViewRoute,
+                                  arguments: {
+                                    'familyDetails': person,
+                                  },
+                                );
+                              },
+                              highlightColor: Colors.transparent,
+                            ),
+                          ),
+                        ]);
+                      }).toList(),
+                    )
+                  : const Center(
+                      child: Text(
+                          'No data available')), // Fallback when data is null or empty
+            )),
+      ],
+    );
+  }
+
+  Widget _assetInformation() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CommonText(
+          text: 'Asset Information',
+          color: AppColors.colorBlack,
+          fontSize: 16,
+          fontWeight: AppFontWeight.w500,
+        ).paddingOnly(top: 15),
+        Container(
+            //height: Utils.getScreenHeight(context: context) / 2.5,
+            margin: const EdgeInsets.symmetric(horizontal: 1, vertical: 5),
+            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 4),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0X1C1F370D),
+                  blurRadius: 4.0,
+                  spreadRadius: 1.0,
+                  offset: Offset(0, 0),
+                ),
+              ],
+            ),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: controller.profileFamilyModelResponse.value.data != null &&
+                      controller
+                          .profileFamilyModelResponse.value.data!.isNotEmpty
+                  ? DataTable(
+                      columns: const [
+                        DataColumn(label: Text('Asset Code')),
+                        DataColumn(label: Text('Asset Name')),
+                        DataColumn(label: Text('Serial no')),
+                        DataColumn(label: Text('Allocation Date')),
+                        DataColumn(label: Text('View')),
+                      ],
+                      rows: controller.profileFamilyModelResponse.value.data!
+                          .map((person) {
+                        return DataRow(cells: [
+                          DataCell(Text(person.name ?? '')),
+                          DataCell(Text(person.relationship ?? '')),
+                          DataCell(
+                              Text(person.isDependant == 1 ? 'Yes' : 'No')),
+                          DataCell(
+                              Text(person.isDependant == 1 ? 'Yes' : 'No')),
+                          DataCell(
+                            IconButton(
+                              icon: const Icon(Icons.visibility),
+                              onPressed: () {
+                                // Handle the "View" button press
+                                showDialog(
+                                  context: Get.context!,
+                                  builder: (context) => AlertDialog(
+                                    title: const Text('View Details'),
+                                    content: Text('Name: ${person.name}\n'
+                                        'Relationship: ${person.relationship}\n'
+                                        'Dependent: ${person.isDependant.toString()}'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(),
+                                        child: const Text('Close'),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ]);
+                      }).toList(),
+                    )
+                  : const Center(
+                      child: Text(
+                          'No data available')), // Fallback when data is null or empty
+            )).paddingOnly(top: 10),
+      ],
+    );
+  }
+
+  Widget _employeeDetails(String imagePath, String label, String value) {
+    return Row(
+      children: [
+        Container(
+          height: 45,
+          width: 45,
+          decoration: BoxDecoration(
+            color: AppColors.colorF8F4FA,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: const [
+              BoxShadow(
+                color: Color(0X1C1F370D),
+                blurRadius: 0.0,
+                spreadRadius: 0.0,
+                offset: Offset(0, 0),
+              ),
+            ],
+          ),
+          child: CommonAppImageSvg(
+            imagePath: imagePath,
+            height: 20,
+            width: 20,
+            color: AppColors.colorDarkBlue,
+          ).paddingSymmetric(vertical: 10, horizontal: 10),
+        ),
+        const SizedBox(width: 5),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CommonText(
+                text: label,
+                fontWeight: FontWeight.w400,
+                fontSize: 12,
+                color: AppColors.color6B6D7A,
+              ),
+              CommonText(
+                softWrap: true,
+                maxLine: 2,
+                overflow: TextOverflow.visible,
+                text: value,
+                fontWeight: FontWeight.w400,
+                fontSize: 14,
+                color: AppColors.colorDarkBlue,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
 }

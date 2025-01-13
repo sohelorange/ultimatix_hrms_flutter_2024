@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ultimatix_hrms_flutter/app/app_date_format.dart';
 import 'package:ultimatix_hrms_flutter/app/app_font_weight.dart';
+import 'package:ultimatix_hrms_flutter/app/app_snack_bar.dart';
 import 'package:ultimatix_hrms_flutter/app/app_time_format.dart';
 import 'package:ultimatix_hrms_flutter/screen/leave/add_leave/add_leave_controller.dart';
 import 'package:ultimatix_hrms_flutter/screen/leave/add_leave/add_leave_type_dropdown_model.dart';
@@ -13,6 +14,7 @@ import 'package:ultimatix_hrms_flutter/utility/utils.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_app_bar.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_button.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_container.dart';
+import 'package:ultimatix_hrms_flutter/widget/common_material_dialog.dart';
 
 import '../../../app/app_colors.dart';
 import '../../../app/app_images.dart';
@@ -130,7 +132,31 @@ class AddLeaveView extends GetView<AddLeaveController> {
                     controller.leaveHalfDay.clear();
                     controller.selectedLeaveHalfDay?.value = '';
                     controller.selectedAPILeaveHalfDay!.value = '';
+                    controller.fromTimeController.value.clear();
+                    controller.hourController.value.clear();
+                    controller.toTimeController.value.clear();
                     //controller.leaveTypesAttachment.value = 0;
+
+                    if (controller.selectedDropdownLeaveID.value == '1724' ||
+                        controller.selectedDropdownLeaveID.value == '1725') {
+                      Get.dialog(CommonMaterialDialog(
+                        title: 'Confirmation',
+                        message:
+                            'Your Leave Period Contains Holiday/WeekOff.Are you sure you want to continue?',
+                        yesButtonText: 'Ok',
+                        noButtonText: 'Cancel',
+                        onConfirm: () {
+                          Get.back();
+                        },
+                        onCancel: () {
+                          Get.back();
+                          controller.selectedDropdownLeave.value = null;
+                          controller.selectedDropdownLeaveID.value = '';
+                          controller.leaveTypesAttachment.value = 0;
+                        },
+                        isLoading: false.obs,
+                      ));
+                    }
                   }
                 },
               ),
@@ -141,9 +167,14 @@ class AddLeaveView extends GetView<AddLeaveController> {
           ),
           GestureDetector(
             onTap: () {
-              Utils.closeKeyboard(context);
-              AppDatePicker.allDateEnable(
-                  context, controller.fromDateController.value);
+              if (controller.selectedDropdownLeaveID.value.isEmpty) {
+                AppSnackBar.showGetXCustomSnackBar(
+                    message: 'Please select first leave type.');
+              } else {
+                Utils.closeKeyboard(context);
+                AppDatePicker.allDateEnable(
+                    context, controller.fromDateController.value);
+              }
             },
             child: CommonInputField(
               textEditingController: controller.fromDateController.value,
@@ -166,34 +197,43 @@ class AddLeaveView extends GetView<AddLeaveController> {
           Visibility(
             visible: controller.selectedDropdownLeaveID.value != '1481',
             child: CommonInputField(
+              isEnable: controller.fromDateController.value.text.isNotEmpty
+                  ? true
+                  : false,
               // onSubmitted: (_) {
               //   FocusScope.of(context).requestFocus(controller.reasonFocus);
               // },
               onChanged: (val) {
-                if (controller.debounce?.isActive ?? false) {
-                  controller.debounce?.cancel();
-                }
-                controller.debounce = Timer(const Duration(seconds: 1), () {
-                  if (val.isNotEmpty) {
-                    controller.getEmployeeLeavePeriod(
-                        controller.selectedDropdownLeaveID.value,
-                        controller.fromDateController.value.text,
-                        controller.periodController.value.text,
-                        controller.toDateController.value.text,
-                        controller.selectedLeaveTypesDay!.value,
-                        controller.reasonController.value.text,
-                        controller.attachment.value,
-                        controller.docName.value);
-                  } else {
-                    controller.toDateController.value.clear();
-                    controller.periodController.value.clear();
-                    controller.leaveTypesDay.clear();
-                    controller.selectedLeaveTypesDay!.value = '';
-                    controller.leaveHalfDay.clear();
-                    controller.selectedLeaveHalfDay!.value = '';
-                    controller.selectedAPILeaveHalfDay!.value = '';
+                if (controller.fromDateController.value.text.isEmpty) {
+                  controller.periodController.value.clear();
+                  AppSnackBar.showGetXCustomSnackBar(
+                      message: 'Please select first from date.');
+                } else {
+                  if (controller.debounce?.isActive ?? false) {
+                    controller.debounce?.cancel();
                   }
-                });
+                  controller.debounce = Timer(const Duration(seconds: 1), () {
+                    if (val.isNotEmpty) {
+                      controller.getEmployeeLeavePeriod(
+                          controller.selectedDropdownLeaveID.value,
+                          controller.fromDateController.value.text,
+                          controller.periodController.value.text,
+                          controller.toDateController.value.text,
+                          controller.selectedLeaveTypesDay!.value,
+                          controller.reasonController.value.text,
+                          controller.attachment.value,
+                          controller.docName.value);
+                    } else {
+                      controller.toDateController.value.clear();
+                      controller.periodController.value.clear();
+                      controller.leaveTypesDay.clear();
+                      controller.selectedLeaveTypesDay!.value = '';
+                      controller.leaveHalfDay.clear();
+                      controller.selectedLeaveHalfDay!.value = '';
+                      controller.selectedAPILeaveHalfDay!.value = '';
+                    }
+                  });
+                }
               },
               textInputAction: TextInputAction.next,
               inputFormatters: [
@@ -220,9 +260,14 @@ class AddLeaveView extends GetView<AddLeaveController> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Utils.closeKeyboard(context);
-                    AppTimePicker.allTimeEnable24(
-                        context, controller.fromTimeController.value);
+                    if (controller.fromDateController.value.text.isEmpty) {
+                      AppSnackBar.showGetXCustomSnackBar(
+                          message: 'Please select from date.');
+                    } else {
+                      Utils.closeKeyboard(context);
+                      AppTimePicker.allTimeEnable24(
+                          context, controller.fromTimeController.value);
+                    }
                   },
                   child: CommonInputField(
                     textEditingController: controller.fromTimeController.value,
@@ -272,6 +317,9 @@ class AddLeaveView extends GetView<AddLeaveController> {
                       controller.toTimeController.value.clear();
                     }
                   },
+                  isEnable: controller.fromTimeController.value.text.isNotEmpty
+                      ? true
+                      : false,
                   textInputAction: TextInputAction.next,
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),

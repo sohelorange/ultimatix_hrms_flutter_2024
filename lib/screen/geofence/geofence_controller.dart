@@ -1,10 +1,5 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:ffi';
-import 'dart:math';
-import 'dart:ui';
-import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
+import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
@@ -13,12 +8,12 @@ import 'package:ultimatix_hrms_flutter/api/dio_client.dart';
 import 'package:ultimatix_hrms_flutter/app/app_colors.dart';
 import 'package:ultimatix_hrms_flutter/app/app_snack_bar.dart';
 import 'package:ultimatix_hrms_flutter/app/app_url.dart';
-import 'package:ultimatix_hrms_flutter/screen/geofence/geo_location_record_model.dart';
+import 'package:ultimatix_hrms_flutter/screen/geofence/geo_fence_model.dart';
 import 'package:ultimatix_hrms_flutter/utility/preference_utils.dart';
 
 class GeofenceController extends GetxController {
   RxBool isLoading = true.obs;
-  final marker = <Marker>{}.obs;// Observable set of markers
+  final marker = <Marker>{}.obs; // Observable set of markers
   var circles = <Circle>{}.obs;
   RxInt radius = 0.obs;
   RxDouble distance = 0.0.obs;
@@ -26,11 +21,11 @@ class GeofenceController extends GetxController {
   RxString userImageUrl = "".obs;
 
   // Define current location
-  final currentPosition = LatLng(0.0, 0.0).obs; // Observable current position
+  final currentPosition =
+      const LatLng(0.0, 0.0).obs; // Observable current position
   late GoogleMapController mapController;
 
-  Rx<GeoLocationrecordList> geolocationrecordmodel = GeoLocationrecordList().obs;
-
+  Rx<GeoFenceModel> geoFenceModel = GeoFenceModel().obs;
 
   @override
   void onInit() {
@@ -42,9 +37,6 @@ class GeofenceController extends GetxController {
 
     // distance.value = calculateDistance(
     //     currentPosition.value,LatLng(23.105404, 72.5563849));
-
-
-
   }
 
   // Method to set GoogleMapController
@@ -53,10 +45,10 @@ class GeofenceController extends GetxController {
   }
 
   Future<void> getCurrentLocation() async {
-    isLoading.value =true;
     try {
       LocationPermission permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
           return; // Permission denied
@@ -64,24 +56,25 @@ class GeofenceController extends GetxController {
       }
 
       Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
-      );
+          //desiredAccuracy: LocationAccuracy.high,
+          locationSettings:
+              const LocationSettings(accuracy: LocationAccuracy.high));
 
       currentPosition.value = LatLng(position.latitude, position.longitude);
-      print("Lat: ${position.latitude}, Lng: ${position.longitude}");
+      if (kDebugMode) {
+        print("Lat: ${position.latitude}, Lng: ${position.longitude}");
+      }
       // Add a marker at the current location
       addMarker(currentPosition.value);
 
-      mapController.animateCamera(CameraUpdate.newLatLngZoom(currentPosition.value, 17));
+      mapController
+          .animateCamera(CameraUpdate.newLatLngZoom(currentPosition.value, 17));
 
       // double distance= calculateDistance(currentPosition.value,LatLng(23.105404, 72.5563849));
-
-
     } catch (e) {
-      print("Error getting location: $e");
-    }finally{
-      isLoading.value =false;
-
+      if (kDebugMode) {
+        print("Error getting location: $e");
+      }
     }
   }
 
@@ -89,13 +82,13 @@ class GeofenceController extends GetxController {
     marker.clear(); // Remove previous markers
     marker.add(
       Marker(
-        markerId: MarkerId("current_location"),
+        markerId: const MarkerId("current_location"),
         position: position,
-        infoWindow: InfoWindow(title: "You are here"),
+        infoWindow: const InfoWindow(title: "You are here"),
       ),
     );
     // _addMarkersAndCircles();
-    ongeolocartionrecordsAPI();
+    onGeoFenceAPI();
     update();
   }
 
@@ -139,8 +132,10 @@ class GeofenceController extends GetxController {
 
   void checkIfInsideCircle(double currentLat, double currentLng) {
     double distance = Geolocator.distanceBetween(
-      currentPosition.value.latitude,currentPosition.value.longitude,
-      double.parse(geolocationrecordmodel.value.data![0].latitude!), double.parse(geolocationrecordmodel.value.data![0].longitude!),
+      currentPosition.value.latitude,
+      currentPosition.value.longitude,
+      double.parse(geoFenceModel.value.data![0].latitude!),
+      double.parse(geoFenceModel.value.data![0].longitude!),
     );
 
     // Update the observable based on the condition
@@ -152,43 +147,49 @@ class GeofenceController extends GetxController {
     // isWithinRadius.value = distance <= radius.value;
     isWithinRadius.value = false;
 
-    print('Calculkate distance ${distance}, ${radius.value},${isWithinRadius.value}');
-
+    if (kDebugMode) {
+      print(
+          'Calculkate distance $distance, ${radius.value},${isWithinRadius.value}');
+    }
   }
 
-  Future<void> ongeolocartionrecordsAPI() async {
+  Future<void> onGeoFenceAPI() async {
     try {
+      isLoading.value = true;
 
       var response = await DioClient().getQueryParam(AppURL.geolocationrecords);
       debugPrint("res --$response");
 
-      geolocationrecordmodel.value = GeoLocationrecordList.fromJson(response);
+      geoFenceModel.value = GeoFenceModel.fromJson(response);
 
-      if(geolocationrecordmodel.value.code == 200 && geolocationrecordmodel.value.status == true) {
-
-        for(var i = 0; i < geolocationrecordmodel.value.data!.length; i++ ){
-          final location = geolocationrecordmodel.value.data![i];
+      if (geoFenceModel.value.code == 200 &&
+          geoFenceModel.value.status == true) {
+        for (var i = 0; i < geoFenceModel.value.data!.length; i++) {
+          final location = geoFenceModel.value.data![i];
 
           marker.add(
             Marker(
                 markerId: MarkerId('marker_$i'),
-                position: LatLng(double.parse(location.latitude!), double.parse(location.longitude!)),
+                position: LatLng(double.parse(location.latitude!),
+                    double.parse(location.longitude!)),
                 infoWindow: InfoWindow(
                   title: location.geoLocation,
                   // snippet: 'Lat: ${location.latitude}, Lng: ${location.longitude}',
                 ),
-                icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueViolet)
-            ),
+                icon: BitmapDescriptor.defaultMarkerWithHue(
+                    BitmapDescriptor.hueViolet)),
           );
 
           radius.value = location.meter!;
           debugPrint("geo meter --${radius.value}");
-          debugPrint("location --${i}");
+          debugPrint("location --$i");
           circles.add(
             Circle(
               circleId: CircleId('circle_$i'),
-              center: LatLng(double.parse(location.latitude!), double.parse(location.longitude!)),
-              radius: location.meter!.toDouble(), // Radius in meters
+              center: LatLng(double.parse(location.latitude!),
+                  double.parse(location.longitude!)),
+              radius: location.meter!.toDouble(),
+              // Radius in meters
               fillColor: AppColors.color7B1FA2.withOpacity(0.3),
               strokeColor: AppColors.colorAppPurple,
               strokeWidth: 2,
@@ -223,18 +224,18 @@ class GeofenceController extends GetxController {
             ),
           );
         });*/
-        debugPrint("geo record --${response}");
+        debugPrint("geo record --$response");
 
-        checkIfInsideCircle(currentPosition.value.latitude,currentPosition.value.longitude);
-
-      } else{
-        AppSnackBar.showGetXCustomSnackBar(message: "${geolocationrecordmodel.value.message}" );
+        checkIfInsideCircle(
+            currentPosition.value.latitude, currentPosition.value.longitude);
+      } else {
+        AppSnackBar.showGetXCustomSnackBar(
+            message: "${geoFenceModel.value.message}");
       }
     } catch (e) {
       debugPrint("Login catch --$e");
     } finally {
-      // isLoading.value = false;
+       isLoading.value = false;
     }
   }
-
 }

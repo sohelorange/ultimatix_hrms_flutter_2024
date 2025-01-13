@@ -147,7 +147,7 @@ class DrawerDashController extends GetxController {
 
   Future<void> logout() async {
     try {
-      isLoading(true);
+      isLoading.value = true;
       isDisable(true);
 
       // Check if network is available
@@ -179,7 +179,8 @@ class DrawerDashController extends GetxController {
     } catch (e) {
       AppSnackBar.showGetXCustomSnackBar(message: e.toString());
     } finally {
-      isLoading(false);
+      isLoading.value = false;
+
       isDisable(false);
     }
   }

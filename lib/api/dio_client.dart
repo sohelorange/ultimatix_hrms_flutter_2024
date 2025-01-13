@@ -43,6 +43,10 @@ class DioClient {
       uri = Uri.parse(baseUrl).replace(queryParameters: queryParams);
     }
 
+    log("API is:$baseUrl");
+    log("API Param is:$queryParams");
+    log("API Token is:${PreferenceUtils.getAuthToken()}");
+
     try {
       var response = await Dio()
           .get(uri.toString(),
@@ -129,6 +133,7 @@ class DioClient {
   Future<dynamic> postQuery(String url, {Map<String, dynamic>? queryParams}) async {
     var uri = Uri.parse(url);
     log("API is:$url");
+    log("API Param is:$queryParams");
     log("API Token is:${PreferenceUtils.getAuthToken()}");
 
     try {

@@ -64,25 +64,39 @@ class DashAppBar extends StatelessWidget implements PreferredSizeWidget {
                   children: [
                     GestureDetector(
                       onTap: onProfileImageClick,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: profileImageUrl.isEmpty
-                            ? const CommonAppImageSvg(
-                                imagePath:
-                                    AppImages.svgAvatar, // Default SVG image
-                                height: 56,
-                                width: 56,
-                                fit: BoxFit
-                                    .cover, // Ensures the image fills the space
-                              )
-                            : CommonAppImageSvg(
-                                imagePath:
-                                    profileImageUrl, // Use profile image URL
-                                height: 56,
-                                width: 56,
-                                fit: BoxFit
-                                    .cover, // Ensures the image fills the space
-                              ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          // Adjust radius
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 0,
+                              blurRadius: 0,
+                              offset: const Offset(0, 0), // Shadow position
+                            ),
+                          ],
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: profileImageUrl.isEmpty
+                              ? const CommonAppImageSvg(
+                                  imagePath:
+                                      AppImages.svgAvatar, // Default SVG image
+                                  height: 56,
+                                  width: 56,
+                                  fit: BoxFit
+                                      .cover, // Ensures the image fills the space
+                                )
+                              : CommonAppImageSvg(
+                                  imagePath:
+                                      profileImageUrl, // Use profile image URL
+                                  height: 56,
+                                  width: 56,
+                                  fit: BoxFit
+                                      .cover, // Ensures the image fills the space
+                                ),
+                        ),
                       ),
                     ),
                     if (showEditIcon)

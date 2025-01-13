@@ -30,6 +30,8 @@ class LeaveBalanceController extends GetxController {
 
   Rx<LeaveBalanceModel> leaveBalListResponse = LeaveBalanceModel().obs;
 
+  RxString errorMsg = ''.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -77,17 +79,17 @@ class LeaveBalanceController extends GetxController {
   }
 
   void showYearDialog(BuildContext context) {
-    final int currentYear = DateTime.now().year - 15;
+    final int currentYear = DateTime.now().year;
 
-    // Generate a list of years dynamically
+    // Generate a list of years from (currentYear - 10) to (currentYear + 2)
     final List<Map<String, dynamic>> yearItems = List.generate(
-      50,
-      (index) => {'name': (currentYear + index).toString()},
+      13, // Total of 13 years (10 previous + current year + 2 future)
+      (index) => {'name': (currentYear - 10 + index).toString()},
     );
 
     // Set default to current year if no selection has been made yet
     if (selectedYearIndex.value == -1) {
-      selectedYearIndex.value = 15; // Default to the current year
+      selectedYearIndex.value = 10; // Default to the current year
     }
 
     showDialog(
@@ -102,15 +104,6 @@ class LeaveBalanceController extends GetxController {
             width: MediaQuery.of(context).size.width * 0.8,
             child: LayoutBuilder(
               builder: (context, constraints) {
-                // int crossAxisCount;
-                // if (constraints.maxWidth < 400) {
-                //   crossAxisCount = 2; // For smaller screens
-                // } else if (constraints.maxWidth < 800) {
-                //   crossAxisCount = 3; // For medium screens
-                // } else {
-                //   crossAxisCount = 4; // For larger screens
-                // }
-
                 return CommonYearMonthGridView(
                   gridItems: yearItems,
                   selectedIndex: selectedYearIndex,
@@ -118,8 +111,8 @@ class LeaveBalanceController extends GetxController {
                     selectedYearIndex.value = index;
 
                     Get.back(); // Close the year dialog
-                    //final selectedYear = currentYear + selectedYearIndex.value;
-                    selectedYear.value = currentYear + selectedYearIndex.value;
+                    selectedYear.value =
+                        currentYear - 10 + selectedYearIndex.value;
                     showMonthDialog(context, selectedYear.value);
                   },
                 );
@@ -136,16 +129,14 @@ class LeaveBalanceController extends GetxController {
                       if (selectedYearIndex.value >= 0) {
                         Get.back();
                         final selectedYear =
-                            currentYear + selectedYearIndex.value;
+                            currentYear - 10 + selectedYearIndex.value;
                         showMonthDialog(context, selectedYear);
                       }
                     },
                     isLoading: false,
                   ),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
+                const SizedBox(width: 10),
                 Expanded(
                   child: CommonButton(
                     buttonText: 'Close',

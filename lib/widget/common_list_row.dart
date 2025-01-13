@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ultimatix_hrms_flutter/app/app_font_weight.dart';
+import 'package:ultimatix_hrms_flutter/widget/common_text.dart';
 
 import '../app/app_colors.dart';
 
@@ -12,8 +14,9 @@ class CommonListRow extends StatelessWidget {
     super.key,
     required this.label,
     required this.value,
-    this.labelColor = AppColors.colorBlack,
-    this.valueColor = AppColors.colorBlack, // Update constructor to accept status color
+    this.labelColor = AppColors.colorDarkBlue,
+    this.valueColor =
+        AppColors.colorDarkGray, // Update constructor to accept status color
   });
 
   @override
@@ -40,18 +43,17 @@ class CommonListRow extends StatelessWidget {
         children: [
           Expanded(
             flex: 7,
-            child: Text(
-              label,
-              style: TextStyle(
-                fontSize: 10,
-                fontWeight: FontWeight.bold,
-                color: labelColor,
-              ),
+            child: CommonText(
+              text: label,
+              color: labelColor,
+              fontSize: 16,
+              fontWeight: AppFontWeight.w700,
             ),
           ),
-          const Text(
-            ' : ',
-            style: TextStyle(fontSize: 10),
+          CommonText(
+            text: ' : ',
+            fontSize: 14,
+            fontWeight: AppFontWeight.w400,
           ),
           Expanded(
             flex: 8,
@@ -61,13 +63,12 @@ class CommonListRow extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               // Center text vertically
               children: [
-                Text(
-                  value,
-                  style: TextStyle(
-                    fontSize: 10,
-                    color: finalValueColor, // Use current status color
-                  ),
-                ), // Apply status color
+                CommonText(
+                  text: value,
+                  color: finalValueColor,
+                  fontSize: 14,
+                  fontWeight: AppFontWeight.w400,
+                ),
               ],
             ),
           ),

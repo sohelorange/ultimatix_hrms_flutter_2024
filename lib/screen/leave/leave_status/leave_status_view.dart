@@ -201,7 +201,7 @@ class LeaveStatusView extends GetView<LeaveStatusController> {
                         children: [
                           CommonText(
                             text: controller.leaveStatusListResponse.value
-                                .data![index].leaveCode
+                                .data![index].leaveName
                                 .toString(),
                             fontWeight: FontWeight.w700,
                             fontSize: 16,

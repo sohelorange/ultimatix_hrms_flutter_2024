@@ -33,6 +33,7 @@ class Data {
   int? exitApproval;
   int? ticketApprovals;
   int? claimAppCnt;
+  int? travelAppCnt;
 
   Data(
       {this.leaveAppCnt,
@@ -41,7 +42,7 @@ class Data {
       this.compOffApprovals,
       this.exitApproval,
       this.ticketApprovals,
-      this.claimAppCnt});
+      this.claimAppCnt,this.travelAppCnt});
 
   Data.fromJson(Map<String, dynamic> json) {
     leaveAppCnt = json['leaveAppCnt'];
@@ -51,6 +52,7 @@ class Data {
     exitApproval = json['exitApproval'];
     ticketApprovals = json['ticketApprovals'];
     claimAppCnt = json['claimAppCnt'];
+    travelAppCnt = json['travelAppCnt'];
   }
 
   Map<String, dynamic> toJson() {
@@ -62,6 +64,7 @@ class Data {
     data['exitApproval'] = exitApproval;
     data['ticketApprovals'] = ticketApprovals;
     data['claimAppCnt'] = claimAppCnt;
+    data['travelAppCnt'] = travelAppCnt;
     return data;
   }
 }

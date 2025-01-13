@@ -40,8 +40,7 @@ class ManagerApprovalView extends GetView<ManagerApprovalController> {
                           height: 20,
                         ),
                         CommonText(
-                          text: controller
-                              .leaveManagerApprovalResponse.value.message!,
+                          text: controller.leaveManagerApprovalResponse.value.message ?? controller.errorMsg.value,
                           fontWeight: FontWeight.w400,
                           fontSize: 16,
                           color: AppColors.colorDarkBlue,

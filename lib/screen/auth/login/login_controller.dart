@@ -37,20 +37,12 @@ class LoginController extends GetxController {
 
   RxString strIdentifier = 'Unknown'.obs;
 
-  final NotificationServices _notificationServices = NotificationServices();
-
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    _notificationServices.requestNotificationPermission();
-    _notificationServices.firebaseInit(Get.context!);
-    _notificationServices.setUpInterMsg(Get.context!);
+
     //notificationServices.isTokenRefresh();
-    _notificationServices.getDeviceToken().then((value) => {
-          // ignore: avoid_print
-          print('Device Token $value')
-        });
 
     deviceID();
 

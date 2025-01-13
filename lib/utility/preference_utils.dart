@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,6 +11,10 @@ class PreferenceUtils {
   static Future<SharedPreferences> init() async {
     _prefsInstance ??= await SharedPreferences.getInstance();
     return _prefsInstance!;
+  }
+
+  static void reload() async{
+    _prefsInstance?.reload();
   }
 
   static Future<void> clearAllPreferences() async {

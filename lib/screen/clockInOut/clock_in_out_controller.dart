@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'dart:isolate';
@@ -56,6 +57,7 @@ class ClockInOutController extends GetxController
     getBgGeoLocation();
     await initDatabase();
     getClockInOutRecord("101", true);
+    /*getCheckInOutStatus();*/
     super.onInit();
   }
 
@@ -438,4 +440,68 @@ class ClockInOutController extends GetxController
       imageCapture();
     }
   }
+
+  void getCheckInOutStatus() async{
+    isLoading.value = true;
+
+    var receivePort = ReceivePort();
+    receivePort.listen(
+          (message) {
+        if (message != null) {
+          isLoading.value = false;
+          remoteDataSetToUi(message);
+          log("This is response getting not null:$message");
+        }else {
+          isLoading.value = false;
+          log("This is response getting null");
+        }
+      },
+    );
+
+    var rootToken = RootIsolateToken.instance!;
+    if (await Network.isConnected()) {
+      Isolate.spawn(
+          _getCheckInOutStatus,
+          IsolateGetApiData(
+              token: rootToken,
+              answerPort: receivePort.sendPort,
+              apiUrl: AppURL.checkInOutStatusURL,
+          ));
+    }
+  }
+
+  static void _getCheckInOutStatus(IsolateGetApiData isolateGetApiData) async{
+    BackgroundIsolateBinaryMessenger.ensureInitialized(isolateGetApiData.token);
+
+    await PreferenceUtils.init();
+    await DioClient()
+        .get(isolateGetApiData.apiUrl)
+        .then(
+          (value) {
+        if (value != null) {
+          isolateGetApiData.answerPort.send(value);
+        } else {
+          isolateGetApiData.answerPort.send(null);
+        }
+      },
+    );
+  }
+
+  void remoteDataSetToUi(message) {
+    Map<String, dynamic> jsonData = json.decode(message);
+    var data = jsonData['data'];
+
+    for (var item in data) {
+      String location = item['Location'];
+      String ioDatetime = item['IO_Datetime'];
+
+      print('Location: $location');
+      print('IO_Datetime: $ioDatetime');
+
+      String textBeforeColon = location.split(':')[0].trim();
+
+      print(textBeforeColon);
+    }
+  }
+
 }

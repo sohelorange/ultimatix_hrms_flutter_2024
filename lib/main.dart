@@ -17,6 +17,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:selfie_camera/selfie_camera.dart';
 import 'package:ultimatix_hrms_flutter/database/database_helper.dart';
 import 'package:ultimatix_hrms_flutter/utility/constants.dart';
 import 'package:ultimatix_hrms_flutter/utility/network.dart';
@@ -54,6 +55,7 @@ void main() async {
   };
 
   initDbWithLocationTrackService();
+  await SelfieCamera.initialize(isLog: true);
 
   runApp(
     ChangeNotifierProvider(

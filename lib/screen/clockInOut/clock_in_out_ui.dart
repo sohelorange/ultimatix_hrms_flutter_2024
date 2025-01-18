@@ -219,7 +219,7 @@ class ClockInOutUi extends GetView<ClockInOutController> {
         ),
       ),
       onPressed: () {
-        controller.checkWorkTypeValidation();
+        controller.checkWorkTypeValidation(context);
       },
       splashColor: AppColors.colorLightPurple2,
     );

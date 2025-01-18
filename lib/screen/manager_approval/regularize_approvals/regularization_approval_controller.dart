@@ -155,3 +155,31 @@ class _IsolateApiData {
 
   _IsolateApiData({required this.token, required this.requestData, required this.answerPort, required this.apiUrl});
 }
+
+/*
+API: http://192.168.1.200:8080/api/v1/AttendanceRegularizeApproval
+Request: {
+  "applicationID": 0,
+  "empID": 13961,
+  "cmpID": 119,
+  "fordate": "10-01-2021",
+  "reason": "string",
+  "halfFullDay": "Full Day",
+  "cancelLateIn": 1,
+  "cancelEarlyOut": 1,
+  "intime": "0",
+  "outTime": "0",
+  "comment": "test",
+  "sEmpID": 0,
+  "rptLevel": 0,
+  "finalApproval": 0,
+  "isFWDRej": 0,
+  "appStatus": "string"
+}
+Response: {
+  "status": true,
+  "code": 200,
+  "message": "Success",
+  "data": "@@No Record Found@@#False#"
+}
+*/

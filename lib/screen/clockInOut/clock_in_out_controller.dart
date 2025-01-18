@@ -55,9 +55,10 @@ class ClockInOutController extends GetxController
 
     getTypeForWork();
     getBgGeoLocation();
-    await initDatabase();
-    getClockInOutRecord("101", true);
-    /*getCheckInOutStatus();*/
+    await initDatabase(); //TODO: temp commented because data will not require to get from local db.
+    getClockInOutRecord("101", true); //TODO: This will return the data from local and set in ui for clock in or out. commented because not showing from locally.(16-01-2025 11:01AM)
+
+    /*getCheckInOutStatus();*/ //TODO: by this the data set in ui by api for clock in or out
     super.onInit();
   }
 
@@ -219,10 +220,9 @@ class ClockInOutController extends GetxController
   }
 
   /*First, executed this method after image capture clockInOutByApi method call Api for Clock In/Out*/
-  void imageCapture() async {
+  void imageCapture(BuildContext context) async {
     selectedImage.value?.absolute.delete();
-    var image = await Utils.pickImage(
-        source: ImageSource.camera, cameraDevice: CameraDevice.rear);
+    var image = await Utils.captureSelfie(context: context);
     if (image != null) {
       selectedImage.value = File(image.path);
       clockInOutByApi();
@@ -234,9 +234,9 @@ class ClockInOutController extends GetxController
     isCheckIn.value = !isCheckIn.value;
     PreferenceUtils.setIsClocking(isCheckIn.value);
     if (isCheckIn.value) {
-      _storeDataToDb();
+      _storeDataToDb(); //TODO: commented because data will not require to store in local db 16-01-2025 11:01 AM
     } else {
-      updateClockInOut("00:00", "101");
+      updateClockInOut("00:00", "101"); //TODO: commented because data will not require to store in db 16-01-2025 11:01 AM
     }
   }
 
@@ -421,23 +421,23 @@ class ClockInOutController extends GetxController
     isLoading.value = false;
   }
 
-  void checkWorkTypeValidation(){
+  void checkWorkTypeValidation(BuildContext context){
     if(defaultValue.value.isEmpty || defaultValue.value==''){
       AppSnackBar.showGetXCustomSnackBar(message:"Please select your working mode",backgroundColor: AppColors.colorRed);
     }else{
       if(defaultValue.value=="Other"){
-        checkValidation();
+        checkValidation(context);
       }else{
-        imageCapture();
+        imageCapture(context);
       }
     }
   }
 
-  void checkValidation() {
+  void checkValidation(BuildContext context) {
     if(textDescriptionController.text.isEmpty || textDescriptionController.text==''){
       AppSnackBar.showGetXCustomSnackBar(message:"Please enter reason",backgroundColor: AppColors.colorRed);
     }else{
-      imageCapture();
+      imageCapture(context);
     }
   }
 

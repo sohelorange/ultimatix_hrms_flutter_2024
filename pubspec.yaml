@@ -76,6 +76,8 @@ dependencies:
   file_picker: ^8.1.6
   flutter_verification_code: ^1.1.7
   pin_input_text_field: ^4.5.2
+  http: ^1.2.2
+  selfie_camera: ^0.0.7
   #local_auth: ^2.3.0
   multi_select_flutter: ^4.1.0
   dropdown_textfield: ^1.2.0

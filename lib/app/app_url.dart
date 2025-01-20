@@ -37,6 +37,7 @@ class AppURL {
   //ClockIn region
   static String clockInURL = '${PreferenceUtils.getAppUrl()}api/v1/clockin';
   static String clockOutURL = '${PreferenceUtils.getAppUrl()}api/v1/clockout';
+  static String checkInOutStatusURL = '${PreferenceUtils.getAppUrl()}api/v1/CheckINOUT';
   static String geolocationrecords =
       '${PreferenceUtils.getAppUrl()}api/v1/GeoLocationRecords';
 

@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/screen/attendanceReg/attendance_main_bind.dart';
 import 'package:ultimatix_hrms_flutter/screen/attendanceReg/attendance_main_ui.dart';
-import 'package:ultimatix_hrms_flutter/screen/attendanceReg/regularizationListApprovals/regularization_list_approvals_bind.dart';
 import 'package:ultimatix_hrms_flutter/screen/attendanceReg/regularizeApplication/regularize_apply_bind.dart';
 import 'package:ultimatix_hrms_flutter/screen/attendanceReg/regularizeApplication/regularize_apply_ui.dart';
 import 'package:ultimatix_hrms_flutter/screen/auth/forgotpassword/forgot_pass_view.dart';
@@ -45,10 +44,6 @@ import 'package:ultimatix_hrms_flutter/screen/settings/feedback/feedback_binding
 import 'package:ultimatix_hrms_flutter/screen/settings/feedback/feedback_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/settings/settings_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/settings/settings_view.dart';
-
-import '../screen/attendanceReg/regularizationListApprovals/regularization_list_approvals_ui.dart';
-import '../screen/attendanceReg/regularizeApprovals/regularization_approval_bind.dart';
-import '../screen/attendanceReg/regularizeApprovals/regularization_approval_ui.dart';
 import '../screen/attendanceReg/userAttendanceRegularize/attendance_user_bind.dart';
 import '../screen/attendanceReg/userAttendanceRegularize/attendance_user_ui.dart';
 import '../screen/auth/forgotpassword/forgot_pass_binding.dart';
@@ -59,6 +54,10 @@ import '../screen/clockInOut/clock_in_out_ui.dart';
 import '../screen/manager_approval/leave_manager_approval/leave_manager_approval_binding.dart';
 import '../screen/manager_approval/leave_manager_approval/leave_manager_approval_view.dart';
 import '../screen/manager_approval/leave_manager_approval_details/leave_manager_approval_edit_details/leave_manager_approval_edit_details_view.dart';
+import '../screen/manager_approval/regularization_list_approvals/regularization_list_approvals_bind.dart';
+import '../screen/manager_approval/regularization_list_approvals/regularization_list_approvals_ui.dart';
+import '../screen/manager_approval/regularize_approvals/regularization_approval_bind.dart';
+import '../screen/manager_approval/regularize_approvals/regularization_approval_ui.dart';
 import '../screen/splash/splash_view.dart';
 
 /// All routes for app pages are defined here

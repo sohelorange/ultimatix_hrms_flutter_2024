@@ -50,6 +50,7 @@ class IsolateGetApiData {
   final RootIsolateToken token;
   final SendPort answerPort;
   final String apiUrl;
+  final Map<String, dynamic>? requestParam;
 
-  IsolateGetApiData({required this.token, required this.answerPort, required this.apiUrl});
+  IsolateGetApiData({required this.token, required this.answerPort, required this.apiUrl, this.requestParam});
 }

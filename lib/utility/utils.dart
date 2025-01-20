@@ -7,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:selfie_camera/selfie_camera.dart';
 
 import '../app/app_colors.dart';
 import '../app/app_font_weight.dart';
@@ -142,6 +143,32 @@ class Utils {
     try {
       final pickedFile = await ImagePicker()
           .pickImage(source: source, preferredCameraDevice: cameraDevice);
+      if (pickedFile != null) {
+        // selectedImage.value = File(pickedFile.path);
+        debugPrint("SELECTED ::: ${pickedFile.path}");
+        return pickedFile;
+      } else {
+        debugPrint('No image selected.');
+        return null;
+      }
+    } catch (e) {
+      debugPrint('Error picking image: $e');
+    }
+    return null;
+  }
+
+  static Future<XFile?> captureSelfie({
+    required BuildContext context
+  }) async{
+    try {
+      final pickedFile = await SelfieCamera.selfieCameraFile(
+        context,
+        imageResolution: ImageResolution.max,
+        defaultCameraType: CameraType.front,
+        defaultFlashType: CameraFlashType.off,
+        imageScale: ImageScale.big,
+        showCameraTypeControl: false,
+      );
       if (pickedFile != null) {
         // selectedImage.value = File(pickedFile.path);
         debugPrint("SELECTED ::: ${pickedFile.path}");

@@ -290,8 +290,8 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
                                     "halfFullDay": controller.attendanceRegularizeDetails.value.data?.elementAt(index).pDays ?? "--:--",
                                     "cancellationLateIn": controller.attendanceRegularizeDetails.value.data?.elementAt(index).isCancelLateIn ?? "--:--",
                                     "cancellationEarlyOut": controller.attendanceRegularizeDetails.value.data?.elementAt(index).isCancelEarlyOut ?? "--:--",
-                                    "inTime1": controller.attendanceRegularizeDetails.value.data?.elementAt(index).shInTime ?? "--:--",
-                                    "outTime1": controller.attendanceRegularizeDetails.value.data?.elementAt(index).shOutTime ?? "--:--",
+                                    "inTime1": controller.attendanceRegularizeDetails.value.data?.elementAt(index).status ?? "--:--",
+                                    "outTime1": controller.attendanceRegularizeDetails.value.data?.elementAt(index).status2 ?? "--:--",
                                     "lateIn": controller.attendanceRegularizeDetails.value.data?.elementAt(index).earlyMinute ?? "--:--",
                                     "earlyOut": controller.attendanceRegularizeDetails.value.data?.elementAt(index).isLeaveApp ?? "--:--",
                                     "UiName": "AttendanceUserUi"
@@ -308,12 +308,14 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
                     ],
                   ),
 
-                  controller.attendanceRegularizeDetails.value.data?.elementAt(index).mainStatus=="W" || controller.attendanceRegularizeDetails.value.data?.elementAt(index).mainStatus=="A" ? const SizedBox(height: 0)
+                  /*controller.attendanceRegularizeDetails.value.data?.elementAt(index).mainStatus=="W" || controller.attendanceRegularizeDetails.value.data?.elementAt(index).mainStatus=="A" ? const SizedBox(height: 0)
+                      : const SizedBox(height: 16.0),*/
+                  checkTime(index)==false ? const SizedBox(height: 0)
                       : const SizedBox(height: 16.0),
 
                   /*Second Row*/
-                  controller.attendanceRegularizeDetails.value.data?.elementAt(index).mainStatus=="W" || controller.attendanceRegularizeDetails.value.data?.elementAt(index).mainStatus=="A" ? Container()
-                      : Row(
+                  /*controller.attendanceRegularizeDetails.value.data?.elementAt(index).mainStatus=="W" || controller.attendanceRegularizeDetails.value.data?.elementAt(index).mainStatus=="A" ? Container()*/
+                  checkTime(index)==false ? Container() : Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       // Box 1
@@ -342,7 +344,7 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
                                       style: TextStyle(fontSize: fontSize,color: AppColors.color6B6D7A, fontWeight: FontWeight.w400),
                                     ),
                                     Text(
-                                        controller.attendanceRegularizeDetails.value.data?.elementAt(index).shInTime?.trim() ?? "",
+                                        controller.attendanceRegularizeDetails.value.data?.elementAt(index).status?.trim() ?? "",
                                         style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w700,
                                             color:
                                             controller.attendanceRegularizeDetails.value.data!.elementAt(index).lateMinute! >
@@ -383,7 +385,7 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
                                       style: TextStyle(fontSize: fontSize,color: AppColors.color6B6D7A, fontWeight: FontWeight.w400),
                                     ),
                                     Text(
-                                        controller.attendanceRegularizeDetails.value.data?.elementAt(index).shOutTime?.trim() ?? "",
+                                        controller.attendanceRegularizeDetails.value.data?.elementAt(index).status2?.trim() ?? "",
                                         style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w700,
                                             color:
                                             controller.attendanceRegularizeDetails.value.data!.elementAt(index).lateMinute! >
@@ -469,4 +471,15 @@ class UserAttendanceUi extends GetView<UserAttendanceController>{
     );
   }
 
+  bool checkTime(int index) {
+    if(controller.attendanceRegularizeDetails.value.data?.elementAt(index).status!=null || controller.attendanceRegularizeDetails.value.data?.elementAt(index).status2!=null){
+      if(controller.attendanceRegularizeDetails.value.data?.elementAt(index).status!="" || controller.attendanceRegularizeDetails.value.data?.elementAt(index).status2!=""){
+        return true;
+      } else{
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
 }

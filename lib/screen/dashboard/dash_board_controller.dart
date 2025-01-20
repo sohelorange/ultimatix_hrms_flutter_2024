@@ -25,6 +25,7 @@ import '../../app/app_snack_bar.dart';
 import '../../app/app_url.dart';
 import '../../database/clock_response.dart';
 import '../../database/location_entity.dart';
+import '../../services/notification_services.dart';
 import '../../utility/constants.dart';
 import '../../utility/network.dart';
 import '../../utility/preference_utils.dart';
@@ -44,6 +45,8 @@ class DashController extends GetxController {
   RxString nDate = "Friday,Oct 15,2024".obs;
 
   RxInt selectedIndex = 0.obs;
+
+  final NotificationServices _notificationServices = NotificationServices();
 
   RxString presentDayLbl = "Present".obs;
   RxString presentDayValue = "0".obs;
@@ -113,9 +116,13 @@ class DashController extends GetxController {
     super.onInit();
     checkInOutStatus.value = PreferenceUtils.getIsClocking();
 
+    _notificationServices.requestNotificationPermission();
+    _notificationServices.firebaseInit(Get.context!);
+    _notificationServices.setUpInterMsg(Get.context!);
+
     await getLoginDetails();
     await fetchDataInParallel();
-    await initDatabase();
+    /*await initDatabase();*/
 
     imeiNo = await getImeiNo() ?? "";
     todayDayDate.value = getTodayFormattedDate();

@@ -307,23 +307,23 @@ class DashboardView extends GetView<DashController> {
                     borderRadius: BorderRadius.circular(6),
                     color: AppColors.purpleSwatch,
                   ),
-                  // child: Center(
-                  //   child: CommonText(
-                  //     textAlign: TextAlign.center,
-                  //     text: controller.checkInTime.value == '--:--' &&
-                  //             controller.checkOutTime.value == '--:--'
-                  //         ? 'Check In'
-                  //         : controller.checkInTime.value.isNotEmpty &&
-                  //                 controller.checkOutTime.value.isNotEmpty
-                  //             ? 'Check In'
-                  //             : 'Check Out',
-                  //     color: AppColors.colorWhite,
-                  //     fontSize: 14,
-                  //     fontWeight: AppFontWeight.w500,
-                  //   ),
-                  // ),
-
                   child: Center(
+                    child: CommonText(
+                      textAlign: TextAlign.center,
+                      text: controller.checkInTime.value == '--:--' &&
+                              controller.checkOutTime.value == '--:--'
+                          ? 'Check In'
+                          : controller.checkInTime.value.isNotEmpty &&
+                                  controller.checkOutTime.value.isNotEmpty
+                              ? 'Check In'
+                              : 'Check Out',
+                      color: AppColors.colorWhite,
+                      fontSize: 14,
+                      fontWeight: AppFontWeight.w500,
+                    ),
+                  ),
+
+                  //child: Center(
                     // child: CommonText(
                     //   textAlign: TextAlign.center,
                     //   text: controller.checkInOutStatus.value
@@ -333,7 +333,7 @@ class DashboardView extends GetView<DashController> {
                     //   fontSize: 14,
                     //   fontWeight: AppFontWeight.w500,
                     // ),
-                    child: ValueListenableBuilder<bool>(
+                   /* child: ValueListenableBuilder<bool>(
                       valueListenable: controller.checkInOutStatus,
                       builder: (context, value, child) {
                         return CommonText(
@@ -346,8 +346,8 @@ class DashboardView extends GetView<DashController> {
                           fontWeight: AppFontWeight.w500,
                         );
                       },
-                    ),
-                  ),
+                    ),*/
+                  //),
                 ),
               )
               //SizedBox(width: 120,child: CommonButton(buttonText: 'Check In', onPressed: (){}, isLoading: false))

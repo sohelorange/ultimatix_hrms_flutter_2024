@@ -182,6 +182,46 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.1"
+  camera:
+    dependency: transitive
+    description:
+      name: camera
+      sha256: dfa8fc5a1adaeb95e7a54d86a5bd56f4bb0e035515354c8ac6d262e35cec2ec8
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.10.6"
+  camera_android:
+    dependency: transitive
+    description:
+      name: camera_android
+      sha256: "007c57cdcace4751014071e3d42f2eb8a64a519254abed35b714223d81d66234"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.10.10"
+  camera_avfoundation:
+    dependency: transitive
+    description:
+      name: camera_avfoundation
+      sha256: "3f81ee3e88a79b0b010f0233d42625926299551b05d5dc995267a0b35bc33247"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.18"
+  camera_platform_interface:
+    dependency: transitive
+    description:
+      name: camera_platform_interface
+      sha256: "953e7baed3a7c8fae92f7200afeb2be503ff1a17c3b4e4ed7b76f008c2810a31"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.9.0"
+  camera_web:
+    dependency: transitive
+    description:
+      name: camera_web
+      sha256: "595f28c89d1fb62d77c73c633193755b781c6d2e0ebcd8dc25b763b514e6ba8f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.5"
   carousel_slider:
     dependency: "direct main"
     description:
@@ -902,7 +942,7 @@ packages:
     source: hosted
     version: "0.15.5"
   http:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: http
       sha256: b9c29a161230ee03d3ccf545097fccd9b87a5264228c5d348202e0f0c28f9010
@@ -925,6 +965,38 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  image_editor:
+    dependency: transitive
+    description:
+      name: image_editor
+      sha256: "38070067264fd9fea4328ca630d2ff7bd65ebe6aa4ed375d983b732d2ae7146b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.6.0"
+  image_editor_common:
+    dependency: transitive
+    description:
+      name: image_editor_common
+      sha256: "93d2f5c8b636f862775dd62a9ec20d09c8272598daa02f935955a4640e1844ee"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
+  image_editor_ohos:
+    dependency: transitive
+    description:
+      name: image_editor_ohos
+      sha256: "06756859586d5acefec6e3b4f356f9b1ce05ef09213bcb9a0ce1680ecea2d054"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.9"
+  image_editor_platform_interface:
+    dependency: transitive
+    description:
+      name: image_editor_platform_interface
+      sha256: "474517efc770464f7d99942472d8cfb369a3c378e95466ec17f74d2b80bd40de"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   image_picker:
     dependency: "direct main"
     description:
@@ -1445,6 +1517,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
+  selfie_camera:
+    dependency: "direct main"
+    description:
+      name: selfie_camera
+      sha256: "7e2dd46c14264a337beb28a1a34f593841b201e43580c392c85b9374558367f8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.7"
   shared_preferences:
     dependency: "direct main"
     description:

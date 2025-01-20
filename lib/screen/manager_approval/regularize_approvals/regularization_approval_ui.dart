@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:ultimatix_hrms_flutter/screen/attendanceReg/regularizeApprovals/regularization_approval_controller.dart';
+import 'package:ultimatix_hrms_flutter/screen/manager_approval/regularize_approvals/regularization_approval_controller.dart';
 
 import '../../../app/app_colors.dart';
 import '../../../app/app_font_weight.dart';

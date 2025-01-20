@@ -1,10 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/app/app_routes.dart';
-import 'package:ultimatix_hrms_flutter/screen/attendanceReg/regularizationListApprovals/regularization_list_approvals_controller.dart';
+import 'package:ultimatix_hrms_flutter/screen/manager_approval/regularization_list_approvals/regularization_list_approvals_controller.dart';
 import '../../../app/app_colors.dart';
 import '../../../app/app_font_weight.dart';
 import '../../../app/app_images.dart';
@@ -248,7 +246,7 @@ class RegularizationListApprovalsUi extends GetView<RegularizationListApprovalsC
 
                     const SizedBox(height: 16.0),
 
-                    Text(controller.attendanceApprovalListData.value.data?.elementAt(index).halfFullDay?.trim().toString() ?? "",style: TextStyle(color: AppColors.color7B1FA2,fontWeight: FontWeight.w600),)
+                    Text(controller.attendanceApprovalListData.value.data?.elementAt(index).halfFullDay?.trim().toString() ?? "",style: const TextStyle(color: AppColors.color7B1FA2,fontWeight: FontWeight.w600),)
                   ],
                 );
               },

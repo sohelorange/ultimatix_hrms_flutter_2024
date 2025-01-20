@@ -7,6 +7,7 @@ import 'package:ultimatix_hrms_flutter/screen/attendanceReg/attendance_controlle
 
 import '../../../api/dio_client.dart';
 import '../../../api/model/get_reason_response.dart';
+import '../../../app/app_colors.dart';
 import '../../../app/app_snack_bar.dart';
 import '../../../app/app_url.dart';
 import '../userAttendanceRegularize/attendance_user_controller.dart';
@@ -157,9 +158,9 @@ class RegularizeApplyController extends GetxController{
 
               if (match != null) {
                 String attendanceMessage = match.group(1) ?? '';
-                goBack(attendanceMessage);
+                goBack(attendanceMessage,"green");
               }else{
-                goBack(jsonResponse["data"]);
+                goBack(jsonResponse["data"],"red");
               }
             }else{
               log("Server data getting empty");
@@ -233,15 +234,15 @@ class RegularizeApplyController extends GetxController{
     }
   }
 
-  void goBack(String message) {
+  void goBack(String message, String color) {
     if(uiName=="AttendanceMainUi"){
       Get.find<AttendanceMainController>().getUserAttendanceRecords(DateTime.now().year,DateTime.now().month);
       Get.back();
-      AppSnackBar.showGetXCustomSnackBar(message:message);
+      AppSnackBar.showGetXCustomSnackBar(message:message,backgroundColor: color == "green" ? AppColors.colorGreen : AppColors.colorRed);
     }else if(uiName=="AttendanceUserUi"){
       Get.find<UserAttendanceController>().callUserAttendanceRegularizationDetails(DateTime.now().year,DateTime.now().month);
       Get.back();
-      AppSnackBar.showGetXCustomSnackBar(message:message);
+      AppSnackBar.showGetXCustomSnackBar(message:message,backgroundColor: color == "green" ? AppColors.colorGreen : AppColors.colorRed);
     }else{
       Get.back();
     }

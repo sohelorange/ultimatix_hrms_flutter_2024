@@ -211,7 +211,7 @@ class ProfileView extends GetView<ProfileController> {
                   children: [
                     Expanded(
                       child: _employeeDetails(
-                          AppImages.leaveCalendarIcon,
+                          AppImages.profileDOJIcon,
                           'Date Of Joining',
                           controller.profilePersonalModelResponse.value.data![0]
                                   .dateOfJoin ??
@@ -219,7 +219,7 @@ class ProfileView extends GetView<ProfileController> {
                     ),
                     Expanded(
                       child: _employeeDetails(
-                          AppImages.leaveCalendarIcon,
+                          AppImages.profileBloodGroupIcon,
                           'Blood Group',
                           controller.profilePersonalModelResponse.value.data![0]
                                   .bloodGroup ??
@@ -227,15 +227,15 @@ class ProfileView extends GetView<ProfileController> {
                     ),
                   ],
                 ).paddingSymmetric(horizontal: 10),
+                // _employeeDetails(
+                //         AppImages.leaveCalendarIcon,
+                //         'Guardian Name',
+                //         controller.profilePersonalModelResponse.value.data![0]
+                //                 .grdName ??
+                //             '')
+                //     .paddingOnly(left: 10, right: 10, top: 10),
                 _employeeDetails(
-                        AppImages.leaveCalendarIcon,
-                        'Guardian Name',
-                        controller.profilePersonalModelResponse.value.data![0]
-                                .grdName ??
-                            '')
-                    .paddingOnly(left: 10, right: 10, top: 10),
-                _employeeDetails(
-                        AppImages.leaveCalendarIcon,
+                        AppImages.profileUANIcon,
                         'UAN Number',
                         controller.maskNumber(controller
                                 .profilePersonalModelResponse
@@ -245,7 +245,7 @@ class ProfileView extends GetView<ProfileController> {
                             ''))
                     .paddingOnly(left: 10, right: 10, top: 10),
                 _employeeDetails(
-                        AppImages.leaveCalendarIcon,
+                        AppImages.profileAadharCardNoIcon,
                         'Aadhar Card Number',
                         controller.maskNumber(controller
                                 .profilePersonalModelResponse
@@ -255,7 +255,7 @@ class ProfileView extends GetView<ProfileController> {
                             ''))
                     .paddingOnly(left: 10, right: 10, top: 10),
                 _employeeDetails(
-                        AppImages.leaveCalendarIcon,
+                        AppImages.profilePanNoIcon,
                         'PAN Number',
                         controller.maskNumber(controller
                                 .profilePersonalModelResponse
@@ -265,26 +265,31 @@ class ProfileView extends GetView<ProfileController> {
                             ''))
                     .paddingOnly(left: 10, right: 10, top: 10),
                 _employeeDetails(
-                        AppImages.leaveCalendarIcon,
+                        AppImages.profileUANIcon,
                         'Contact No',
-                        controller.maskNumber(controller
-                                .profilePersonalModelResponse
-                                .value
-                                .data![0]
+                        controller.profilePersonalModelResponse.value.data![0]
                                 .mobileNo ??
-                            ''))
+                            '')
                     .paddingOnly(left: 10, right: 10, top: 10),
                 _employeeDetails(
-                        AppImages.leaveCalendarIcon,
+                        AppImages.profileCompanyEmailIcon,
                         'Email Id',
-                        controller.maskNumber(controller
+                        controller.profilePersonalModelResponse.value.data![0]
+                                .workEmail ??
+                            '')
+                    .paddingOnly(left: 10, right: 10, top: 10),
+                _employeeDetails(
+                        AppImages.profilePersonEmailIcon,
+                        'Person Email',
+                        controller
                                 .profilePersonalModelResponse
                                 .value
                                 .data![0]
-                                .workEmail ??
-                            ''))
+                                //.otherEmail ??
+                                .fROMEMAIL ??
+                            '')
                     .paddingOnly(left: 10, right: 10, top: 10),
-                _employeeDetails(AppImages.leaveCalendarIcon, 'Address',
+                _employeeDetails(AppImages.profileAddressIcon, 'Address',
                         '${controller.profilePersonalModelResponse.value.data![0].street1 ?? ''},${controller.profilePersonalModelResponse.value.data![0].city ?? ''},${controller.profilePersonalModelResponse.value.data![0].state ?? ''},${controller.profilePersonalModelResponse.value.data![0].zipCode ?? '' '.'}')
                     .paddingOnly(left: 10, right: 10, top: 10)
               ],
@@ -322,21 +327,28 @@ class ProfileView extends GetView<ProfileController> {
             child: Column(
               children: [
                 _employeeDetails(
-                        AppImages.leaveCalendarIcon,
+                        AppImages.profileBankNameIcon,
                         'Bank Name',
+                        controller.profilePersonalModelResponse.value.data![0]
+                                .bankName ??
+                            '')
+                    .paddingOnly(left: 10, right: 10, top: 10),
+                _employeeDetails(
+                        AppImages.profileBankBranchNameIcon,
+                        'Bank Branch Name',
                         controller.profilePersonalModelResponse.value.data![0]
                                 .bankBranchName ??
                             '')
                     .paddingOnly(left: 10, right: 10, top: 10),
                 _employeeDetails(
-                  AppImages.leaveCalendarIcon,
+                  AppImages.profileACNoIcon,
                   'Account Number',
                   controller.maskNumber(controller.profilePersonalModelResponse
                           .value.data![0].incBankACNo ??
                       ''),
                 ).paddingOnly(left: 10, right: 10, top: 10),
                 _employeeDetails(
-                        AppImages.leaveCalendarIcon,
+                        AppImages.profileIFSCCodeIcon,
                         'IFSC Code',
                         controller.profilePersonalModelResponse.value.data![0]
                                 .ifscCode ??
@@ -377,56 +389,56 @@ class ProfileView extends GetView<ProfileController> {
             child: Column(
               children: [
                 _employeeDetails(
-                        AppImages.leaveCalendarIcon,
+                        AppImages.profileFavSportIcon,
                         'Favourite Sport',
                         controller.profileFavoriteModelResponse.value.data![0]
                                 .empFavSportName ??
                             '')
                     .paddingOnly(left: 10, right: 10, top: 10),
                 _employeeDetails(
-                        AppImages.leaveCalendarIcon,
+                        AppImages.profileFavHobbyIcon,
                         'Hobby',
                         controller.profileFavoriteModelResponse.value.data![0]
                                 .empHobbyName ??
                             '')
                     .paddingOnly(left: 10, right: 10, top: 10),
                 _employeeDetails(
-                        AppImages.leaveCalendarIcon,
+                        AppImages.profileFavFoodIcon,
                         'Favourite Food',
                         controller.profileFavoriteModelResponse.value.data![0]
                                 .empFavFood ??
                             '')
                     .paddingOnly(left: 10, right: 10, top: 10),
                 _employeeDetails(
-                        AppImages.leaveCalendarIcon,
+                        AppImages.profileFavRestIcon,
                         'Favourite Restaurant',
                         controller.profileFavoriteModelResponse.value.data![0]
                                 .empFavRestro ??
                             '')
                     .paddingOnly(left: 10, right: 10, top: 10),
                 _employeeDetails(
-                        AppImages.leaveCalendarIcon,
+                        AppImages.profileFavTravelIcon,
                         'Favourite Travel Destination',
                         controller.profileFavoriteModelResponse.value.data![0]
                                 .empFavTrvDestination ??
                             '')
                     .paddingOnly(left: 10, right: 10, top: 10),
                 _employeeDetails(
-                        AppImages.leaveCalendarIcon,
+                        AppImages.profileFavFestivalIcon,
                         'Favourite Festival',
                         controller.profileFavoriteModelResponse.value.data![0]
                                 .empFavFestival ??
                             '')
                     .paddingOnly(left: 10, right: 10, top: 10),
                 _employeeDetails(
-                        AppImages.leaveCalendarIcon,
+                        AppImages.profileFavSportsPersonIcon,
                         'Favourite Sport Person',
                         controller.profileFavoriteModelResponse.value.data![0]
                                 .empFavSportPerson ??
                             '')
                     .paddingOnly(left: 10, right: 10, top: 10),
                 _employeeDetails(
-                        AppImages.leaveCalendarIcon,
+                        AppImages.profileFavSingerIcon,
                         'Favourite Singer',
                         controller.profileFavoriteModelResponse.value.data![0]
                                 .empFavSinger ??
@@ -452,7 +464,9 @@ class ProfileView extends GetView<ProfileController> {
               fontWeight: AppFontWeight.w500,
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.toNamed(AppRoutes.familyAddRoute);
+              },
               highlightColor: Colors.transparent,
               icon: const Icon(
                 //size: 20,

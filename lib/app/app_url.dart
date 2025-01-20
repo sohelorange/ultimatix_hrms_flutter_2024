@@ -51,6 +51,16 @@ class AppURL {
       '${PreferenceUtils.getAppUrl()}api/v1/EmployeeFavDetails';
   static String getEmployeeFamilyDetailsURL =
       '${PreferenceUtils.getAppUrl()}api/v1/EmployeeChildrenDetails_List';
+  static String getEmployeeFamilyDropdownURL =
+      '${PreferenceUtils.getAppUrl()}api/v1/UnisonMaster';
+  static String insertEmployeeFamilyDetailsURL =
+      '${PreferenceUtils.getAppUrl()}api/v1/EmpChildDetailInsert';
+  static String updateEmployeeFamilyDetailsURL =
+      '${PreferenceUtils.getAppUrl()}api/v1/EmpChildDetailUpdate';
+
+  // public static final String EmployeeChildrenDetail = "EmployeeChildrenDetail";
+  // public static final String EmpChildDetailDelete = "EmpChildDetailDelete";
+  // public static final String GET_UpdateEmpFavDetails = "UpdateEmpFavDetails";
   //end region
 
   //Leave region

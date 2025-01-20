@@ -77,6 +77,9 @@ dependencies:
   flutter_verification_code: ^1.1.7
   pin_input_text_field: ^4.5.2
   #local_auth: ^2.3.0
+  multi_select_flutter: ^4.1.0
+  dropdown_textfield: ^1.2.0
+  multi_dropdown: ^3.0.1
 
 dev_dependencies:
   flutter_test:
@@ -117,6 +120,7 @@ flutter:
     - assets/applicationIcon/feedback/
     - assets/applicationIcon/leave/
     - assets/applicationIcon/approval/
+    - assets/applicationIcon/profile/
     - assets/icon/leaveApplication/
     - assets/icon/profileicon/
     - assets/map/

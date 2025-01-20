@@ -349,8 +349,7 @@ class AddFamilyDetailsView extends GetView<AddFamilyDetailsController> {
 
                           controller.hobbyId.value = selectedHobbies
                               .map((hobby) => hobby.hID.toString())
-                              .join(
-                                  ','); // TODO : String Format With Comma
+                              .join(','); // TODO : String Format With Comma
 
                           // List<Map<String, dynamic>> hobbyList = selectedHobbies
                           //     .map((hobby) => {'hobbyID': hobby.hID})

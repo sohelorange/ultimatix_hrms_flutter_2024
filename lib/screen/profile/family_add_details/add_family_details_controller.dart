@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ultimatix_hrms_flutter/api/dio_client.dart';
+import 'package:ultimatix_hrms_flutter/app/app_colors.dart';
 import 'package:ultimatix_hrms_flutter/app/app_date_format.dart';
 import 'package:ultimatix_hrms_flutter/app/app_snack_bar.dart';
 import 'package:ultimatix_hrms_flutter/app/app_url.dart';
@@ -13,6 +14,7 @@ import 'package:ultimatix_hrms_flutter/model/hobby_model.dart';
 import 'package:ultimatix_hrms_flutter/model/occupation_model.dart';
 import 'package:ultimatix_hrms_flutter/model/relationship_model.dart';
 import 'package:ultimatix_hrms_flutter/model/standard_model.dart';
+import 'package:ultimatix_hrms_flutter/screen/profile/profile_controller.dart';
 import 'package:ultimatix_hrms_flutter/utility/constants.dart';
 import 'package:ultimatix_hrms_flutter/utility/network.dart';
 import 'package:ultimatix_hrms_flutter/utility/preference_utils.dart';
@@ -230,8 +232,8 @@ class AddFamilyDetailsController extends GetxController {
           "cmpID": cmpID,
           "name": familyMembersNameController.value.text,
           "gender": selectedGender.value,
-          "dob": AppDatePicker.convertDateTimeFormat(dobController.value.text,
-              'dd/MM/yyyy, EEEE', Utils.commonUTCDateFormat),
+          "dob": dobController.value.text.isNotEmpty ? AppDatePicker.convertDateTimeFormat(dobController.value.text,
+              'dd/MM/yyyy, EEEE', Utils.commonUTCDateFormat) : '',
           "relationship": relationShipName.value,
           "is_Resi": isResidingValue.value,
           "is_Dependant": isDependentValue.value,
@@ -241,11 +243,11 @@ class AddFamilyDetailsController extends GetxController {
           "adharCardNo": aadharCardController.value.text,
           "height": heightController.value.text.toString(),
           "weight": weightController.value.text.toString(),
-          "occpId": occupationId.value,
+          "occpId": occupationId.value.isNotEmpty ? occupationId.value : 0,
           "hobbyID": hobbyId.value.toString(),
           "hobbyName": otherHobbyController.value.text,
           "depComp": companyNameController.value.text,
-          "standID": standardId.value,
+          "standID": standardId.value.isNotEmpty ? standardId.value : 0,
           "schoolCol": clgNameController.value.text,
           "extActivity": extraActivityController.value.text,
           "citySchCol": clgCityController.value.text,
@@ -257,9 +259,15 @@ class AddFamilyDetailsController extends GetxController {
 
         if (response['code'] == 200 && response['status'] == true) {
           final data = response['data'];
-          if (data != null && data is List && data.isNotEmpty) {
+          if (data != null) {
             Utils.closeKeyboard(Get.context!);
             Get.back();
+            final ProfileController controller = Get.put(ProfileController());
+            controller.fetchDataInParallel();
+
+            AppSnackBar.showGetXCustomSnackBar(
+                message: response['data'].split('#')[0],
+                backgroundColor: AppColors.colorGreen);
           }
         } else {
           AppSnackBar.showGetXCustomSnackBar(message: response['message']);

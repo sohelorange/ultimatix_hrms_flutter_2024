@@ -2,7 +2,9 @@ import '../utility/preference_utils.dart';
 
 class AppURL {
   //Static getServerIP link : https://hrms.webpayroll.in/Mobile_License/MobileLicence.asmx?op=ServerConnection
-  //mobilerest
+  //Server IP : mobilerest
+  //Username : 0060@mobile,0058@mobile,0057@mobile,0020@mobile,0032@mobile
+  //Password : m5o0t5 or admin
 
   //static const String baseURL = "https://hrms.webpayroll.in/mobile_license_new/"; //TODO: Swagger Local
 
@@ -37,7 +39,8 @@ class AppURL {
   //ClockIn region
   static String clockInURL = '${PreferenceUtils.getAppUrl()}api/v1/clockin';
   static String clockOutURL = '${PreferenceUtils.getAppUrl()}api/v1/clockout';
-  static String checkInOutStatusURL = '${PreferenceUtils.getAppUrl()}api/v1/CheckINOUT';
+  static String checkInOutStatusURL =
+      '${PreferenceUtils.getAppUrl()}api/v1/CheckINOUT';
   static String geolocationrecords =
       '${PreferenceUtils.getAppUrl()}api/v1/GeoLocationRecords';
 

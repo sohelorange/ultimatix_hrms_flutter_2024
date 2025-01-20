@@ -37,7 +37,15 @@ class FamilyDetailsViewController extends GetxController {
     name.value = leaveData.name ?? '';
     relationship.value = leaveData.relationship ?? '';
     gender.value = leaveData.gender ?? '';
-    dob.value = AppDatePicker.convertDateTimeFormat(leaveData.dateOfBirth ?? '', Utils.commonUTCDateFormat, 'dd/MM/yyyy');
+    if (leaveData.dateOfBirth != null && leaveData.dateOfBirth!.isNotEmpty) {
+      dob.value = AppDatePicker.convertDateTimeFormat(
+        leaveData.dateOfBirth!,
+        Utils.commonUTCDateFormat,
+        'dd/MM/yyyy',
+      );
+    } else {
+      dob.value = '';
+    }
     occupation.value = leaveData.occupationID.toString();
     hobby.value = leaveData.hobbyName ?? '';
     standard.value = leaveData.standardID.toString();

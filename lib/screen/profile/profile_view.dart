@@ -503,6 +503,8 @@ class ProfileView extends GetView<ProfileController> {
                         DataColumn(label: Text('Relationship')),
                         DataColumn(label: Text('Dependent')),
                         DataColumn(label: Text('View')),
+                        // DataColumn(label: Text('Edit')),
+                        // DataColumn(label: Text('Delete')),
                       ],
                       rows: controller.profileFamilyModelResponse.value.data!
                           .map((person) {
@@ -525,6 +527,23 @@ class ProfileView extends GetView<ProfileController> {
                               highlightColor: Colors.transparent,
                             ),
                           ),
+                          // DataCell(
+                          //   IconButton(
+                          //     icon: const Icon(Icons.edit),
+                          //     onPressed: () {},
+                          //     highlightColor: Colors.transparent,
+                          //   ),
+                          // ),
+                          // DataCell(
+                          //   IconButton(
+                          //     icon: const Icon(
+                          //       Icons.delete,
+                          //       color: AppColors.colorRed,
+                          //     ),
+                          //     onPressed: () {},
+                          //     highlightColor: Colors.transparent,
+                          //   ),
+                          // ),
                         ]);
                       }).toList(),
                     )

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/app/app_font_weight.dart';
 import 'package:ultimatix_hrms_flutter/app/app_routes.dart';
 import 'package:ultimatix_hrms_flutter/screen/profile/profile_controller.dart';
+import 'package:ultimatix_hrms_flutter/utility/constants.dart';
 import 'package:ultimatix_hrms_flutter/utility/utils.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_app_image_svg.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_text.dart';
@@ -512,7 +513,7 @@ class ProfileView extends GetView<ProfileController> {
                           DataCell(Text(person.name ?? '')),
                           DataCell(Text(person.relationship ?? '')),
                           DataCell(
-                              Text(person.isDependant == 1 ? 'Yes' : 'No')),
+                              Text(person.isDependant == true ? 'Yes' : 'No')),
                           DataCell(
                             IconButton(
                               icon: const Icon(Icons.visibility),
@@ -530,7 +531,14 @@ class ProfileView extends GetView<ProfileController> {
                           // DataCell(
                           //   IconButton(
                           //     icon: const Icon(Icons.edit),
-                          //     onPressed: () {},
+                          //     onPressed: () {
+                          //       Get.toNamed(
+                          //         AppRoutes.familyEditRoute,
+                          //         arguments: {
+                          //           'familyDetails': person,
+                          //         },
+                          //       );
+                          //     },
                           //     highlightColor: Colors.transparent,
                           //   ),
                           // ),
@@ -540,16 +548,29 @@ class ProfileView extends GetView<ProfileController> {
                           //       Icons.delete,
                           //       color: AppColors.colorRed,
                           //     ),
-                          //     onPressed: () {},
+                          //     onPressed: () {
+                          //       controller.deleteFamilyInformation(
+                          //           person.rowID.toString());
+                          //     },
                           //     highlightColor: Colors.transparent,
                           //   ),
                           // ),
                         ]);
                       }).toList(),
                     )
-                  : const Center(
-                      child: Text(
-                          'No data available')), // Fallback when data is null or empty
+                  : SizedBox(
+                      height:
+                          Utils.getScreenHeight(context: Get.context!) / 7.5,
+                      width: Utils.getScreenWidth(context: Get.context!),
+                      child: Center(
+                        child: CommonText(
+                          text: Constants.noDataMsg,
+                          color: AppColors.colorDarkBlue,
+                          fontSize: 14,
+                          fontWeight: AppFontWeight.w400,
+                        ),
+                      ),
+                    ),
             )),
       ],
     );
@@ -600,9 +621,9 @@ class ProfileView extends GetView<ProfileController> {
                           DataCell(Text(person.name ?? '')),
                           DataCell(Text(person.relationship ?? '')),
                           DataCell(
-                              Text(person.isDependant == 1 ? 'Yes' : 'No')),
+                              Text(person.isDependant == true ? 'Yes' : 'No')),
                           DataCell(
-                              Text(person.isDependant == 1 ? 'Yes' : 'No')),
+                              Text(person.isDependant == true ? 'Yes' : 'No')),
                           DataCell(
                             IconButton(
                               icon: const Icon(Icons.visibility),
@@ -630,9 +651,19 @@ class ProfileView extends GetView<ProfileController> {
                         ]);
                       }).toList(),
                     )
-                  : const Center(
-                      child: Text(
-                          'No data available')), // Fallback when data is null or empty
+                  : SizedBox(
+                      height:
+                          Utils.getScreenHeight(context: Get.context!) / 7.5,
+                      width: Utils.getScreenWidth(context: Get.context!),
+                      child: Center(
+                        child: CommonText(
+                          text: Constants.noDataMsg,
+                          color: AppColors.colorDarkBlue,
+                          fontSize: 14,
+                          fontWeight: AppFontWeight.w400,
+                        ),
+                      ),
+                    ), // Fallback when data is null or empty
             )).paddingOnly(top: 10),
       ],
     );

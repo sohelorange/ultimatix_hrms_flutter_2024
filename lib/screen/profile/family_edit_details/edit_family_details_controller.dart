@@ -19,8 +19,9 @@ import 'package:ultimatix_hrms_flutter/utility/constants.dart';
 import 'package:ultimatix_hrms_flutter/utility/network.dart';
 import 'package:ultimatix_hrms_flutter/utility/preference_utils.dart';
 import 'package:ultimatix_hrms_flutter/utility/utils.dart';
+import 'package:ultimatix_hrms_flutter/screen/profile/profile_family_model.dart';
 
-class AddFamilyDetailsController extends GetxController {
+class EditFamilyDetailsController extends GetxController {
   Rx<TextEditingController> familyMembersNameController =
       TextEditingController().obs;
   Rx<TextEditingController> dobController = TextEditingController().obs;
@@ -73,15 +74,96 @@ class AddFamilyDetailsController extends GetxController {
   RxString hobbyName = ''.obs;
   RxString selectedGender = ''.obs;
 
+  RxString rowID = ''.obs;
   RxString attachment = ''.obs;
   RxString docName = ''.obs;
+  RxString imagePath = ''.obs;
   RxString extension = ''.obs;
   Rx<File?> selectedImage = Rx<File?>(null);
 
   @override
   void onInit() {
     super.onInit();
-    fetchDataInParallel();
+    fetchDataInParallel().then((val) {
+      final leaveData = Get.arguments['familyDetails'] as Data;
+      rowID.value = leaveData.rowID.toString();
+      familyMembersNameController.value.text = leaveData.name ?? '';
+
+      relationShipName.value = leaveData.relationship ?? '';
+      if (relationShipName.value.isNotEmpty) {
+        RelationshipModel selectedItem = relationshipList.firstWhere(
+            (item) => item.relationship.toString() == relationShipName.value);
+
+        relationShipId.value = selectedItem.relationshipID.toString();
+        relationShipName.value = selectedItem.relationship.toString();
+      }
+
+      selectedGender.value = leaveData.gender ?? '';
+      if (leaveData.dateOfBirth != null && leaveData.dateOfBirth!.isNotEmpty) {
+        dobController.value.text = AppDatePicker.convertDateTimeFormat(
+          leaveData.dateOfBirth!,
+          Utils.commonUTCDateFormat,
+          'dd/MM/yyyy, EEEE',
+        );
+      } else {
+        dobController.value.text = '';
+      }
+      occupationId.value = leaveData.occupationID.toString();
+
+      if (int.parse(occupationId.value) > 0) {
+        OccupationModel selectedItem = occupationList
+            .firstWhere((item) => item.oID.toString() == occupationId.value);
+
+        occupationId.value = selectedItem.oID.toString();
+        occupationName.value = selectedItem.occupationName.toString();
+
+        if (occupationId.value == '10' || occupationId.value == '11') {
+          companyNameController.value.text = leaveData.depCompanyName ?? '';
+          companyCityController.value.text = leaveData.cmpCity ?? '';
+        } else if (occupationId.value == '9') {
+          clgNameController.value.text = leaveData.shcoolCollege ?? '';
+          clgCityController.value.text = leaveData.city ?? '';
+          extraActivityController.value.text = leaveData.extraActivity ?? '';
+
+          if (int.parse(standardId.value) > 0) {
+            StandardModel selectedItem = standardList
+                .firstWhere((item) => item.sID.toString() == standardId.value);
+            standardId.value = selectedItem.sID.toString();
+            standardName.value = selectedItem.standardName.toString();
+          }
+        }
+      }
+
+      hobbyId.value = leaveData.hobbyID ?? '';
+      if (hobbyId.isNotEmpty) {}
+      otherHobbyController.value.text = leaveData.hobbyName ?? '';
+      if (otherHobbyController.value.text.isNotEmpty) {
+        isHobbyCheck.value = true;
+      } else {
+        isHobbyCheck.value = false;
+      }
+
+      isResidingValue.value = leaveData.isResi == true ? 1 : 0;
+      if (isResidingValue.value == 1) {
+        isResidingCheck.value = true;
+      } else {
+        isResidingCheck.value = false;
+      }
+      isDependentValue.value = leaveData.isDependant == true ? 1 : 0;
+      if (isDependentValue.value == 1) {
+        isDependentCheck.value = true;
+      } else {
+        isDependentCheck.value = false;
+      }
+
+      panCardController.value.text = leaveData.panCardNo ?? '';
+      aadharCardController.value.text = leaveData.adharCardNo ?? '';
+      heightController.value.text = leaveData.height ?? '';
+      weightController.value.text = leaveData.weight ?? '';
+
+      imagePath.value = leaveData.imagePath ?? '';
+      docName.value = imagePath.value.split('/').last;
+    });
   }
 
   Future<void> fetchDataInParallel() async {
@@ -227,7 +309,7 @@ class AddFamilyDetailsController extends GetxController {
         String cmpID = loginData['cmp_ID'].toString();
 
         Map<String, dynamic> param = {
-          "row_ID": 0,
+          "row_ID": rowID.value,
           "empID": empID,
           "cmpID": cmpID,
           "name": familyMembersNameController.value.text,
@@ -259,7 +341,7 @@ class AddFamilyDetailsController extends GetxController {
         print(attachment.value);
 
         var response = await DioClient()
-            .post(AppURL.insertEmployeeFamilyDetailsURL, param);
+            .post(AppURL.updateEmployeeFamilyDetailsURL, param);
 
         if (response['code'] == 200 && response['status'] == true) {
           final data = response['data'];

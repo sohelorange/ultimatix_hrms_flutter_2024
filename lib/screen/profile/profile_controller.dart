@@ -14,6 +14,7 @@ import 'package:ultimatix_hrms_flutter/screen/profile/profile_personal_model.dar
 import 'package:ultimatix_hrms_flutter/utility/constants.dart';
 import 'package:ultimatix_hrms_flutter/utility/network.dart';
 import 'package:ultimatix_hrms_flutter/utility/preference_utils.dart';
+import 'package:ultimatix_hrms_flutter/utility/utils.dart';
 
 class ProfileController extends GetxController {
   RxBool isLoading = true.obs;
@@ -29,8 +30,7 @@ class ProfileController extends GetxController {
       ProfilePersonalModel().obs;
   Rx<ProfileFavoriteModel> profileFavoriteModelResponse =
       ProfileFavoriteModel().obs;
-  Rx<ProfileFamilyModel> profileFamilyModelResponse =
-      ProfileFamilyModel().obs;
+  Rx<ProfileFamilyModel> profileFamilyModelResponse = ProfileFamilyModel().obs;
 
   RxString favSport = ''.obs;
 
@@ -116,8 +116,7 @@ class ProfileController extends GetxController {
     try {
       var response =
           await DioClient().getQueryParam(AppURL.getEmployeeFamilyDetailsURL);
-      profileFamilyModelResponse.value =
-          ProfileFamilyModel.fromJson(response);
+      profileFamilyModelResponse.value = ProfileFamilyModel.fromJson(response);
 
       if (profileFamilyModelResponse.value.code == 200 &&
           profileFamilyModelResponse.value.status == true) {
@@ -237,6 +236,41 @@ class ProfileController extends GetxController {
       }
     } else {
       AppSnackBar.showGetXCustomSnackBar(message: Constants.networkMsg);
+    }
+  }
+
+  Future<void> deleteFamilyInformation(
+    String rowId,
+  ) async {
+    try {
+      if (await Network.isConnected()) {
+        Map<String, dynamic> param = {
+          "RowId": rowId,
+        };
+
+        var response = await DioClient().getQueryParam(
+            AppURL.deleteFamilyInformationDetailsURL,
+            queryParams: param);
+
+        if (response['code'] == 200 && response['status'] == true) {
+          final data = response['data'];
+          if (data != null) {
+            Utils.closeKeyboard(Get.context!);
+
+            onEmployeeFamilyDetailsAPI();
+
+            AppSnackBar.showGetXCustomSnackBar(
+                message: response['data'].split('#')[0],
+                backgroundColor: AppColors.colorGreen);
+          }
+        } else {
+          AppSnackBar.showGetXCustomSnackBar(message: response['message']);
+        }
+      } else {
+        AppSnackBar.showGetXCustomSnackBar(message: Constants.networkMsg);
+      }
+    } catch (e) {
+      AppSnackBar.showGetXCustomSnackBar(message: e.toString());
     }
   }
 }

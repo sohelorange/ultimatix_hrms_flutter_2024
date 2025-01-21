@@ -37,15 +37,15 @@ class Data {
   String? name;
   String? gender;
   String? dateOfBirth;
-  num? cAge; // Changed from int? to num?
+  int? cAge;
   String? relationship;
-  int? isResi;
-  int? isDependant;
+  bool? isResi;
+  bool? isDependant;
   String? imagePath;
   String? panCardNo;
   String? adharCardNo;
-  String? height; // Changed from String? to num? to accept both int and double
-  String? weight; // Changed from String? to num? to accept both int and double
+  String? height;
+  String? weight;
   int? occupationID;
   String? hobbyID;
   String? hobbyName;
@@ -54,7 +54,7 @@ class Data {
   String? shcoolCollege;
   String? extraActivity;
   String? city;
-  String? cDTM;
+  String? cdtm;
   String? cmpCity;
   String? stdSpecialization;
   String? depWorkTime;
@@ -85,7 +85,7 @@ class Data {
       this.shcoolCollege,
       this.extraActivity,
       this.city,
-      this.cDTM,
+      this.cdtm,
       this.cmpCity,
       this.stdSpecialization,
       this.depWorkTime,
@@ -93,68 +93,68 @@ class Data {
       this.requestType});
 
   Data.fromJson(Map<String, dynamic> json) {
-    empID = json['Emp_ID'];
-    rowID = json['Row_ID'];
-    cmpID = json['Cmp_ID'];
-    name = json['Name'];
-    gender = json['Gender'];
-    dateOfBirth = json['Date_Of_Birth'];
-    cAge = json['C_age']; // This can be a double or int, hence num
-    relationship = json['Relationship'];
-    isResi = json['Is_Resi'];
-    isDependant = json['Is_Dependant'];
-    imagePath = json['Image_Path'];
-    panCardNo = json['Pan_Card_No'];
-    adharCardNo = json['Adhar_Card_No'];
-    height = json['Height']; // This can be a double or int, hence num
-    weight = json['Weight']; // This can be a double or int, hence num
-    occupationID = json['OccupationID'];
-    hobbyID = json['HobbyID'];
-    hobbyName = json['HobbyName'];
-    depCompanyName = json['DepCompanyName'];
-    standardID = json['Standard_ID'];
-    shcoolCollege = json['Shcool_College'];
-    extraActivity = json['ExtraActivity'];
-    city = json['City'];
-    cDTM = json['CDTM'];
-    cmpCity = json['CmpCity'];
-    stdSpecialization = json['Std_Specialization'];
-    depWorkTime = json['DepWorkTime'];
-    requestId = json['Request_id'];
-    requestType = json['Request_type'];
+    empID = json['emp_ID'];
+    rowID = json['row_ID'];
+    cmpID = json['cmp_ID'];
+    name = json['name'];
+    gender = json['gender'];
+    dateOfBirth = json['date_Of_Birth'];
+    cAge = json['c_age'];
+    relationship = json['relationship'];
+    isResi = json['is_Resi'];
+    isDependant = json['is_Dependant'];
+    imagePath = json['image_Path'];
+    panCardNo = json['pan_Card_No'];
+    adharCardNo = json['adhar_Card_No'];
+    height = json['height'];
+    weight = json['weight'];
+    occupationID = json['occupationID'];
+    hobbyID = json['hobbyID'];
+    hobbyName = json['hobbyName'];
+    depCompanyName = json['depCompanyName'];
+    standardID = json['standard_ID'];
+    shcoolCollege = json['shcool_College'];
+    extraActivity = json['extraActivity'];
+    city = json['city'];
+    cdtm = json['cdtm'];
+    cmpCity = json['cmpCity'];
+    stdSpecialization = json['std_Specialization'];
+    depWorkTime = json['depWorkTime'];
+    requestId = json['request_id'];
+    requestType = json['request_type'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['Emp_ID'] = empID;
-    data['Row_ID'] = rowID;
-    data['Cmp_ID'] = cmpID;
-    data['Name'] = name;
-    data['Gender'] = gender;
-    data['Date_Of_Birth'] = dateOfBirth;
-    data['C_age'] = cAge; // This can be an int or double, hence num
-    data['Relationship'] = relationship;
-    data['Is_Resi'] = isResi;
-    data['Is_Dependant'] = isDependant;
-    data['Image_Path'] = imagePath;
-    data['Pan_Card_No'] = panCardNo;
-    data['Adhar_Card_No'] = adharCardNo;
-    data['Height'] = height; // This can be an int or double, hence num
-    data['Weight'] = weight; // This can be an int or double, hence num
-    data['OccupationID'] = occupationID;
-    data['HobbyID'] = hobbyID;
-    data['HobbyName'] = hobbyName;
-    data['DepCompanyName'] = depCompanyName;
-    data['Standard_ID'] = standardID;
-    data['Shcool_College'] = shcoolCollege;
-    data['ExtraActivity'] = extraActivity;
-    data['City'] = city;
-    data['CDTM'] = cDTM;
-    data['CmpCity'] = cmpCity;
-    data['Std_Specialization'] = stdSpecialization;
-    data['DepWorkTime'] = depWorkTime;
-    data['Request_id'] = requestId;
-    data['Request_type'] = requestType;
+    data['emp_ID'] = empID;
+    data['row_ID'] = rowID;
+    data['cmp_ID'] = cmpID;
+    data['name'] = name;
+    data['gender'] = gender;
+    data['date_Of_Birth'] = dateOfBirth;
+    data['c_age'] = cAge;
+    data['relationship'] = relationship;
+    data['is_Resi'] = isResi;
+    data['is_Dependant'] = isDependant;
+    data['image_Path'] = imagePath;
+    data['pan_Card_No'] = panCardNo;
+    data['adhar_Card_No'] = adharCardNo;
+    data['height'] = height;
+    data['weight'] = weight;
+    data['occupationID'] = occupationID;
+    data['hobbyID'] = hobbyID;
+    data['hobbyName'] = hobbyName;
+    data['depCompanyName'] = depCompanyName;
+    data['standard_ID'] = standardID;
+    data['shcool_College'] = shcoolCollege;
+    data['extraActivity'] = extraActivity;
+    data['city'] = city;
+    data['cdtm'] = cdtm;
+    data['cmpCity'] = cmpCity;
+    data['std_Specialization'] = stdSpecialization;
+    data['depWorkTime'] = depWorkTime;
+    data['request_id'] = requestId;
+    data['request_type'] = requestType;
     return data;
   }
 }

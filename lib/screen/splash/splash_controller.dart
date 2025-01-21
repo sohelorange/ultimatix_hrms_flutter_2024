@@ -13,7 +13,7 @@ class SplashController extends GetxController {
     super.onInit();
     checkLocationEnabled();
 
-    Future.delayed(const Duration(seconds: 4)).then(
+    Future.delayed(const Duration(seconds: 3)).then(
       (value) {
         if (PreferenceUtils.getIsLogin()) {
           if (kDebugMode) {

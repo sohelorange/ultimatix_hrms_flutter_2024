@@ -167,13 +167,67 @@ class AddLeaveView extends GetView<AddLeaveController> {
           ),
           GestureDetector(
             onTap: () {
+              // if (controller.selectedDropdownLeaveID.value.isEmpty) {
+              //   AppSnackBar.showGetXCustomSnackBar(
+              //       message: 'Please select first leave type.');
+              // } else {
+              //   Utils.closeKeyboard(context);
+              //   AppDatePicker.allDateEnable(
+              //       context, controller.fromDateController.value);
+              // }
+
               if (controller.selectedDropdownLeaveID.value.isEmpty) {
                 AppSnackBar.showGetXCustomSnackBar(
-                    message: 'Please select first leave type.');
+                  message: 'Please select first leave type.',
+                );
               } else {
                 Utils.closeKeyboard(context);
-                AppDatePicker.allDateEnable(
-                    context, controller.fromDateController.value);
+
+                // Check if the selected date is already the same as the last selected date.
+                if (controller.lastSelectedDate != null &&
+                    controller.lastSelectedDate ==
+                        controller.fromDateController.value.text) {
+                  // Call the API directly as the date hasn't changed.
+                } else {
+                  // Open date picker and allow date selection.
+                  AppDatePicker.allDateChangeEnable(
+                    context,
+                    controller.fromDateController.value,
+                    onDateChanged: (DateTime selectedDate) {
+                      controller.lastSelectedDate = selectedDate;
+
+                      if (controller.periodController.value.text.isNotEmpty) {
+                        if (controller.debounce?.isActive ?? false) {
+                          controller.debounce?.cancel();
+                        }
+
+                        controller.debounce =
+                            Timer(const Duration(seconds: 1), () {
+                          if (controller
+                              .periodController.value.text.isNotEmpty) {
+                            controller.getEmployeeLeavePeriod(
+                                controller.selectedDropdownLeaveID.value,
+                                controller.fromDateController.value.text,
+                                controller.periodController.value.text,
+                                controller.toDateController.value.text,
+                                controller.selectedLeaveTypesDay!.value,
+                                controller.reasonController.value.text,
+                                controller.attachment.value,
+                                controller.docName.value);
+                          } else {
+                            controller.toDateController.value.clear();
+                            controller.periodController.value.clear();
+                            controller.leaveTypesDay.clear();
+                            controller.selectedLeaveTypesDay!.value = '';
+                            controller.leaveHalfDay.clear();
+                            controller.selectedLeaveHalfDay!.value = '';
+                            controller.selectedAPILeaveHalfDay!.value = '';
+                          }
+                        });
+                      }
+                    },
+                  );
+                }
               }
             },
             child: CommonInputField(

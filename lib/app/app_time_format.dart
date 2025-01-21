@@ -33,8 +33,15 @@ class AppTimePicker {
     return selected;
   }
 
-  static String formatTime24(TimeOfDay timeOfDay) {
-    return '${timeOfDay.hour}:${timeOfDay.minute.toString().padLeft(2, '0')}';
+  static String formatTime24(TimeOfDay time) {
+    final int hour = time.hour;
+    final int minute = time.minute;
+
+    // Format with leading zeros if needed
+    final String hourStr = hour.toString().padLeft(2, '0');
+    final String minuteStr = minute.toString().padLeft(2, '0');
+
+    return '$hourStr:$minuteStr';
   }
 
   static void allTimeEnable24(

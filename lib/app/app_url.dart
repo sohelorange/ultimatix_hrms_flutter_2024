@@ -61,10 +61,11 @@ class AppURL {
       '${PreferenceUtils.getAppUrl()}api/v1/EmpChildDetailInsert';
   static String updateEmployeeFamilyDetailsURL =
       '${PreferenceUtils.getAppUrl()}api/v1/EmpChildDetailUpdate';
+  static String getFamilyInformationDetailsURL =
+      '${PreferenceUtils.getAppUrl()}api/v1/EmployeeChildrenDetail';
+  static String deleteFamilyInformationDetailsURL =
+      '${PreferenceUtils.getAppUrl()}api/v1/EmpChildDetailDelete';
 
-  // public static final String EmployeeChildrenDetail = "EmployeeChildrenDetail";
-  // public static final String EmpChildDetailDelete = "EmpChildDetailDelete";
-  // public static final String GET_UpdateEmpFavDetails = "UpdateEmpFavDetails";
   //end region
 
   //Leave region

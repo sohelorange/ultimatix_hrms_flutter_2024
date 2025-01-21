@@ -47,6 +47,7 @@ class AddLeaveController extends GetxController {
   final Rx<LeaveData?> selectedDropdownLeave = Rx<LeaveData?>(null);
   RxString selectedDropdownLeaveID = ''.obs;
   RxInt leaveTypesAttachment = 0.obs;
+  DateTime? lastSelectedDate;
 
   late RxList<String> leaveTypesDay = <String>[].obs; // Initialize
   RxString? selectedLeaveTypesDay =

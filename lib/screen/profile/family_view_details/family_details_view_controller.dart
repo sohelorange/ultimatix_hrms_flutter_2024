@@ -53,8 +53,8 @@ class FamilyDetailsViewController extends GetxController {
     clg.value = leaveData.shcoolCollege ?? '';
     city.value = leaveData.city ?? '';
     extraActivity.value = leaveData.extraActivity ?? '';
-    isResiding.value = leaveData.isResi == 1 ? 'Yes' : 'No';
-    isDependent.value = leaveData.isDependant == 1 ? 'Yes' : 'No';
+    isResiding.value = leaveData.isResi == true ? 'Yes' : 'No';
+    isDependent.value = leaveData.isDependant == true ? 'Yes' : 'No';
     panCard.value = maskNumber(leaveData.panCardNo ?? '');
     aadharCard.value = maskNumber(leaveData.adharCardNo ?? '');
     height.value = leaveData.height ?? '';

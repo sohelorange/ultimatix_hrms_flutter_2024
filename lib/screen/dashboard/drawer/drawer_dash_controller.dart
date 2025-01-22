@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/app/app_images.dart';
 import 'package:ultimatix_hrms_flutter/app/app_routes.dart';
 import 'package:ultimatix_hrms_flutter/app/app_snack_bar.dart';
+import 'package:ultimatix_hrms_flutter/screen/profile/profile_personal_model.dart';
 import 'package:ultimatix_hrms_flutter/utility/constants.dart';
 import 'package:ultimatix_hrms_flutter/utility/preference_utils.dart';
 
@@ -60,8 +61,12 @@ class DrawerDashController extends GetxController {
     },
     {'id': 13, 'icon': AppImages.drawerSettingIcon, 'name': 'Setting'},
   ];
+  Rx<ProfilePersonalModel> profilePersonalModelResponse =
+      ProfilePersonalModel().obs;
 
   final RxInt selectedIndex = 0.obs;
+
+  ValueNotifier<String> profileValueNotifier = ValueNotifier<String>('');
 
   void handleNavigation(int index) {
     // Retrieve the selected item dynamically based on index
@@ -117,9 +122,11 @@ class DrawerDashController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+    //onEmployeePersonalDetailsAPI();
+    profileValueNotifier.value = PreferenceUtils.getProfileImage();
     initDatabase();
     Map<String, dynamic> loginData = PreferenceUtils.getLoginDetails();
-    userImageUrl.value = loginData['image_Name'] ?? '';
+    //userImageUrl.value = loginData['image_Name'] ?? '';
     //userName.value = loginData['emp_Full_Name'] ?? '';
     userName.value = loginData['emp_Sort_Name'] ?? '';
     designation.value = loginData['desig_Name'] ?? '';
@@ -129,7 +136,7 @@ class DrawerDashController extends GetxController {
 
   Future<void> initDatabase() async {
     database =
-    await $FloorUltimatixDb.databaseBuilder('ultimatix_db.db').build();
+        await $FloorUltimatixDb.databaseBuilder('ultimatix_db.db').build();
     localDao = database.localDao;
   }
 
@@ -182,6 +189,26 @@ class DrawerDashController extends GetxController {
       isLoading.value = false;
 
       isDisable(false);
+    }
+  }
+
+  Future<void> onEmployeePersonalDetailsAPI() async {
+    try {
+      var response =
+          await DioClient().getQueryParam(AppURL.getEmployeeDetailsURL);
+      profilePersonalModelResponse.value =
+          ProfilePersonalModel.fromJson(response);
+
+      if (profilePersonalModelResponse.value.code == 200 &&
+          profilePersonalModelResponse.value.status == true) {
+        userImageUrl.value = profilePersonalModelResponse
+            .value.data!.employeeDetails!.imagePath!;
+      } else {
+        AppSnackBar.showGetXCustomSnackBar(
+            message: "${profilePersonalModelResponse.value.message}");
+      }
+    } catch (e) {
+      //AppSnackBar.showGetXCustomSnackBar(message: e.toString());
     }
   }
 }

@@ -1,11 +1,17 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ultimatix_hrms_flutter/app/app_date_format.dart';
 import 'package:ultimatix_hrms_flutter/app/app_font_weight.dart';
 import 'package:ultimatix_hrms_flutter/app/app_routes.dart';
+import 'package:ultimatix_hrms_flutter/screen/dashboard/drawer/drawer_dash_controller.dart';
 import 'package:ultimatix_hrms_flutter/screen/profile/profile_controller.dart';
 import 'package:ultimatix_hrms_flutter/utility/constants.dart';
+import 'package:ultimatix_hrms_flutter/utility/preference_utils.dart';
 import 'package:ultimatix_hrms_flutter/utility/utils.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_app_image_svg.dart';
+import 'package:ultimatix_hrms_flutter/widget/common_list_row.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_text.dart';
 
 import '../../app/app_colors.dart';
@@ -19,41 +25,50 @@ class ProfileView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-      appBar: const CommonAppBar(
-        title: 'Profile',
-      ),
-      body: CommonContainer(
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          child: Obx(() => controller.isLoading.isTrue
-              ? Center(child: Utils.commonCircularProgress())
-              : controller.profilePersonalModelResponse.value.data != null
-                  ? _getProfileView(context)
-                  : Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        CommonAppImageSvg(
-                            imagePath: AppImages.svgNoData,
-                            height: 100,
-                            width: MediaQuery.sizeOf(context).width),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        CommonText(
-                          text: controller.profilePersonalModelResponse.value
-                                      .message !=
-                                  null
-                              ? controller
-                                  .profilePersonalModelResponse.value.message!
-                              : 'Something Went Wrong',
-                          fontWeight: FontWeight.w400,
-                          fontSize: 16,
-                          color: AppColors.colorDarkBlue,
-                        ),
-                      ],
-                    )),
+        child: PopScope(
+      canPop: true,
+      onPopInvokedWithResult: (bool didPop, Object? result) {
+        DrawerDashController controller = Get.put(DrawerDashController());
+        controller.profileValueNotifier.value =
+            PreferenceUtils.getProfileImage();
+        return;
+      },
+      child: Scaffold(
+        appBar: const CommonAppBar(
+          title: 'Profile',
+        ),
+        body: CommonContainer(
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            child: Obx(() => controller.isLoading.isTrue
+                ? Center(child: Utils.commonCircularProgress())
+                : controller.profilePersonalModelResponse.value.data != null
+                    ? _getProfileView(context)
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CommonAppImageSvg(
+                              imagePath: AppImages.svgNoData,
+                              height: 100,
+                              width: MediaQuery.sizeOf(context).width),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          CommonText(
+                            text: controller.profilePersonalModelResponse.value
+                                        .message !=
+                                    null
+                                ? controller
+                                    .profilePersonalModelResponse.value.message!
+                                : 'Something Went Wrong',
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16,
+                            color: AppColors.colorDarkBlue,
+                          ),
+                        ],
+                      )),
+          ),
         ),
       ),
     ));
@@ -76,39 +91,68 @@ class ProfileView extends GetView<ProfileController> {
               //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  height: 80,
-                  width: 80,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    // Adjust radius
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withValues(alpha: 0.5),
-                        spreadRadius: 0,
-                        blurRadius: 0,
-                        offset: const Offset(0, 0), // Shadow position
-                      ),
-                    ],
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: controller.userImageUrl.value.isEmpty
-                        ? const CommonAppImageSvg(
-                            imagePath: AppImages.svgAvatar, // Default SVG image
-                            height: 80,
-                            width: 80,
-                            fit: BoxFit
-                                .cover, // Ensures the image fills the space
-                          )
-                        : CommonAppImageSvg(
-                            imagePath: controller.userImageUrl.value,
-                            // Use profile image URL
-                            height: 80,
-                            width: 80,
-                            fit: BoxFit
-                                .cover, // Ensures the image fills the space
-                          ),
+                GestureDetector(
+                  onTap: () {
+                    controller.getOpenGalleryView(context);
+                  },
+                  child: Container(
+                    height: 70,
+                    width: 70,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      // Adjust radius
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withValues(alpha: 0.5),
+                          spreadRadius: 0,
+                          blurRadius: 0,
+                          offset: const Offset(0, 0), // Shadow position
+                        ),
+                      ],
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Obx(() {
+                        if (controller.userImageUrl.value.isNotEmpty) {
+                          // Show the camera-uploaded image
+                          if (controller.userImageUrl.value.startsWith('/')) {
+                            // Local file path
+                            return Image.file(
+                              File(controller.userImageUrl.value),
+                              height: 70,
+                              width: 70,
+                              fit: BoxFit.cover,
+                            );
+                          } else {
+                            // Network image
+                            return Image.network(
+                              controller.userImageUrl.value,
+                              height: 70,
+                              width: 70,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                // Fallback to placeholder if the network image fails
+                                return const CommonAppImageSvg(
+                                  imagePath: AppImages.svgAvatar,
+                                  // Default placeholder SVG image
+                                  height: 70,
+                                  width: 70,
+                                  fit: BoxFit.cover,
+                                );
+                              },
+                            );
+                          }
+                        } else {
+                          // Show the placeholder if no image is set
+                          return const CommonAppImageSvg(
+                            imagePath: AppImages.svgAvatar,
+                            height: 70,
+                            width: 70,
+                            fit: BoxFit.cover,
+                          );
+                        }
+                      }),
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -122,7 +166,7 @@ class ProfileView extends GetView<ProfileController> {
                       CommonText(
                         textAlign: TextAlign.start,
                         text: controller.profilePersonalModelResponse.value
-                            .data![0].empFullName!,
+                            .data!.employeeDetails!.empFullName!,
                         color: AppColors.colorWhite,
                         fontSize: 20,
                         fontWeight: AppFontWeight.w700,
@@ -133,7 +177,7 @@ class ProfileView extends GetView<ProfileController> {
                       CommonText(
                         textAlign: TextAlign.start,
                         text: controller.profilePersonalModelResponse.value
-                            .data![0].empCode!,
+                            .data!.employeeDetails!.empCode!,
                         color: AppColors.colorWhite,
                         fontSize: 14,
                         fontWeight: AppFontWeight.w500,
@@ -152,8 +196,8 @@ class ProfileView extends GetView<ProfileController> {
           fontWeight: AppFontWeight.w400,
         ).paddingOnly(top: 15),
         CommonText(
-          text:
-              controller.profilePersonalModelResponse.value.data![0].desigName!,
+          text: controller.profilePersonalModelResponse.value.data!
+              .employeeDetails!.desigName!,
           color: AppColors.colorDarkBlue,
           fontSize: 14,
           fontWeight: AppFontWeight.w400,
@@ -165,8 +209,8 @@ class ProfileView extends GetView<ProfileController> {
           fontWeight: AppFontWeight.w400,
         ).paddingOnly(top: 15),
         CommonText(
-          text: controller
-              .profilePersonalModelResponse.value.data![0].empFullNameSuperior!,
+          text: controller.profilePersonalModelResponse.value.data!
+              .employeeDetails!.empFullNameSuperior!,
           color: AppColors.colorDarkBlue,
           fontSize: 14,
           fontWeight: AppFontWeight.w400,
@@ -214,16 +258,16 @@ class ProfileView extends GetView<ProfileController> {
                       child: _employeeDetails(
                           AppImages.profileDOJIcon,
                           'Date Of Joining',
-                          controller.profilePersonalModelResponse.value.data![0]
-                                  .dateOfJoin ??
+                          controller.profilePersonalModelResponse.value.data!
+                                  .employeeDetails!.dateOfJoin ??
                               ''),
                     ),
                     Expanded(
                       child: _employeeDetails(
                           AppImages.profileBloodGroupIcon,
                           'Blood Group',
-                          controller.profilePersonalModelResponse.value.data![0]
-                                  .bloodGroup ??
+                          controller.profilePersonalModelResponse.value.data!
+                                  .employeeDetails!.bloodGroup ??
                               ''),
                     ),
                   ],
@@ -231,7 +275,7 @@ class ProfileView extends GetView<ProfileController> {
                 // _employeeDetails(
                 //         AppImages.leaveCalendarIcon,
                 //         'Guardian Name',
-                //         controller.profilePersonalModelResponse.value.data![0]
+                //         controller.profilePersonalModelResponse.value.data!.employeeDetails!
                 //                 .grdName ??
                 //             '')
                 //     .paddingOnly(left: 10, right: 10, top: 10),
@@ -241,8 +285,9 @@ class ProfileView extends GetView<ProfileController> {
                         controller.maskNumber(controller
                                 .profilePersonalModelResponse
                                 .value
-                                .data![0]
-                                .uANNo ??
+                                .data!
+                                .employeeDetails!
+                                .uaNNo ??
                             ''))
                     .paddingOnly(left: 10, right: 10, top: 10),
                 _employeeDetails(
@@ -251,7 +296,8 @@ class ProfileView extends GetView<ProfileController> {
                         controller.maskNumber(controller
                                 .profilePersonalModelResponse
                                 .value
-                                .data![0]
+                                .data!
+                                .employeeDetails!
                                 .aadharCardNo ??
                             ''))
                     .paddingOnly(left: 10, right: 10, top: 10),
@@ -261,22 +307,23 @@ class ProfileView extends GetView<ProfileController> {
                         controller.maskNumber(controller
                                 .profilePersonalModelResponse
                                 .value
-                                .data![0]
+                                .data!
+                                .employeeDetails!
                                 .panNo ??
                             ''))
                     .paddingOnly(left: 10, right: 10, top: 10),
                 _employeeDetails(
                         AppImages.profileUANIcon,
                         'Contact No',
-                        controller.profilePersonalModelResponse.value.data![0]
-                                .mobileNo ??
+                        controller.profilePersonalModelResponse.value.data!
+                                .employeeDetails!.mobileNo ??
                             '')
                     .paddingOnly(left: 10, right: 10, top: 10),
                 _employeeDetails(
                         AppImages.profileCompanyEmailIcon,
                         'Email Id',
-                        controller.profilePersonalModelResponse.value.data![0]
-                                .workEmail ??
+                        controller.profilePersonalModelResponse.value.data!
+                                .employeeDetails!.workEmail ??
                             '')
                     .paddingOnly(left: 10, right: 10, top: 10),
                 _employeeDetails(
@@ -285,13 +332,14 @@ class ProfileView extends GetView<ProfileController> {
                         controller
                                 .profilePersonalModelResponse
                                 .value
-                                .data![0]
+                                .data!
+                                .employeeDetails!
                                 //.otherEmail ??
-                                .fROMEMAIL ??
+                                .froMEMAIL ??
                             '')
                     .paddingOnly(left: 10, right: 10, top: 10),
                 _employeeDetails(AppImages.profileAddressIcon, 'Address',
-                        '${controller.profilePersonalModelResponse.value.data![0].street1 ?? ''},${controller.profilePersonalModelResponse.value.data![0].city ?? ''},${controller.profilePersonalModelResponse.value.data![0].state ?? ''},${controller.profilePersonalModelResponse.value.data![0].zipCode ?? '' '.'}')
+                        '${controller.profilePersonalModelResponse.value.data!.employeeDetails!.street1 ?? ''},${controller.profilePersonalModelResponse.value.data!.employeeDetails!.city ?? ''},${controller.profilePersonalModelResponse.value.data!.employeeDetails!.state ?? ''},${controller.profilePersonalModelResponse.value.data!.employeeDetails!.zipCode ?? '' '.'}')
                     .paddingOnly(left: 10, right: 10, top: 10)
               ],
             )).paddingOnly(top: 10),
@@ -330,29 +378,29 @@ class ProfileView extends GetView<ProfileController> {
                 _employeeDetails(
                         AppImages.profileBankNameIcon,
                         'Bank Name',
-                        controller.profilePersonalModelResponse.value.data![0]
-                                .bankName ??
+                        controller.profilePersonalModelResponse.value.data!
+                                .employeeDetails!.bankName ??
                             '')
                     .paddingOnly(left: 10, right: 10, top: 10),
                 _employeeDetails(
                         AppImages.profileBankBranchNameIcon,
                         'Bank Branch Name',
-                        controller.profilePersonalModelResponse.value.data![0]
-                                .bankBranchName ??
+                        controller.profilePersonalModelResponse.value.data!
+                                .employeeDetails!.bankBranchName ??
                             '')
                     .paddingOnly(left: 10, right: 10, top: 10),
                 _employeeDetails(
                   AppImages.profileACNoIcon,
                   'Account Number',
                   controller.maskNumber(controller.profilePersonalModelResponse
-                          .value.data![0].incBankACNo ??
+                          .value.data!.employeeDetails!.incBankACNo ??
                       ''),
                 ).paddingOnly(left: 10, right: 10, top: 10),
                 _employeeDetails(
                         AppImages.profileIFSCCodeIcon,
                         'IFSC Code',
-                        controller.profilePersonalModelResponse.value.data![0]
-                                .ifscCode ??
+                        controller.profilePersonalModelResponse.value.data!
+                                .employeeDetails!.ifscCode ??
                             '')
                     .paddingOnly(left: 10, right: 10, top: 10),
               ],
@@ -604,9 +652,11 @@ class ProfileView extends GetView<ProfileController> {
             ),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              child: controller.profileFamilyModelResponse.value.data != null &&
-                      controller
-                          .profileFamilyModelResponse.value.data!.isNotEmpty
+              child: controller.profilePersonalModelResponse.value.data!
+                              .assets !=
+                          null &&
+                      controller.profilePersonalModelResponse.value.data!
+                          .assets!.isNotEmpty
                   ? DataTable(
                       columns: const [
                         DataColumn(label: Text('Asset Code')),
@@ -615,29 +665,72 @@ class ProfileView extends GetView<ProfileController> {
                         DataColumn(label: Text('Allocation Date')),
                         DataColumn(label: Text('View')),
                       ],
-                      rows: controller.profileFamilyModelResponse.value.data!
+                      rows: controller
+                          .profilePersonalModelResponse.value.data!.assets!
                           .map((person) {
                         return DataRow(cells: [
-                          DataCell(Text(person.name ?? '')),
-                          DataCell(Text(person.relationship ?? '')),
-                          DataCell(
-                              Text(person.isDependant == true ? 'Yes' : 'No')),
-                          DataCell(
-                              Text(person.isDependant == true ? 'Yes' : 'No')),
+                          DataCell(Text(person.assetCode ?? '')),
+                          DataCell(Text(person.assetName ?? '')),
+                          DataCell(Text(person.serialNo ?? '')),
+                          DataCell(Text(AppDatePicker.convertDateTimeFormat(
+                              person.allocationDate ?? '',
+                              'MM/dd/yyyy HH:mm:ss',
+                              'dd/MM/yyyy'))),
                           DataCell(
                             IconButton(
                               icon: const Icon(Icons.visibility),
                               onPressed: () {
-                                // Handle the "View" button press
                                 showDialog(
                                   context: Get.context!,
                                   builder: (context) => AlertDialog(
-                                    title: const Text('View Details'),
-                                    content: Text('Name: ${person.name}\n'
-                                        'Relationship: ${person.relationship}\n'
-                                        'Dependent: ${person.isDependant.toString()}'),
+                                    title: CommonText(
+                                      text: 'Asset Details :',
+                                      color: AppColors.colorDarkBlue,
+                                      fontSize: 20,
+                                      fontWeight: AppFontWeight.w700,
+                                    ),
+                                    content: SingleChildScrollView(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          CommonListRow(
+                                              label: 'Brand name',
+                                              value: person.brandName!),
+                                          CommonListRow(
+                                              label: 'Asset name',
+                                              value: person.assetName!),
+                                          CommonListRow(
+                                              label: 'Allocation Date',
+                                              value: AppDatePicker
+                                                  .convertDateTimeFormat(
+                                                      person.allocationDate ??
+                                                          '',
+                                                      'MM/dd/yyyy HH:mm:ss',
+                                                      'dd/MM/yyyy')),
+                                          CommonListRow(
+                                              label: 'Type Of Asset',
+                                              value: person.typeOfAsset!),
+                                          CommonListRow(
+                                              label: 'Model Name',
+                                              value: person.modelName!),
+                                          CommonListRow(
+                                              label: 'Serial No',
+                                              value: person.serialNo!),
+                                          CommonListRow(
+                                              label: 'Asset Code',
+                                              value: person.assetCode!),
+                                          CommonListRow(
+                                              label: 'Type',
+                                              value: person.type!),
+                                        ],
+                                      ),
+                                    ),
                                     actions: [
                                       TextButton(
+                                        style: TextButton.styleFrom(
+                                          overlayColor: Colors.transparent,
+                                        ),
                                         onPressed: () =>
                                             Navigator.of(context).pop(),
                                         child: const Text('Close'),

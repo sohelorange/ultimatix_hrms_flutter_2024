@@ -1,11 +1,12 @@
-import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ultimatix_hrms_flutter/api/dio_client.dart';
 import 'package:ultimatix_hrms_flutter/app/app_colors.dart';
+import 'package:ultimatix_hrms_flutter/app/app_font_weight.dart';
 import 'package:ultimatix_hrms_flutter/app/app_snack_bar.dart';
 import 'package:ultimatix_hrms_flutter/app/app_url.dart';
 import 'package:ultimatix_hrms_flutter/screen/profile/profile_family_model.dart';
@@ -15,15 +16,13 @@ import 'package:ultimatix_hrms_flutter/utility/constants.dart';
 import 'package:ultimatix_hrms_flutter/utility/network.dart';
 import 'package:ultimatix_hrms_flutter/utility/preference_utils.dart';
 import 'package:ultimatix_hrms_flutter/utility/utils.dart';
+import 'package:ultimatix_hrms_flutter/widget/common_text.dart';
 
 class ProfileController extends GetxController {
   RxBool isLoading = true.obs;
+
   RxString userImageUrl = "".obs;
-  RxString profileImage = "".obs;
-
-  // var profileImage = Rx<File?>(null);
-  var base64String = ''.obs;
-
+  RxString base64String = ''.obs;
   final ImagePicker _picker = ImagePicker();
 
   Rx<ProfilePersonalModel> profilePersonalModelResponse =
@@ -32,15 +31,10 @@ class ProfileController extends GetxController {
       ProfileFavoriteModel().obs;
   Rx<ProfileFamilyModel> profileFamilyModelResponse = ProfileFamilyModel().obs;
 
-  RxString favSport = ''.obs;
-
   String maskNumber(String number) {
-    // Check if the account number has enough digits
     if (number.length > 4) {
-      // Mask all but the last 4 digits
       return 'X' * (number.length - 4) + number.substring(number.length - 4);
     } else {
-      // If the account number is less than or equal to 4 digits, return it as is
       return number;
     }
   }
@@ -48,8 +42,8 @@ class ProfileController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    Map<String, dynamic> loginData = PreferenceUtils.getLoginDetails();
-    userImageUrl.value = loginData['image_Name'] ?? '';
+    // Map<String, dynamic> loginData = PreferenceUtils.getLoginDetails();
+    // userImageUrl.value = loginData['image_Name'] ?? '';
 
     fetchDataInParallel();
   }
@@ -85,6 +79,9 @@ class ProfileController extends GetxController {
 
       if (profilePersonalModelResponse.value.code == 200 &&
           profilePersonalModelResponse.value.status == true) {
+        userImageUrl.value = profilePersonalModelResponse
+            .value.data!.employeeDetails!.imagePath!;
+        PreferenceUtils.setProfileImage(userImageUrl.value);
       } else {
         AppSnackBar.showGetXCustomSnackBar(
             message: "${profilePersonalModelResponse.value.message}");
@@ -131,87 +128,137 @@ class ProfileController extends GetxController {
 
   getOpenGalleryView(BuildContext context) {
     showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              ListTile(
-                leading: const Icon(Icons.camera),
-                title: const Text('Camera'),
-                iconColor: AppColors.color7B1FA2,
-                onTap: () {
-                  Get.back();
-                  pickImage();
-                },
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),
+      ),
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            const SizedBox(
+              height: 10,
+            ),
+            ListTile(
+              leading: const Icon(Icons.camera),
+              title: CommonText(
+                textAlign: TextAlign.start,
+                text: 'Camera',
+                color: AppColors.colorDarkBlue,
+                fontSize: 14,
+                fontWeight: AppFontWeight.w700,
               ),
-              ListTile(
-                leading: const Icon(Icons.photo),
-                title: const Text('Gallery'),
-                iconColor: AppColors.color7B1FA2,
-                onTap: () {
-                  Get.back();
-                  // pickgalleryImage();
-                },
-              )
-            ],
-          );
-        });
+              visualDensity:
+                  const VisualDensity(horizontal: -4.0, vertical: -4.0),
+              iconColor: AppColors.colorDarkBlue,
+              onTap: () {
+                Get.back();
+                pickImage(ImageSource.camera);
+              },
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            ListTile(
+              leading: const Icon(Icons.photo),
+              title: CommonText(
+                textAlign: TextAlign.start,
+                text: 'Gallery',
+                color: AppColors.colorDarkBlue,
+                fontSize: 14,
+                fontWeight: AppFontWeight.w700,
+              ),
+              visualDensity:
+                  const VisualDensity(horizontal: -4.0, vertical: -4.0),
+              iconColor: AppColors.colorDarkBlue,
+              onTap: () {
+                Get.back();
+                pickImage(ImageSource.gallery);
+              },
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+          ],
+        );
+      },
+    );
   }
 
-  Future<void> pickImage() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+  Future<void> pickImage(ImageSource source) async {
+    final pickedFile = await _picker.pickImage(source: source);
 
     if (pickedFile != null) {
-      profileImage.value = pickedFile.path;
-      convertToBase64(profileImage.value as File);
-    }
+      File selectedImage = File(pickedFile.path);
 
-    await onUpdateEmployeeDetailsAPI();
-  }
-
-  /* if (pickedFile != null) {
+      // Update reactive variables with the selected image path
       userImageUrl.value = pickedFile.path;
-      // userImageUrl.value = profileImagePath.value;
-      print("imagefinal---${userImageUrl.value}");
-      // await saveImageLocally(File(pickedFile.path));
-      await onUpdateEmployeeDetailsAPI();
-    } else {
-      Get.snackbar('Error', 'No image selected',
-          snackPosition: SnackPosition.BOTTOM);
-    }*/
 
-  // Convert the image to Base64 string
-  void convertToBase64(File imageFile) {
-    final bytes = imageFile.readAsBytesSync();
-    base64String.value = base64Encode(bytes);
-    debugPrint("Base64 String: ${base64String.value}");
-    onUpdateEmployeeDetailsAPI();
+      // Convert the image to Base64 and call the API
+      base64String.value = await Utils.convertFileToBase64(selectedImage.path)
+          .then((base64StringValue) {
+        imageUpdateAPI();
+        return base64StringValue;
+      });
+    } else {
+      // Handle the case where no image is selected
+      if (kDebugMode) {
+        print(
+            "No image selected from ${source == ImageSource.camera ? 'camera' : 'gallery'}.");
+      }
+    }
   }
 
-  /* Future<void> pickgalleryImage() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+  Future<void> pickCameraImage() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    if (pickedFile != null) {
+      File selectedImage = File(pickedFile.path);
+      userImageUrl.value = pickedFile.path;
+      base64String.value = await Utils.convertFileToBase64(selectedImage.path)
+          .then((base64StringValue) {
+        imageUpdateAPI();
+        return base64StringValue;
+      });
+    }
+
+    // if (pickedFile != null) {
+    //   File selectedImage = File(pickedFile.path);
+    //   Utils.convertFileToBase64(selectedImage.path).then((base64StringValue) {
+    //     base64String.value = base64StringValue;
+    //     onUpdateEmployeeDetailsAPI();
+    //   });
+    // }
+  }
+
+  Future<void> pickGalleryImage() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
-      profileImagePath.value = pickedFile.path;
-      userImageUrl.value = profileImagePath.value;
-      print("image---${profileImagePath.value}");
-      print("imagefinal---${userImageUrl.value}");
+      File selectedImage = File(pickedFile.path);
+      userImageUrl.value = pickedFile.path;
+      base64String.value = await Utils.convertFileToBase64(selectedImage.path)
+          .then((base64StringValue) {
+        imageUpdateAPI();
+        return base64StringValue;
+      });
 
-      onUpdateEmployeeDetailsAPI();
-
-    } else {
-      Get.snackbar('Error', 'No image selected',
-          snackPosition: SnackPosition.BOTTOM);
+      // if (pickedFile != null) {
+      //   profileImage.value = pickedFile.path;
+      //   userImageUrl.value = profileImage.value;
+      //   print("image---${profileImage.value}");
+      //   print("imagefinal---${userImageUrl.value}");
+      //
+      //   onUpdateEmployeeDetailsAPI();
+      // }
     }
-  }*/
+  }
 
-  Future<void> onUpdateEmployeeDetailsAPI() async {
+  Future<void> imageUpdateAPI() async {
     if (await Network.isConnected()) {
       try {
-        isLoading.value = true;
-
         Map<String, dynamic> requestParam = {
           "empID": 0,
           "cmpID": 0,
@@ -222,17 +269,20 @@ class ProfileController extends GetxController {
           "phoneNo": "",
           "mobileNo": "",
           "email": "",
-          "strType": base64String.value,
+          "strImage": base64String.value,
           "type": "U"
         };
 
         var response = await DioClient()
             .post(AppURL.updateEmployeeDetailsURL, requestParam);
-        debugPrint("res --$response");
+        if (response['code'] == 200 && response['status'] == true) {
+          onEmployeePersonalDetailsAPI();
+          debugPrint("res --$response");
+        } else {
+          AppSnackBar.showGetXCustomSnackBar(message: response['message']);
+        }
       } catch (e) {
-        debugPrint("Login catch --$e");
-      } finally {
-        isLoading.value = false;
+        AppSnackBar.showGetXCustomSnackBar(message: e.toString());
       }
     } else {
       AppSnackBar.showGetXCustomSnackBar(message: Constants.networkMsg);

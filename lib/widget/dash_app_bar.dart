@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/app/app_images.dart';
@@ -8,7 +10,8 @@ import '../app/app_status_bar.dart';
 import 'common_text.dart';
 
 class DashAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final String profileImageUrl;
+  //final String profileImageUrl;
+  final ValueNotifier<String> profileImageUrlNotifier;
   final String name;
   final String designation;
   final List<Widget>? actions;
@@ -20,7 +23,7 @@ class DashAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   const DashAppBar({
     super.key,
-    required this.profileImageUrl,
+    required this.profileImageUrlNotifier,
     required this.name,
     required this.designation,
     this.actions,
@@ -70,7 +73,7 @@ class DashAppBar extends StatelessWidget implements PreferredSizeWidget {
                           // Adjust radius
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
+                              color: Colors.grey.withValues(alpha: 0.5),
                               spreadRadius: 0,
                               blurRadius: 0,
                               offset: const Offset(0, 0), // Shadow position
@@ -79,24 +82,96 @@ class DashAppBar extends StatelessWidget implements PreferredSizeWidget {
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
-                          child: profileImageUrl.isEmpty
-                              ? const CommonAppImageSvg(
-                                  imagePath:
-                                      AppImages.svgAvatar, // Default SVG image
+                          child: ValueListenableBuilder<String>(
+                            valueListenable: profileImageUrlNotifier,
+                            // A ValueNotifier wrapping profileImageUrl
+                            builder: (context, profileImageUrl, child) {
+                              if (profileImageUrl.isNotEmpty) {
+                                // Show the camera-uploaded image
+                                if (profileImageUrl.startsWith('/')) {
+                                  // Local file path
+                                  return Image.file(
+                                    File(profileImageUrl),
+                                    height: 56,
+                                    width: 56,
+                                    fit: BoxFit.cover,
+                                  );
+                                } else {
+                                  // Network image
+                                  return Image.network(
+                                    profileImageUrl,
+                                    height: 56,
+                                    width: 56,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      // Fallback to placeholder if the network image fails
+                                      return const CommonAppImageSvg(
+                                        imagePath: AppImages.svgAvatar,
+                                        // Default placeholder SVG image
+                                        height: 56,
+                                        width: 56,
+                                        fit: BoxFit.cover,
+                                      );
+                                    },
+                                  );
+                                }
+                              } else {
+                                // Show the placeholder if no image is set
+                                return const CommonAppImageSvg(
+                                  imagePath: AppImages.svgAvatar,
                                   height: 56,
                                   width: 56,
-                                  fit: BoxFit
-                                      .cover, // Ensures the image fills the space
-                                )
-                              : CommonAppImageSvg(
-                                  imagePath:
-                                      profileImageUrl, // Use profile image URL
-                                  height: 56,
-                                  width: 56,
-                                  fit: BoxFit
-                                      .cover, // Ensures the image fills the space
-                                ),
+                                  fit: BoxFit.cover,
+                                );
+                              }
+                            },
+                          ),
                         ),
+                        // child: ClipRRect(
+                        //   borderRadius: BorderRadius.circular(10),
+                        //   child: profileImageUrl.isNotEmpty
+                        //       ? Image.network(
+                        //           profileImageUrl,
+                        //           height: 56,
+                        //           width: 56,
+                        //           fit: BoxFit.cover,
+                        //           errorBuilder: (context, error, stackTrace) {
+                        //             return const CommonAppImageSvg(
+                        //               imagePath: AppImages.svgAvatar,
+                        //               height: 56,
+                        //               width: 56,
+                        //               fit: BoxFit.cover,
+                        //             );
+                        //           },
+                        //         )
+                        //       : const CommonAppImageSvg(
+                        //           imagePath: AppImages.svgAvatar,
+                        //           height: 56,
+                        //           width: 56,
+                        //           fit: BoxFit.cover,
+                        //         ),
+                        // ),
+
+                        // child: ClipRRect(
+                        //   borderRadius: BorderRadius.circular(10),
+                        //   child: profileImageUrl.isEmpty
+                        //       ? const CommonAppImageSvg(
+                        //           imagePath:
+                        //               AppImages.svgAvatar, // Default SVG image
+                        //           height: 56,
+                        //           width: 56,
+                        //           fit: BoxFit
+                        //               .cover, // Ensures the image fills the space
+                        //         )
+                        //       : CommonAppImageSvg(
+                        //           imagePath:
+                        //               profileImageUrl, // Use profile image URL
+                        //           height: 56,
+                        //           width: 56,
+                        //           fit: BoxFit
+                        //               .cover, // Ensures the image fills the space
+                        //         ),
+                        // ),
                       ),
                     ),
                     if (showEditIcon)
@@ -113,7 +188,7 @@ class DashAppBar extends StatelessWidget implements PreferredSizeWidget {
                               shape: BoxShape.circle,
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
+                                  color: Colors.black.withValues(alpha: 0.2),
                                   blurRadius: 4,
                                   offset: const Offset(0, 2),
                                 ),

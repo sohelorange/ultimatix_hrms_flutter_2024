@@ -91,6 +91,7 @@ class DashController extends GetxController {
   String imeiNo = "";
 
   ValueNotifier<bool> checkInOutStatus = ValueNotifier<bool>(false);
+  ValueNotifier<String> profileValueNotifier = ValueNotifier<String>('');
 
   void onBottomTabSelected(int index) {
     selectedIndex.value = index;
@@ -115,6 +116,7 @@ class DashController extends GetxController {
   onInit() async {
     super.onInit();
     checkInOutStatus.value = PreferenceUtils.getIsClocking();
+    profileValueNotifier.value = PreferenceUtils.getProfileImage();
 
     _notificationServices.requestNotificationPermission();
     _notificationServices.firebaseInit(Get.context!);

@@ -149,6 +149,8 @@ class LoginController extends GetxController {
           PreferenceUtils.setAuthToken('Bearer ${response['data']['token']}');
 
           if (response['data']['loginData'] is Map<String, dynamic>) {
+            PreferenceUtils.setProfileImage(
+                response['data']['loginData']['image_Name']);
             await PreferenceUtils.setLoginDetails(
                 response['data']['loginData']);
           }

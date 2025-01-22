@@ -12,6 +12,11 @@ class AppURL {
 
   static const String baseURL =
       "https://hrms.webpayroll.in/mobile_license_new/"; //TODO : Swagger Live
+  static const String emailBaseUrl =
+      'http://120.72.91.75:1203//Email_Webservice.asmx';
+  static const String sentEmailUrl = '${emailBaseUrl}SentEmail';
+
+  //{TranID=587102; EmailType=Attendance Regularization; }
 
   //Auth region
   static const String serverConnectionURL = "${baseURL}api/v1/ServerConnection";

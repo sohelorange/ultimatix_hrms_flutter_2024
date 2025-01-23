@@ -9,6 +9,7 @@ class AppFonts {
 
   // static String sfProText = 'SF Pro Text';
   static String dMSans = 'DM Sans';
+  static String inter = 'Inter';
 
   // static TextStyle sfProTextStyle({double height = 1}) {
   //   return TextStyle(fontSize: 16, fontFamily: dMSans, height: height, fontWeight: AppFontWeight.regular, color: AppColors.colorBlack);
@@ -16,5 +17,9 @@ class AppFonts {
 
   static TextStyle dMSansTextStyle() {
     return TextStyle(fontSize: 16, fontFamily: dMSans, fontWeight: AppFontWeight.regular, color: AppColors.colorBlack, decoration: TextDecoration.none);
+  }
+
+  static TextStyle interTextStyle() {
+    return TextStyle(fontSize: 16, fontFamily: inter, fontWeight: AppFontWeight.regular, color: AppColors.colorBlack, decoration: TextDecoration.none);
   }
 }

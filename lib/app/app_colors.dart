@@ -22,7 +22,6 @@ class AppColors {
     },
   );
 
-
   // Primary Purple Color (Purple color for UI)
   static const Color colorPurple = Color(0xFF7B1FA2);
 
@@ -33,18 +32,22 @@ class AppColors {
   static const Color colorDarkGray = Color(0xFF6B6D7A);
 
   // Gradient Colors
-  static const Color colorGradientStart = Color(0xFF161F59); // Start of gradient
+  static const Color colorGradientStart =
+      Color(0xFF161F59); // Start of gradient
   static const Color colorGradientEnd = Color(0xFF631983); // End of gradient
 
   // Light Theme Colors
   static const Color lightBackground = Color(0xFFF7F8FC); // Light background
-  static const Color lightPrimary = colorPurple;  // Primary Purple for light theme
-  static const Color lightAccent = colorDarkBlue;  // Accent color (dark blue) for light theme
+  static const Color lightPrimary =
+      colorPurple; // Primary Purple for light theme
+  static const Color lightAccent =
+      colorDarkBlue; // Accent color (dark blue) for light theme
 
   // Dark Theme Colors
-  static const Color darkBackground = Color(0xFF121212);  // Dark background
-  static const Color darkPrimary = colorPurple;  // Primary Purple for dark theme
-  static const Color darkAccent = colorDarkGray;  // Accent color (dark gray) for dark theme
+  static const Color darkBackground = Color(0xFF121212); // Dark background
+  static const Color darkPrimary = colorPurple; // Primary Purple for dark theme
+  static const Color darkAccent =
+      colorDarkGray; // Accent color (dark gray) for dark theme
 
   // Optional: You can also define the gradient directly, but this isn't a color
   static LinearGradient gradientBackground = const LinearGradient(
@@ -61,11 +64,12 @@ class AppColors {
   static const Color color1C1F37 = Color(0xFF1C1F37);
   static const Color colorAF84DD = Color(0xFFAF84DD);
   static const Color colorF4F2FF = Color(0xFFF4F2FF);
+
   //static const Color colorAmber = Colors.amber;
   static const Color colorAmber = Color(0XFFF68C1F);
   static const Color colorGreen = Colors.green;
   static const Color colorRed = Colors.red;
-  static const Color colorUnderline =Color(0XFF4F1B78);
+  static const Color colorUnderline = Color(0XFF4F1B78);
 
   static const Color color1F1100 = Color(0xFF1F1100);
   static const Color colorCBCBCB = Color(0xFFCBCBCB);
@@ -112,4 +116,10 @@ class AppColors {
   static const Color colorF8F4FA = Color(0xFFF8F4FA);
   static const Color colorBlueDark = Color(0xFF1C1F37);
 
+  //New UI Theme Color
+  static const Color color2F2F31 = Color(0XFF2F2F31);
+  static const Color colorDCDCDC = Color(0XFFDCDCDC);
+  static const Color color7B758E = Color(0XFF7B758E);
+  static const Color color7A1FA2 = Color(0XFF7A1FA2);
+  static const Color color303E9F = Color(0XFF303E9F);
 }

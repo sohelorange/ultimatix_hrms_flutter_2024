@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -65,7 +67,10 @@ class RegularizationListApprovalsUi extends GetView<RegularizationListApprovalsC
       children: [
         GestureDetector(
           onTap: () {
-            Get.toNamed(AppRoutes.regularizeApproval);
+            log("The Application Id:${controller.attendanceApprovalListData.value.data?.elementAt(index).iOTranId}");
+            Get.toNamed(AppRoutes.regularizeApproval,arguments: [{
+              "applicationId":controller.attendanceApprovalListData.value.data?.elementAt(index).iOTranId
+            }]);
           },
           child: Container(
             padding: const EdgeInsets.all(16.0),
@@ -186,7 +191,7 @@ class RegularizationListApprovalsUi extends GetView<RegularizationListApprovalsC
                                         style: TextStyle(fontSize: fontSize,color: AppColors.color6B6D7A, fontWeight: FontWeight.w400),
                                       ),
                                       Text(
-                                        controller.attendanceApprovalListData.value.data?.elementAt(index).shInTime?.trim() ?? "--:--",
+                                        controller.getTime(controller.attendanceApprovalListData.value.data?.elementAt(index).inTime?.trim()),
                                         style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w700,
                                             color:AppColors.color1C1F37
                                           /*controller.attendanceRegularizeDetails.value.data!.elementAt(index).lateMinute! >
@@ -227,7 +232,7 @@ class RegularizationListApprovalsUi extends GetView<RegularizationListApprovalsC
                                         style: TextStyle(fontSize: fontSize,color: AppColors.color6B6D7A, fontWeight: FontWeight.w400),
                                       ),
                                       Text(
-                                        controller.attendanceApprovalListData.value.data?.elementAt(index).shOutTime?.trim() ?? "--:--",
+                                        controller.getTime(controller.attendanceApprovalListData.value.data?.elementAt(index).outTime?.trim()),
                                         style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w700,
                                             color:AppColors.color1C1F37
                                           /*controller.attendanceRegularizeDetails.value.data!.elementAt(index).lateMinute! >

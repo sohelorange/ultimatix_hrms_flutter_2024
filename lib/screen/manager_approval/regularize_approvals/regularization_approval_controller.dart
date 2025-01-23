@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 
 import '../../../api/dio_client.dart';
 import '../../../api/model/GetAttendanceApprovalRegularizeModel.dart';
+import '../../../app/app_snack_bar.dart';
 import '../../../app/app_url.dart';
 import '../../../utility/network.dart';
 import '../../../utility/preference_utils.dart';
@@ -34,11 +35,17 @@ class RegularizeApprovalController extends GetxController{
   TextEditingController textCommentController = TextEditingController();
   RxBool isLoading = true.obs;
 
+  dynamic argumentData = Get.arguments;
+  late num applicationId;
+
   Rx<GetAttendanceApprovalRegularizeModel> attendanceApprovalListData = GetAttendanceApprovalRegularizeModel().obs;
 
   @override
   void onInit() {
     log("This Controller Start");
+    applicationId = argumentData[0]['applicationId'];
+    log("The Application Id 2:$applicationId");
+
     getApprovalDetails();
     super.onInit();
   }
@@ -60,7 +67,7 @@ class RegularizeApprovalController extends GetxController{
     },);
 
     Map<String, dynamic> requestParam = {
-      /*"ApplicationId": 0,*/
+      "ApplicationId": applicationId,
     };
 
     await Isolate.spawn<_IsolateApiData>(_getApprovalDetailsByApi,
@@ -68,7 +75,7 @@ class RegularizeApprovalController extends GetxController{
             token: rootToken,
             requestData: requestParam,
             answerPort: receivePort.sendPort,
-            apiUrl: "${AppURL.getAttendanceRegularizeApplicationDetails}?ApplicationId=0"));
+            apiUrl: "${AppURL.getAttendanceRegularizeApplicationDetails}?ApplicationId=$applicationId"));
   }
 
   static void _getApprovalDetailsByApi(_IsolateApiData api) async{
@@ -86,12 +93,12 @@ class RegularizeApprovalController extends GetxController{
     }
   }
 
-  void toCallApi() async{
+  void toCallApi(String appStatus) async{
     log("This Function is start");
     isLoading.value = true;
 
     Map<String, dynamic> requestParam = {
-      "applicationID": 0,
+      "applicationID": applicationId,
       "empID": attendanceApprovalListData.value.data?.elementAt(0).empId,
       "cmpID": attendanceApprovalListData.value.data?.elementAt(0).cmpID,
       "fordate": attendanceApprovalListData.value.data?.elementAt(0).forDate,
@@ -106,7 +113,7 @@ class RegularizeApprovalController extends GetxController{
       "rptLevel": 0,
       "finalApproval": 0,
       "isFWDRej": 0,
-      "appStatus": "string"
+      "appStatus": appStatus
     };
 
     await PreferenceUtils.init();
@@ -116,6 +123,11 @@ class RegularizeApprovalController extends GetxController{
       await DioClient().post(AppURL.attendanceRegularizeApproval, requestParam).then((value) {
         if (value != null) {
           log("The result of the api is:$value");
+          var response = value;
+          String data = response["data"] ?? "";
+          String result = data.split('#').first;
+          AppSnackBar.showGetXCustomSnackBar(message: result);
+          Get.back();
           isLoading.value = false;
         } else{
           log("The result is getting null");

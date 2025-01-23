@@ -1,10 +1,11 @@
+
 import 'dart:developer';
 import 'dart:isolate';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../../../api/dio_client.dart';
-import '../../../api/model/GetAttendanceApprovalRegularizeModel.dart';
+import '../../../api/model/get_approve_regularize_list.dart';
 import '../../../app/app_url.dart';
 import '../../../utility/network.dart';
 import '../../../utility/preference_utils.dart';
@@ -19,7 +20,7 @@ class RegularizationListApprovalsController extends GetxController{
   RxString userEmpId = "".obs;
   RxString userCmpId = "".obs;
 
-  Rx<GetAttendanceApprovalRegularizeModel> attendanceApprovalListData = GetAttendanceApprovalRegularizeModel().obs;
+  Rx<GetApproveRegularizeList> attendanceApprovalListData = GetApproveRegularizeList().obs;
 
   @override
   void onInit() {
@@ -33,7 +34,8 @@ class RegularizationListApprovalsController extends GetxController{
 
     receivePort.listen((message) {
       if(message!=null){
-        attendanceApprovalListData.value = GetAttendanceApprovalRegularizeModel.fromJson(message);
+        attendanceApprovalListData.value = GetApproveRegularizeList.fromJson(message);
+        log("The Half And Full day ${attendanceApprovalListData.value.data?.elementAt(0).halfFullDay?.trim().toString()}");
         isLoading.value = false;
       }else{
         isLoading.value = false;
@@ -63,7 +65,7 @@ class RegularizationListApprovalsController extends GetxController{
 
   String setDate(String? date) {
     if(date!=null && date!=""){
-      DateFormat inputFormat = DateFormat('MM/dd/yyyy HH:mm:ss');
+      DateFormat inputFormat = DateFormat('yyyy-MM-ddTHH:mm:ss');
       // Parse the input string to DateTime
       DateTime parsedDate = inputFormat.parse(date);
       // Format the DateTime to the desired output format (MM/dd/yyyy)
@@ -71,6 +73,16 @@ class RegularizationListApprovalsController extends GetxController{
       return formattedDate;
     }else{
       return "";
+    }
+  }
+
+  String getTime(String? dateTime) {
+    if(dateTime!=null && dateTime!="") {
+      List<String> parts = dateTime.split(' ');
+      String time = parts[1];
+      return time;
+    }else{
+      return "--:--";
     }
   }
 }

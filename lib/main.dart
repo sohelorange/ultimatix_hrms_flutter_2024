@@ -402,3 +402,18 @@ Widget getMainAppViewBuilder(BuildContext context, Widget? widget) {
     ],
   );
 }
+
+/*Future<void> permissionRequired() async{
+  Map<Permission, PermissionStatus> statuses = await [
+    Permission.location,
+    Permission.camera,
+    Permission.notification,
+    Permission.storage,
+  ].request();
+
+  if(statuses[Permission.locationAlways]?.isGranted==true){
+    initDbWithLocationTrackService();
+  } else {
+    permissionRequired();
+  }
+}*/

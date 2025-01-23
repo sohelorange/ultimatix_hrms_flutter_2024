@@ -416,6 +416,53 @@ class AppImages {
   static const String icbirth = 'assets/icon/profileicon/ic_birth.png';
   static const String icpan = 'assets/icon/profileicon/ic_pan.png';
 
+  static const String profileEmpCodeIcon =
+      'assets/applicationIcon/profile/profile_emp_code_icon.svg';
+  static const String profileDOBIcon =
+      'assets/applicationIcon/profile/profile_dob_icon.svg';
+  static const String profileDOJIcon =
+      'assets/applicationIcon/profile/profile_doj_icon.svg';
+  static const String profileBloodGroupIcon =
+      'assets/applicationIcon/profile/profile_blood_group_icon.svg';
+  static const String profileUANIcon =
+      'assets/applicationIcon/profile/profile_uan_no_icon.svg';
+  static const String profileAadharCardNoIcon =
+      'assets/applicationIcon/profile/profile_aadhar_card_no_icon.svg';
+  static const String profilePersonEmailIcon =
+      'assets/applicationIcon/profile/profile_personal_email_icon.svg';
+  static const String profileCompanyEmailIcon =
+      'assets/applicationIcon/profile/profile_company_email_icon.svg';
+  static const String profilePanNoIcon =
+      'assets/applicationIcon/profile/profile_pan_no_icon.svg';
+  static const String profileAddressIcon =
+      'assets/applicationIcon/profile/profile_address_icon.svg';
+  static const String profileWorkMailIcon =
+      'assets/applicationIcon/profile/profile_company_email_icon.svg';
+  static const String profileACNoIcon =
+      'assets/applicationIcon/profile/profile_ac_no_icon.svg';
+  static const String profileBankNameIcon =
+      'assets/applicationIcon/profile/profile_bank_name_icon.svg';
+  static const String profileBankBranchNameIcon =
+      'assets/applicationIcon/profile/profile_bank_branch_name_icon.svg';
+  static const String profileIFSCCodeIcon =
+      'assets/applicationIcon/profile/profile_ifsc_code_icon.svg';
+  static const String profileFavSportIcon =
+      'assets/applicationIcon/profile/profile_fav_sport_icon.svg';
+  static const String profileFavHobbyIcon =
+      'assets/applicationIcon/profile/profile_hobby_icon.svg';
+  static const String profileFavFoodIcon =
+      'assets/applicationIcon/profile/profile_fav_food_icon.svg';
+  static const String profileFavRestIcon =
+      'assets/applicationIcon/profile/profile_fav_rest_icon.svg';
+  static const String profileFavTravelIcon =
+      'assets/applicationIcon/profile/profile_fav_travel_dest_icon.svg';
+  static const String profileFavFestivalIcon =
+      'assets/applicationIcon/profile/profile_fav_festival_icon.svg';
+  static const String profileFavSportsPersonIcon =
+      'assets/applicationIcon/profile/profile_fav_sport_person_icon.svg';
+  static const String profileFavSingerIcon =
+      'assets/applicationIcon/profile/profile_fav_singer_icon.svg';
+
   //end region
 
   //approval region
@@ -437,5 +484,5 @@ class AppImages {
       'assets/applicationIcon/approval/approval_exit_icon.svg';
   static const String approvalCalendarIcon =
       'assets/applicationIcon/approval/approval_calendar_icon.svg';
-  //end region
+//end region
 }

@@ -90,6 +90,25 @@ class AppDatePicker {
     }
   }
 
+  static void allDateChangeEnable(
+    BuildContext context,
+    TextEditingController controller, {
+    required Function(DateTime) onDateChanged,
+  }) async {
+    final DateTime? selected = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1999),
+      lastDate: DateTime(int.parse(currentYear()), 12, 31),
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
+    );
+
+    if (selected != null) {
+      controller.text = formatDateWithDay(selected);
+      onDateChanged(selected); // Notify that the date has changed.
+    }
+  }
+
   static void previousDateDisable(
       BuildContext context, TextEditingController controller) async {
     final DateTime? selected = await showDatePicker(

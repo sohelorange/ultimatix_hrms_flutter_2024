@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/app/app_routes.dart';
-import 'package:ultimatix_hrms_flutter/utility/preference_utils.dart';
 import 'package:ultimatix_hrms_flutter/utility/utils.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_button.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_container.dart';
@@ -34,7 +33,7 @@ class DashboardView extends GetView<DashController> {
       appBar: DashAppBar(
         name: "Hello",
         designation: controller.userName.value,
-        profileImageUrl: controller.userImageUrl.value,
+        profileImageUrlNotifier: controller.profileValueNotifier,
         onProfileImageClick: () {
           Get.toNamed(AppRoutes.drawerRoute);
         },
@@ -324,16 +323,16 @@ class DashboardView extends GetView<DashController> {
                   ),
 
                   //child: Center(
-                    // child: CommonText(
-                    //   textAlign: TextAlign.center,
-                    //   text: controller.checkInOutStatus.value
-                    //       ? 'Check Out'
-                    //       : 'Check In',
-                    //   color: AppColors.colorWhite,
-                    //   fontSize: 14,
-                    //   fontWeight: AppFontWeight.w500,
-                    // ),
-                   /* child: ValueListenableBuilder<bool>(
+                  // child: CommonText(
+                  //   textAlign: TextAlign.center,
+                  //   text: controller.checkInOutStatus.value
+                  //       ? 'Check Out'
+                  //       : 'Check In',
+                  //   color: AppColors.colorWhite,
+                  //   fontSize: 14,
+                  //   fontWeight: AppFontWeight.w500,
+                  // ),
+                  /* child: ValueListenableBuilder<bool>(
                       valueListenable: controller.checkInOutStatus,
                       builder: (context, value, child) {
                         return CommonText(

@@ -13,7 +13,7 @@ class PreferenceUtils {
     return _prefsInstance!;
   }
 
-  static void reload() async{
+  static void reload() async {
     _prefsInstance?.reload();
   }
 
@@ -114,6 +114,16 @@ class PreferenceUtils {
         loginUserPasswordPref, Constants.loginUserPasswordPref);
     return _prefsInstance!
         .setString(Constants.loginUserPasswordPref, loginUserPasswordPref);
+  }
+
+  static String getProfileImage() {
+    return _prefsInstance?.getString(Constants.profileImagePref) ?? '';
+  }
+
+  static Future<bool> setProfileImage(String profileImagePref) {
+    ArgumentError.checkNotNull(profileImagePref, Constants.profileImagePref);
+    return _prefsInstance!
+        .setString(Constants.profileImagePref, profileImagePref);
   }
 
   static bool getIsRemember() {

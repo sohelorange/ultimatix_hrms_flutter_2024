@@ -37,7 +37,15 @@ class FamilyDetailsViewController extends GetxController {
     name.value = leaveData.name ?? '';
     relationship.value = leaveData.relationship ?? '';
     gender.value = leaveData.gender ?? '';
-    dob.value = AppDatePicker.convertDateTimeFormat(leaveData.dateOfBirth ?? '', Utils.commonUTCDateFormat, 'dd/MM/yyyy');
+    if (leaveData.dateOfBirth != null && leaveData.dateOfBirth!.isNotEmpty) {
+      dob.value = AppDatePicker.convertDateTimeFormat(
+        leaveData.dateOfBirth!,
+        Utils.commonUTCDateFormat,
+        'dd/MM/yyyy',
+      );
+    } else {
+      dob.value = '';
+    }
     occupation.value = leaveData.occupationID.toString();
     hobby.value = leaveData.hobbyName ?? '';
     standard.value = leaveData.standardID.toString();
@@ -45,8 +53,8 @@ class FamilyDetailsViewController extends GetxController {
     clg.value = leaveData.shcoolCollege ?? '';
     city.value = leaveData.city ?? '';
     extraActivity.value = leaveData.extraActivity ?? '';
-    isResiding.value = leaveData.isResi == 1 ? 'Yes' : 'No';
-    isDependent.value = leaveData.isDependant == 1 ? 'Yes' : 'No';
+    isResiding.value = leaveData.isResi == true ? 'Yes' : 'No';
+    isDependent.value = leaveData.isDependant == true ? 'Yes' : 'No';
     panCard.value = maskNumber(leaveData.panCardNo ?? '');
     aadharCard.value = maskNumber(leaveData.adharCardNo ?? '');
     height.value = leaveData.height ?? '';

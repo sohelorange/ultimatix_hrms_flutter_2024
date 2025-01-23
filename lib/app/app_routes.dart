@@ -32,6 +32,10 @@ import 'package:ultimatix_hrms_flutter/screen/manager_approval/leave_manager_app
 import 'package:ultimatix_hrms_flutter/screen/manager_approval/leave_manager_approval_details/leave_manager_approval_edit_details/leave_manager_approval_edit_details_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/manager_approval/manager_approval_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/manager_approval/manager_approval_view.dart';
+import 'package:ultimatix_hrms_flutter/screen/profile/family_add_details/add_family_details_view.dart';
+import 'package:ultimatix_hrms_flutter/screen/profile/family_add_details/add_family_details_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/profile/family_edit_details/edit_family_details_binding.dart';
+import 'package:ultimatix_hrms_flutter/screen/profile/family_edit_details/edit_family_details_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/profile/family_view_details/family_details_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/profile/family_view_details/family_details_view_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/profile/profile_binding.dart';
@@ -82,7 +86,9 @@ class AppRoutes {
   //profile region
   static const profileRoute = '/profile_route';
   static const familyAddRoute = '/family_add_route';
+  static const familyEditRoute = '/family_edit_route';
   static const familyViewRoute = '/family_view_route';
+
   // end region
 
   //leave region
@@ -189,6 +195,16 @@ class AppRoutes {
       name: AppRoutes.familyViewRoute,
       binding: FamilyDetailsViewBinding(),
       page: () => const FamilyDetailsView(),
+    ),
+    GetPage(
+      name: AppRoutes.familyAddRoute,
+      binding: AddFamilyDetailsBinding(),
+      page: () => const AddFamilyDetailsView(),
+    ),
+    GetPage(
+      name: AppRoutes.familyEditRoute,
+      binding: EditFamilyDetailsBinding(),
+      page: () => const EditFamilyDetailsView(),
     ),
     GetPage(
       name: AppRoutes.geofenceRoute,

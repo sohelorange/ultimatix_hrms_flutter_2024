@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'package:get/get.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
 import 'package:ultimatix_hrms_flutter/app/app_colors.dart';
@@ -10,10 +9,10 @@ import 'package:ultimatix_hrms_flutter/screen/auth/forgotpassword/forgot_pass_co
 import 'package:ultimatix_hrms_flutter/utility/utils.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_app_image.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_text.dart';
+import 'package:ultimatix_hrms_flutter/widget/new/common_app_input_new.dart';
+import 'package:ultimatix_hrms_flutter/widget/new/common_button_new.dart';
 
 import '../../../app/app_dimensions.dart';
-import '../../../widget/common_button.dart';
-import '../../../widget/common_input_field.dart';
 
 class ForgotPassView extends GetView<ForgotPassController> {
   const ForgotPassView({super.key});
@@ -23,12 +22,49 @@ class ForgotPassView extends GetView<ForgotPassController> {
     return SafeArea(
       child: Scaffold(
         //backgroundColor: Colors.white,
-        body: Obx(() => SingleChildScrollView(
-              child: Container(
-                //height: MediaQuery.of(context).size.height, // Full screen height
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-                child: _mainUI(),
+        body: Obx(() => Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: _mainUI().paddingOnly(top: 50),
+                    ),
+                  ),
+                  Visibility(
+                    visible: controller.isForgotPass.value,
+                    child: CommonButtonNew(
+                            buttonText: 'Submit',
+                            onPressed: () {
+                              controller.forgotPassValidationWithAPI();
+                            },
+                            isLoading: controller.isLoading.value,
+                            isDisable: controller.isDisable.value)
+                        .paddingOnly(top: 20),
+                  ),
+                  Visibility(
+                    visible: controller.isVerifyOTP.value,
+                    child: CommonButtonNew(
+                            buttonText: 'Verify',
+                            onPressed: () {
+                              controller.verifyOTPValidationWithAPI();
+                            },
+                            isLoading: controller.isLoading.value,
+                            isDisable: controller.isDisable.value)
+                        .paddingOnly(top: 20),
+                  ),
+                  Visibility(
+                    visible: controller.isResetPass.value,
+                    child: CommonButtonNew(
+                            buttonText: 'Submit',
+                            onPressed: () {
+                              controller.resetPassValidationWithAPI();
+                            },
+                            isLoading: controller.isLoading.value,
+                            isDisable: controller.isDisable.value)
+                        .paddingOnly(top: 20),
+                  ),
+                ],
               ),
             )),
       ),
@@ -37,7 +73,7 @@ class ForgotPassView extends GetView<ForgotPassController> {
 
   Widget _mainUI() {
     return Column(
-      //mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Center(
@@ -47,10 +83,7 @@ class ForgotPassView extends GetView<ForgotPassController> {
             width: 50,
             fit: BoxFit.fill,
           ),
-        ),
-        const SizedBox(
-          height: 40,
-        ),
+        ).paddingOnly(bottom: 40),
         Visibility(
             visible: controller.isForgotPass.value, child: _forgotPasswordUI()),
         Visibility(
@@ -68,46 +101,38 @@ class ForgotPassView extends GetView<ForgotPassController> {
       children: [
         CommonText(
           text: AppString.forgotPassWord.replaceAll('?', ''),
-          color: AppColors.color1C1F37,
+          color: AppColors.color2F2F31,
           fontSize: AppDimensions.fontSizeExtraLarge,
           fontWeight: AppFontWeight.w500,
         ),
-        const SizedBox(
-          height: 20,
-        ),
         CommonText(
-          padding: const EdgeInsets.only(top: 10),
-          text: AppString.forgotPasswordText.replaceAll('?', ''),
-          color: const Color(0XFF6B6D7A),
-          maxLine: 3,
-          fontSize: AppDimensions.fontSizeRegular,
+          text:
+              'We just need your registered Login ID to send you password reset instructions.',
+          color: AppColors.color2F2F31,
+          fontSize: AppDimensions.fontSizeMedium,
           fontWeight: AppFontWeight.w400,
-        ),
-        const SizedBox(
-          height: 30,
-        ),
-        CommonInputField(
-          textInputAction: TextInputAction.done,
+        ).paddingOnly(top: 20),
+        CommonText(
+          text: 'Login ID',
+          color: AppColors.color2F2F31,
+          fontSize: 16,
+          fontWeight: AppFontWeight.w400,
+        ).paddingOnly(top: 30),
+        CommonAppInputNew(
           textEditingController: controller.forgotPassController.value,
-          hintText: "Login ID",
           focusNode: controller.forgotPassFocus,
-          labelStyle: const TextStyle(
-            color: AppColors.colorDarkBlue,
-          ),
-          hintStyle: const TextStyle(
-            color: AppColors.colorDarkBlue,
-          ),
-        ),
-        const SizedBox(
-          height: 30,
-        ),
-        CommonButton(
-            buttonText: 'Submit',
-            onPressed: () {
-              controller.forgotPassValidationWithAPI();
-            },
-            isLoading: controller.isLoading.value,
-            isDisable: controller.isDisable.value),
+          hintText: 'Enter Login ID',
+          textInputAction: TextInputAction.done,
+          hintColor: AppColors.color7B758E,
+        ).paddingOnly(top: 15),
+        // CommonButtonNew(
+        //         buttonText: 'Submit',
+        //         onPressed: () {
+        //           controller.forgotPassValidationWithAPI();
+        //         },
+        //         isLoading: controller.isLoading.value,
+        //         isDisable: controller.isDisable.value)
+        //     .paddingOnly(top: 20),
       ],
     );
   }
@@ -117,81 +142,119 @@ class ForgotPassView extends GetView<ForgotPassController> {
       //mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CommonText(
-          text: 'Enter a passcode of 4 digits',
-          color: AppColors.colorDarkBlue,
-          fontSize: AppDimensions.fontSizeLarge,
-          fontWeight: AppFontWeight.w500,
-        ),
-        const SizedBox(
-          height: 40,
-        ),
-        PinInputTextField(
-          pinLength: 4,
-          decoration: UnderlineDecoration(
-            textStyle: TextStyle(
-                fontSize: 24,
-                fontWeight: AppFontWeight.w500,
-                color: AppColors.colorBlack),
-            colorBuilder: const FixedColorBuilder(AppColors.colorPurple),
-          ),
-          keyboardType: TextInputType.number,
-          autoFocus: true,
-          cursor: Cursor(
-            width: 2,
-            color: AppColors.colorPurple,
-            enabled: true,
-          ),
-          onChanged: (pin) {
-            if (pin.isEmpty) {
-              controller.verifyOTP.value = 0;
-            } else {
-              controller.verifyOTP.value = int.parse(pin);
-            }
-
-            if (pin.length == 4) {
-              Utils.closeKeyboard(Get.context!);
-            }
-          },
-          onSubmit: (pin) {
-            if (pin.isEmpty) {
-              controller.verifyOTP.value = 0;
-            } else {
-              controller.verifyOTP.value = int.parse(pin);
-            }
-          },
-        ),
         Visibility(
           visible: false,
-          child: Center(
-            child: VerificationCode(
-              textStyle:
-                  const TextStyle(fontSize: 20.0, color: AppColors.colorBlack),
-              keyboardType: TextInputType.number,
-              //underlineColor: Colors.amber,
-              digitsOnly: true,
-              length: 4,
-              cursorColor: AppColors.colorPurple,
-              onCompleted: (String value) {
-                controller.verifyOTP.value = int.parse(value);
-              },
-              onEditing: (bool value) {
-                //if (!value) FocusScope.of(Get.context!).unfocus();
-              },
-              margin: const EdgeInsets.symmetric(horizontal: 10),
-            ),
+          child: CommonText(
+            text: 'Verify Password',
+            color: AppColors.color2F2F31,
+            fontSize: AppDimensions.fontSizeExtraLarge,
+            fontWeight: AppFontWeight.w500,
           ),
         ),
-        const SizedBox(
-          height: 30,
-        ),
-        CommonButton(
-            buttonText: 'Verify',
-            onPressed: () {
-              controller.verifyOTPValidationWithAPI();
+        CommonText(
+          text: 'Enter a passcode of 4 digits.',
+          color: AppColors.color2F2F31,
+          //fontSize: AppDimensions.fontSizeMedium,
+          fontSize: AppDimensions.fontSizeExtraLarge,
+          //fontWeight: AppFontWeight.w400,
+          fontWeight: AppFontWeight.w500,
+        ).paddingOnly(top: 20),
+        Center(
+          child: PinInputTextField(
+            textInputAction: TextInputAction.done,
+            pinLength: 4,
+            decoration: BoxLooseDecoration(
+              textStyle: TextStyle(
+                fontSize: 24,
+                fontWeight: AppFontWeight.w500,
+                color: AppColors.colorBlack,
+              ),
+              //gapSpace: 45,
+              strokeColorBuilder: PinListenColorBuilder(
+                AppColors.color7A1FA2, // Blue color for active
+                AppColors.colorDCDCDC, // Gray color for inactive/disabled
+              ),
+              bgColorBuilder: const FixedColorBuilder(
+                Colors.transparent, // No background color
+              ),
+              //borderWidth: 2, // Box border width
+              radius: const Radius.circular(6), // Rounded corners
+            ),
+            keyboardType: TextInputType.number,
+            autoFocus: true,
+            cursor: Cursor(
+              width: 2,
+              color: AppColors.color303E9F, // Blue cursor color
+              enabled: true,
+            ),
+            onChanged: (pin) {
+              if (pin.isEmpty) {
+                controller.verifyOTP.value = 0;
+              } else {
+                controller.verifyOTP.value = int.parse(pin);
+              }
+
+              if (pin.length == 4) {
+                Utils.closeKeyboard(Get.context!);
+              }
             },
-            isLoading: controller.isLoading.value,
-            isDisable: controller.isDisable.value),
+            onSubmit: (pin) {
+              if (pin.isEmpty) {
+                controller.verifyOTP.value = 0;
+              } else {
+                controller.verifyOTP.value = int.parse(pin);
+              }
+            },
+          ).paddingOnly(top: 30),
+        ),
+
+        Visibility(
+          visible: false,
+          child: PinInputTextField(
+            textInputAction: TextInputAction.done,
+            pinLength: 4,
+            decoration: UnderlineDecoration(
+              textStyle: TextStyle(
+                  fontSize: 24,
+                  fontWeight: AppFontWeight.w500,
+                  color: AppColors.colorBlack),
+              colorBuilder: const FixedColorBuilder(AppColors.color303E9F),
+            ),
+            keyboardType: TextInputType.number,
+            autoFocus: true,
+            cursor: Cursor(
+              width: 2,
+              color: AppColors.color303E9F,
+              enabled: true,
+            ),
+            onChanged: (pin) {
+              if (pin.isEmpty) {
+                controller.verifyOTP.value = 0;
+              } else {
+                controller.verifyOTP.value = int.parse(pin);
+              }
+
+              if (pin.length == 4) {
+                Utils.closeKeyboard(Get.context!);
+              }
+            },
+            onSubmit: (pin) {
+              if (pin.isEmpty) {
+                controller.verifyOTP.value = 0;
+              } else {
+                controller.verifyOTP.value = int.parse(pin);
+              }
+            },
+          ).paddingOnly(top: 20),
+        ),
+        // CommonButtonNew(
+        //         buttonText: 'Verify',
+        //         onPressed: () {
+        //           controller.verifyOTPValidationWithAPI();
+        //         },
+        //         isLoading: controller.isLoading.value,
+        //         isDisable: controller.isDisable.value)
+        //     .paddingOnly(top: 20),
       ],
     );
   }
@@ -203,59 +266,45 @@ class ForgotPassView extends GetView<ForgotPassController> {
       children: [
         CommonText(
           text: 'Reset Password',
-          color: AppColors.colorDarkBlue,
+          color: AppColors.color2F2F31,
           fontSize: AppDimensions.fontSizeExtraLarge,
           fontWeight: AppFontWeight.w500,
         ),
-        const SizedBox(
-          height: 40,
-        ),
-        CommonInputField(
-          textInputAction: TextInputAction.next,
+        CommonText(
+          text: 'New Password',
+          color: AppColors.color2F2F31,
+          fontSize: 16,
+          fontWeight: AppFontWeight.w400,
+        ).paddingOnly(top: 30),
+        CommonAppInputNew(
           textEditingController: controller.newPassController.value,
-          hintText: "New Password",
           focusNode: controller.newPassFocus,
-          labelStyle: const TextStyle(
-            color: AppColors.colorDarkBlue,
-          ),
-          hintStyle: const TextStyle(
-            color: AppColors.colorDarkBlue,
-          ),
-        ),
-        const SizedBox(
-          height: 30,
-        ),
-        CommonInputField(
-          textInputAction: TextInputAction.done,
+          hintText: 'Enter New Password',
+          textInputAction: TextInputAction.next,
+          hintColor: AppColors.color7B758E,
+        ).paddingOnly(top: 15),
+        CommonText(
+          text: 'Confirm Password',
+          color: AppColors.color2F2F31,
+          fontSize: 16,
+          fontWeight: AppFontWeight.w400,
+        ).paddingOnly(top: 30),
+        CommonAppInputNew(
           textEditingController: controller.confirmPassController.value,
-          hintText: "Confirm Password",
           focusNode: controller.confirmPassFocus,
-          labelStyle: const TextStyle(
-            color: AppColors.colorDarkBlue,
-          ),
-          hintStyle: const TextStyle(
-            color: AppColors.colorDarkBlue,
-          ),
-        ),
-        const SizedBox(
-          height: 30,
-        ),
-        CommonButton(
-            buttonText: 'Submit',
-            onPressed: () {
-              controller.resetPassValidationWithAPI();
-            },
-            isLoading: controller.isLoading.value,
-            isDisable: controller.isDisable.value),
+          hintText: 'Enter Confirm Password',
+          textInputAction: TextInputAction.done,
+          hintColor: AppColors.color7B758E,
+        ).paddingOnly(top: 15),
+        // CommonButtonNew(
+        //         buttonText: 'Submit',
+        //         onPressed: () {
+        //           controller.resetPassValidationWithAPI();
+        //         },
+        //         isLoading: controller.isLoading.value,
+        //         isDisable: controller.isDisable.value)
+        //     .paddingOnly(top: 20),
       ],
     );
   }
-
-// void _forgotPassValidationWithAPI() {
-//   if (controller.forgotPassController.value.text.isEmpty) {
-//     AppSnackBar.showGetXCustomSnackBar(message: 'Please enter login ID.');
-//   } else {
-//     controller.forgotPass(controller.forgotPassController.value.text);
-//   }
-// }
 }

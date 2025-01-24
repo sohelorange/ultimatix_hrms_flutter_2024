@@ -130,7 +130,7 @@ class DashController extends GetxController {
     todayDayDate.value = getTodayFormattedDate();
 
     currentMonthYear.value =
-        "${DateFormat('MMMM').format(DateTime.now())} ${DateTime.now().year} Attendance";
+        "My Attendance - Since ${DateFormat('MMMM').format(DateTime.now())} ${DateTime.now().year}";
   }
 
   @override

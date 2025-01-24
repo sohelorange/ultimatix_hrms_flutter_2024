@@ -121,6 +121,8 @@ class AppImages {
   static const String icarrowup = 'assets/icon/ic_arrowup.png';
 
   //region dashboard icon
+  static const String dashFillSettingIcon =
+      'assets/applicationIcon/dashboard/dash_fill_setting_icon.svg';
   static const String dashFillHomeIcon =
       'assets/applicationIcon/dashboard/dash_fill_home_icon.svg';
   static const String dashFillExploreIcon =
@@ -129,6 +131,8 @@ class AppImages {
       'assets/applicationIcon/dashboard/dash_fill_attendance_icon.svg';
   static const String dashFillLeaveIcon =
       'assets/applicationIcon/dashboard/dash_fill_leave_icon.svg';
+  static const String dashUnFillSettingIcon =
+      'assets/applicationIcon/dashboard/dash_un_fill_setting_icon.svg';
   static const String dashUnFillHomeIcon =
       'assets/applicationIcon/dashboard/dash_un_fill_home_icon.svg';
   static const String dashUnFillExploreIcon =
@@ -337,6 +341,7 @@ class AppImages {
   static const String svgShift = "assets/images/svg_shift_time.svg";
 
   //static const String svgUserLoc = "assets/images/svg_user_loc.svg";
+  static const String svgMenu = "assets/images/ic_bottom_menu.svg";
   static const String svgAvatar = "assets/images/ic_avatar_logo.svg";
   static const String svgCamera = 'assets/icon/clockInOut/svg_camera.svg';
   static const String svgTime = 'assets/icon/clockInOut/svg_time.svg';

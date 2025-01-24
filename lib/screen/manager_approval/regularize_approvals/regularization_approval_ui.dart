@@ -503,7 +503,8 @@ class RegularizationApprovalUi extends GetView<RegularizeApprovalController> {
                               borderRadius: BorderRadius.circular(10.0),
                             ))),
                         onPressed: () {
-                          controller.toCallApi("A");
+                          /*controller.toCallApi("A");*/
+                          controller.checkValidation("A");
                           /*showDialog(context: context, builder: (context) {
                                 return _showDialog(context,"Approved Successfully","Attendance regularization approvedsuccessfully");
                               },);*/
@@ -521,7 +522,9 @@ class RegularizationApprovalUi extends GetView<RegularizeApprovalController> {
                     ),
                     InkWell(
                       onTap: () {
-                        controller.toCallApi("R");
+                        /*controller.toCallApi("R");*/
+                        controller.checkValidation("R");
+
                         /*Get.back();*/
                       },
                       child: CommonText(

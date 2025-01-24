@@ -5,9 +5,11 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../../../api/dio_client.dart';
 import '../../../api/model/GetAttendanceApprovalRegularizeModel.dart';
+import '../../../app/app_colors.dart';
 import '../../../app/app_snack_bar.dart';
 import '../../../app/app_url.dart';
 import '../../../utility/network.dart';
@@ -30,7 +32,7 @@ class RegularizeApprovalController extends GetxController{
   RxBool isCancelLateIn = true.obs;
   RxBool isCancelEarlyOut = true.obs;
 
-  RxInt selectedValue = 0.obs;
+  RxInt selectedValue = 3.obs;
 
   TextEditingController textCommentController = TextEditingController();
   RxBool isLoading = true.obs;
@@ -57,7 +59,7 @@ class RegularizeApprovalController extends GetxController{
     receivePort.listen((message) {
       if(message!=null){
         attendanceApprovalListData.value = GetAttendanceApprovalRegularizeModel.fromJson(message);
-        selectedValue.value = getSelectedRadio();
+        /*selectedValue.value = getSelectedRadio();*/
         isCancelEarlyOut.value = attendanceApprovalListData.value.data?.elementAt(0).isCancelEarlyOut==0 ? true : false;
         isCancelLateIn.value = attendanceApprovalListData.value.data?.elementAt(0).isCancelLateIn==0 ? true : false;
         isLoading.value = false;
@@ -93,6 +95,16 @@ class RegularizeApprovalController extends GetxController{
     }
   }
 
+  void checkValidation(String appStatus) {
+    if (appStatus == "R" && textCommentController.text.trim().isEmpty) {
+      AppSnackBar.showGetXCustomSnackBar(message: "Please add Superior Comment");
+    } else if (selectedValue.value == 3) {
+      AppSnackBar.showGetXCustomSnackBar(message: "Please select Full Day, Half Day or Second Half");
+    } else {
+      toCallApi(appStatus);
+    }
+  }
+
   void toCallApi(String appStatus) async{
     log("This Function is start");
     isLoading.value = true;
@@ -125,9 +137,16 @@ class RegularizeApprovalController extends GetxController{
           log("The result of the api is:$value");
           var response = value;
           String data = response["data"] ?? "";
+          RegExp regExp = RegExp(r'\b(True|False)\b', caseSensitive: false);
+          var match = regExp.firstMatch(data);
           String result = data.split('#').first;
-          AppSnackBar.showGetXCustomSnackBar(message: result);
+          String label = result.replaceAll(RegExp(r'[^a-zA-Z\s]'), '');
           Get.back();
+          if (match != null) {
+            AppSnackBar.showGetXCustomSnackBar(message: label,backgroundColor: match.group(0)?.toLowerCase()=="true" ? AppColors.colorGreen : AppColors.colorRed);
+          }else {
+            AppSnackBar.showGetXCustomSnackBar(message: label);
+          }
           isLoading.value = false;
         } else{
           log("The result is getting null");
@@ -143,8 +162,10 @@ class RegularizeApprovalController extends GetxController{
       return 0;
     }else if(attendanceApprovalListData.value.data?.elementAt(0).halfFullDay?.trim().toString()=="Half Day"){
       return 1;
-    }else{
+    }else if(attendanceApprovalListData.value.data?.elementAt(0).halfFullDay?.trim().toString()=="Second Half"){
       return 2;
+    }else{
+      return 3;
     }
   }
 

@@ -485,4 +485,13 @@ class AppImages {
   static const String approvalCalendarIcon =
       'assets/applicationIcon/approval/approval_calendar_icon.svg';
 //end region
+
+
+  //Clocking new icon
+  static const String backBtnSvg = "assets/icon/clockInOut/new/svg_back_btn_icon.svg";
+  static const String svgClockNew = "assets/icon/clockInOut/new/clock_icon_dropdown.svg";
+  static const String svgClockLocation = "assets/icon/clockInOut/new/clock_location_svg.svg";
+  static const String svgClockCamera = "assets/icon/clockInOut/new/clock_camera_svg.svg";
+  static const String svgClockInputReason = "assets/icon/clockInOut/new/clock_input_reason_svg.svg";
+  static const String pngClockReason = "assets/icon/clockInOut/new/clock_reason_png.png";
 }

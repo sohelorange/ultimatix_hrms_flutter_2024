@@ -1,16 +1,17 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:ultimatix_hrms_flutter/screen/clockInOut/clock_in_out_controller.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/dash_board_controller.dart';
 import 'package:ultimatix_hrms_flutter/utility/preference_utils.dart';
+import 'package:ultimatix_hrms_flutter/widget/new/common_app_bar_two.dart';
+import 'package:ultimatix_hrms_flutter/widget/new/common_button_new.dart';
 import '../../app/app_colors.dart';
 import '../../app/app_font_weight.dart';
 import '../../app/app_images.dart';
 import '../../utility/utils.dart';
-import '../../widget/common_app_bar.dart';
 import '../../widget/common_app_image.dart';
-import '../../widget/common_container.dart';
 import '../../widget/common_text.dart';
 
 class ClockInOutUi extends GetView<ClockInOutController> {
@@ -27,10 +28,10 @@ class ClockInOutUi extends GetView<ClockInOutController> {
           return;
         },
         child: Scaffold(
-          appBar: const CommonAppBar(title: 'Clocking'),
-          body: CommonContainer(
-            child: Obx(() => _buildClockInOutView(context)),
+          appBar: const CommonAppBarTwo(
+            title: "Clocking",
           ),
+          body: Obx(() => _buildClockInOutView(context)),
         ),
       ),
     );
@@ -39,37 +40,59 @@ class ClockInOutUi extends GetView<ClockInOutController> {
   Widget _buildClockInOutView(BuildContext context) {
     return Stack(
       children: [
-        controller.isLoading.isTrue ? const Center(child: CircularProgressIndicator())
-        : Container(
-          width: Utils.getScreenWidth(context: context),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: _responsiveHeight(context, 0.05)),
-                _buildProfileImage(context),
-                SizedBox(height: _responsiveHeight(context, 0.02)),
-                _buildTitle(context, 'Select your working mode'),
-                SizedBox(height: _responsiveHeight(context, 0.02)),
-                _buildDropdownWidget(context),
-                SizedBox(height: _responsiveHeight(context, 0.02)),
-                controller.defaultValue.value=='Other' ? _buildInputText(context) : Container(),
-                _buildCardContainer(context, controller.userLocAddress.value),
-                SizedBox(height: _responsiveHeight(context, 0.02)),
-                _buildWorkHourWidget(context),
-                SizedBox(height: _responsiveHeight(context, 0.02)),
-                _buildCheckInOutButton(context),
-                SizedBox(height: _responsiveHeight(context, 0.02)),
-                _buildBottomWidgets(context),
-                const SizedBox(height: 20),
-              ],
-            ),
-          ),
-        ).marginOnly(top: 2),
+        controller.isLoading.isTrue
+            ? const Center(child: CircularProgressIndicator())
+            : Container(
+                width: Utils.getScreenWidth(context: context),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: _responsiveHeight(context, 0.04)),
+                      Container(
+                        width: _responsiveHeight(context, 0.9),
+                        padding: const EdgeInsets.all(15),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: AppColors.colorLightPurple3,
+                        ),
+                        child: Column(
+                          children: [
+                            SizedBox(height: _responsiveHeight(context, 0.05)),
+                            _buildProfileImage(context),
+                            SizedBox(height: _responsiveHeight(context, 0.02)),
+                            _buildDropdownWidget(context),
+                            SizedBox(height: _responsiveHeight(context, 0.02)),
+                            controller.defaultValue.value == 'Other'
+                                ? _buildInputText(context)
+                                : Container(),
+                            _buildCardContainer(
+                                context, controller.userLocAddress.value),
+                            SizedBox(height: _responsiveHeight(context, 0.02)),
+                            CommonButtonNew(
+                                buttonText: controller.isCheckIn.value
+                                    ? "Check Out"
+                                    : "Check In",
+                                onPressed: () {
+                                  controller.checkWorkTypeValidation(context);
+                                },
+                                isLoading: false),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: _responsiveHeight(context, 0.02)),
+                      _buildLastClockingContainer(context),
+                      SizedBox(height: _responsiveHeight(context, 0.02)),
+                      _getLastClockingLocation(context),
+                      const SizedBox(height: 20),
+                    ],
+                  ),
+                ),
+              ).marginOnly(top: 2),
       ],
     );
   }
@@ -85,15 +108,15 @@ class ClockInOutUi extends GetView<ClockInOutController> {
         height: _responsiveHeight(context, 0.3),
         child: Card(
           elevation: 0,
-          color: AppColors.colorLightPurple1,
-          shape: CircleBorder(
+          color: AppColors.colorWhite,
+          shape: const CircleBorder(
             side: BorderSide(
-              color: AppColors.colorLightPurple2.withAlpha((0.4 * 255).toInt()),
+              color: AppColors.color303E9F,
               width: 2,
             ),
           ),
           child: controller.selectedImage.value == null
-              ? SvgPicture.asset(AppImages.svgCamera, fit: BoxFit.fill)
+              ? SvgPicture.asset(AppImages.svgClockCamera, fit: BoxFit.fill)
                   .paddingAll(37)
               : CommonAppImage(
                   imagePath: controller.selectedImage.value!.path,
@@ -128,54 +151,63 @@ class ClockInOutUi extends GetView<ClockInOutController> {
           borderRadius: BorderRadius.all(Radius.circular(8.0)),
         ),
       ),
-      child: controller.items.isEmpty
-          ? Container() :
-      DropdownButton<String>(
-        value: controller.defaultValue.value.isNotEmpty
-            ? controller.defaultValue.value
-            : null,
-        hint: const Text('Select an option'),
-        isExpanded: true,
-        underline: const SizedBox(),
-        items: controller.items.map((String item) {
-          return DropdownMenuItem(
-            value: item,
-            child: CommonText(
-              text: item,
-              fontSize: FontSize.responsiveFontSize(context, 14),
-              color: AppColors.color1C1F37,
-              fontWeight: AppFontWeight.w400,
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: controller.items.isEmpty == true
+          ? Container()
+          : DropdownButtonHideUnderline(
+              child: DropdownButton2(
+                isExpanded: true,
+                hint: Row(
+                  children: [
+                    SvgPicture.asset(AppImages.svgClockNew),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    const Expanded(child: Text("Select Clocking Type",overflow: TextOverflow.ellipsis,))
+                  ],
+                ),
+                items: controller.menuItems,
+                dropdownStyleData: DropdownStyleData(
+                    offset: const Offset(-20, 0),
+                    maxHeight: 200,
+                    width: MediaQuery.of(context).size.width * 0.82,
+                    useSafeArea: true),
+                iconStyleData: const IconStyleData(
+                  openMenuIcon: Icon(Icons.arrow_drop_up),
+                ),
+                value: controller.defaultValue.value.isNotEmpty
+                    ? controller.defaultValue.value
+                    : null,
+                onChanged: (String? newValue) {
+                  if (newValue != null) {
+                    controller.defaultValue.value = newValue;
+                  }
+                },
+              ),
             ),
-          );
-        }).toList(),
-        onChanged: (String? newValue) {
-          if (newValue != null) {
-            controller.defaultValue.value = newValue;
-          }
-        },
-      ),
     );
   }
 
   Widget _buildCardContainer(BuildContext context, String text) {
-    return Card(
-      elevation: 4,
-      color: AppColors.colorLightPurple1,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.9,
-        padding: EdgeInsets.zero,
-        child: CommonText(
-          text: text,
-          fontSize: FontSize.responsiveFontSize(context, 12),
-          maxLine: 3,
-          color: AppColors.color1C1F37,
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          fontWeight: AppFontWeight.w400,
-        ),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(6), color: AppColors.colorWhite),
+      width: MediaQuery.of(context).size.width * 0.9,
+      child: Row(
+        children: [
+          SvgPicture.asset(AppImages.svgClockLocation),
+          Expanded(
+            flex: 1,
+            child: CommonText(
+              text: text,
+              fontSize: FontSize.responsiveFontSize(context, 12),
+              maxLine: 3,
+              color: AppColors.color1C1F37,
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              fontWeight: AppFontWeight.w400,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -265,43 +297,96 @@ class ClockInOutUi extends GetView<ClockInOutController> {
     );
   }
 
+  _getLastClockingLocation(BuildContext context){
+    return Container(
+        padding: const EdgeInsets.all(16),
+        height: _responsiveHeight(context, 0.3),
+        width: MediaQuery.of(context).size.width * 0.9,
+        decoration: BoxDecoration(
+          color: AppColors.colorLightPurple3,
+          borderRadius: BorderRadius.circular(10),
+        ),
+      child: _buildCardContainer(context, controller.userLocAddress.value),
+    );
+  }
+
+  _buildLastClockingContainer(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      height: _responsiveHeight(context, 0.3),
+      width: MediaQuery.of(context).size.width * 0.9,
+      decoration: BoxDecoration(
+        color: AppColors.colorLightPurple3,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text("Last Clocking",style: TextStyle(color: AppColors.color6D24A1,fontSize: 16),),
+          SizedBox(height: _responsiveHeight(context, 0.02)),
+          Expanded(
+            child: Container(
+                width: MediaQuery.of(context).size.width * 0.9,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(6)
+                ),
+                child: Text("Mon, Jan 13,2025",style: TextStyle(color: AppColors.color2F2F31,fontWeight: FontWeight.w500,fontSize: 14),)),
+          ),
+        ],
+      ),
+    );
+  }
+
   _buildInputText(BuildContext context) {
     return Column(
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width > 600 ? 500 : MediaQuery.of(context).size.width - 32,
-            padding: const EdgeInsets.only(
-                left: 15, right: 15),
-            child: TextField(
-              controller: controller.textDescriptionController,
-              decoration: InputDecoration(
-                hintText: "Enter Reason",
-                hintStyle: const TextStyle(
-                    color: AppColors.color1C1F37),
-                border: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                      color: AppColors.color6B6D7A
-                          .withOpacity(
-                          0.12)), // Default grey underline
-                ),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                      color: AppColors.color6B6D7A
-                          .withOpacity(
-                          0.12)), // Grey when enabled
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                      color: AppColors.color6B6D7A
-                          .withOpacity(
-                          0.12)), // Blue when focused
-                ),
+      children: [
+        Container(
+          width: MediaQuery.of(context).size.width > 600
+              ? 500
+              : MediaQuery.of(context).size.width - 32,
+          padding: const EdgeInsets.only(left: 10, right: 15),
+          decoration: const ShapeDecoration(
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                  width: 1.0, style: BorderStyle.solid, color: Colors.grey),
+              borderRadius: BorderRadius.all(Radius.circular(8.0)),
+            ),
+          ),
+          child: TextField(
+            controller: controller.textDescriptionController,
+            decoration: InputDecoration(
+              hintText: "Enter Reason",
+              prefixIcon: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: SvgPicture.asset(
+                    AppImages.svgClockInputReason,
+                  )
+              ),prefixIconConstraints: const BoxConstraints(maxHeight: 30, maxWidth: 30),
+              hintStyle: const TextStyle(color: AppColors.color1C1F37),
+              border: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: AppColors.color6B6D7A
+                        .withOpacity(0.12)), // Default grey underline
+              ),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: AppColors.color6B6D7A
+                        .withOpacity(0.12)), // Grey when enabled
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: AppColors.color6B6D7A
+                        .withOpacity(0.12)), // Blue when focused
               ),
             ),
           ),
-          SizedBox(height: _responsiveHeight(context, 0.02)),
-        ],
-      );
+        ),
+        SizedBox(height: _responsiveHeight(context, 0.02)),
+      ],
+    );
   }
 }
 

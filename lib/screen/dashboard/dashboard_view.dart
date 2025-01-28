@@ -1,14 +1,13 @@
-import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/app/app_date_format.dart';
 import 'package:ultimatix_hrms_flutter/app/app_routes.dart';
-import 'package:ultimatix_hrms_flutter/app/app_time_format.dart';
+import 'package:ultimatix_hrms_flutter/app/app_snack_bar.dart';
 import 'package:ultimatix_hrms_flutter/utility/utils.dart';
-import 'package:ultimatix_hrms_flutter/widget/common_button.dart';
-import 'package:ultimatix_hrms_flutter/widget/common_container.dart';
 import 'package:ultimatix_hrms_flutter/widget/new/common_app_bar_latest.dart';
 import 'package:ultimatix_hrms_flutter/widget/new/common_app_bar_new.dart';
+import 'package:ultimatix_hrms_flutter/widget/new/common_app_drawer.dart';
+import 'package:ultimatix_hrms_flutter/widget/new/common_explore_grid_view_new.dart';
 import 'package:ultimatix_hrms_flutter/widget/new/common_grid_view_new.dart';
 
 import '../../app/app_colors.dart';
@@ -18,11 +17,8 @@ import '../../app/app_status_bar.dart';
 import '../../utility/constants.dart';
 import '../../widget/common_app_image.dart';
 import '../../widget/common_app_image_svg.dart';
-import '../../widget/common_banner.dart';
 import '../../widget/common_bottom_bar.dart';
-import '../../widget/common_grid_view.dart';
 import '../../widget/common_text.dart';
-import '../../widget/dash_app_bar.dart';
 import 'dash_board_controller.dart';
 
 class DashboardView extends GetView<DashController> {
@@ -38,9 +34,9 @@ class DashboardView extends GetView<DashController> {
         child: Scaffold(
       appBar: CommonNewAppBar(
         title: "Dashboard",
-        leadingIcon: Icons.menu, // Menu icon
+        //leadingIconSvg: Icons.menu,
+        leadingIconSvg: AppImages.ic_menu, // Menu icon
         onLeadingIconTap: () {
-          // Action for menu icon, e.g., open drawer
           Scaffold.of(context).openDrawer();
         },
         trailingWidgets: [
@@ -74,7 +70,7 @@ class DashboardView extends GetView<DashController> {
               // Adjust radius
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
+                  color: Colors.grey.withValues(alpha: 0.5),
                   spreadRadius: 0,
                   blurRadius: 0,
                   offset: const Offset(0, 0), // Shadow position
@@ -99,86 +95,50 @@ class DashboardView extends GetView<DashController> {
                     ),
             ),
           ),
-
-          // IconButton(
-          //   icon: Icon(Icons.notifications, color: Colors.white),
-          //   onPressed: () {
-          //     // Action for notifications icon
-          //     print("Notifications tapped");
-          //   },
-          // ),
-          // IconButton(
-          //   icon: Icon(Icons.notifications, color: Colors.white),
-          //   onPressed: () {
-          //     // Action for notifications icon
-          //     print("Notifications tapped");
-          //   },
-          // ),
-          // IconButton(
-          //   icon: Icon(Icons.notifications, color: Colors.white),
-          //   onPressed: () {
-          //     // Action for notifications icon
-          //     print("Notifications tapped");
-          //   },
-          // ),
         ],
       ),
-
-      // appBar: PreferredSize(
-      //   preferredSize: const Size.fromHeight(90),
-      //   child: CommonLatestAppBar(
-      //     title: "Dashboard",
-      //     leadingIcon: Icons.menu, // Menu icon
-      //     onLeadingIconTap: () {
-      //       // Action for menu icon, open drawer
-      //       Scaffold.of(context).openDrawer();
-      //     },
-      //     trailingWidgets: [
-      //       IconButton(
-      //         icon: const Icon(Icons.notifications, color: Colors.white),
-      //         onPressed: () {
-      //           // Action for notifications icon
-      //           print("Notifications tapped");
-      //         },
-      //       ),
-      //       IconButton(
-      //         icon: const Icon(Icons.settings, color: Colors.white),
-      //         onPressed: () {
-      //           // Action for settings icon
-      //           print("Settings tapped");
-      //         },
-      //       ),
-      //     ],
-      //   ),
-      // ),
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: AppColors.color303E9F,
-              ),
-              child: Text(
-                'Drawer Header',
-                style: TextStyle(fontSize: 24, color: Colors.white),
-              ),
-            ),
-            ListTile(
-              title: const Text('Item 1'),
-              onTap: () {
-                // Close the drawer and perform an action
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Item 2'),
-              onTap: () {
-                // Close the drawer and perform an action
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
+      //drawer: const AppDrawer(),
+      drawer: CommonAppDrawer(
+        items: const [
+          CommonDrawerItem(
+            icon: AppImages.drawerApprovalsIcon, // Your icon file path
+            text: 'Approval',
+          ),
+          CommonDrawerItem(
+            icon: AppImages.drawerSalaryIcon, // Your icon file path
+            text: 'Salary',
+          ),
+          CommonDrawerItem(
+            icon: AppImages.drawerLiveTrackingIcon, // Your icon file path
+            text: 'Live Tracking',
+          ),
+          CommonDrawerItem(
+            icon: AppImages.drawerHolidayIcon, // Your icon file path
+            text: 'Holiday',
+          ),
+          CommonDrawerItem(
+            icon: AppImages.drawerPolicyIcon, // Your icon file path
+            text: 'Policy & Document',
+          ),
+          CommonDrawerItem(
+            icon: AppImages.drawerSurveyIcon, // Your icon file path
+            text: 'Survey',
+          ),
+          CommonDrawerItem(
+            icon: AppImages.drawerSettingIcon, // Your icon file path
+            text: 'Setting',
+          ),
+          CommonDrawerItem(
+            icon: AppImages.dashLogoutIcon, // Your icon file path
+            text: 'Logout',
+          ),
+        ],
+        onTabSelected: (index) {
+          controller.onDrawerTabSelected(index);
+        },
+        profileValueNotifier: controller.profileValueNotifier,
+        nameValueNotifier: controller.nameValueNotifier,
+        designationValueNotifier: controller.designationValueNotifier,
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 20.0, right: 20.0),
@@ -201,14 +161,12 @@ class DashboardView extends GetView<DashController> {
                           const Icon(Icons.notifications, color: Colors.white),
                       onPressed: () {
                         // Action for notifications icon
-                        print("Notifications tapped");
                       },
                     ),
                     IconButton(
                       icon: const Icon(Icons.settings, color: Colors.white),
                       onPressed: () {
                         // Action for settings icon
-                        print("Settings tapped");
                       },
                     ),
                   ],
@@ -221,7 +179,39 @@ class DashboardView extends GetView<DashController> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+            ),
+            isScrollControlled: true, // Allow full-screen behavior
+            builder: (BuildContext context) {
+              return DraggableScrollableSheet(
+                initialChildSize: 0.65, // Full height on opening
+                //maxChildSize: 0.8, // Full height allowed
+                //minChildSize: 0.5, // Minimum height
+                expand: false,
+                builder:
+                    (BuildContext context, ScrollController scrollController) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 20),
+                    child: CommonExploreGridViewNew(
+                      gridItems: controller.exploreItems,
+                      selectedIndex: controller.selectedExploreIndex.value,
+                      onItemTap: (index) {
+                        Get.back();
+                        controller.selectedExploreIndex.value = index;
+                        controller.handleMenuNavigation(index);
+                      },
+                    ),
+                  );
+                },
+              );
+            },
+          );
+        },
         shape: const CircleBorder(),
         child: const CommonAppImageSvg(
           imagePath: AppImages.svgMenu, // Default SVG image
@@ -256,29 +246,29 @@ class DashboardView extends GetView<DashController> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildProfileInfo(),
-            //Obx(() => _buildLocationInfo()),
+            _profileInfoUI(),
             const SizedBox(
-              height: 15,
+              height: 10,
             ),
-            _buildAttendanceSummary(context),
-            //Obx(() => _buildAttendanceSummary()),
+            attendanceInfoUI(context),
             const SizedBox(
-              height: 15,
+              height: 10,
             ),
-            Visibility(visible: false, child: _buildAttendanceRegulation()),
-            const Visibility(
-              visible: false,
-              child: SizedBox(
-                height: 15,
-              ),
+            _leaveApprovalInfoUI(),
+            const SizedBox(
+              height: 5,
             ),
-            Visibility(visible: false, child: _buildMyKPA()),
-            const Visibility(
-              visible: false,
-              child: SizedBox(
-                height: 15,
-              ),
+            _regularizationApprovalInfoUI(),
+            const SizedBox(
+              height: 5,
+            ),
+            _cancellationApprovalInfoUI(),
+            const SizedBox(
+              height: 10,
+            ),
+            _locationInfoUI(),
+            const SizedBox(
+              height: 10,
             ),
           ],
         ),
@@ -286,7 +276,7 @@ class DashboardView extends GetView<DashController> {
     );
   }
 
-  Widget _buildProfileInfo() {
+  Widget _profileInfoUI() {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
@@ -367,11 +357,7 @@ class DashboardView extends GetView<DashController> {
                   const SizedBox(height: 2.5),
                   GestureDetector(
                     onTap: () {
-                      if (controller.isGeofenceEnable == 1) {
-                        Get.toNamed(AppRoutes.geofenceRoute);
-                      } else {
-                        Get.toNamed(AppRoutes.clockInRoute);
-                      }
+                      Get.toNamed(AppRoutes.profileRoute);
                     },
                     child: Container(
                       height: 40,
@@ -410,7 +396,8 @@ class DashboardView extends GetView<DashController> {
             children: [
               CommonText(
                 //text: controller.workingHours.value,
-                text: AppTimePicker.currentTime12(),
+                //text: AppTimePicker.currentTime12(),
+                text: controller.currentTime.value,
                 color: AppColors.color6D24A1,
                 fontSize: 18,
                 fontWeight: AppFontWeight.w600,
@@ -428,120 +415,12 @@ class DashboardView extends GetView<DashController> {
     );
   }
 
-  Widget _buildViewMore(BuildContext context) {
-    // Helper function to determine if "View More" should be shown
-    bool shouldShowViewMore(String text, TextStyle style, double maxWidth) {
-      final TextPainter textPainter = TextPainter(
-        text: TextSpan(text: text, style: style),
-        maxLines: 2,
-        textDirection: TextDirection.ltr,
-      )..layout(maxWidth: maxWidth);
-
-      return textPainter.didExceedMaxLines;
-    }
-
-    // Get the maxWidth for the text
-    final double maxWidth = MediaQuery.of(context).size.width -
-        32; // Adjust for padding or other constraints
-
-    // TextStyle used for the `address` text
-    final TextStyle textStyle = TextStyle(
-      fontSize: 14,
-      fontWeight: AppFontWeight.w400,
-      color: AppColors.colorDarkBlue,
-    );
-
-    // Check if the "View More" button should be shown
-    bool showViewMore =
-        shouldShowViewMore(controller.address.value, textStyle, maxWidth);
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          constraints: BoxConstraints(
-            maxHeight: controller.isViewMore.value ? 50 : 50,
-          ),
-          child: SingleChildScrollView(
-            physics: controller.isViewMore.value
-                ? null
-                : const NeverScrollableScrollPhysics(),
-            child: CommonText(
-              maxLine: controller.isViewMore.value ? null : 2,
-              overflow: controller.isViewMore.value
-                  ? TextOverflow.visible
-                  : TextOverflow.ellipsis,
-              text: controller.address.value,
-              color: AppColors.colorDarkBlue,
-              fontSize: 14,
-              fontWeight: AppFontWeight.w400,
-            ),
-          ),
-        ),
-        if (showViewMore)
-          Align(
-            alignment: Alignment.bottomRight,
-            child: GestureDetector(
-              onTap: () {
-                controller.isViewMore.value = !controller.isViewMore.value;
-              },
-              child: CommonText(
-                textAlign: TextAlign.center,
-                text: controller.isViewMore.value ? 'View Less' : 'View More',
-                color: AppColors.purpleSwatch,
-                fontSize: 12,
-                fontWeight: AppFontWeight.w500,
-              ).paddingOnly(top: 10, bottom: 10),
-            ),
-          ),
-      ],
-    );
-  }
-
-  Widget _buildUpcomingEvent() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            CommonText(
-              textAlign: TextAlign.center,
-              text: 'Announcement',
-              color: AppColors.colorDarkBlue,
-              fontSize: 16,
-              fontWeight: AppFontWeight.w500,
-            ),
-            Visibility(
-              visible: false,
-              child: GestureDetector(
-                onTap: () {},
-                child: CommonText(
-                  textAlign: TextAlign.center,
-                  text: 'View All',
-                  color: AppColors.purpleSwatch,
-                  fontSize: 12,
-                  fontWeight: AppFontWeight.w500,
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 10),
-        CommonCarouselBanner(
-          images: controller.bannerListData,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildAttendanceSummary(BuildContext context) {
+  Widget attendanceInfoUI(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           decoration: BoxDecoration(
             gradient: const LinearGradient(
               colors: [
@@ -576,11 +455,11 @@ class DashboardView extends GetView<DashController> {
         const SizedBox(height: 10),
         controller.isLoading.value && controller.attendanceStatusData.isEmpty
             ? SizedBox(
-                height: Utils.getScreenHeight(context: context) / 3.25,
+                height: Utils.getScreenHeight(context: context) / 6,
                 child: Center(child: Utils.commonCircularProgress()))
             : controller.attendanceStatusData.isEmpty
                 ? SizedBox(
-                    height: Utils.getScreenHeight(context: context) / 3.25,
+                    height: Utils.getScreenHeight(context: context) / 6,
                     child: Center(
                       child: CommonText(
                         text: Constants.noDataMsg,
@@ -597,150 +476,232 @@ class DashboardView extends GetView<DashController> {
     );
   }
 
-  Widget _buildAttendanceRegulation() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+  Widget _leaveApprovalInfoUI() {
+    return GestureDetector(
+      onTap: () {
+        if (controller.leaveApprovalCount.value == '0') {
+          AppSnackBar.showGetXCustomSnackBar(
+              message: 'No Leave Approval Request...');
+        } else {
+          Get.toNamed(AppRoutes.leaveManagerApprovalRoute);
+        }
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+        decoration: BoxDecoration(
+          color: AppColors.colorF1EBFB,
+          //color: AppColors.color8957DD.withValues(alpha: 0.1),
+          borderRadius: BorderRadius.circular(9),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            CommonText(
+              text: 'Leave Approval',
+              color: AppColors.color8957DD,
+              fontSize: 14,
+              fontWeight: AppFontWeight.w500,
+            ),
+            CommonText(
+              text: controller.leaveApprovalCount.value,
+              color: AppColors.color2F2F31,
+              fontSize: 14,
+              fontWeight: AppFontWeight.w500,
+            ),
+          ],
+        ), // Your widget inside the Container
+      ),
+    );
+  }
+
+  Widget _regularizationApprovalInfoUI() {
+    return GestureDetector(
+      onTap: () {
+        if (controller.attendanceCount.value == '0') {
+          AppSnackBar.showGetXCustomSnackBar(
+              message: 'No Regularization Approval Request...');
+        } else {
+          //Get.toNamed(AppRoutes.leaveManagerApprovalRoute);
+        }
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+        decoration: BoxDecoration(
+          color: AppColors.colorEEFAFE,
+          //color: AppColors.color0085FF.withValues(alpha: 0.1),
+          borderRadius: BorderRadius.circular(9),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            CommonText(
+              text: 'Regularization Approval',
+              color: AppColors.color0085FF,
+              fontSize: 14,
+              fontWeight: AppFontWeight.w500,
+            ),
+            CommonText(
+              text: controller.attendanceCount.value,
+              color: AppColors.color2F2F31,
+              fontSize: 14,
+              fontWeight: AppFontWeight.w500,
+            ),
+          ],
+        ), // Your widget inside the Container
+      ),
+    );
+  }
+
+  Widget _cancellationApprovalInfoUI() {
+    return GestureDetector(
+      onTap: () {
+        if (controller.leaveCancelCount.value == '0') {
+          AppSnackBar.showGetXCustomSnackBar(
+              message: 'No Cancellation Approval Request...');
+        } else {
+          //Get.toNamed(AppRoutes.leaveManagerApprovalRoute);
+        }
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+        decoration: BoxDecoration(
+          //color: AppColors.color303E9F,
+          color: AppColors.color303E9F.withValues(alpha: 0.1),
+          borderRadius: BorderRadius.circular(9),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            CommonText(
+              text: 'Cancellation Approval',
+              color: AppColors.color303E9F,
+              fontSize: 14,
+              fontWeight: AppFontWeight.w500,
+            ),
+            CommonText(
+              text: controller.leaveCancelCount.value,
+              color: AppColors.color2F2F31,
+              fontSize: 14,
+              fontWeight: AppFontWeight.w500,
+            ),
+          ],
+        ), // Your widget inside the Container
+      ),
+    );
+  }
+
+  Widget _locationInfoUI() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: AppColors.colorF1EBFB,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CommonText(
-            textAlign: TextAlign.center,
-            text: 'Attendance Regulation',
-            color: AppColors.colorDarkBlue,
-            fontSize: 16,
-            fontWeight: AppFontWeight.w500,
+            //text: controller.workingHours.value,
+            text: 'Last Clocking',
+            color: AppColors.color6D24A1,
+            fontSize: 18,
+            fontWeight: AppFontWeight.w600,
           ),
-          const SizedBox(height: 10),
+          const SizedBox(
+            height: 10,
+          ),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             decoration: BoxDecoration(
-              color: AppColors.lightBackground,
-              // Gray color for unselected
               borderRadius: BorderRadius.circular(10),
-              // boxShadow: const [
-              //   BoxShadow(
-              //     color: Color(0X1C1F370D),
-              //     blurRadius: 4.0,
-              //     spreadRadius: 1.0,
-              //     offset: Offset(0, 0),
-              //   ),
-              // ],
+              color: AppColors.colorWhite,
             ),
             child: Row(
               children: [
                 Expanded(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    //crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      CommonText(
-                        textAlign: TextAlign.center,
-                        text: 'Target',
-                        color: AppColors.colorDarkBlue,
-                        fontSize: 16,
-                        fontWeight: AppFontWeight.w400,
+                      Row(
+                        //mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const CommonAppImageSvg(
+                            imagePath: AppImages.dashClockingIcon,
+                            height: 20,
+                            width: 20,
+                            fit: BoxFit
+                                .cover, // Ensures the image fills the space
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          CommonText(
+                            text: controller.lstClockingDate.value,
+                            color: AppColors.color2F2F31,
+                            fontSize: 14,
+                            fontWeight: AppFontWeight.w500,
+                          ),
+                          CommonText(
+                            text: '.',
+                            color: AppColors.color6D24A1,
+                            fontSize: 20,
+                            fontWeight: AppFontWeight.w900,
+                          ).marginOnly(left: 5, right: 5),
+                          CommonText(
+                            text: controller.lstClockingTime.value,
+                            color: AppColors.color2F2F31,
+                            fontSize: 14,
+                            fontWeight: AppFontWeight.w500,
+                          )
+                        ],
                       ),
                       const SizedBox(
                         height: 10,
                       ),
                       CommonText(
-                        textAlign: TextAlign.center,
-                        text: '5,00,000.00',
-                        color: AppColors.colorDarkGray,
-                        fontSize: 14,
-                        fontWeight: AppFontWeight.w500,
-                      ),
+                        maxLine: 3,
+                        overflow: TextOverflow.ellipsis,
+                        text: controller.address.value,
+                        color: AppColors.color7B758E,
+                        fontSize: 12,
+                        fontWeight: AppFontWeight.w400,
+                      )
                     ],
                   ),
                 ),
-                SizedBox(
-                  width: 125,
-                  height: 40,
-                  child: CommonButton(
-                      buttonText: 'Regularize',
-                      onPressed: () {},
-                      isLoading: false),
-                )
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMyKPA() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CommonText(
-            textAlign: TextAlign.center,
-            text: 'My KAP',
-            color: AppColors.colorDarkBlue,
-            fontSize: 16,
-            fontWeight: AppFontWeight.w500,
-          ),
-          const SizedBox(height: 10),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            decoration: BoxDecoration(
-              color: AppColors.lightBackground,
-              // Gray color for unselected
-              borderRadius: BorderRadius.circular(10),
-              // boxShadow: const [
-              //   BoxShadow(
-              //     color: Color(0X1C1F370D),
-              //     blurRadius: 4.0,
-              //     spreadRadius: 1.0,
-              //     offset: Offset(0, 0),
-              //   ),
-              // ],
-            ),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CommonText(
-                      textAlign: TextAlign.center,
-                      text: 'Target',
-                      color: AppColors.colorDarkBlue,
-                      fontSize: 16,
-                      fontWeight: AppFontWeight.w400,
-                    ),
-                    CommonText(
-                      textAlign: TextAlign.center,
-                      text: '5,00,000.00',
-                      color: AppColors.colorDarkGray,
-                      fontSize: 14,
-                      fontWeight: AppFontWeight.w500,
-                    ),
-                  ],
-                ),
                 const SizedBox(
-                  height: 10,
+                  width: 10,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CommonText(
-                      textAlign: TextAlign.center,
-                      text: 'Actual',
-                      color: AppColors.colorDarkBlue,
-                      fontSize: 16,
-                      fontWeight: AppFontWeight.w400,
+                Container(
+                  height: 80,
+                  width: 40,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [
+                        AppColors.color303E9F, // Center and Right color
+                        AppColors.color7A1FA2, // Left color
+                      ],
+                      stops: [0.25, 0.85],
+                      tileMode: TileMode.mirror,
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                     ),
-                    CommonText(
-                      textAlign: TextAlign.center,
-                      text: '2,00,000.00',
-                      color: AppColors.colorDarkGray,
-                      fontSize: 14,
-                      fontWeight: AppFontWeight.w500,
+                    borderRadius: BorderRadius.circular(6.0),
+                  ),
+                  child: const Center(
+                    child: CommonAppImageSvg(
+                      imagePath: AppImages.settingsRightArrowIcon,
+                      color: AppColors.colorWhite,
+                      height: 14,
+                      width: 8,
+                      fit: BoxFit.cover, // Ensures the image fills the space
                     ),
-                  ],
-                ),
+                  ),
+                )
               ],
             ),
           )

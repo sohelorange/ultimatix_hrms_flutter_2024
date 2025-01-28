@@ -8,9 +8,7 @@ import '../../app/app_images.dart';
 class ExploreController extends GetxController {
   // Dynamic list of explore items (can be 5, 10, or any length)
 
-  int geofence_enable = 0;
-
-
+  int isGeofenceEnable = 0;
 
   final List<Map<String, dynamic>> exploreItems = [
     {'id': 1, 'icon': AppImages.exploreClockingIcon, 'name': 'Clocking'},
@@ -50,9 +48,7 @@ class ExploreController extends GetxController {
   void onInit() {
     super.onInit();
     Map<String, dynamic> loginData = PreferenceUtils.getLoginDetails();
-    geofence_enable = loginData['is_Geofence_enable'];
-    print("geofen--${geofence_enable}");
-
+    isGeofenceEnable = loginData['is_Geofence_enable'];
   }
 
   void handleNavigation(int index) {
@@ -61,20 +57,18 @@ class ExploreController extends GetxController {
 
     // Use 'id' to handle navigation dynamically
     switch (selectedItem['id']) {
-      case 1:// Clocking
-        if(geofence_enable == 1){
+      case 1: // Clocking
+        if (isGeofenceEnable == 1) {
           Get.toNamed(AppRoutes.geofenceRoute);
-          print("geo--${geofence_enable}");
         } else {
           Get.toNamed(AppRoutes.clockInRoute);
-          print("geo--${geofence_enable}");
         }
         break;
       case 2: // Leaves
         Get.toNamed(AppRoutes.leaveApplicationRoute);
         break;
       case 3: // Attendance
-      Get.toNamed(AppRoutes.attendanceMainRoute);
+        Get.toNamed(AppRoutes.attendanceMainRoute);
         break;
       case 4: // Change Request
         break;
@@ -102,5 +96,4 @@ class ExploreController extends GetxController {
             message: 'This feature is under development.');
     }
   }
-
 }

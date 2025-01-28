@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ultimatix_hrms_flutter/utility/utils.dart';
 
 import '../app/app_colors.dart';
-import 'common_app_image.dart';
 import 'common_app_image_svg.dart';
 import 'common_text.dart';
 

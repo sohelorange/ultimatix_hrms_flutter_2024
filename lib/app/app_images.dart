@@ -28,7 +28,8 @@ class AppImages {
   static const String icprofile = 'assets/images/ic_profile.png';
   static const String icclock = 'assets/images/ic_clock.png';
   static const String iclocation = 'assets/images/ic_location.png';
-  static const String icmenu = 'assets/images/ic_menu.png';
+  static const String ic_menu = 'assets/images/ic_menu.svg';
+  static const String icBack = 'assets/images/ic_back.svg';
   static const String backBtnImg = 'assets/images/back_image.png';
   static const String addLeaveImg = 'assets/images/add_leave_img.png';
   static const String notificationImg = 'assets/images/notification_img.png';
@@ -121,6 +122,8 @@ class AppImages {
   static const String icarrowup = 'assets/icon/ic_arrowup.png';
 
   //region dashboard icon
+  static const String dashClockingIcon =
+      'assets/applicationIcon/dashboard/dash_clocking_icon.svg';
   static const String dashFillSettingIcon =
       'assets/applicationIcon/dashboard/dash_fill_setting_icon.svg';
   static const String dashFillHomeIcon =
@@ -195,6 +198,10 @@ class AppImages {
       'assets/applicationIcon/explore/explore_claim_icon.svg';
   static const String exploreExitAppIcon =
       'assets/applicationIcon/explore/explore_exit_icon.svg';
+  static const String explorePhotoGalleryIcon =
+      'assets/applicationIcon/explore/explore_photo_gallery_icon.svg';
+  static const String exploreBirthdayIcon =
+      'assets/applicationIcon/explore/explore_birthday_icon.svg';
 
   //end region
 

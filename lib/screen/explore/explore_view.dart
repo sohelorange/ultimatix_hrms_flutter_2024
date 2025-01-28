@@ -14,38 +14,7 @@ class ExploreView extends GetView<ExploreController> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      //appBar: const CommonAppBar(title: 'Explore'),
-          appBar: CommonNewAppBar(
-            title: "Dashboard",
-            leadingIcon: Icons.arrow_back_ios, // Menu icon
-            onLeadingIconTap: () {
-              // Action for menu icon, e.g., open drawer
-              Get.back();
-            },
-            trailingWidgets: [
-              IconButton(
-                icon: Icon(Icons.notifications, color: Colors.white),
-                onPressed: () {
-                  // Action for notifications icon
-                  print("Notifications tapped");
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.notifications, color: Colors.white),
-                onPressed: () {
-                  // Action for notifications icon
-                  print("Notifications tapped");
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.notifications, color: Colors.white),
-                onPressed: () {
-                  // Action for notifications icon
-                  print("Notifications tapped");
-                },
-              ),
-            ],
-          ),
+      appBar: const CommonAppBar(title: 'Explore'),
       body: CommonContainer(
         child: CommonExploreGridView(
           gridItems: controller.exploreItems,

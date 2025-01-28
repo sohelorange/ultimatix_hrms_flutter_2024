@@ -18,7 +18,8 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     AppStatusBar.setStatusBarStyle(
-      statusBarColor: AppColors.colorAppBar,
+      //statusBarColor: AppColors.colorAppBar,
+      statusBarColor: AppColors.colorWhite,
       //statusBarIconBrightness: Brightness.dark,
       //statusBarBrightness: Brightness.light, // For iOS
     );

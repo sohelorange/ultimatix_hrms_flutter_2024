@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ultimatix_hrms_flutter/utility/utils.dart';
+import 'package:ultimatix_hrms_flutter/widget/common_app_image_svg.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_text.dart';
 import '../../app/app_colors.dart';
 
 class CommonNewAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final IconData leadingIcon;
+  final String leadingIconSvg;
   final VoidCallback? onLeadingIconTap;
   final List<Widget>? trailingWidgets;
 
   const CommonNewAppBar({
     super.key,
     required this.title,
-    required this.leadingIcon,
+    required this.leadingIconSvg,
     this.onLeadingIconTap,
     this.trailingWidgets,
   });
@@ -21,7 +23,6 @@ class CommonNewAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-      // Spacing above and below
       child: Container(
         height: preferredSize.height,
         width: Utils.getScreenWidth(context: context) * 0.9,
@@ -48,8 +49,11 @@ class CommonNewAppBar extends StatelessWidget implements PreferredSizeWidget {
                         Scaffold.of(context).openDrawer();
                       }
                     },
-                    //child: Icon(leadingIcon, color: AppColors.colorWhite),
-                    child: Icon(leadingIcon, color: AppColors.colorWhite,size: 30,),
+                    child: CommonAppImageSvg(
+                      imagePath: leadingIconSvg,
+                      height: 15,
+                      width: 15,
+                    ),
                   ),
                 ),
                 const SizedBox(width: 20),

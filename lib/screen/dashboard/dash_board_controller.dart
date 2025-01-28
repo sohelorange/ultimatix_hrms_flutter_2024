@@ -12,9 +12,12 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:ultimatix_hrms_flutter/app/app_time_format.dart';
 import 'package:ultimatix_hrms_flutter/database/database_helper.dart';
 import 'package:ultimatix_hrms_flutter/database/ultimatix_dao.dart';
 import 'package:ultimatix_hrms_flutter/database/ultimatix_db.dart';
+import 'package:ultimatix_hrms_flutter/screen/manager_approval/manager_approval_model.dart';
+import 'package:ultimatix_hrms_flutter/widget/common_material_dialog.dart';
 
 import '../../api/dio_client.dart';
 import '../../app/app_colors.dart';
@@ -92,6 +95,132 @@ class DashController extends GetxController {
 
   ValueNotifier<bool> checkInOutStatus = ValueNotifier<bool>(false);
   ValueNotifier<String> profileValueNotifier = ValueNotifier<String>('');
+  ValueNotifier<String> nameValueNotifier = ValueNotifier<String>('');
+  ValueNotifier<String> designationValueNotifier = ValueNotifier<String>('');
+
+  RxString lstClockingDate = ''.obs;
+  RxString lstClockingTime = ''.obs;
+  RxString leaveApprovalCount = "0".obs;
+  RxString attendanceCount = "0".obs;
+  RxString leaveCancelCount = "0".obs;
+  RxString currentTime = AppTimePicker.currentTime12().obs;
+  late Timer _timer;
+
+  RxBool isLogoutLoading = false.obs;
+  RxBool isDisable = false.obs;
+
+  Rx<ManagerApprovalModel> leaveManagerApprovalResponse =
+      ManagerApprovalModel().obs;
+
+  //TODO : Bottom-sheet Menu Tab
+  final List<Map<String, dynamic>> exploreItems = [
+    {
+      'id': 1,
+      'icon': AppImages.exploreClockingIcon,
+      'name': 'Clocking',
+      'visible': true,
+      'boxColor': const Color(0XFFE8FFF7),
+    },
+    {
+      'id': 2,
+      'icon': AppImages.exploreLeaveIcon,
+      'name': 'Leaves',
+      'visible': true,
+      'boxColor': const Color(0XFFF1EBFB),
+    },
+    {
+      'id': 3,
+      'icon': AppImages.exploreAttendanceIcon,
+      'name': 'Attendance',
+      'visible': true,
+      'boxColor': const Color(0XFFFFF2F2),
+    },
+    {
+      'id': 4,
+      'icon': AppImages.exploreChangeReqIcon,
+      'name': 'Change\nRequest',
+      'visible': true,
+      'boxColor': const Color(0XFFEAF8FF),
+    },
+    {
+      'id': 5,
+      'icon': AppImages.exploreTravelIcon,
+      'name': 'Travel',
+      'visible': true,
+      'boxColor': const Color(0XFFFFEEFD),
+    },
+    {
+      'id': 6,
+      'icon': AppImages.exploreMedicalIcon,
+      'name': 'Medical',
+      'visible': true,
+      'boxColor': const Color(0XFFFDFCED),
+    },
+    {
+      'id': 7,
+      'icon': AppImages.exploreGrievanceIcon,
+      'name': 'Grievance',
+      'visible': true,
+      'boxColor': const Color(0XFFE8FFF7),
+    },
+    {
+      'id': 8,
+      'icon': AppImages.exploreCanteenIcon,
+      'name': 'Canteen',
+      'visible': true,
+      'boxColor': const Color(0XFFF1EBFB),
+    },
+    {
+      'id': 9,
+      'icon': AppImages.exploreCRMIcon,
+      'name': 'CRM',
+      'visible': true,
+      'boxColor': const Color(0XFFFFF2F2),
+    },
+    {
+      'id': 10,
+      'icon': AppImages.exploreTicketAppIcon,
+      'name': 'Ticket\nApplication',
+      'visible': true,
+      'boxColor': const Color(0XFFEAF8FF),
+    },
+    {
+      'id': 11,
+      'icon': AppImages.exploreClaimIcon,
+      'name': 'Claim',
+      'visible': true,
+      'boxColor': const Color(0XFFFFEEFD),
+    },
+    {
+      'id': 12,
+      'icon': AppImages.exploreExitAppIcon,
+      'name': 'Exit\nApplication',
+      'visible': true,
+      'boxColor': const Color(0XFFFDFCED),
+    },
+    {
+      'id': 13,
+      'icon': AppImages.explorePhotoGalleryIcon,
+      'name': 'Photo Gallery',
+      'visible': true,
+      'boxColor': const Color(0XFFE8FFF7),
+    },
+    {
+      'id': 14,
+      'icon': AppImages.exploreBirthdayIcon,
+      'name': 'Birthday &\nAnniversary',
+      'visible': true,
+      'boxColor': const Color(0XFFF1EBFB),
+    }
+  ];
+
+  final RxInt selectedExploreIndex = 0.obs;
+
+  void _updateTime() {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      currentTime.value = AppTimePicker.currentTime12();
+    });
+  }
 
   void onBottomTabSelected(int index) {
     selectedIndex.value = index;
@@ -101,7 +230,7 @@ class DashController extends GetxController {
         Get.offAllNamed(AppRoutes.dashBoardRoute);
         break;
       case 1:
-        Get.toNamed(AppRoutes.exploreTabRoute);
+        Get.toNamed(AppRoutes.settingsRoute);
         break;
       case 2:
         Get.toNamed(AppRoutes.attendanceMainRoute);
@@ -112,11 +241,115 @@ class DashController extends GetxController {
     }
   }
 
+  void onDrawerTabSelected(int index) {
+    switch (index) {
+      case 0:
+        Get.back();
+        Get.toNamed(AppRoutes.managerApprovalRoute);
+        break;
+      case 1:
+        Get.back();
+        break;
+      case 2:
+        Get.back();
+        //Get.toNamed(AppRoutes.liveTrackingRoute);
+        Get.toNamed(AppRoutes.liveTrackingRoute, arguments: [
+          {
+            "username": userName.value,
+            "empId": int.parse(empID.value),
+            "cmpId": int.parse(cmpID.value),
+            "userImage": userImageUrl.value
+          }
+        ]);
+        break;
+      case 3:
+        Get.back();
+        break;
+      case 4:
+        Get.back();
+        break;
+      case 5:
+        Get.back();
+        break;
+      case 6:
+        Get.back();
+        Get.toNamed(AppRoutes.settingsRoute);
+        break;
+      case 7:
+        Get.back();
+        Get.dialog(CommonMaterialDialog(
+          title: 'Logout',
+          message: 'Are you sure you want to\nsign out?',
+          yesButtonText: 'Yes',
+          noButtonText: 'No',
+          onConfirm: () {
+            logout();
+            // PreferenceUtils.setIsLogin(false).then((_) {
+            //   Get.offAllNamed(AppRoutes.loginRoute);
+            // });
+          },
+          onCancel: () {
+            Get.back();
+          },
+          isLoading: isLogoutLoading,
+        ));
+
+        break;
+    }
+  }
+
+  void handleMenuNavigation(int index) {
+    // Retrieve the selected item dynamically based on index
+    final selectedItem = exploreItems[index];
+
+    // Use 'id' to handle navigation dynamically
+    switch (selectedItem['id']) {
+      case 1: // Clocking
+        if (isGeofenceEnable == 1) {
+          Get.toNamed(AppRoutes.geofenceRoute);
+        } else {
+          Get.toNamed(AppRoutes.clockInRoute);
+        }
+        break;
+      case 2: // Leaves
+        //Get.toNamed(AppRoutes.leaveApplicationRoute);
+        break;
+      case 3: // Attendance
+        //Get.toNamed(AppRoutes.attendanceMainRoute);
+        break;
+      case 4: // Change Request
+        break;
+      case 5: // Travel
+        break;
+      case 6: // Medical
+        break;
+      case 7: // Grievance
+        break;
+      case 8: // Canteen
+        break;
+      case 9: // CRM
+        break;
+      case 10: // Ticket Application
+        break;
+      case 11: // Claim
+        break;
+      case 12: // Exit Application
+        break;
+      case 13: // Photo Gallery
+        break;
+      case 14: // Birthday & Anniversary
+        break;
+      default:
+        AppSnackBar.showGetXCustomSnackBar(
+            message: 'This feature is under development.');
+    }
+  }
+
   @override
   onInit() async {
     super.onInit();
+    _updateTime();
     checkInOutStatus.value = PreferenceUtils.getIsClocking();
-    profileValueNotifier.value = PreferenceUtils.getProfileImage();
 
     _notificationServices.requestNotificationPermission();
     _notificationServices.firebaseInit(Get.context!);
@@ -135,6 +368,7 @@ class DashController extends GetxController {
 
   @override
   void dispose() {
+    _timer.cancel();
     timer1?.cancel();
     super.dispose();
   }
@@ -156,6 +390,10 @@ class DashController extends GetxController {
     empID.value = loginData['emp_ID'].toString();
     cmpID.value = loginData['cmp_ID'].toString();
     isGeofenceEnable = loginData['is_Geofence_enable'] ?? 0;
+
+    profileValueNotifier.value = userImageUrl.value;
+    nameValueNotifier.value = userName.value;
+    designationValueNotifier.value = loginData['desig_Name'].toString();
   }
 
   Future<void> fetchDataInParallel() async {
@@ -164,7 +402,8 @@ class DashController extends GetxController {
         isLoading(true);
         await Future.wait([
           fetchDashboardAttendanceHistoryAPICall(),
-          fetchDashboardPresentDetailsAPICall(),
+          //fetchDashboardPresentDetailsAPICall(),
+          fetchManagerApprovalCountAPI(),
         ]).then((_) {
           isLoading(false);
         });
@@ -186,6 +425,14 @@ class DashController extends GetxController {
       if (response['code'] == 200 && response['status'] == true) {
         final data = response['data']; // Keep this as Map<String, dynamic>
         if (data != null && data is Map<String, dynamic>) {
+          lstClockingDate.value = AppDatePicker.convertDateTimeFormat(
+              data['employeeData']['iO_Datetime'].toString(),
+              Utils.commonUTCDateFormat,
+              'EEE, MMM dd, yyyy');
+          lstClockingTime.value = AppDatePicker.convertDateTimeFormat(
+              data['employeeData']['iO_Datetime'].toString(),
+              Utils.commonUTCDateFormat,
+              'hh:mm a');
           address.value = data['employeeData']['location'].toString();
           presentDayValue.value =
               data['employeeCount']['present']?.toString() ?? '0';
@@ -207,37 +454,37 @@ class DashController extends GetxController {
               weekOffDayValue.value.isNotEmpty) {
             attendanceStatusData.value = [
               {
-                'color': const Color(0XFF34A853),
+                'color': const Color(0XFFE8FFF7),
                 'icon': AppImages.dashPresentIcon,
                 'name': presentDayLbl.value.toString(),
                 'count': presentDayValue.value.toString(),
               },
               {
-                'color': const Color(0XFFEA4335),
+                'color': AppColors.colorF1EBFB,
                 'icon': AppImages.dashLeaveIcon,
                 'name': leaveDayLbl.value.toString(),
                 'count': leaveDayValue.value.toString(),
               },
               {
-                'color': const Color(0XFFF68C1F),
+                'color': const Color(0XFFFFF2F2),
                 'icon': AppImages.dashAbsentIcon,
                 'name': absentDayLbl.value.toString(),
                 'count': absentDayValue.value.toString(),
               },
               {
-                'color': const Color(0XFF4285F4),
+                'color': const Color(0XFFEAF8FF),
                 'icon': AppImages.dashOnDutyIcon,
                 'name': onDutyDayLbl.value.toString(),
                 'count': onDutyDayValue.value.toString(),
               },
               {
-                'color': const Color(0XFFAF84DD),
+                'color': const Color(0XFFFFEEFD),
                 'icon': AppImages.dashHolidayIcon,
                 'name': holidayDayLbl.value.toString(),
                 'count': holidayDayValue.value.toString(),
               },
               {
-                'color': const Color(0XFFAAAE01),
+                'color': const Color(0XFFFDFCED),
                 'icon': AppImages.dashWeekOffIcon,
                 'name': weekOffDayLbl.value.toString(),
                 'count': weekOffDayValue.value.toString(),
@@ -343,6 +590,71 @@ class DashController extends GetxController {
     }
   }
 
+  Future<void> fetchManagerApprovalCountAPI() async {
+    try {
+      var response =
+          await DioClient().getQueryParam(AppURL.managerApprovalCount);
+
+      leaveManagerApprovalResponse.value =
+          ManagerApprovalModel.fromJson(response);
+      if (leaveManagerApprovalResponse.value.code == 200 &&
+          leaveManagerApprovalResponse.value.status == true) {
+        leaveApprovalCount.value =
+            leaveManagerApprovalResponse.value.data!.leaveAppCnt.toString();
+        attendanceCount.value =
+            leaveManagerApprovalResponse.value.data!.lateComer.toString();
+        leaveCancelCount.value =
+            leaveManagerApprovalResponse.value.data!.leaveCancel.toString();
+        debugPrint(
+            "leave manger approval balance --${leaveManagerApprovalResponse.value.data}");
+      } else {
+        AppSnackBar.showGetXCustomSnackBar(
+            message: "${leaveManagerApprovalResponse.value.message}");
+      }
+    } catch (e) {
+      //AppSnackBar.showGetXCustomSnackBar(message: e.toString());
+    }
+  }
+
+  Future<void> logout() async {
+    try {
+      isLogoutLoading.value = true;
+      isDisable(true);
+
+      // Check if network is available
+      if (await Network.isConnected()) {
+        Map<String, dynamic> param = {
+          'loginToken':
+              PreferenceUtils.getAuthToken().replaceAll('Bearer ', '').trim(),
+        };
+
+        var response =
+            await DioClient().postQuery(AppURL.logoutURL, queryParams: param);
+        if (response['code'] == 200 && response['status'] == true) {
+          deleteRecord();
+          deleteAllLocations();
+
+          PreferenceUtils.setIsLogin(false).then((_) {
+            closeDb();
+            Get.offAllNamed(AppRoutes.loginRoute);
+          });
+
+          AppSnackBar.showGetXCustomSnackBar(
+              message: response['message'], backgroundColor: Colors.green);
+        } else {
+          AppSnackBar.showGetXCustomSnackBar(message: response['message']);
+        }
+      } else {
+        AppSnackBar.showGetXCustomSnackBar(message: Constants.networkMsg);
+      }
+    } catch (e) {
+      AppSnackBar.showGetXCustomSnackBar(message: e.toString());
+    } finally {
+      isLogoutLoading.value = false;
+      isDisable(false);
+    }
+  }
+
   //TODO: dashboard use for live tracking field
   Future<void> initDatabase() async {
     localDao = await DatabaseHelper.localDao;
@@ -356,6 +668,14 @@ class DashController extends GetxController {
 
   closeDb() async {
     await database.close();
+  }
+
+  void deleteRecord() async {
+    await localDao.deleteAllRecords();
+  }
+
+  void deleteAllLocations() async {
+    await localDao.deleteAllLocations();
   }
 
   Future<String> getBatteryPercentage() async {

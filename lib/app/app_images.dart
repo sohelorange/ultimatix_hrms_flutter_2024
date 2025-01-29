@@ -428,6 +428,9 @@ class AppImages {
   static const String icbirth = 'assets/icon/profileicon/ic_birth.png';
   static const String icpan = 'assets/icon/profileicon/ic_pan.png';
 
+  static const String profileChoosePhotoIcon = 'assets/images/ic_choose_photo.svg';
+  static const String profileAddIcon = 'assets/images/ic_add.svg';
+  static const String profileViewIcon = 'assets/images/ic_view.svg';
   static const String profileEmpCodeIcon =
       'assets/applicationIcon/profile/profile_emp_code_icon.svg';
   static const String profileDOBIcon =

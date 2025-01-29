@@ -14,9 +14,9 @@ class CommonListRow extends StatelessWidget {
     super.key,
     required this.label,
     required this.value,
-    this.labelColor = AppColors.colorDarkBlue,
+    this.labelColor = AppColors.color2F2F31,
     this.valueColor =
-        AppColors.colorDarkGray, // Update constructor to accept status color
+        AppColors.color7B758E, // Update constructor to accept status color
   });
 
   @override

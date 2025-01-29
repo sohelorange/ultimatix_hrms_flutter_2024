@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'dart:isolate';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:ultimatix_hrms_flutter/api/dio_client.dart';
 import 'package:ultimatix_hrms_flutter/app/app_colors.dart';
@@ -17,6 +17,7 @@ import 'package:ultimatix_hrms_flutter/database/ultimatix_dao.dart';
 import 'package:ultimatix_hrms_flutter/database/ultimatix_db.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:ultimatix_hrms_flutter/utility/network.dart';
+import '../../app/app_images.dart';
 import '../../app/app_snack_bar.dart';
 import '../../utility/isolates_class.dart';
 import '../../utility/preference_utils.dart';
@@ -48,6 +49,8 @@ class ClockInOutController extends GetxController
   TextEditingController textDescriptionController = TextEditingController();
   RxBool isShow = true.obs;
 
+  RxBool isLoadDropDown = true.obs;
+
   @override
   void onInit() async {
     WidgetsFlutterBinding.ensureInitialized();
@@ -56,7 +59,8 @@ class ClockInOutController extends GetxController
     getTypeForWork();
     getBgGeoLocation();
     await initDatabase(); //TODO: temp commented because data will not require to get from local db.
-    getClockInOutRecord("101", true); //TODO: This will return the data from local and set in ui for clock in or out. commented because not showing from locally.(16-01-2025 11:01AM)
+    getClockInOutRecord("101",
+        true); //TODO: This will return the data from local and set in ui for clock in or out. commented because not showing from locally.(16-01-2025 11:01AM)
 
     /*getCheckInOutStatus();*/ //TODO: by this the data set in ui by api for clock in or out
     super.onInit();
@@ -236,7 +240,8 @@ class ClockInOutController extends GetxController
     if (isCheckIn.value) {
       _storeDataToDb(); //TODO: commented because data will not require to store in local db 16-01-2025 11:01 AM
     } else {
-      updateClockInOut("00:00", "101"); //TODO: commented because data will not require to store in db 16-01-2025 11:01 AM
+      updateClockInOut("00:00",
+          "101"); //TODO: commented because data will not require to store in db 16-01-2025 11:01 AM
     }
   }
 
@@ -373,7 +378,7 @@ class ClockInOutController extends GetxController
       (message) {
         if (message != null) {
           setToUi(message);
-        }else {
+        } else {
           isLoading.value = false;
           log("This is response getting null");
         }
@@ -392,19 +397,20 @@ class ClockInOutController extends GetxController
     }
   }
 
-  static void _getReasonApi(IsolateGetApiData isolateGetApiData) async{
+  static void _getReasonApi(IsolateGetApiData isolateGetApiData) async {
     BackgroundIsolateBinaryMessenger.ensureInitialized(isolateGetApiData.token);
 
     await PreferenceUtils.init();
     await DioClient()
-        .getQueryParam(isolateGetApiData.apiUrl,queryParams: isolateGetApiData.requestParam)
+        .getQueryParam(isolateGetApiData.apiUrl,
+            queryParams: isolateGetApiData.requestParam)
         .then(
-          (value) {
-          if (value != null) {
-            isolateGetApiData.answerPort.send(value);
-          } else {
-            isolateGetApiData.answerPort.send(null);
-          }
+      (value) {
+        if (value != null) {
+          isolateGetApiData.answerPort.send(value);
+        } else {
+          isolateGetApiData.answerPort.send(null);
+        }
       },
     );
   }
@@ -417,41 +423,46 @@ class ClockInOutController extends GetxController
     for (var item in data) {
       items.add(item['Reason_Name'].toString().trim());
     }
+    addItemsToDropdown(items);
     /*defaultValue.value = items.elementAt(0);*/
     isLoading.value = false;
   }
 
-  void checkWorkTypeValidation(BuildContext context){
-    if(defaultValue.value.isEmpty || defaultValue.value==''){
-      AppSnackBar.showGetXCustomSnackBar(message:"Please select your working mode",backgroundColor: AppColors.colorRed);
-    }else{
-      if(defaultValue.value=="Other"){
+  void checkWorkTypeValidation(BuildContext context) {
+    if (defaultValue.value.isEmpty || defaultValue.value == '') {
+      AppSnackBar.showGetXCustomSnackBar(
+          message: "Please select your working mode",
+          backgroundColor: AppColors.colorRed);
+    } else {
+      if (defaultValue.value == "Other") {
         checkValidation(context);
-      }else{
+      } else {
         imageCapture(context);
       }
     }
   }
 
   void checkValidation(BuildContext context) {
-    if(textDescriptionController.text.isEmpty || textDescriptionController.text==''){
-      AppSnackBar.showGetXCustomSnackBar(message:"Please enter reason",backgroundColor: AppColors.colorRed);
-    }else{
+    if (textDescriptionController.text.isEmpty ||
+        textDescriptionController.text == '') {
+      AppSnackBar.showGetXCustomSnackBar(
+          message: "Please enter reason", backgroundColor: AppColors.colorRed);
+    } else {
       imageCapture(context);
     }
   }
 
-  void getCheckInOutStatus() async{
+  void getCheckInOutStatus() async {
     isLoading.value = true;
 
     var receivePort = ReceivePort();
     receivePort.listen(
-          (message) {
+      (message) {
         if (message != null) {
           isLoading.value = false;
           remoteDataSetToUi(message);
           log("This is response getting not null:$message");
-        }else {
+        } else {
           isLoading.value = false;
           log("This is response getting null");
         }
@@ -463,21 +474,19 @@ class ClockInOutController extends GetxController
       Isolate.spawn(
           _getCheckInOutStatus,
           IsolateGetApiData(
-              token: rootToken,
-              answerPort: receivePort.sendPort,
-              apiUrl: AppURL.checkInOutStatusURL,
+            token: rootToken,
+            answerPort: receivePort.sendPort,
+            apiUrl: AppURL.checkInOutStatusURL,
           ));
     }
   }
 
-  static void _getCheckInOutStatus(IsolateGetApiData isolateGetApiData) async{
+  static void _getCheckInOutStatus(IsolateGetApiData isolateGetApiData) async {
     BackgroundIsolateBinaryMessenger.ensureInitialized(isolateGetApiData.token);
 
     await PreferenceUtils.init();
-    await DioClient()
-        .get(isolateGetApiData.apiUrl)
-        .then(
-          (value) {
+    await DioClient().get(isolateGetApiData.apiUrl).then(
+      (value) {
         if (value != null) {
           isolateGetApiData.answerPort.send(value);
         } else {
@@ -495,13 +504,49 @@ class ClockInOutController extends GetxController
       String location = item['Location'];
       String ioDatetime = item['IO_Datetime'];
 
-      print('Location: $location');
-      print('IO_Datetime: $ioDatetime');
+      log('Location: $location');
+      log('IO_Datetime: $ioDatetime');
 
       String textBeforeColon = location.split(':')[0].trim();
 
-      print(textBeforeColon);
+      log(textBeforeColon);
     }
   }
 
+  final List<DropdownMenuItem<String>> menuItems = [];
+
+  void addItemsToDropdown(RxList<String>? items) {
+    for (final String item in items!) {
+      menuItems.addAll(
+        [
+          DropdownMenuItem<String>(
+            value: item,
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(color: Colors.grey.shade300, width: 0.8),
+                ),
+              ),
+              child: Row(
+                children: [
+                  defaultValue.value!=item ? Container() : SvgPicture.asset(AppImages.svgClockNew),
+                  Text(
+                    item,
+                    style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black),
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
+      );
+    }
+    isLoadDropDown.value = false;
+  }
 }
+
+

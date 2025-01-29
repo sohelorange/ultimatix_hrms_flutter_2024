@@ -82,6 +82,7 @@ dependencies:
   multi_select_flutter: ^4.1.0
   dropdown_textfield: ^1.2.0
   multi_dropdown: ^3.0.1
+  dropdown_button2: ^2.3.9
   animated_bottom_navigation_bar: ^1.3.3
 
 dev_dependencies:
@@ -114,6 +115,7 @@ flutter:
     - assets/icon/
     - assets/applicationIcon/
     - assets/icon/clockInOut/
+    - assets/icon/clockInOut/new/
     - assets/icon/liveTracking/
     - assets/icon/attendance/
     - assets/applicationIcon/dashboard/

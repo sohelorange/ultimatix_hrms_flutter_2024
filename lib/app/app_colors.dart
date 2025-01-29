@@ -115,6 +115,7 @@ class AppColors {
   static const Color colorLightPurple2 = Color(0xFFC3AAD0);
   static const Color colorF8F4FA = Color(0xFFF8F4FA);
   static const Color colorBlueDark = Color(0xFF1C1F37);
+  static const Color colorLightPurple3 = Color(0xFFF1EBFB);
 
   //New UI Theme Color
   static const Color color2F2F31 = Color(0XFF2F2F31);
@@ -128,4 +129,5 @@ class AppColors {
   static const Color color8957DD = Color(0XFF8957DD);
   static const Color colorEEFAFE = Color(0XFFEEFAFE);
   static const Color color0085FF = Color(0XFF0085FF);
+  static const Color color6D24A1 = Color(0XFF6D24A1);
 }

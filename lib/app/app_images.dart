@@ -511,4 +511,12 @@ class AppImages {
   static const String svgClockCamera = "assets/icon/clockInOut/new/clock_camera_svg.svg";
   static const String svgClockInputReason = "assets/icon/clockInOut/new/clock_input_reason_svg.svg";
   static const String pngClockReason = "assets/icon/clockInOut/new/clock_reason_png.png";
+
+  //live tracking
+  static const String svgClockLiveTracking = "assets/icon/liveTracking/new/svg_clock_new.svg";
+  static const String svgBatteryNew = "assets/icon/liveTracking/new/svg_battery_new.svg";
+  static const String svgDistanceNew = "assets/icon/liveTracking/new/svg_dist_new.svg";
+  static const String svgLocationLiveTrack = "assets/icon/liveTracking/new/svg_location_live_track.svg";
+  static const String svgLocationTrack = "assets/icon/liveTracking/new/svg_location_line.svg";
+
 }

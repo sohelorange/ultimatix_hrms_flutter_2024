@@ -10,10 +10,18 @@ class CommonAppShimmer extends StatelessWidget {
   final ShapeBorder shapeBorder;
 
   /// Get rectangular shimmer
-  const CommonAppShimmer.rectangular({super.key, this.width = double.infinity, required this.height, this.shapeBorder = const RoundedRectangleBorder()});
+  const CommonAppShimmer.rectangular(
+      {super.key,
+      this.width = double.infinity,
+      required this.height,
+      this.shapeBorder = const RoundedRectangleBorder()});
 
   /// Get circular shimmer
-  const CommonAppShimmer.circular({super.key, this.width = double.infinity, required this.height, this.shapeBorder = const CircleBorder()});
+  const CommonAppShimmer.circular(
+      {super.key,
+      this.width = double.infinity,
+      required this.height,
+      this.shapeBorder = const CircleBorder()});
 
   @override
   Widget build(BuildContext context) => Shimmer.fromColors(

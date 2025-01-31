@@ -13,10 +13,6 @@ import 'package:ultimatix_hrms_flutter/screen/profile/family_add_details/add_fam
 import 'package:ultimatix_hrms_flutter/utility/utils.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_app_image.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_app_image_svg.dart';
-import 'package:ultimatix_hrms_flutter/widget/common_button.dart';
-import 'package:ultimatix_hrms_flutter/widget/common_dropdown.dart';
-import 'package:ultimatix_hrms_flutter/widget/common_dropdown_with_model.dart';
-import 'package:ultimatix_hrms_flutter/widget/common_input_field.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_text.dart';
 import 'package:ultimatix_hrms_flutter/widget/new/common_app_bar_new.dart';
 import 'package:ultimatix_hrms_flutter/widget/new/common_app_input_date_new.dart';
@@ -24,9 +20,6 @@ import 'package:ultimatix_hrms_flutter/widget/new/common_app_input_new.dart';
 import 'package:ultimatix_hrms_flutter/widget/new/common_button_new.dart';
 import 'package:ultimatix_hrms_flutter/widget/new/common_dropdown_new.dart';
 import 'package:ultimatix_hrms_flutter/widget/new/common_dropdown_with_model_new.dart';
-
-import '../../../widget/common_app_bar.dart';
-import '../../../widget/common_container.dart';
 
 class AddFamilyDetailsView extends GetView<AddFamilyDetailsController> {
   const AddFamilyDetailsView({super.key});
@@ -46,14 +39,14 @@ class AddFamilyDetailsView extends GetView<AddFamilyDetailsController> {
         child: Column(
           children: [
             Expanded(child: getAddFamilyView(context)),
-            Obx(()=>CommonButtonNew(
-              buttonText: 'Submit',
-              onPressed: () {
-                controller.validationWithAPI();
-              },
-              isLoading: controller.isSubmitLoading.value,
-              isDisable: controller.isDisable.value,
-            ).paddingOnly(top: 10, bottom: 10))
+            Obx(() => CommonButtonNew(
+                  buttonText: 'Submit',
+                  onPressed: () {
+                    controller.validationWithAPI();
+                  },
+                  isLoading: controller.isSubmitLoading.value,
+                  isDisable: controller.isDisable.value,
+                ).paddingOnly(top: 10, bottom: 10))
           ],
         ),
       ),
@@ -601,7 +594,9 @@ class AddFamilyDetailsView extends GetView<AddFamilyDetailsController> {
                     width: 60,
                   ),
                 ),
-                const SizedBox(width: 10,),
+                const SizedBox(
+                  width: 10,
+                ),
                 Expanded(
                   child: CommonText(
                     text: controller.docName.value.isEmpty

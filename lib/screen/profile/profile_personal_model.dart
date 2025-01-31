@@ -10,7 +10,7 @@ class ProfilePersonalModel {
     status = json['status'];
     code = json['code'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -34,12 +34,12 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     employeeDetails = json['employeeDetails'] != null
-        ? new EmployeeDetails.fromJson(json['employeeDetails'])
+        ? EmployeeDetails.fromJson(json['employeeDetails'])
         : null;
     if (json['allowanceDatas'] != null) {
       allowanceDatas = <AllowanceDatas>[];
       json['allowanceDatas'].forEach((v) {
-        allowanceDatas!.add(new AllowanceDatas.fromJson(v));
+        allowanceDatas!.add(AllowanceDatas.fromJson(v));
       });
     }
     if (json['assets'] != null) {

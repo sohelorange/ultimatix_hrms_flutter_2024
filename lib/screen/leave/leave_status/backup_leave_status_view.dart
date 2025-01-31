@@ -215,15 +215,16 @@ class BackupLeaveStatusView extends GetView<LeaveStatusController> {
                                           .data![index].applicationStatus
                                           .toString() ==
                                       'A'
-                                  ? AppColors.colorGreen
-                                      .withOpacity(0.1) // Green for status 'A'
+                                  ? AppColors.colorGreen.withValues(
+                                      alpha: 0.1) // Green for status 'A'
                                   : controller.leaveStatusListResponse.value
                                               .data![index].applicationStatus
                                               .toString() ==
                                           'P'
-                                      ? AppColors.colorAmber.withOpacity(
-                                          0.1) // Amber for status 'P'
-                                      : AppColors.colorRed.withOpacity(0.1),
+                                      ? AppColors.colorAmber.withValues(
+                                          alpha: 0.1) // Amber for status 'P'
+                                      : AppColors.colorRed
+                                          .withValues(alpha: 0.1),
                               // Red for statuses 'C' or 'R',
                               borderRadius: BorderRadius.circular(6),
                               boxShadow: [
@@ -235,8 +236,8 @@ class BackupLeaveStatusView extends GetView<LeaveStatusController> {
                                               .applicationStatus
                                               .toString() ==
                                           'A'
-                                      ? AppColors.colorGreen.withOpacity(
-                                          0.1) // Green for status 'A'
+                                      ? AppColors.colorGreen.withValues(
+                                          alpha: 0.1) // Green for status 'A'
                                       : controller
                                                   .leaveStatusListResponse
                                                   .value
@@ -245,8 +246,9 @@ class BackupLeaveStatusView extends GetView<LeaveStatusController> {
                                                   .toString() ==
                                               'P'
                                           ? AppColors.colorAmber
-                                              .withOpacity(0.1)
-                                          : AppColors.colorRed.withOpacity(0.1),
+                                              .withValues(alpha: 0.1)
+                                          : AppColors.colorRed
+                                              .withValues(alpha: 0.1),
                                   blurRadius: 0.0,
                                   spreadRadius: 1.0,
                                   offset: const Offset(0, 0),
@@ -280,7 +282,7 @@ class BackupLeaveStatusView extends GetView<LeaveStatusController> {
                       ),
                     ),
                     Divider(
-                      color: AppColors.colorBlack.withOpacity(0.2),
+                      color: AppColors.colorBlack.withValues(alpha: 0.2),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -355,7 +357,7 @@ class BackupLeaveStatusView extends GetView<LeaveStatusController> {
                       ],
                     ),
                     Divider(
-                      color: AppColors.colorBlack.withOpacity(0.2),
+                      color: AppColors.colorBlack.withValues(alpha: 0.2),
                     ),
                     CommonText(
                       text: 'Reason',
@@ -373,7 +375,7 @@ class BackupLeaveStatusView extends GetView<LeaveStatusController> {
                       color: AppColors.colorDarkBlue,
                     ),
                     Divider(
-                      color: AppColors.colorBlack.withOpacity(0.2),
+                      color: AppColors.colorBlack.withValues(alpha: 0.2),
                     ),
                     CommonText(
                       text: 'Assigned As',

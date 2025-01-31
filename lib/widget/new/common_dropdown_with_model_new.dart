@@ -45,6 +45,7 @@ class _CommonDropdownWithModelState<T>
   Widget build(BuildContext context) {
     return Obx(() {
       // Ensure there's exactly one item with the selected value
+      // ignore: unused_local_variable
       T? selectedItem;
       if (widget.items.isNotEmpty) {
         selectedItem = widget.items.firstWhere(
@@ -72,7 +73,8 @@ class _CommonDropdownWithModelState<T>
           ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
-              value: selectedValue.value.isNotEmpty ? selectedValue.value : null,
+              value:
+                  selectedValue.value.isNotEmpty ? selectedValue.value : null,
               isExpanded: true,
               icon: const Icon(
                 Icons.keyboard_arrow_down,
@@ -80,11 +82,11 @@ class _CommonDropdownWithModelState<T>
               ),
               hint: widget.hint != null
                   ? CommonText(
-                text: widget.hint!,
-                fontWeight: AppFontWeight.w400,
-                fontSize: 16,
-                color: AppColors.color7B758E,
-              )
+                      text: widget.hint!,
+                      fontWeight: AppFontWeight.w400,
+                      fontSize: 16,
+                      color: AppColors.color7B758E,
+                    )
                   : null,
               items: widget.items.map<DropdownMenuItem<String>>((T value) {
                 final itemValue = widget.value(value);
@@ -93,7 +95,8 @@ class _CommonDropdownWithModelState<T>
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(8.0), // Rounded corners for items
+                      borderRadius: BorderRadius.circular(
+                          8.0), // Rounded corners for items
                     ),
                     //padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
                     child: Align(
@@ -117,10 +120,11 @@ class _CommonDropdownWithModelState<T>
                 }
               },
               dropdownColor: Colors.white,
-              borderRadius: BorderRadius.circular(6.0,), // Rounded corners for dropdown menu
+              borderRadius: BorderRadius.circular(
+                6.0,
+              ), // Rounded corners for dropdown menu
             ),
-          )
-          ,
+          ),
         ),
       );
     });

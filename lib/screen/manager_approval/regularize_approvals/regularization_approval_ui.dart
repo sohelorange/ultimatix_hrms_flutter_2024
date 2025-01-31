@@ -17,17 +17,17 @@ class RegularizationApprovalUi extends GetView<RegularizeApprovalController> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        appBar: const CommonAppBar(
-          title: 'Regularization Approvals',
+        child: Scaffold(
+      appBar: const CommonAppBar(
+        title: 'Regularization Approvals',
+      ),
+      body: CommonContainer(
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          child: getView(context),
         ),
-        body: CommonContainer(
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            child: getView(context),
-          ),
-        ),
-      ));
+      ),
+    ));
   }
 
   getView(BuildContext context) {
@@ -57,8 +57,8 @@ class RegularizationApprovalUi extends GetView<RegularizeApprovalController> {
                       // Increase the blur for a more spread-out shadow
                       spreadRadius: 1.0,
                       // Small spread to create a more pronounced shadow
-                      offset: Offset(
-                          0, 0), // Offset to simulate elevation effect (vertical shadow)
+                      offset: Offset(0,
+                          0), // Offset to simulate elevation effect (vertical shadow)
                     ),
                   ],
                   borderRadius: BorderRadius.circular(6),
@@ -461,18 +461,18 @@ class RegularizationApprovalUi extends GetView<RegularizeApprovalController> {
                                   const TextStyle(color: AppColors.color6B6D7A),
                               border: UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                    color: AppColors.color6B6D7A.withOpacity(
-                                        0.12)), // Default grey underline
+                                    color: AppColors.color6B6D7A.withValues(
+                                        alpha: 0.12)), // Default grey underline
                               ),
                               enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                    color: AppColors.color6B6D7A.withOpacity(
-                                        0.12)), // Grey when enabled
+                                    color: AppColors.color6B6D7A.withValues(
+                                        alpha: 0.12)), // Grey when enabled
                               ),
                               focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                    color: AppColors.color6B6D7A.withOpacity(
-                                        0.12)), // Blue when focused
+                                    color: AppColors.color6B6D7A.withValues(
+                                        alpha: 0.12)), // Blue when focused
                               ),
                             ),
                           ),
@@ -544,6 +544,7 @@ class RegularizationApprovalUi extends GetView<RegularizeApprovalController> {
     );
   }
 
+  // ignore: unused_element
   _showDialog(BuildContext context, String title, String content) {
     return AlertDialog(
       title: Column(

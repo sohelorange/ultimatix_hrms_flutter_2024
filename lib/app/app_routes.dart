@@ -1,9 +1,14 @@
 import 'package:get/get.dart';
-import 'package:ultimatix_hrms_flutter/screen/attendanceReg/attendance_main_bind.dart';
-import 'package:ultimatix_hrms_flutter/screen/attendanceReg/attendance_main_ui.dart';
-import 'package:ultimatix_hrms_flutter/screen/attendanceReg/regularizeApplication/regularize_apply_bind.dart';
-import 'package:ultimatix_hrms_flutter/screen/attendanceReg/regularizeApplication/regularize_apply_ui.dart';
+
+import 'package:ultimatix_hrms_flutter/screen/attendance_reg/attendance_main_bind.dart';
+import 'package:ultimatix_hrms_flutter/screen/attendance_reg/attendance_main_ui.dart';
+import 'package:ultimatix_hrms_flutter/screen/attendance_reg/regularize_application/regularize_apply_bind.dart';
+import 'package:ultimatix_hrms_flutter/screen/attendance_reg/regularize_application/regularize_apply_ui.dart';
+import 'package:ultimatix_hrms_flutter/screen/attendance_reg/user_attendance_regularize/attendance_user_bind.dart';
+import 'package:ultimatix_hrms_flutter/screen/attendance_reg/user_attendance_regularize/attendance_user_ui.dart';
 import 'package:ultimatix_hrms_flutter/screen/auth/forgotpassword/forgot_pass_view.dart';
+import 'package:ultimatix_hrms_flutter/screen/clock_in_out/clock_in_out_bind.dart';
+import 'package:ultimatix_hrms_flutter/screen/clock_in_out/clock_in_out_ui.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/dashboard_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/dashboard_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/auth/serverconnection/server_connection_binding.dart';
@@ -24,9 +29,9 @@ import 'package:ultimatix_hrms_flutter/screen/leave/leave_approval_status/leave_
 import 'package:ultimatix_hrms_flutter/screen/leave/leave_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/geofence/geofence_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/geofence/geofence_view.dart';
+import 'package:ultimatix_hrms_flutter/screen/live_tracking/live_tracking_bind.dart';
+import 'package:ultimatix_hrms_flutter/screen/live_tracking/live_tracking_ui.dart';
 
-import 'package:ultimatix_hrms_flutter/screen/liveTracking/live_tracking_bind.dart';
-import 'package:ultimatix_hrms_flutter/screen/liveTracking/live_tracking_ui.dart';
 import 'package:ultimatix_hrms_flutter/screen/manager_approval/leave_manager_approval_details/leave_manager_approval_details_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/manager_approval/leave_manager_approval_details/leave_manager_approval_details_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/manager_approval/leave_manager_approval_details/leave_manager_approval_edit_details/leave_manager_approval_edit_details_binding.dart';
@@ -46,13 +51,10 @@ import 'package:ultimatix_hrms_flutter/screen/settings/feedback/feedback_binding
 import 'package:ultimatix_hrms_flutter/screen/settings/feedback/feedback_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/settings/settings_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/settings/settings_view.dart';
-import '../screen/attendanceReg/userAttendanceRegularize/attendance_user_bind.dart';
-import '../screen/attendanceReg/userAttendanceRegularize/attendance_user_ui.dart';
+
 import '../screen/auth/forgotpassword/forgot_pass_binding.dart';
 import '../screen/auth/login/login_binding.dart';
 import '../screen/auth/login/login_view_new.dart';
-import '../screen/clockInOut/clock_in_out_bind.dart';
-import '../screen/clockInOut/clock_in_out_ui.dart';
 import '../screen/manager_approval/leave_manager_approval/leave_manager_approval_binding.dart';
 import '../screen/manager_approval/leave_manager_approval/leave_manager_approval_view.dart';
 import '../screen/manager_approval/leave_manager_approval_details/leave_manager_approval_edit_details/leave_manager_approval_edit_details_view.dart';

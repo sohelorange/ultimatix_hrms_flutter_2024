@@ -4,7 +4,7 @@ import 'package:ultimatix_hrms_flutter/app/app_routes.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/dash_board_controller.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/drawer/drawer_dash_controller.dart';
 import 'package:ultimatix_hrms_flutter/utility/preference_utils.dart';
-import 'package:ultimatix_hrms_flutter/widget/dash_app_bar.dart';
+import 'package:ultimatix_hrms_flutter/widget/common_dash_app_bar.dart';
 
 import '../../../app/app_colors.dart';
 import '../../../app/app_images.dart';
@@ -28,7 +28,7 @@ class DrawerDashView extends GetView<DrawerDashController> {
         return;
       },
       child: Scaffold(
-        appBar: DashAppBar(
+        appBar: CommonDashAppBar(
           name: controller.designation.value,
           designation: controller.userName.value,
           profileImageUrlNotifier: controller.profileValueNotifier,

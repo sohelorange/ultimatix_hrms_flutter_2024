@@ -9,7 +9,7 @@ import '../app/app_colors.dart';
 import '../app/app_status_bar.dart';
 import 'common_text.dart';
 
-class DashAppBar extends StatelessWidget implements PreferredSizeWidget {
+class CommonDashAppBar extends StatelessWidget implements PreferredSizeWidget {
   //final String profileImageUrl;
   final ValueNotifier<String> profileImageUrlNotifier;
   final String name;
@@ -21,7 +21,7 @@ class DashAppBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback? onEditIconClick;
   final VoidCallback? onBackIconClick; // Add callback for back icon click
 
-  const DashAppBar({
+  const CommonDashAppBar({
     super.key,
     required this.profileImageUrlNotifier,
     required this.name,

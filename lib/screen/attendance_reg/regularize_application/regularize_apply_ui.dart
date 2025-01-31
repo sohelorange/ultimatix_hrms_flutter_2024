@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:ultimatix_hrms_flutter/screen/attendanceReg/regularizeApplication/regularize_apply_controller.dart';
+import 'package:ultimatix_hrms_flutter/screen/attendance_reg/regularize_application/regularize_apply_controller.dart';
 
 import '../../../app/app_colors.dart';
 import '../../../app/app_font_weight.dart';
@@ -17,23 +17,22 @@ class RegularizeApplyUi extends GetView<RegularizeApplyController> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        appBar: const CommonAppBar(
-          title: 'Regularize Request',
+        child: Scaffold(
+      appBar: const CommonAppBar(
+        title: 'Regularize Request',
+      ),
+      body: CommonContainer(
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          child: getView(context),
         ),
-        body: CommonContainer(
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            child: getView(context),
-          ),
-        ),
+      ),
     ));
   }
 
   getView(BuildContext context) {
     return Stack(
       children: [
-
         Container(
           height: Utils.getScreenHeight(context: context),
           width: Utils.getScreenWidth(context: context),
@@ -58,8 +57,8 @@ class RegularizeApplyUi extends GetView<RegularizeApplyController> {
                       // Increase the blur for a more spread-out shadow
                       spreadRadius: 1.0,
                       // Small spread to create a more pronounced shadow
-                      offset: Offset(
-                          0, 0), // Offset to simulate elevation effect (vertical shadow)
+                      offset: Offset(0,
+                          0), // Offset to simulate elevation effect (vertical shadow)
                     ),
                   ],
                   borderRadius: BorderRadius.circular(6),
@@ -360,8 +359,8 @@ class RegularizeApplyUi extends GetView<RegularizeApplyController> {
                       // Increase the blur for a more spread-out shadow
                       spreadRadius: 1.0,
                       // Small spread to create a more pronounced shadow
-                      offset: Offset(
-                          0, 0), // Offset to simulate elevation effect (vertical shadow)
+                      offset: Offset(0,
+                          0), // Offset to simulate elevation effect (vertical shadow)
                     ),
                   ],
                   borderRadius: BorderRadius.circular(6),
@@ -511,17 +510,17 @@ class RegularizeApplyUi extends GetView<RegularizeApplyController> {
                                             //borderSide: BorderSide(color: AppColors.color6B6D7A.withValues(alpha: 0.12)),
                                             borderSide: BorderSide(
                                                 color: AppColors.color6B6D7A
-                                                    .withOpacity(0.12)),
+                                                    .withValues(alpha: 0.12)),
                                           ),
                                           focusedBorder: UnderlineInputBorder(
                                             borderSide: BorderSide(
                                                 color: AppColors.color6B6D7A
-                                                    .withOpacity(0.12)),
+                                                    .withValues(alpha: 0.12)),
                                           ),
                                           enabledBorder: UnderlineInputBorder(
                                             borderSide: BorderSide(
                                                 color: AppColors.color6B6D7A
-                                                    .withOpacity(0.12)),
+                                                    .withValues(alpha: 0.12)),
                                           ),
                                         ),
                                         onChanged: (String? newValue) {
@@ -573,20 +572,23 @@ class RegularizeApplyUi extends GetView<RegularizeApplyController> {
                                         border: UnderlineInputBorder(
                                           borderSide: BorderSide(
                                               color: AppColors.color6B6D7A
-                                                  .withOpacity(
-                                                      0.12)), // Default grey underline
+                                                  .withValues(
+                                                      alpha:
+                                                          0.12)), // Default grey underline
                                         ),
                                         enabledBorder: UnderlineInputBorder(
                                           borderSide: BorderSide(
                                               color: AppColors.color6B6D7A
-                                                  .withOpacity(
-                                                      0.12)), // Grey when enabled
+                                                  .withValues(
+                                                      alpha:
+                                                          0.12)), // Grey when enabled
                                         ),
                                         focusedBorder: UnderlineInputBorder(
                                           borderSide: BorderSide(
                                               color: AppColors.color6B6D7A
-                                                  .withOpacity(
-                                                      0.12)), // Blue when focused
+                                                  .withValues(
+                                                      alpha:
+                                                          0.12)), // Blue when focused
                                         ),
                                       ),
                                     ),
@@ -610,20 +612,23 @@ class RegularizeApplyUi extends GetView<RegularizeApplyController> {
                                         border: UnderlineInputBorder(
                                           borderSide: BorderSide(
                                               color: AppColors.color6B6D7A
-                                                  .withOpacity(
-                                                      0.12)), // Default underline color
+                                                  .withValues(
+                                                      alpha:
+                                                          0.12)), // Default underline color
                                         ),
                                         focusedBorder: UnderlineInputBorder(
                                           borderSide: BorderSide(
                                               color: AppColors.color6B6D7A
-                                                  .withOpacity(
-                                                      0.12)), // Color when focused
+                                                  .withValues(
+                                                      alpha:
+                                                          0.12)), // Color when focused
                                         ),
                                         enabledBorder: UnderlineInputBorder(
                                           borderSide: BorderSide(
                                               color: AppColors.color6B6D7A
-                                                  .withOpacity(
-                                                      0.12)), // Color when enabled
+                                                  .withValues(
+                                                      alpha:
+                                                          0.12)), // Color when enabled
                                         ),
                                       ),
                                       onChanged: (String? value) {

@@ -6,10 +6,13 @@ class AppString {
   static const String poweredBy = 'Powered By';
   static const String allowed = 'Allow';
   static const String deny = 'Deny';
-  static const String copyRights = 'Copyrights by Orange Technolab Pvt. Ltd 2016';
+  static const String copyRights =
+      'Copyrights by Orange Technolab Pvt. Ltd 2016';
   static const String useYourLocation = 'Use Your Location';
-  static const String locationText = 'Ultimatix Payroll Collect location Data to enable location and movement tacking even when app is closed or not in use.';
-  static const String locationText1 = 'This(All Time Allow) is then used for Clock-in & Clock-out, Geofencing, Pinning Customer Location.';
+  static const String locationText =
+      'Ultimatix Payroll Collect location Data to enable location and movement tacking even when app is closed or not in use.';
+  static const String locationText1 =
+      'This(All Time Allow) is then used for Clock-in & Clock-out, Geofencing, Pinning Customer Location.';
   static const String loginDetails = "Login ";
   static const String userName = "User Name";
   static const String loginId = "Login ID";
@@ -39,9 +42,10 @@ class AppString {
   static const String currentPassword = "Current Password";
   static const String newPassword = "New Password";
   static const String enterCurrentPassword = "Enter Current Password";
-  static const String forgotPasswordText = "We just need your registered User Id to send you \npassword reset instructions.";
-  static const String successText = "Successfully Connected Enter your \nCredential to Login.";
-  static const String pleaseEnterUserNamePassword = "Please enter your username and password to \n connect mobile Payroll and HRMS";
-
-
+  static const String forgotPasswordText =
+      "We just need your registered User Id to send you \npassword reset instructions.";
+  static const String successText =
+      "Successfully Connected Enter your \nCredential to Login.";
+  static const String pleaseEnterUserNamePassword =
+      "Please enter your username and password to \n connect mobile Payroll and HRMS";
 }

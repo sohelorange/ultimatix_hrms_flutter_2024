@@ -1,21 +1,19 @@
 import 'dart:developer';
 import 'dart:isolate';
-import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 import '../../../api/dio_client.dart';
-import '../../../api/model/GetAttendanceApprovalRegularizeModel.dart';
+import '../../../api/model/get_attendance_approval_regularize_model.dart';
 import '../../../app/app_colors.dart';
 import '../../../app/app_snack_bar.dart';
 import '../../../app/app_url.dart';
 import '../../../utility/network.dart';
 import '../../../utility/preference_utils.dart';
 
-class RegularizeApprovalController extends GetxController{
+class RegularizeApprovalController extends GetxController {
   RxString employeeName = "OTL0111-Mr. Vivek Singh".obs;
   RxString appliedDate = "24/12/2024".obs;
   RxString presentDay = "".obs;
@@ -40,7 +38,8 @@ class RegularizeApprovalController extends GetxController{
   dynamic argumentData = Get.arguments;
   late num applicationId;
 
-  Rx<GetAttendanceApprovalRegularizeModel> attendanceApprovalListData = GetAttendanceApprovalRegularizeModel().obs;
+  Rx<GetAttendanceApprovalRegularizeModel> attendanceApprovalListData =
+      GetAttendanceApprovalRegularizeModel().obs;
 
   @override
   void onInit() {
@@ -52,60 +51,79 @@ class RegularizeApprovalController extends GetxController{
     super.onInit();
   }
 
-  void getApprovalDetails() async{
+  void getApprovalDetails() async {
     var receivePort = ReceivePort();
     var rootToken = RootIsolateToken.instance!;
 
-    receivePort.listen((message) {
-      if(message!=null){
-        attendanceApprovalListData.value = GetAttendanceApprovalRegularizeModel.fromJson(message);
-        /*selectedValue.value = getSelectedRadio();*/
-        isCancelEarlyOut.value = attendanceApprovalListData.value.data?.elementAt(0).isCancelEarlyOut==0 ? true : false;
-        isCancelLateIn.value = attendanceApprovalListData.value.data?.elementAt(0).isCancelLateIn==0 ? true : false;
-        isLoading.value = false;
-      }else{
-        isLoading.value = false;
-      }
-    },);
+    receivePort.listen(
+      (message) {
+        if (message != null) {
+          attendanceApprovalListData.value =
+              GetAttendanceApprovalRegularizeModel.fromJson(message);
+          /*selectedValue.value = getSelectedRadio();*/
+          isCancelEarlyOut.value = attendanceApprovalListData.value.data
+                      ?.elementAt(0)
+                      .isCancelEarlyOut ==
+                  0
+              ? true
+              : false;
+          isCancelLateIn.value = attendanceApprovalListData.value.data
+                      ?.elementAt(0)
+                      .isCancelLateIn ==
+                  0
+              ? true
+              : false;
+          isLoading.value = false;
+        } else {
+          isLoading.value = false;
+        }
+      },
+    );
 
     Map<String, dynamic> requestParam = {
       "ApplicationId": applicationId,
     };
 
-    await Isolate.spawn<_IsolateApiData>(_getApprovalDetailsByApi,
+    await Isolate.spawn<_IsolateApiData>(
+        _getApprovalDetailsByApi,
         _IsolateApiData(
             token: rootToken,
             requestData: requestParam,
             answerPort: receivePort.sendPort,
-            apiUrl: "${AppURL.getAttendanceRegularizeApplicationDetails}?ApplicationId=$applicationId"));
+            apiUrl:
+                "${AppURL.getAttendanceRegularizeApplicationDetails}?ApplicationId=$applicationId"));
   }
 
-  static void _getApprovalDetailsByApi(_IsolateApiData api) async{
+  static void _getApprovalDetailsByApi(_IsolateApiData api) async {
     BackgroundIsolateBinaryMessenger.ensureInitialized(api.token);
     await PreferenceUtils.init();
 
-    if(await Network.isConnected()){
-      await DioClient().post(api.apiUrl, api.requestData).then((value) {
-        if (value != null) {
-          api.answerPort.send(value);
-        }else{
-          api.answerPort.send(null);
-        }
-      },);
+    if (await Network.isConnected()) {
+      await DioClient().post(api.apiUrl, api.requestData).then(
+        (value) {
+          if (value != null) {
+            api.answerPort.send(value);
+          } else {
+            api.answerPort.send(null);
+          }
+        },
+      );
     }
   }
 
   void checkValidation(String appStatus) {
     if (appStatus == "R" && textCommentController.text.trim().isEmpty) {
-      AppSnackBar.showGetXCustomSnackBar(message: "Please add Superior Comment");
+      AppSnackBar.showGetXCustomSnackBar(
+          message: "Please add Superior Comment");
     } else if (selectedValue.value == 3) {
-      AppSnackBar.showGetXCustomSnackBar(message: "Please select Full Day, Half Day or Second Half");
+      AppSnackBar.showGetXCustomSnackBar(
+          message: "Please select Full Day, Half Day or Second Half");
     } else {
       toCallApi(appStatus);
     }
   }
 
-  void toCallApi(String appStatus) async{
+  void toCallApi(String appStatus) async {
     log("This Function is start");
     isLoading.value = true;
 
@@ -114,12 +132,15 @@ class RegularizeApprovalController extends GetxController{
       "empID": attendanceApprovalListData.value.data?.elementAt(0).empId,
       "cmpID": attendanceApprovalListData.value.data?.elementAt(0).cmpID,
       "fordate": attendanceApprovalListData.value.data?.elementAt(0).forDate,
-      "reason": attendanceApprovalListData.value.data?.elementAt(0).reason ?? "",
+      "reason":
+          attendanceApprovalListData.value.data?.elementAt(0).reason ?? "",
       "halfFullDay": getDay(),
-      "cancelLateIn": isCancelLateIn.value==true ? 1 : 0,
-      "cancelEarlyOut": isCancelEarlyOut.value==true ? 1 : 0,
-      "intime": attendanceApprovalListData.value.data?.elementAt(0).shInTime ?? "",
-      "outTime": attendanceApprovalListData.value.data?.elementAt(0).shOutTime ?? "",
+      "cancelLateIn": isCancelLateIn.value == true ? 1 : 0,
+      "cancelEarlyOut": isCancelEarlyOut.value == true ? 1 : 0,
+      "intime":
+          attendanceApprovalListData.value.data?.elementAt(0).shInTime ?? "",
+      "outTime":
+          attendanceApprovalListData.value.data?.elementAt(0).shOutTime ?? "",
       "comment": textCommentController.text.trim(),
       "sEmpID": 0,
       "rptLevel": 0,
@@ -130,51 +151,73 @@ class RegularizeApprovalController extends GetxController{
 
     await PreferenceUtils.init();
 
-    if(await Network.isConnected()){
+    if (await Network.isConnected()) {
       log("Checked the internet connection");
-      await DioClient().post(AppURL.attendanceRegularizeApproval, requestParam).then((value) {
-        if (value != null) {
-          log("The result of the api is:$value");
-          var response = value;
-          String data = response["data"] ?? "";
-          RegExp regExp = RegExp(r'\b(True|False)\b', caseSensitive: false);
-          var match = regExp.firstMatch(data);
-          String result = data.split('#').first;
-          String label = result.replaceAll(RegExp(r'[^a-zA-Z\s]'), '');
-          Get.back();
-          if (match != null) {
-            AppSnackBar.showGetXCustomSnackBar(message: label,backgroundColor: match.group(0)?.toLowerCase()=="true" ? AppColors.colorGreen : AppColors.colorRed);
-          }else {
-            AppSnackBar.showGetXCustomSnackBar(message: label);
+      await DioClient()
+          .post(AppURL.attendanceRegularizeApproval, requestParam)
+          .then(
+        (value) {
+          if (value != null) {
+            log("The result of the api is:$value");
+            var response = value;
+            String data = response["data"] ?? "";
+            RegExp regExp = RegExp(r'\b(True|False)\b', caseSensitive: false);
+            var match = regExp.firstMatch(data);
+            String result = data.split('#').first;
+            String label = result.replaceAll(RegExp(r'[^a-zA-Z\s]'), '');
+            Get.back();
+            if (match != null) {
+              AppSnackBar.showGetXCustomSnackBar(
+                  message: label,
+                  backgroundColor: match.group(0)?.toLowerCase() == "true"
+                      ? AppColors.colorGreen
+                      : AppColors.colorRed);
+            } else {
+              AppSnackBar.showGetXCustomSnackBar(message: label);
+            }
+            isLoading.value = false;
+          } else {
+            log("The result is getting null");
+            isLoading.value = false;
           }
-          isLoading.value = false;
-        } else{
-          log("The result is getting null");
-          isLoading.value = false;
-        }
-      },);
+        },
+      );
     }
   }
 
-
   int getSelectedRadio() {
-    if(attendanceApprovalListData.value.data?.elementAt(0).halfFullDay?.trim().toString()=="Full Day"){
+    if (attendanceApprovalListData.value.data
+            ?.elementAt(0)
+            .halfFullDay
+            ?.trim()
+            .toString() ==
+        "Full Day") {
       return 0;
-    }else if(attendanceApprovalListData.value.data?.elementAt(0).halfFullDay?.trim().toString()=="Half Day"){
+    } else if (attendanceApprovalListData.value.data
+            ?.elementAt(0)
+            .halfFullDay
+            ?.trim()
+            .toString() ==
+        "Half Day") {
       return 1;
-    }else if(attendanceApprovalListData.value.data?.elementAt(0).halfFullDay?.trim().toString()=="Second Half"){
+    } else if (attendanceApprovalListData.value.data
+            ?.elementAt(0)
+            .halfFullDay
+            ?.trim()
+            .toString() ==
+        "Second Half") {
       return 2;
-    }else{
+    } else {
       return 3;
     }
   }
 
   getDay() {
-    if(selectedValue.value==0){
+    if (selectedValue.value == 0) {
       return "Full Day";
-    }else if(selectedValue.value==1){
+    } else if (selectedValue.value == 1) {
       return "Half Day";
-    }else{
+    } else {
       return "Second Day";
     }
   }
@@ -186,7 +229,11 @@ class _IsolateApiData {
   final SendPort answerPort;
   final String apiUrl;
 
-  _IsolateApiData({required this.token, required this.requestData, required this.answerPort, required this.apiUrl});
+  _IsolateApiData(
+      {required this.token,
+      required this.requestData,
+      required this.answerPort,
+      required this.apiUrl});
 }
 
 /*

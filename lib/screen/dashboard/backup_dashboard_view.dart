@@ -16,7 +16,7 @@ import '../../widget/common_banner.dart';
 import '../../widget/common_bottom_bar.dart';
 import '../../widget/common_grid_view.dart';
 import '../../widget/common_text.dart';
-import '../../widget/dash_app_bar.dart';
+import '../../widget/common_dash_app_bar.dart';
 import 'dash_board_controller.dart';
 
 class DashboardViewBackup extends GetView<DashController> {
@@ -30,7 +30,7 @@ class DashboardViewBackup extends GetView<DashController> {
 
     return SafeArea(
         child: Scaffold(
-      appBar: DashAppBar(
+      appBar: CommonDashAppBar(
         name: "Hello",
         designation: controller.userName.value,
         profileImageUrlNotifier: controller.profileValueNotifier,
@@ -68,7 +68,7 @@ class DashboardViewBackup extends GetView<DashController> {
               // Adjust radius
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
+                  color: Colors.grey.withValues(alpha: 0.5),
                   spreadRadius: 0,
                   blurRadius: 0,
                   offset: const Offset(0, 0), // Shadow position

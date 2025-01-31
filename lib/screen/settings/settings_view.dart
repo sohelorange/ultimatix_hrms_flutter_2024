@@ -4,8 +4,6 @@ import 'package:ultimatix_hrms_flutter/app/app_routes.dart';
 import 'package:ultimatix_hrms_flutter/screen/settings/settings_controller.dart';
 import 'package:ultimatix_hrms_flutter/widget/new/common_app_bar_new.dart';
 
-import '../../../widget/common_app_bar.dart';
-import '../../../widget/common_container.dart';
 import '../../app/app_colors.dart';
 import '../../app/app_font_weight.dart';
 import '../../app/app_images.dart';

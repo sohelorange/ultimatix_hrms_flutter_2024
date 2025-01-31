@@ -4,12 +4,11 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ultimatix_hrms_flutter/app/app_url.dart';
 import '../../../api/dio_client.dart';
-import '../../../api/model/AttendanceRegularizeDetails.dart';
+import '../../../api/model/attendance_regularize_details.dart';
 import '../../../widget/common_button.dart';
 import '../../../widget/common_year_month_grid_view.dart';
 
-class UserAttendanceController extends GetxController{
-
+class UserAttendanceController extends GetxController {
   RxBool isLoading = false.obs;
 
   RxString userName = "Tester".obs;
@@ -19,7 +18,8 @@ class UserAttendanceController extends GetxController{
   Rx<num> userCmpId = 0.obs;
 
   dynamic argumentData = Get.arguments;
-  Rx<AttendanceRegularizeDetails> attendanceRegularizeDetails = AttendanceRegularizeDetails().obs;
+  Rx<AttendanceRegularizeDetails> attendanceRegularizeDetails =
+      AttendanceRegularizeDetails().obs;
 
   final RxInt selectedYearIndex = RxInt(-1); // Default to -1 (no selection yet)
   final RxInt selectedMonthIndex = RxInt(-1);
@@ -28,45 +28,56 @@ class UserAttendanceController extends GetxController{
 
   @override
   void onInit() {
-
     userProfile.value = argumentData[0]['userPhoto'];
     userName.value = argumentData[0]['userName'];
     userDesignation.value = argumentData[0]['userDesignation'];
     userEmpId.value = argumentData[0]['userEmpId'];
     userCmpId.value = argumentData[0]['userCmpId'];
 
-    callUserAttendanceRegularizationDetails(DateTime.now().year,DateTime.now().month);
+    callUserAttendanceRegularizationDetails(
+        DateTime.now().year, DateTime.now().month);
 
     super.onInit();
   }
 
-  Future<void> callUserAttendanceRegularizationDetails(int year, int month) async {
+  Future<void> callUserAttendanceRegularizationDetails(
+      int year, int month) async {
     try {
       isLoading.value = true;
 
-      Map<String, dynamic> requestParam = {"month": month, "year": year, "empId": userEmpId.value, "cmpId": userCmpId.value};
+      Map<String, dynamic> requestParam = {
+        "month": month,
+        "year": year,
+        "empId": userEmpId.value,
+        "cmpId": userCmpId.value
+      };
 
-      await DioClient().post(AppURL.attendanceRegularizeDetailsURL, requestParam).then((value) {
-        if (value != null) {
-          String response = "$value";
-          log(response);
+      await DioClient()
+          .post(AppURL.attendanceRegularizeDetailsURL, requestParam)
+          .then(
+        (value) {
+          if (value != null) {
+            String response = "$value";
+            log(response);
 
-          Map<String, dynamic> jsonResponse = value;
-          log(jsonResponse['message']);
-          if (jsonResponse['code'] == 200) {
-            if (jsonResponse['data'] != null) {
-              attendanceRegularizeDetails.value = AttendanceRegularizeDetails.fromJson(value);
+            Map<String, dynamic> jsonResponse = value;
+            log(jsonResponse['message']);
+            if (jsonResponse['code'] == 200) {
+              if (jsonResponse['data'] != null) {
+                attendanceRegularizeDetails.value =
+                    AttendanceRegularizeDetails.fromJson(value);
+                isLoading.value = false;
+              }
+            } else {
               isLoading.value = false;
+              log("not Success");
             }
           } else {
             isLoading.value = false;
             log("not Success");
           }
-        }else{
-          isLoading.value = false;
-          log("not Success");
-        }
-      },);
+        },
+      );
     } catch (e) {
       isLoading.value = false;
       e.printError();
@@ -95,7 +106,7 @@ class UserAttendanceController extends GetxController{
     // Generate a list of years from (currentYear - 10) to (currentYear + 2)
     final List<Map<String, dynamic>> yearItems = List.generate(
       13, // Total of 13 years (10 previous + current year + 2 future)
-          (index) => {'name': (currentYear - 10 + index).toString()},
+      (index) => {'name': (currentYear - 10 + index).toString()},
     );
 
     // Set default to current year if no selection has been made yet
@@ -206,9 +217,10 @@ class UserAttendanceController extends GetxController{
                     selectedMonthIndex.value = index;
 
                     Get.back(); // Close the month dialog
-                    callUserAttendanceRegularizationDetails( selectedYear,
-                      selectedMonthIndex.value +
-                          1,);
+                    callUserAttendanceRegularizationDetails(
+                      selectedYear,
+                      selectedMonthIndex.value + 1,
+                    );
                   },
                 );
               },
@@ -223,9 +235,10 @@ class UserAttendanceController extends GetxController{
                     onPressed: () {
                       if (selectedMonthIndex.value >= 0) {
                         Get.back(); // Close the month dialog
-                        callUserAttendanceRegularizationDetails(selectedYear,
-                          selectedMonthIndex.value +
-                              1,);
+                        callUserAttendanceRegularizationDetails(
+                          selectedYear,
+                          selectedMonthIndex.value + 1,
+                        );
                       }
                     },
                     isLoading: false,

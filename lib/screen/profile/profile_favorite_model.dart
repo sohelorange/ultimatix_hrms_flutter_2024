@@ -46,17 +46,17 @@ class Data {
 
   Data(
       {this.empID,
-        this.alphaEmpCode,
-        this.empFavSportId,
-        this.empFavSportName,
-        this.empHobbyId,
-        this.empHobbyName,
-        this.empFavFood,
-        this.empFavRestro,
-        this.empFavTrvDestination,
-        this.empFavFestival,
-        this.empFavSportPerson,
-        this.empFavSinger});
+      this.alphaEmpCode,
+      this.empFavSportId,
+      this.empFavSportName,
+      this.empHobbyId,
+      this.empHobbyName,
+      this.empFavFood,
+      this.empFavRestro,
+      this.empFavTrvDestination,
+      this.empFavFestival,
+      this.empFavSportPerson,
+      this.empFavSinger});
 
   Data.fromJson(Map<String, dynamic> json) {
     empID = json['Emp_ID'];

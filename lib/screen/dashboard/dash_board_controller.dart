@@ -233,10 +233,10 @@ class DashController extends GetxController {
         Get.toNamed(AppRoutes.settingsRoute);
         break;
       case 2:
-        Get.toNamed(AppRoutes.attendanceMainRoute);
+        //Get.toNamed(AppRoutes.attendanceMainRoute);
         break;
       case 3:
-        Get.toNamed(AppRoutes.leaveApplicationRoute);
+        //Get.toNamed(AppRoutes.leaveApplicationRoute);
         break;
     }
   }
@@ -245,14 +245,13 @@ class DashController extends GetxController {
     switch (index) {
       case 0:
         Get.back();
-        //Get.toNamed(AppRoutes.managerApprovalRoute);
+        Get.toNamed(AppRoutes.managerApprovalRoute);
         break;
       case 1:
         Get.back();
         break;
       case 2:
         Get.back();
-        //Get.toNamed(AppRoutes.liveTrackingRoute);
         Get.toNamed(AppRoutes.liveTrackingRoute, arguments: [
           {
             "username": userName.value,
@@ -312,7 +311,7 @@ class DashController extends GetxController {
         }
         break;
       case 2: // Leaves
-        //Get.toNamed(AppRoutes.leaveApplicationRoute);
+        Get.toNamed(AppRoutes.leaveApplicationRoute);
         break;
       case 3: // Attendance
         //Get.toNamed(AppRoutes.attendanceMainRoute);

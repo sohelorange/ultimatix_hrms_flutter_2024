@@ -42,7 +42,8 @@ class Data {
       this.compOffApprovals,
       this.exitApproval,
       this.ticketApprovals,
-      this.claimAppCnt,this.travelAppCnt});
+      this.claimAppCnt,
+      this.travelAppCnt});
 
   Data.fromJson(Map<String, dynamic> json) {
     leaveAppCnt = json['leaveAppCnt'];

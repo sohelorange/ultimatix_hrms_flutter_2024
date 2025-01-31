@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../../api/dio_client.dart';
-import '../../api/model/AttendanceRegularizeDetails.dart';
+import '../../api/model/attendance_regularize_details.dart';
 import '../../api/model/team_attendance_response.dart';
 import '../../utility/isolates_class.dart';
 import '../../utility/network.dart';
@@ -26,8 +26,10 @@ class AttendanceMainController extends GetxController {
   Rx<num> userEmpId = 0.obs;
   Rx<num> userCmpId = 0.obs;
 
-  Rx<TeamAttendanceResponse> teamAttendanceResponse = TeamAttendanceResponse().obs;
-  Rx<AttendanceRegularizeDetails> attendanceRegularizeDetails = AttendanceRegularizeDetails().obs;
+  Rx<TeamAttendanceResponse> teamAttendanceResponse =
+      TeamAttendanceResponse().obs;
+  Rx<AttendanceRegularizeDetails> attendanceRegularizeDetails =
+      AttendanceRegularizeDetails().obs;
 
   final RxInt selectedYearIndex = RxInt(-1);
   final RxInt selectedMonthIndex = RxInt(-1);
@@ -48,14 +50,15 @@ class AttendanceMainController extends GetxController {
   Future<void> getMyTeamRecords() async {
     await _fetchDataFromApi(
       AppURL.myTeamAttendanceURL,
-          (data) {
+      (data) {
         teamAttendanceResponse.value = TeamAttendanceResponse.fromJson(data);
         setUserOwnData();
       },
     );
   }
 
-  Future<void> _fetchDataFromApi(String apiUrl, Function(Map<String, dynamic>) onSuccess) async {
+  Future<void> _fetchDataFromApi(
+      String apiUrl, Function(Map<String, dynamic>) onSuccess) async {
     var receivePort = ReceivePort();
     var rootToken = RootIsolateToken.instance!;
 
@@ -69,7 +72,8 @@ class AttendanceMainController extends GetxController {
 
     await Isolate.spawn(
       _getAttendanceRecordsByApi,
-      IsolateGetApiData(token: rootToken, answerPort: receivePort.sendPort, apiUrl: apiUrl),
+      IsolateGetApiData(
+          token: rootToken, answerPort: receivePort.sendPort, apiUrl: apiUrl),
     );
   }
 
@@ -85,15 +89,17 @@ class AttendanceMainController extends GetxController {
 
   Future<void> setUserOwnData() async {
     var userData = teamAttendanceResponse.value.data?.firstWhere(
-          (item) => "${item.empId}" == empID.value,
+      (item) => "${item.empId}" == empID.value,
     );
 
     if (userData != null) {
       userName.value = userData.empFullName!;
       userDesignation.value = userData.desigName!;
       userAddress.value = userData.branchAddress!;
-      userCheckInTime.value = userData.status=='' ? "--:--" : userData.status!;
-      userCheckoutTime.value = userData.status2=='' ? "--:--" : userData.status2!;
+      userCheckInTime.value =
+          userData.status == '' ? "--:--" : userData.status!;
+      userCheckoutTime.value =
+          userData.status2 == '' ? "--:--" : userData.status2!;
       userProfileUrl.value = userData.imagePath!;
       userEmpId.value = userData.empId!;
       userCmpId.value = userData.cmpID!;
@@ -116,18 +122,19 @@ class AttendanceMainController extends GetxController {
     await _fetchDataFromApiWithParams(
       AppURL.attendanceRegularizeDetailsURL,
       requestParam,
-          (data) {
-        attendanceRegularizeDetails.value = AttendanceRegularizeDetails.fromJson(data);
+      (data) {
+        attendanceRegularizeDetails.value =
+            AttendanceRegularizeDetails.fromJson(data);
         isLoading.value = false;
       },
     );
   }
 
   Future<void> _fetchDataFromApiWithParams(
-      String apiUrl,
-      Map<String, dynamic> params,
-      Function(Map<String, dynamic>) onSuccess,
-      ) async {
+    String apiUrl,
+    Map<String, dynamic> params,
+    Function(Map<String, dynamic>) onSuccess,
+  ) async {
     var receivePort = ReceivePort();
     var rootToken = RootIsolateToken.instance!;
 
@@ -141,7 +148,11 @@ class AttendanceMainController extends GetxController {
 
     await Isolate.spawn(
       _getUserAttendanceByApi,
-      IsolatePostApiData(token: rootToken, requestData: params, answerPort: receivePort.sendPort, apiUrl: apiUrl),
+      IsolatePostApiData(
+          token: rootToken,
+          requestData: params,
+          answerPort: receivePort.sendPort,
+          apiUrl: apiUrl),
     );
   }
 
@@ -162,25 +173,25 @@ class AttendanceMainController extends GetxController {
   }
 
   String getWeekDay(String? date) {
-    if(date!=null && date!="") {
+    if (date != null && date != "") {
       DateFormat inputFormat = DateFormat('MM/dd/yyyy HH:mm:ss');
       DateTime parsedDate = inputFormat.parse(date);
       String daysStr = DateFormat('EEEE').format(parsedDate);
-      return daysStr;// Output: 2023-10-01
-    }else{
+      return daysStr; // Output: 2023-10-01
+    } else {
       return "";
     }
   }
 
   String setDate(String? date) {
-    if(date!=null && date!=""){
+    if (date != null && date != "") {
       DateFormat inputFormat = DateFormat('MM/dd/yyyy HH:mm:ss');
       // Parse the input string to DateTime
       DateTime parsedDate = inputFormat.parse(date);
       // Format the DateTime to the desired output format (MM/dd/yyyy)
       String formattedDate = DateFormat('MM/dd/yyyy').format(parsedDate);
       return formattedDate;
-    }else{
+    } else {
       return "";
     }
   }
@@ -191,7 +202,7 @@ class AttendanceMainController extends GetxController {
     // Generate a list of years from (currentYear - 10) to (currentYear + 2)
     final List<Map<String, dynamic>> yearItems = List.generate(
       13, // Total of 13 years (10 previous + current year + 2 future)
-          (index) => {'name': (currentYear - 10 + index).toString()},
+      (index) => {'name': (currentYear - 10 + index).toString()},
     );
 
     // Set default to current year if no selection has been made yet
@@ -267,21 +278,21 @@ class AttendanceMainController extends GetxController {
       'Select Month for $selectedYear',
       _generateMonthItems(),
       selectedMonthIndex,
-          (index) {
-            selectedMonthIndex.value = index;
-            Get.back();
+      (index) {
+        selectedMonthIndex.value = index;
+        Get.back();
         getUserAttendanceRecords(selectedYear, index + 1);
       },
     );
   }
 
   void _showDialog(
-      BuildContext context,
-      String title,
-      List<Map<String, dynamic>> items,
-      RxInt selectedIndex,
-      Function(int) onItemTap,
-      ) {
+    BuildContext context,
+    String title,
+    List<Map<String, dynamic>> items,
+    RxInt selectedIndex,
+    Function(int) onItemTap,
+  ) {
     showDialog(
       context: context,
       builder: (context) {
@@ -327,9 +338,11 @@ class AttendanceMainController extends GetxController {
     );
   }
 
+  // ignore: unused_element
   List<Map<String, dynamic>> _generateYearItems() {
     var currentYear = DateTime.now().year - 15;
-    return List.generate(50, (index) => {'name': (currentYear + index).toString()});
+    return List.generate(
+        50, (index) => {'name': (currentYear + index).toString()});
   }
 
   List<Map<String, dynamic>> _generateMonthItems() {

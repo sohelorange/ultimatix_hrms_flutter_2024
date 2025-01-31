@@ -59,7 +59,7 @@ class BackupGeofenceView extends GetView<GeofenceController> {
               borderRadius: BorderRadius.circular(10), // Rounded corners
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.1), // Shadow color
+                  color: Colors.black.withValues(alpha: 0.1), // Shadow color
                   spreadRadius: 2, // Spread radius
                   blurRadius: 8, // Blur radius
                   offset: const Offset(0, 4), // Shadow position
@@ -112,7 +112,7 @@ class BackupGeofenceView extends GetView<GeofenceController> {
                               // Adjust radius
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
+                                  color: Colors.grey.withValues(alpha: 0.5),
                                   spreadRadius: 0,
                                   blurRadius: 0,
                                   offset: const Offset(0, 0), // Shadow position

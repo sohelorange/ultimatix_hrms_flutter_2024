@@ -4,7 +4,11 @@ class AppDataModel {
   bool? isForMobileUpdate;
   bool isNoBack;
 
-  AppDataModel({this.isdCode, this.mobile, this.isForMobileUpdate, this.isNoBack = false});
+  AppDataModel(
+      {this.isdCode,
+      this.mobile,
+      this.isForMobileUpdate,
+      this.isNoBack = false});
 }
 
 class DashBoardDetail {

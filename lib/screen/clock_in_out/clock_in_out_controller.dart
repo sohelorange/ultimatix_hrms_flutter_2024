@@ -530,7 +530,9 @@ class ClockInOutController extends GetxController
               ),
               child: Row(
                 children: [
-                  defaultValue.value!=item ? Container() : SvgPicture.asset(AppImages.svgClockNew),
+                  defaultValue.value != item
+                      ? Container()
+                      : SvgPicture.asset(AppImages.svgClockNew),
                   Text(
                     item,
                     style: const TextStyle(
@@ -548,5 +550,3 @@ class ClockInOutController extends GetxController
     isLoadDropDown.value = false;
   }
 }
-
-

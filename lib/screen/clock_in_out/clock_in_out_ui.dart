@@ -2,7 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:ultimatix_hrms_flutter/screen/clockInOut/clock_in_out_controller.dart';
+import 'package:ultimatix_hrms_flutter/screen/clock_in_out/clock_in_out_controller.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/dash_board_controller.dart';
 import 'package:ultimatix_hrms_flutter/utility/preference_utils.dart';
 import 'package:ultimatix_hrms_flutter/widget/new/common_app_bar_two.dart';
@@ -128,6 +128,7 @@ class ClockInOutUi extends GetView<ClockInOutController> {
     );
   }
 
+  // ignore: unused_element
   Widget _buildTitle(BuildContext context, String text) {
     return Center(
       child: CommonText(
@@ -162,7 +163,11 @@ class ClockInOutUi extends GetView<ClockInOutController> {
                     const SizedBox(
                       width: 5,
                     ),
-                    const Expanded(child: Text("Select Clocking Type",overflow: TextOverflow.ellipsis,))
+                    const Expanded(
+                        child: Text(
+                      "Select Clocking Type",
+                      overflow: TextOverflow.ellipsis,
+                    ))
                   ],
                 ),
                 items: controller.menuItems,
@@ -212,6 +217,7 @@ class ClockInOutUi extends GetView<ClockInOutController> {
     );
   }
 
+  // ignore: unused_element
   Widget _buildWorkHourWidget(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.9,
@@ -239,6 +245,7 @@ class ClockInOutUi extends GetView<ClockInOutController> {
     );
   }
 
+  // ignore: unused_element
   Widget _buildCheckInOutButton(BuildContext context) {
     return IconButton(
       icon: SizedBox(
@@ -257,6 +264,7 @@ class ClockInOutUi extends GetView<ClockInOutController> {
     );
   }
 
+  // ignore: unused_element
   Widget _buildBottomWidgets(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -297,15 +305,15 @@ class ClockInOutUi extends GetView<ClockInOutController> {
     );
   }
 
-  _getLastClockingLocation(BuildContext context){
+  _getLastClockingLocation(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.all(16),
-        height: _responsiveHeight(context, 0.3),
-        width: MediaQuery.of(context).size.width * 0.9,
-        decoration: BoxDecoration(
-          color: AppColors.colorLightPurple3,
-          borderRadius: BorderRadius.circular(10),
-        ),
+      padding: const EdgeInsets.all(16),
+      height: _responsiveHeight(context, 0.3),
+      width: MediaQuery.of(context).size.width * 0.9,
+      decoration: BoxDecoration(
+        color: AppColors.colorLightPurple3,
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: _buildCardContainer(context, controller.userLocAddress.value),
     );
   }
@@ -322,17 +330,25 @@ class ClockInOutUi extends GetView<ClockInOutController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Last Clocking",style: TextStyle(color: AppColors.color6D24A1,fontSize: 16),),
+          const Text(
+            "Last Clocking",
+            style: TextStyle(color: AppColors.color6D24A1, fontSize: 16),
+          ),
           SizedBox(height: _responsiveHeight(context, 0.02)),
           Expanded(
             child: Container(
                 width: MediaQuery.of(context).size.width * 0.9,
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(6)
-                ),
-                child: Text("Mon, Jan 13,2025",style: TextStyle(color: AppColors.color2F2F31,fontWeight: FontWeight.w500,fontSize: 14),)),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(6)),
+                child: const Text(
+                  "Mon, Jan 13,2025",
+                  style: TextStyle(
+                      color: AppColors.color2F2F31,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14),
+                )),
           ),
         ],
       ),
@@ -363,23 +379,24 @@ class ClockInOutUi extends GetView<ClockInOutController> {
                   padding: const EdgeInsets.all(8),
                   child: SvgPicture.asset(
                     AppImages.svgClockInputReason,
-                  )
-              ),prefixIconConstraints: const BoxConstraints(maxHeight: 30, maxWidth: 30),
+                  )),
+              prefixIconConstraints:
+                  const BoxConstraints(maxHeight: 30, maxWidth: 30),
               hintStyle: const TextStyle(color: AppColors.color1C1F37),
               border: UnderlineInputBorder(
                 borderSide: BorderSide(
                     color: AppColors.color6B6D7A
-                        .withOpacity(0.12)), // Default grey underline
+                        .withValues(alpha: 0.12)), // Default grey underline
               ),
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
                     color: AppColors.color6B6D7A
-                        .withOpacity(0.12)), // Grey when enabled
+                        .withValues(alpha: 0.12)), // Grey when enabled
               ),
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
                     color: AppColors.color6B6D7A
-                        .withOpacity(0.12)), // Blue when focused
+                        .withValues(alpha: 0.12)), // Blue when focused
               ),
             ),
           ),

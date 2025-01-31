@@ -66,7 +66,8 @@ class CommonExploreGridView extends StatelessWidget {
                     spreadRadius: 1.0,
                     offset: Offset(0, 0),
                   ),
-                ],              ),
+                ],
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,

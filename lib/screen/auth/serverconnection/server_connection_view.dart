@@ -22,9 +22,9 @@ class ServerConnectionView extends GetView<ServerConnectionController> {
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Obx(() => Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
                       child: Column(
                         //mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,23 +58,23 @@ class ServerConnectionView extends GetView<ServerConnectionController> {
                         ],
                       ),
                     ),
-              ),
-              CommonButtonNew(
-                buttonText: 'Connect',
-                onPressed: () {
-                  if (controller
-                      .serverConnectionController.value.text.isEmpty) {
-                    AppSnackBar.showGetXCustomSnackBar(
-                        message: 'Please enter server name.');
-                  } else {
-                    controller.serverConnectionValidationWithAPI();
-                  }
-                },
-                isLoading: controller.isLoading.value,
-                isDisable: controller.isDisable.value,
-              ).paddingOnly(top: 20),
-            ],
-          )),
+                  ),
+                  CommonButtonNew(
+                    buttonText: 'Connect',
+                    onPressed: () {
+                      if (controller
+                          .serverConnectionController.value.text.isEmpty) {
+                        AppSnackBar.showGetXCustomSnackBar(
+                            message: 'Please enter server name.');
+                      } else {
+                        controller.serverConnectionValidationWithAPI();
+                      }
+                    },
+                    isLoading: controller.isLoading.value,
+                    isDisable: controller.isDisable.value,
+                  ).paddingOnly(top: 20),
+                ],
+              )),
         ),
       ),
     );

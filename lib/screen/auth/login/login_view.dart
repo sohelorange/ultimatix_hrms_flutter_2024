@@ -75,7 +75,7 @@ class LoginView extends GetView<LoginController> {
                 focusNode: controller.loginIDFocus,
                 hintText: AppString.enterUserName,
                 // prifixPadding: const EdgeInsets.all(12),
-                hintColor: AppColors.colorBlack.withOpacity(0.3),
+                hintColor: AppColors.colorBlack.withValues(alpha: 0.3),
               ).paddingOnly(left: 20, right: 20),
               Row(
                 children: [
@@ -94,7 +94,7 @@ class LoginView extends GetView<LoginController> {
                 focusNode: controller.passWordFocus,
                 hintText: AppString.enterpassword,
                 prifixPadding: const EdgeInsets.all(12),
-                hintColor: AppColors.colorBlack.withOpacity(0.3),
+                hintColor: AppColors.colorBlack.withValues(alpha: 0.3),
                 isPassword: true,
               ).paddingOnly(left: 20, right: 20),
               Row(

@@ -1,8 +1,3 @@
-/// status : true
-/// code : 200
-/// message : "Success"
-/// data : [{"Duration":"04:53","For_Date":"2024-07-16T00:00:00","First_In_Time":"2024-07-16T11:31:00","Last_Out_Time":"2024-07-16T16:24:00"}]
-
 class ClockResponse {
   ClockResponse({
     bool? status,

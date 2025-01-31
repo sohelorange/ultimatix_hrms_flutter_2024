@@ -194,7 +194,7 @@ class ManagerApprovalController extends GetxController {
           errorMsg.value = Constants.somethingWrongMsg;
         } else if (e.toString().contains('TimeOutException')) {
           errorMsg.value = Constants.timeOutMsg;
-        }else{
+        } else {
           errorMsg.value = Constants.somethingWrongMsg;
         }
         //AppSnackBar.showGetXCustomSnackBar(message: e.toString());

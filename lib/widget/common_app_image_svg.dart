@@ -29,7 +29,8 @@ class CommonAppImageSvg extends StatelessWidget {
         height: height,
         width: width,
         fit: fit,
-        colorFilter: color != null ? ColorFilter.mode(color!, BlendMode.srcIn) : null,
+        colorFilter:
+            color != null ? ColorFilter.mode(color!, BlendMode.srcIn) : null,
       );
     } else {
       return CachedNetworkImage(

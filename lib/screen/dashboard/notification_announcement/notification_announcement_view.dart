@@ -8,7 +8,6 @@ import 'package:ultimatix_hrms_flutter/widget/new/common_app_bar_new.dart';
 import '../../../app/app_colors.dart';
 import '../../../app/app_font_weight.dart';
 import '../../../utility/utils.dart';
-import '../../../widget/common_container.dart';
 import '../../../widget/common_text.dart';
 
 class NotificationAnnouncementView

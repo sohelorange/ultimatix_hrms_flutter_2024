@@ -138,7 +138,7 @@ class _CommonLogoutDialogState extends State<CommonLogoutDialog> {
       widget.onLogoutPressed();
 
       // Close the dialog after logout
-      if(mounted) {
+      if (mounted) {
         Navigator.pop(context);
       }
     });

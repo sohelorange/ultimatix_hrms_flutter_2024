@@ -15,7 +15,8 @@ class CommonSearchableDropdown extends StatefulWidget {
   });
 
   @override
-  State<CommonSearchableDropdown> createState() => _CommonSearchableDropdownState();
+  State<CommonSearchableDropdown> createState() =>
+      _CommonSearchableDropdownState();
 }
 
 class _CommonSearchableDropdownState extends State<CommonSearchableDropdown> {

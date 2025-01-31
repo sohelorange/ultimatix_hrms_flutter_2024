@@ -83,10 +83,14 @@ class ChangePasswordController extends GetxController {
               message: response['message'], backgroundColor: Colors.green);
         } else {
           if (response['code'] == 204 && response['status'] == false) {
-            AppSnackBar.showGetXCustomSnackBar(message: response['data'].toString().replaceAll('#False#', '.'));
+            AppSnackBar.showGetXCustomSnackBar(
+                message:
+                    response['data'].toString().replaceAll('#False#', '.'));
           } else {
             //AppSnackBar.showGetXCustomSnackBar(message: response['message']);
-            AppSnackBar.showGetXCustomSnackBar(message: response['data'].toString().replaceAll('#False#', '.'));
+            AppSnackBar.showGetXCustomSnackBar(
+                message:
+                    response['data'].toString().replaceAll('#False#', '.'));
           }
         }
       } else {

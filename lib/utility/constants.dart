@@ -6,7 +6,8 @@ class Constants {
   Constants._();
 
   //TODO : App Constant
-  static const int passwordLengthApp = 8; // Define password length which is used in whole app
+  static const int passwordLengthApp =
+      8; // Define password length which is used in whole app
   static const String userIdApp = "userIdApp";
   static const String passwordApp = "passwordApp";
   static const String serverNameApp = "serverNameApp";
@@ -20,9 +21,10 @@ class Constants {
   static get deviceTypePlatform => kIsWeb
       ? 'web'
       : Platform.isAndroid
-      ? 'android'
-      : 'ios'; // used in api calls
-  static const int otpLength = 4; // Define OTP length which is used in whole app
+          ? 'android'
+          : 'ios'; // used in api calls
+  static const int otpLength =
+      4; // Define OTP length which is used in whole app
 // Define your api's code for unauthorized
 
   //TODO : Pref Constants

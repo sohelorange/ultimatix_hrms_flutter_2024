@@ -138,7 +138,8 @@ class LoginViewNew extends GetView<LoginController> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      controller.isRememberCheck.value = !controller.isRememberCheck.value;
+                      controller.isRememberCheck.value =
+                          !controller.isRememberCheck.value;
                       PreferenceUtils.setIsRemember(
                           controller.isRememberCheck.value);
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/app/app_colors.dart';
 import 'package:ultimatix_hrms_flutter/utility/utils.dart';
-import 'package:ultimatix_hrms_flutter/widget/common_button.dart';
 import 'package:ultimatix_hrms_flutter/widget/new/common_button_new.dart';
 
 import '../app/app_dimensions.dart';
@@ -49,9 +48,7 @@ class CommonMaterialDialog extends StatelessWidget {
                 fontWeight: AppFontWeight.w500,
               ),
               const SizedBox(height: 8),
-              const Divider(
-                  color: AppColors.colorDCDCDC,
-                  thickness: 1),
+              const Divider(color: AppColors.colorDCDCDC, thickness: 1),
             ],
           ),
 

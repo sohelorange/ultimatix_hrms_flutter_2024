@@ -174,7 +174,7 @@ class CommonInputField extends StatelessWidget {
               ),
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-              color: AppColors.colorDarkBlue.withOpacity(0.1),
+              color: AppColors.colorDarkBlue.withValues(alpha: 0.1),
               // Your desired color
               width: 1.0, // Your desired width
             ),
@@ -187,7 +187,8 @@ class CommonInputField extends StatelessWidget {
           ),
           disabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.grey.withOpacity(0.5), // Dull gray for disabled state
+              color: Colors.grey.withValues(alpha: 0.5),
+              // Dull gray for disabled state
               width: 1.0,
             ),
           ),

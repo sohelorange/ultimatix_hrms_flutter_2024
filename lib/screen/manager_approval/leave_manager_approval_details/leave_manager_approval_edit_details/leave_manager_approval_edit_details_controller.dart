@@ -297,8 +297,6 @@ class LeaveManagerApprovalEditDetailsController extends GetxController {
         var response =
             await DioClient().post(AppURL.leaveApplicationURL, param);
 
-        print(response);
-
         if (response['code'] == 200 && response['status'] == true) {
           final data = response['data'];
           // if (data != null && data is List && data.isNotEmpty) {

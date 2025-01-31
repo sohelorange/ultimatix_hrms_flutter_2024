@@ -34,23 +34,25 @@ class CommonExploreGridViewNew extends StatelessWidget {
 
         return useListView
             ? ListView.builder(
-          shrinkWrap: true,
-          padding: const EdgeInsets.all(16),
-          itemCount: visibleItems.length,
-          itemBuilder: (context, index) => _buildItem(visibleItems, index),
-        )
+                shrinkWrap: true,
+                padding: const EdgeInsets.all(16),
+                itemCount: visibleItems.length,
+                itemBuilder: (context, index) =>
+                    _buildItem(visibleItems, index),
+              )
             : GridView.builder(
-          shrinkWrap: true,
-          padding: const EdgeInsets.all(16),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 10.0,
-            mainAxisSpacing: 10.0,
-            mainAxisExtent: 66,
-          ),
-          itemCount: visibleItems.length,
-          itemBuilder: (context, index) => _buildItem(visibleItems, index),
-        );
+                shrinkWrap: true,
+                padding: const EdgeInsets.all(16),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10.0,
+                  mainAxisSpacing: 10.0,
+                  mainAxisExtent: 66,
+                ),
+                itemCount: visibleItems.length,
+                itemBuilder: (context, index) =>
+                    _buildItem(visibleItems, index),
+              );
       },
     );
   }
@@ -83,17 +85,17 @@ class CommonExploreGridViewNew extends StatelessWidget {
           children: [
             iconPath.isEmpty
                 ? const CommonAppImageSvg(
-              imagePath: AppImages.svgAvatar,
-              height: 20,
-              width: 20,
-              fit: BoxFit.cover,
-            )
+                    imagePath: AppImages.svgAvatar,
+                    height: 20,
+                    width: 20,
+                    fit: BoxFit.cover,
+                  )
                 : CommonAppImageSvg(
-              imagePath: iconPath,
-              height: 20,
-              width: 20,
-              fit: BoxFit.cover,
-            ),
+                    imagePath: iconPath,
+                    height: 20,
+                    width: 20,
+                    fit: BoxFit.cover,
+                  ),
             const SizedBox(width: 8),
             Expanded(
               child: CommonText(

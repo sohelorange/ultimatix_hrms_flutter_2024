@@ -338,8 +338,6 @@ class EditFamilyDetailsController extends GetxController {
           "cmpCityName": companyCityController.value.text
         };
 
-        print(attachment.value);
-
         var response = await DioClient()
             .post(AppURL.updateEmployeeFamilyDetailsURL, param);
 

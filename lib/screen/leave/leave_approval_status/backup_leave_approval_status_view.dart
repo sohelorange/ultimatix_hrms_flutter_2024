@@ -14,7 +14,8 @@ import 'package:ultimatix_hrms_flutter/widget/common_text.dart';
 
 import '../../../widget/common_app_image_svg.dart';
 
-class BackupLeaveApprovalStatusView extends GetView<LeaveApprovalStatusController> {
+class BackupLeaveApprovalStatusView
+    extends GetView<LeaveApprovalStatusController> {
   const BackupLeaveApprovalStatusView({super.key});
 
   @override
@@ -107,7 +108,7 @@ class BackupLeaveApprovalStatusView extends GetView<LeaveApprovalStatusControlle
         borderRadius: BorderRadius.circular(10.0),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
+            color: Colors.grey.withValues(alpha: 0.2),
             blurRadius: 4.0,
             spreadRadius: 1.0,
             offset: const Offset(0, 0),
@@ -273,13 +274,13 @@ class BackupLeaveApprovalStatusView extends GetView<LeaveApprovalStatusControlle
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
                             color: index == 0
-                                ? AppColors.purpleSwatch.withOpacity(0.10)
-                                : AppColors.colorE1E1E1.withOpacity(0.10),
+                                ? AppColors.purpleSwatch.withValues(alpha: 0.10)
+                                : AppColors.colorE1E1E1.withValues(alpha: 0.10),
                             // Replace with AppColors.colorF68C1F
                             borderRadius: BorderRadius.circular(8.0),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.grey.withOpacity(0.1),
+                                color: Colors.grey.withValues(alpha: 0.1),
                                 spreadRadius: 1,
                                 blurRadius: 3,
                                 offset: const Offset(0, 2),
@@ -307,19 +308,20 @@ class BackupLeaveApprovalStatusView extends GetView<LeaveApprovalStatusControlle
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           color: index == 0
-                              ? AppColors.purpleSwatch.withOpacity(0.10)
+                              ? AppColors.purpleSwatch.withValues(alpha: 0.10)
                               : controller.leaveApprovalResponse.value.data
                                           ?.data1
                                           ?.elementAt(index)
                                           .applicationStatus
                                           ?.trim() ==
                                       "A"
-                                  ? Colors.green.withOpacity(0.10)
-                                  : AppColors.colorE1E1E1.withOpacity(0.10),
+                                  ? Colors.green.withValues(alpha: 0.10)
+                                  : AppColors.colorE1E1E1
+                                      .withValues(alpha: 0.10),
                           borderRadius: BorderRadius.circular(8.0),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.grey.withOpacity(0.1),
+                              color: Colors.grey.withValues(alpha: 0.1),
                               spreadRadius: 1,
                               blurRadius: 3,
                               offset: const Offset(0, 2),

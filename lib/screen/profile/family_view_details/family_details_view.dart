@@ -6,9 +6,6 @@ import 'package:ultimatix_hrms_flutter/screen/profile/family_view_details/family
 import 'package:ultimatix_hrms_flutter/widget/common_list_row.dart';
 import 'package:ultimatix_hrms_flutter/widget/new/common_app_bar_new.dart';
 
-import '../../../widget/common_app_bar.dart';
-import '../../../widget/common_container.dart';
-
 class FamilyDetailsView extends GetView<FamilyDetailsViewController> {
   const FamilyDetailsView({super.key});
 
@@ -42,10 +39,8 @@ class FamilyDetailsView extends GetView<FamilyDetailsViewController> {
                   CommonListRow(
                       label: 'Date Of Birth', value: controller.dob.value),
                   CommonListRow(
-                      label: 'Occupation',
-                      value: controller.occupation.value),
-                  CommonListRow(
-                      label: 'Hobby', value: controller.hobby.value),
+                      label: 'Occupation', value: controller.occupation.value),
+                  CommonListRow(label: 'Hobby', value: controller.hobby.value),
                   CommonListRow(
                       label: 'Standard', value: controller.standard.value),
                   CommonListRow(
@@ -68,8 +63,7 @@ class FamilyDetailsView extends GetView<FamilyDetailsViewController> {
                   CommonListRow(
                       label: 'PAN Card', value: controller.panCard.value),
                   CommonListRow(
-                      label: 'Aadhar Card',
-                      value: controller.aadharCard.value),
+                      label: 'Aadhar Card', value: controller.aadharCard.value),
                   CommonListRow(
                       label: 'Height', value: controller.height.value),
                   CommonListRow(

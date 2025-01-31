@@ -184,9 +184,11 @@ class BackupAddLeaveView extends GetView<AddLeaveController> {
                 Utils.closeKeyboard(context);
 
                 // Check if the selected date is already the same as the last selected date.
-                if (controller.lastSelectedDate != null &&
+                if (controller.lastSelectedDate !=
+                        null /*&&
                     controller.lastSelectedDate ==
-                        controller.fromDateController.value.text) {
+                        controller.fromDateController.value.text*/
+                    ) {
                   // Call the API directly as the date hasn't changed.
                 } else {
                   // Open date picker and allow date selection.

@@ -17,7 +17,7 @@ class CommonDatePicker extends StatelessWidget {
     required this.imagePath,
     required this.onTap,
     this.gradient, // Gradient will now be optional and nullable
-    this.borderRadius = 10.0,
+    this.borderRadius = 6.0,
   });
 
   @override
@@ -28,7 +28,7 @@ class CommonDatePicker extends StatelessWidget {
         height: 40,
         //padding: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
-          gradient: gradient ?? AppColors.gradientBackground,
+          gradient: gradient ?? AppColors.gradientBackgroundDate,
           // Assign default if null
           borderRadius: BorderRadius.circular(borderRadius),
         ),

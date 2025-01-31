@@ -12,9 +12,11 @@ import 'package:ultimatix_hrms_flutter/widget/common_app_image_svg.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_button.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_container.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_text.dart';
+import 'package:ultimatix_hrms_flutter/widget/new/common_app_bar_new.dart';
 
 import '../../app/app_images.dart';
 import '../../widget/common_app_image.dart';
+import '../../widget/new/common_button_new.dart';
 
 class GeofenceView extends GetView<GeofenceController> {
   const GeofenceView({super.key});
@@ -23,28 +25,24 @@ class GeofenceView extends GetView<GeofenceController> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      appBar: CommonAppBar(
-        title: 'Geofence',
-        actions: [
+      appBar: CommonNewAppBar(
+        title: "Geofence",
+        leadingIconSvg: AppImages.icBack,
+        trailingWidgets: [
           GestureDetector(
             onTap: () {
               controller.getCurrentLocation();
             },
             child: const CommonAppImage(
               imagePath: AppImages.dashRefreshIcon,
-              color: AppColors.colorDarkBlue,
+              color: AppColors.colorWhite,
             ),
-          ),
-          const SizedBox(
-            width: 10,
           ),
         ],
       ),
-      body: CommonContainer(
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          child: Obx(() => getGeofenceView(context)),
-        ),
+      body: Padding(
+        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+        child: Obx(() => getGeofenceView(context)),
       ),
     ));
   }
@@ -54,30 +52,31 @@ class GeofenceView extends GetView<GeofenceController> {
       child: Column(
         children: [
           Container(
-            height: 500,
+            width: double.infinity,
+            //height: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10), // Rounded corners
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1), // Shadow color
-                  spreadRadius: 2, // Spread radius
-                  blurRadius: 8, // Blur radius
-                  offset: const Offset(0, 4), // Shadow position
-                ),
-              ],
-            ),
-            child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              // Same rounded corners for clipping
-              child: GoogleMap(
-                onMapCreated: controller.onMapCreated,
-                initialCameraPosition: CameraPosition(
-                  target: controller.currentPosition.value,
-                  zoom: 17.0,
+              color: AppColors.colorF1EBFB,
+            ),
+            child: Container(
+              height: 500,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10), // Rounded corners
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                // Same rounded corners for clipping
+                child: GoogleMap(
+                  onMapCreated: controller.onMapCreated,
+                  initialCameraPosition: CameraPosition(
+                    target: controller.currentPosition.value,
+                    zoom: 17.0,
+                  ),
+                  markers: Set<Marker>.of(controller.marker),
+                  circles: Set<Circle>.from(controller.circles),
+                  myLocationEnabled: true,
                 ),
-                markers: Set<Marker>.of(controller.marker),
-                circles: Set<Circle>.from(controller.circles),
-                myLocationEnabled: true,
               ),
             ),
           ),
@@ -87,94 +86,89 @@ class GeofenceView extends GetView<GeofenceController> {
               : Column(
                   children: [
                     Container(
-                      height: 70,
-                      //margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      width: double.infinity,
+                      //height: double.infinity,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
                       decoration: BoxDecoration(
-                        color: Colors.white,
                         borderRadius: BorderRadius.circular(10),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color(0X1C1F370D),
-                            blurRadius: 4.0,
-                            spreadRadius: 1.0,
-                            offset: Offset(0, 0),
-                          ),
-                        ],
+                        color: AppColors.colorF1EBFB,
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              // Adjust radius
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 0,
-                                  blurRadius: 0,
-                                  offset: const Offset(0, 0), // Shadow position
-                                ),
-                              ],
+                      child: Container(
+                        height: 70,
+                        //margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: ClipOval(
+                                //borderRadius: BorderRadius.circular(10),
+                                child: controller.userImageUrl.value.isEmpty
+                                    ? const CommonAppImageSvg(
+                                        imagePath: AppImages
+                                            .svgAvatar, // Default SVG image
+                                        height: 40,
+                                        width: 40,
+                                        fit: BoxFit
+                                            .cover, // Ensures the image fills the space
+                                      )
+                                    : CommonAppImageSvg(
+                                        imagePath:
+                                            controller.userImageUrl.value,
+                                        // Use profile image URL
+                                        height: 40,
+                                        width: 40,
+                                        fit: BoxFit
+                                            .cover, // Ensures the image fills the space
+                                      ),
+                              ),
                             ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: controller.userImageUrl.value.isEmpty
-                                  ? const CommonAppImageSvg(
-                                      imagePath: AppImages
-                                          .svgAvatar, // Default SVG image
-                                      height: 40,
-                                      width: 40,
-                                      fit: BoxFit
-                                          .cover, // Ensures the image fills the space
-                                    )
-                                  : CommonAppImageSvg(
-                                      imagePath: controller.userImageUrl.value,
-                                      // Use profile image URL
-                                      height: 40,
-                                      width: 40,
-                                      fit: BoxFit
-                                          .cover, // Ensures the image fills the space
-                                    ),
+                            Visibility(
+                              visible: false,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: controller.userImageUrl.value.isEmpty
+                                    ? const CommonAppImageSvg(
+                                        imagePath: AppImages
+                                            .svgAvatar, // Default SVG image
+                                        height: 40,
+                                        width: 40,
+                                        fit: BoxFit
+                                            .cover, // Ensures the image fills the space
+                                      )
+                                    : CommonAppImageSvg(
+                                        imagePath:
+                                            controller.userImageUrl.value,
+                                        // Use profile image URL
+                                        height: 40,
+                                        width: 40,
+                                        fit: BoxFit
+                                            .cover, // Ensures the image fills the space
+                                      ),
+                              ),
                             ),
-                          ),
-                          Visibility(
-                            visible: false,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: controller.userImageUrl.value.isEmpty
-                                  ? const CommonAppImageSvg(
-                                      imagePath: AppImages
-                                          .svgAvatar, // Default SVG image
-                                      height: 40,
-                                      width: 40,
-                                      fit: BoxFit
-                                          .cover, // Ensures the image fills the space
-                                    )
-                                  : CommonAppImageSvg(
-                                      imagePath: controller.userImageUrl.value,
-                                      // Use profile image URL
-                                      height: 40,
-                                      width: 40,
-                                      fit: BoxFit
-                                          .cover, // Ensures the image fills the space
-                                    ),
+                            const SizedBox(
+                              width: 10,
                             ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          CommonText(
-                            text: controller.isWithinRadius.value
-                                ? 'Entered: ${controller.geoFenceModel.value.data != null ? controller.geoFenceModel.value.data![0].geoLocation : 'No data Available'}'
-                                : 'You are Outside of Geofence',
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14,
-                            color: AppColors.colorDarkBlue,
-                          ),
-                        ],
+                            CommonText(
+                              text: controller.isWithinRadius.value
+                                  ? 'Entered: ${controller.geoFenceModel.value.data != null ? controller.geoFenceModel.value.data![0].geoLocation : 'No data Available'}'
+                                  : 'You are Outside of Geofence',
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16,
+                              color: AppColors.color2F2F31,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     Visibility(
@@ -182,7 +176,7 @@ class GeofenceView extends GetView<GeofenceController> {
                       visible: controller.isWithinRadius.value,
                       child: Column(
                         children: [
-                          CommonButton(
+                          CommonButtonNew(
                                   buttonText: 'Ok',
                                   onPressed: () {
                                     Get.toNamed(AppRoutes.clockInRoute);
@@ -204,7 +198,7 @@ class GeofenceView extends GetView<GeofenceController> {
                       ),
                     ),
                   ],
-                ).paddingOnly(top: 20),
+                ).paddingOnly(top: 15),
         ],
       ),
     );

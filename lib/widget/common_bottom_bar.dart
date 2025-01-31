@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ultimatix_hrms_flutter/utility/utils.dart';
 
 import '../app/app_colors.dart';
-import 'common_app_image.dart';
 import 'common_app_image_svg.dart';
 import 'common_text.dart';
 
@@ -41,7 +39,8 @@ class _CommonBottomNavBarState extends State<CommonBottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
-      color: AppColors.colorAppBar,
+      //color: AppColors.colorAppBar,
+      color: AppColors.color010A46,
       elevation: 10,
       shadowColor: Colors.grey.shade400,
       child: SizedBox(
@@ -81,40 +80,15 @@ class _CommonBottomNavBarState extends State<CommonBottomNavBar> {
                       //     : AppColors.colorDarkGray,
                       fit: BoxFit.cover, // Ensures the image fills the space
                     ),
-
-                    // CommonAppImage(
-                    //   imagePath: isSelected
-                    //       ? item.selectedIconPath
-                    //       : item.unselectedIconPath,
-                    //   color: isSelected
-                    //       ? AppColors.colorDarkBlue
-                    //       : AppColors.colorDarkGray,
-                    //   height: 20,
-                    //   width: 20,
-                    // ),
-
-                    //Icon(
-                    //  isSelected ? item.selectedIconPath : item.unselectedIconPath,
-                    //  color: isSelected
-                    //      ? AppColors.colorDarkBlue
-                    //      : AppColors.colorDarkGray,
-                    //  size: 20,
-                    //),
                     const SizedBox(height: 4),
                     CommonText(
                         text: item.label,
                         fontWeight: FontWeight.w400,
-                        color: isSelected
-                            ? AppColors.colorPurple
-                            : AppColors.colorDarkGray,
+                        // color: isSelected
+                        //     ? AppColors.colorPurple
+                        //     : AppColors.colorDarkGray,
+                        color: AppColors.colorWhite,
                         fontSize: 10),
-                    //Text(
-                    //  item.label,
-                    //  style: TextStyle(
-                    //    color: isSelected ? Colors.blue : Colors.grey,
-                    //    fontSize: 12, // Set a smaller font size
-                    //  ),
-                    //),
                   ],
                 ),
               ),

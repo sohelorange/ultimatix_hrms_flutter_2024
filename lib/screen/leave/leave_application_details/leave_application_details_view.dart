@@ -10,6 +10,10 @@ import 'package:ultimatix_hrms_flutter/widget/common_container.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_dropdown.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_input_field.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_text.dart';
+import 'package:ultimatix_hrms_flutter/widget/new/common_app_bar_new.dart';
+import 'package:ultimatix_hrms_flutter/widget/new/common_app_input_new.dart';
+import 'package:ultimatix_hrms_flutter/widget/new/common_button_new.dart';
+import 'package:ultimatix_hrms_flutter/widget/new/common_dropdown_new.dart';
 
 import '../../../app/app_colors.dart';
 import '../../../app/app_font_weight.dart';
@@ -26,28 +30,11 @@ class LeaveApplicationDetailsView
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      appBar: CommonAppBar(
-        title: 'Application Status',
-        actions: [
-          Visibility(
-            visible: false,
-            //visible:
-            //    controller.leaveAppStatus.value.toString().toUpperCase() == 'A',
-            child: IconButton(
-              onPressed: () {
-                controller.leaveCancelDialog(context);
-              },
-              icon: const Icon(Icons.edit),
-            ),
-          ),
-        ],
-      ),
-      body: CommonContainer(
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          //child: getLeaveDetailsView(context),
-          child: Obx(() => getLeaveDetailsView(context)),
-        ),
+      appBar: const CommonNewAppBar(
+          title: 'Application Status', leadingIconSvg: AppImages.icBack),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+        child: Obx(() => getLeaveDetailsView(context)),
       ),
     ));
   }
@@ -57,164 +44,186 @@ class LeaveApplicationDetailsView
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Container(
+          //   height: 50,
+          //   decoration: BoxDecoration(
+          //     color: controller.leaveAppStatus.value == 'A'
+          //         ? AppColors.colorGreen
+          //             .withOpacity(0.1) // Green for status 'A'
+          //         : controller.leaveAppStatus.value == 'P'
+          //             ? AppColors.colorAmber
+          //                 .withOpacity(0.1) // Amber for status 'P'
+          //             : AppColors.colorRed.withOpacity(0.1),
+          //     borderRadius: BorderRadius.circular(6),
+          //     boxShadow: [
+          //       BoxShadow(
+          //         color: controller.leaveAppStatus.value == 'A'
+          //             ? AppColors.colorGreen
+          //                 .withOpacity(0.1) // Green for status 'A'
+          //             : controller.leaveAppStatus.value == 'P'
+          //                 ? AppColors.colorAmber.withOpacity(0.1)
+          //                 : AppColors.colorRed.withOpacity(0.1),
+          //         blurRadius: 0.0,
+          //         spreadRadius: 1.0,
+          //         offset: const Offset(0, 0),
+          //       ),
+          //     ],
+          //   ),
+          //   child: Center(
+          //     child: CommonText(
+          //       text: controller.leaveStatus.value,
+          //       fontWeight: AppFontWeight.w500,
+          //       fontSize: 16,
+          //       color: controller.leaveAppStatus.value == 'A'
+          //           ? AppColors.colorGreen // Green for status 'A'
+          //           : controller.leaveAppStatus.value == 'P'
+          //               ? AppColors.colorAmber // Amber for status 'P'
+          //               : AppColors.colorRed,
+          //     ),
+          //   ),
+          // ),
+
           Container(
-            height: 50,
+            width: double.infinity,
+            //height: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             decoration: BoxDecoration(
-              color: controller.leaveAppStatus.value == 'A'
-                  ? AppColors.colorGreen
-                      .withOpacity(0.1) // Green for status 'A'
-                  : controller.leaveAppStatus.value == 'P'
-                      ? AppColors.colorAmber
-                          .withOpacity(0.1) // Amber for status 'P'
-                      : AppColors.colorRed.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(6),
-              boxShadow: [
-                BoxShadow(
-                  color: controller.leaveAppStatus.value == 'A'
-                      ? AppColors.colorGreen
-                          .withOpacity(0.1) // Green for status 'A'
-                      : controller.leaveAppStatus.value == 'P'
-                          ? AppColors.colorAmber.withOpacity(0.1)
-                          : AppColors.colorRed.withOpacity(0.1),
-                  blurRadius: 0.0,
-                  spreadRadius: 1.0,
-                  offset: const Offset(0, 0),
+              borderRadius: BorderRadius.circular(10),
+              color: AppColors.colorF1EBFB,
+            ),
+            child: Container(
+                //margin: const EdgeInsets.symmetric(horizontal: 1, vertical: 15),
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: AppColors.colorWhite,
+                  borderRadius: BorderRadius.circular(10),
                 ),
-              ],
-            ),
-            child: Center(
-              child: CommonText(
-                text: controller.leaveStatus.value,
-                fontWeight: AppFontWeight.w500,
-                fontSize: 16,
-                color: controller.leaveAppStatus.value == 'A'
-                    ? AppColors.colorGreen // Green for status 'A'
-                    : controller.leaveAppStatus.value == 'P'
-                        ? AppColors.colorAmber // Amber for status 'P'
-                        : AppColors.colorRed,
-              ),
-            ),
-          ),
-          CommonText(
-            text: 'Request Details',
-            fontWeight: AppFontWeight.w400,
-            fontSize: 14,
-            color: AppColors.colorBlack,
-          ).paddingOnly(top: 20),
-          Container(
-              margin: const EdgeInsets.symmetric(horizontal: 1, vertical: 15),
-              padding: const EdgeInsets.all(15),
-              decoration: BoxDecoration(
-                color: AppColors.colorWhite,
-                borderRadius: BorderRadius.circular(6),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0X1C1F370D),
-                    blurRadius: 4.0,
-                    spreadRadius: 1.0,
-                    offset: Offset(0, 0),
-                  ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CommonText(
-                    text: 'Leave Type ',
-                    fontWeight: AppFontWeight.w400,
-                    fontSize: 12,
-                    color: AppColors.color6B6D7A,
-                  ),
-                  CommonText(
-                    text: controller.leaveType.value,
-                    fontWeight: AppFontWeight.w400,
-                    fontSize: 14,
-                    color: AppColors.colorDarkBlue,
-                  ).paddingOnly(top: 5),
-                  Divider(
-                    color: AppColors.colorBlack.withOpacity(0.2),
-                  ),
-                  CommonText(
-                    text: 'Leave From',
-                    fontWeight: AppFontWeight.w400,
-                    fontSize: 12,
-                    color: AppColors.color6B6D7A,
-                  ),
-                  CommonText(
-                    text: controller.leaveFromDt.value,
-                    fontWeight: AppFontWeight.w400,
-                    fontSize: 14,
-                    color: AppColors.colorDarkBlue,
-                  ).paddingOnly(top: 5),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  CommonText(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CommonText(
+                          text: 'Request Details',
+                          fontWeight: AppFontWeight.w500,
+                          fontSize: 14,
+                          color: AppColors.color2F2F31,
+                        ),
+                        Container(
+                          height: 24,
+                          //width: 80,
+                          decoration: BoxDecoration(
+                            color: controller.leaveAppStatus.value == 'A'
+                                ? const Color(
+                                    0XFF00ABA4) // Green for status 'A'
+                                : controller.leaveAppStatus.value == 'P'
+                                    ? const Color(
+                                        0XFFB2AF76) // Amber for status 'P'
+                                    : AppColors.colorRed
+                                        .withValues(alpha: 0.80),
+                            // Red for statuses 'C' or 'R',
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Center(
+                            child: CommonText(
+                              text: controller.leaveStatus.value,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12,
+                              color: AppColors.colorWhite,
+                            ).paddingSymmetric(horizontal: 10),
+                          ),
+                        ),
+                      ],
+                    ),
+                    CommonText(
+                      text: 'Leave Type ',
+                      fontWeight: AppFontWeight.w400,
+                      fontSize: 12,
+                      color: AppColors.color7B758E,
+                    ).paddingOnly(top: 5),
+                    CommonText(
+                      text: controller.leaveType.value,
+                      fontWeight: AppFontWeight.w400,
+                      fontSize: 14,
+                      color: AppColors.color2F2F31,
+                    ),
+                    CommonText(
+                      text: 'Leave From',
+                      fontWeight: AppFontWeight.w400,
+                      fontSize: 12,
+                      color: AppColors.color7B758E,
+                    ).paddingOnly(top: 5),
+                    CommonText(
+                      text: controller.leaveFromDt.value,
+                      fontWeight: AppFontWeight.w400,
+                      fontSize: 14,
+                      color: AppColors.color2F2F31,
+                    ),
+                    CommonText(
                       text: 'Leave To',
                       fontWeight: AppFontWeight.w400,
                       fontSize: 12,
-                      color: AppColors.color6B6D7A),
-                  CommonText(
-                    text: controller.leaveToDt.value,
-                    fontWeight: AppFontWeight.w400,
-                    fontSize: 14,
-                    color: AppColors.colorDarkBlue,
-                  ).paddingOnly(top: 5),
-                  Divider(
-                    color: AppColors.colorBlack.withOpacity(0.2),
-                  ),
-                  CommonText(
-                    text: 'Period',
-                    fontWeight: AppFontWeight.w400,
-                    fontSize: 12,
-                    color: AppColors.color6B6D7A,
-                  ),
-                  CommonText(
-                    text: '${controller.leavePeriod.value} Days',
-                    fontWeight: AppFontWeight.w400,
-                    fontSize: 14,
-                    color: AppColors.colorDarkBlue,
-                  ).paddingOnly(top: 5),
-                  Divider(
-                    color: AppColors.colorBlack.withOpacity(0.2),
-                  ),
-                  CommonText(
+                      color: AppColors.color7B758E,
+                    ).paddingOnly(top: 5),
+                    CommonText(
+                      text: controller.leaveToDt.value,
+                      fontWeight: AppFontWeight.w400,
+                      fontSize: 14,
+                      color: AppColors.color2F2F31,
+                    ),
+                    CommonText(
+                      text: 'Period',
+                      fontWeight: AppFontWeight.w400,
+                      fontSize: 12,
+                      color: AppColors.color7B758E,
+                    ).paddingOnly(top: 5),
+                    CommonText(
+                      text: '${controller.leavePeriod.value} Days',
+                      fontWeight: AppFontWeight.w400,
+                      fontSize: 14,
+                      color: AppColors.color2F2F31,
+                    ),
+                    CommonText(
                       text: 'Reason',
                       fontWeight: AppFontWeight.w400,
                       fontSize: 12,
-                      color: AppColors.color6B6D7A),
-                  CommonText(
-                    text: controller.leaveReason.value,
-                    fontWeight: AppFontWeight.w400,
-                    fontSize: 14,
-                    color: AppColors.colorDarkBlue,
-                  ).paddingOnly(top: 5),
-                ],
-              )),
+                      color: AppColors.color7B758E,
+                    ).paddingOnly(top: 5),
+                    CommonText(
+                      text: controller.leaveReason.value,
+                      fontWeight: AppFontWeight.w400,
+                      fontSize: 14,
+                      color: AppColors.color2F2F31,
+                    ),
+                  ],
+                )),
+          ),
           Visibility(
               visible:
                   controller.leaveAppStatus.value.toString().toUpperCase() ==
                       'P',
-              child: CommonButton(
+              child: CommonButtonNew(
                 buttonText: 'Delete',
                 onPressed: () {
                   controller.deleteWithAPI();
                 },
                 isLoading: controller.isDeleteLoading.value,
                 isDisable: controller.isDisable.value,
-              )),
+              ).paddingOnly(top: 20)
+          ),
           Visibility(
               visible:
                   controller.leaveAppStatus.value.toString().toUpperCase() ==
                       'A',
               child: controller.isLoading.isTrue
                   ? SizedBox(
-                      height: 350,
-                      child: Center(child: Utils.commonCircularProgress()))
+                      height: 500,
+                      child: Center(child: Utils.commonCircularProgress())).paddingOnly(top: 20)
                   : controller.leaveDetailsListResponse.value.data != null
-                      ? _leaveCancelListUI(context)
+                      ? _leaveCancelListUI(context).paddingOnly(top: 20)
                       : SizedBox(
-                          height: 350,
+                          height: 500,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -234,15 +243,23 @@ class LeaveApplicationDetailsView
                                 color: AppColors.colorDarkBlue,
                               ),
                             ],
-                          ))),
+                          )).paddingOnly(top: 20)
+          ),
         ],
       ),
     );
   }
 
   Widget _leaveCancelListUI(BuildContext context) {
-    return SizedBox(
-      height: 350,
+    return Container(
+      height: 500,
+      width: double.infinity,
+      //height: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: AppColors.colorF1EBFB,
+      ),
       child: ListView.builder(
           shrinkWrap: true,
           itemCount: controller.leaveDetailsListResponse.value.data!.length,
@@ -281,19 +298,11 @@ class LeaveApplicationDetailsView
     FocusNode reasonFocusNode = FocusNode();
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-      padding: const EdgeInsets.all(15),
+      margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0X1C1F370D),
-            blurRadius: 4.0,
-            spreadRadius: 1.0,
-            offset: Offset(0, 0),
-          ),
-        ],
       ),
       child: AbsorbPointer(
         absorbing: data.appstatus.toString().substring(0, 1) == 'A',
@@ -311,9 +320,9 @@ class LeaveApplicationDetailsView
                   CommonText(
                     text: AppDatePicker.convertDateTimeFormat(
                         data.forDate!, Utils.commonUTCDateFormat, 'dd/MM/yyyy'),
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w500,
                     fontSize: 16,
-                    color: AppColors.colorBlack,
+                    color: AppColors.color2F2F31,
                   ),
                   Visibility(
                     visible: data.appstatus.toString().substring(0, 1) != 'A',
@@ -335,11 +344,15 @@ class LeaveApplicationDetailsView
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
-              // Dropdown for leave type selection
+              CommonText(
+                text: 'Leave Type',
+                color: AppColors.color2F2F31,
+                fontSize: 16,
+                fontWeight: AppFontWeight.w400,
+              ).paddingOnly(top: 10),
               Visibility(
                 visible: controller.leaveTypesDay.isNotEmpty,
-                child: CommonDropdown(
+                child: CommonDropdownNew(
                   items: controller.leaveTypesDay,
                   initialValue: data.leaveAssignAs != null &&
                           controller.leaveTypesDay.contains(data.leaveAssignAs!)
@@ -363,32 +376,35 @@ class LeaveApplicationDetailsView
                     }
                   },
                 ),
-              ),
-              const SizedBox(height: 10),
-              // Display leave duration
+              ).paddingOnly(top: 15),
               Obx(() => CommonText(
                     text: leaveDurationText.value,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w500,
                     fontSize: 16,
-                    color: AppColors.colorBlack,
-                  )),
-              const SizedBox(height: 10),
+                    color: AppColors.color2F2F31,
+                  )).paddingOnly(top: 10),
               // Input field for reason
-              CommonInputField(
+              CommonText(
+                text: 'Reason *',
+                color: AppColors.color2F2F31,
+                fontSize: 16,
+                fontWeight: AppFontWeight.w400,
+              ).paddingOnly(top: 10),
+              CommonAppInputNew(
                 textEditingController: reasonController,
-                hintText: "Reason *",
+                hintText: "Enter Reason",
                 focusNode: reasonFocusNode, // Assign focus node
                 onChanged: (value) {
                   data.approvalComments = value;
                 },
-              ),
+              ).paddingOnly(top: 15),
               Visibility(
                   visible: data.appstatus.toString().substring(0, 1) != 'A',
                   child: const SizedBox(height: 10)),
               // Cancel button
               Visibility(
                 visible: data.appstatus.toString().substring(0, 1) != 'A',
-                child: CommonButton(
+                child: CommonButtonNew(
                   buttonText: 'Cancel',
                   onPressed: () {
                     // Create a map with the current data to match the required array structure
@@ -433,26 +449,26 @@ class LeaveApplicationDetailsView
 
 // Helper methods for status colors
   Color _getStatusColor(String? status) {
-    if (status == null) return AppColors.colorRed.withOpacity(0.1);
+    if (status == null) return AppColors.colorRed.withValues(alpha: 0.80);
     switch (status.toUpperCase().substring(0, 1)) {
       case 'A':
-        return AppColors.colorGreen.withOpacity(0.1);
+        return const Color(0XFF00ABA4);
       case 'P':
-        return AppColors.colorAmber.withOpacity(0.1);
+        return const Color(0XFFB2AF76);
       default:
-        return AppColors.colorRed.withOpacity(0.1);
+        return AppColors.colorRed.withValues(alpha: 0.80);
     }
   }
 
   Color _getStatusTextColor(String? status) {
-    if (status == null) return AppColors.colorRed;
+    if (status == null) return AppColors.colorWhite;
     switch (status.toUpperCase().substring(0, 1)) {
       case 'A':
-        return AppColors.colorGreen;
+        return AppColors.colorWhite;
       case 'P':
-        return AppColors.colorAmber;
+        return AppColors.colorWhite;
       default:
-        return AppColors.colorRed;
+        return AppColors.colorWhite;
     }
   }
 }

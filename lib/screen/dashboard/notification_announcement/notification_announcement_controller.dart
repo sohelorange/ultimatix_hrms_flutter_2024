@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ultimatix_hrms_flutter/app/app_colors.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/notification_announcement/notification_annoucement_model.dart';
 
 import '../../../api/dio_client.dart';
@@ -16,6 +17,16 @@ class NotificationAnnouncementController extends GetxController {
   // var currentPage = 1.obs;
   // var totalPages = 1.obs;
   // late int statusCode;
+
+  final List<Color> boxColors = [
+    AppColors.colorF1EBFB,
+    AppColors.colorEEFAFE,
+  ];
+
+  final List<Color> textColors = [
+    AppColors.color6D24A1,
+    AppColors.color0085FF,
+  ];
 
   Rx<NotificationAnnouncementModel> leaveBalListResponse =
       NotificationAnnouncementModel().obs;

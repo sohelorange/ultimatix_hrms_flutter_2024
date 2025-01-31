@@ -199,7 +199,8 @@ class CommonAppInputNew extends StatelessWidget {
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(
-              color: AppColors.colorDCDCDC,
+              //color: AppColors.colorDCDCDC,
+              color: AppColors.color7A1FA2,
               style: BorderStyle.solid,
               width: 1,
             ),

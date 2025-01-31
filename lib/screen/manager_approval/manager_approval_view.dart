@@ -4,10 +4,9 @@ import 'package:ultimatix_hrms_flutter/app/app_colors.dart';
 import 'package:ultimatix_hrms_flutter/app/app_font_weight.dart';
 import 'package:ultimatix_hrms_flutter/app/app_images.dart';
 import 'package:ultimatix_hrms_flutter/utility/utils.dart';
-import 'package:ultimatix_hrms_flutter/widget/common_app_bar.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_app_image_svg.dart';
-import 'package:ultimatix_hrms_flutter/widget/common_container.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_text.dart';
+import 'package:ultimatix_hrms_flutter/widget/new/common_app_bar_new.dart';
 
 import 'manager_approval_controller.dart';
 
@@ -18,37 +17,47 @@ class ManagerApprovalView extends GetView<ManagerApprovalController> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      appBar: const CommonAppBar(
-        title: 'Leave Approvals',
+      appBar: const CommonNewAppBar(
+        title: "Approval",
+        leadingIconSvg: AppImages.icBack, // Menu icon
       ),
-      body: CommonContainer(
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          child: Obx(() => controller.isLoading.isTrue
-              ? Center(child: Utils.commonCircularProgress())
-              : controller.leaveManagerApprovalResponse.value.data != null
-                  ? getLeaveApprovalView(context)
-                  : Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        CommonAppImageSvg(
-                            imagePath: AppImages.svgNoData,
-                            height: 100,
-                            width: MediaQuery.sizeOf(context).width),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        CommonText(
-                          text: controller.leaveManagerApprovalResponse.value.message ?? controller.errorMsg.value,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 16,
-                          color: AppColors.colorDarkBlue,
-                        ),
-                      ],
-                    )),
-        ),
-      ),
+      body: Obx(() => controller.isLoading.isTrue
+          ? Center(child: Utils.commonCircularProgress())
+          : controller.leaveManagerApprovalResponse.value.data != null
+              ? Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  margin:
+                      const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: AppColors.colorF1EBFB,
+                  ),
+                  child: getLeaveApprovalView(context),
+                )
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CommonAppImageSvg(
+                        imagePath: AppImages.svgNoData,
+                        height: 100,
+                        width: MediaQuery.sizeOf(context).width),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    CommonText(
+                      text: controller
+                              .leaveManagerApprovalResponse.value.message ??
+                          controller.errorMsg.value,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16,
+                      color: AppColors.colorDarkBlue,
+                    ),
+                  ],
+                )),
     ));
   }
 
@@ -62,19 +71,12 @@ class ManagerApprovalView extends GetView<ManagerApprovalController> {
               controller.handleNavigation(index);
             },
             child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-              padding: const EdgeInsets.all(15),
+              margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              height: 60,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0X1C1F370D),
-                    blurRadius: 4.0,
-                    spreadRadius: 1.0,
-                    offset: Offset(0, 0),
-                  ),
-                ],
               ),
               child: Row(
                 //mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -93,9 +95,9 @@ class ManagerApprovalView extends GetView<ManagerApprovalController> {
                     child: CommonText(
                       textAlign: TextAlign.start,
                       text: controller.exploreItems[index]['name'],
-                      color: AppColors.colorDarkGray,
-                      fontSize: 14,
-                      fontWeight: AppFontWeight.w500,
+                      color: AppColors.color2F2F31,
+                      fontSize: 16,
+                      fontWeight: AppFontWeight.w400,
                     ),
                   ),
                   const SizedBox(
@@ -103,9 +105,9 @@ class ManagerApprovalView extends GetView<ManagerApprovalController> {
                   ),
                   CommonText(
                     text: controller.exploreItems[index]['count'],
-                    color: AppColors.colorDarkGray,
+                    color: AppColors.color2F2F31,
                     fontSize: 16,
-                    fontWeight: AppFontWeight.w700,
+                    fontWeight: AppFontWeight.w500,
                   ),
                   // const CommonAppImageSvg(
                   //   imagePath: AppImages.settingsRightArrowIcon,

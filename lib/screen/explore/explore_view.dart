@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/screen/explore/explore_controller.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_app_bar.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_container.dart';
+import 'package:ultimatix_hrms_flutter/widget/new/common_app_bar_new.dart';
 
 import '../../widget/common_explore_grid_view.dart';
 

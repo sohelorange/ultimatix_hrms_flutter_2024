@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/app/app_routes.dart';
 import 'package:ultimatix_hrms_flutter/screen/settings/settings_controller.dart';
+import 'package:ultimatix_hrms_flutter/widget/new/common_app_bar_new.dart';
 
 import '../../../widget/common_app_bar.dart';
 import '../../../widget/common_container.dart';
@@ -19,23 +20,31 @@ class SettingsView extends GetView<SettingsController> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      appBar: const CommonAppBar(title: 'Settings'),
-      body: CommonContainer(
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          child: SingleChildScrollView(
-            child: Column(
-              //mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _changePasswordUI(),
-                _feedbackUI(),
-                _cameraUI(),
-                _patternUI(),
-                _voiceUI(),
-                _contactUSUI(),
-                _versionUI(),
-              ],
-            ),
+      appBar: const CommonNewAppBar(
+        title: "Setting",
+        leadingIconSvg: AppImages.icBack, // Menu icon
+      ),
+      body: Container(
+        width: double.infinity,
+        //height: double.infinity,
+        margin: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: AppColors.colorF1EBFB,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            //mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _changePasswordUI(),
+              _feedbackUI(),
+              _cameraUI(),
+              _patternUI(),
+              _voiceUI(),
+              _contactUSUI(),
+              _versionUI(),
+            ],
           ),
         ),
       ),
@@ -48,8 +57,8 @@ class SettingsView extends GetView<SettingsController> {
         Get.toNamed(AppRoutes.changePasswordRoute);
       },
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-        padding: const EdgeInsets.all(15),
+        //margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
@@ -89,8 +98,8 @@ class SettingsView extends GetView<SettingsController> {
         Get.toNamed(AppRoutes.feedbackRoute);
       },
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-        padding: const EdgeInsets.all(15),
+        margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
@@ -126,8 +135,8 @@ class SettingsView extends GetView<SettingsController> {
 
   Widget _cameraUI() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-      padding: const EdgeInsets.all(15),
+      margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -162,8 +171,8 @@ class SettingsView extends GetView<SettingsController> {
 
   Widget _patternUI() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-      padding: const EdgeInsets.all(15),
+      margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -198,8 +207,8 @@ class SettingsView extends GetView<SettingsController> {
 
   Widget _voiceUI() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-      padding: const EdgeInsets.all(15),
+      margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -234,8 +243,8 @@ class SettingsView extends GetView<SettingsController> {
 
   Widget _contactUSUI() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-      padding: const EdgeInsets.all(15),
+      margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -290,8 +299,8 @@ class SettingsView extends GetView<SettingsController> {
 
   Widget _versionUI() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-      padding: const EdgeInsets.all(15),
+      margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),

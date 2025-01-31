@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/app/app_colors.dart';
 import 'package:ultimatix_hrms_flutter/utility/utils.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_button.dart';
+import 'package:ultimatix_hrms_flutter/widget/new/common_button_new.dart';
 
 import '../app/app_dimensions.dart';
 import '../app/app_font_weight.dart';
@@ -43,13 +44,13 @@ class CommonMaterialDialog extends StatelessWidget {
               CommonText(
                 textAlign: TextAlign.start,
                 text: title,
-                color: AppColors.colorDarkBlue,
+                color: AppColors.color2F2F31,
                 fontSize: AppDimensions.fontSizeLarge,
                 fontWeight: AppFontWeight.w500,
               ),
               const SizedBox(height: 8),
-              Divider(
-                  color: AppColors.colorDarkGray.withOpacity(0.2),
+              const Divider(
+                  color: AppColors.colorDCDCDC,
                   thickness: 1),
             ],
           ),
@@ -64,7 +65,7 @@ class CommonMaterialDialog extends StatelessWidget {
               CommonText(
                 textAlign: TextAlign.start,
                 text: message,
-                color: AppColors.colorDarkBlue,
+                color: AppColors.color2F2F31,
                 fontSize: AppDimensions.fontSizeMedium,
                 fontWeight: AppFontWeight.w400,
               ),
@@ -77,7 +78,7 @@ class CommonMaterialDialog extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         // Yes Button
-                        CommonButton(
+                        CommonButtonNew(
                             buttonText: yesButtonText,
                             onPressed: onConfirm,
                             isLoading: false),

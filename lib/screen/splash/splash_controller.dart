@@ -16,15 +16,15 @@ class SplashController extends GetxController {
     Future.delayed(const Duration(seconds: 3)).then(
       (value) {
         if (PreferenceUtils.getIsLogin()) {
-          if (kDebugMode) {
-            print('dashboard page');
-          }
           Get.offAllNamed(AppRoutes.dashBoardRoute);
         } else {
-          if (kDebugMode) {
-            print('login redirect');
-          }
           Get.offAllNamed(AppRoutes.serverRoute);
+
+          // if (PreferenceUtils.getServerConnection().isEmpty) {
+          //   Get.offAllNamed(AppRoutes.serverRoute);
+          // } else {
+          //   Get.offAllNamed(AppRoutes.loginRoute);
+          // }
         }
       },
     );

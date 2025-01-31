@@ -256,8 +256,6 @@ class AddFamilyDetailsController extends GetxController {
           "cmpCityName": companyCityController.value.text
         };
 
-        print(attachment.value);
-
         var response = await DioClient()
             .post(AppURL.insertEmployeeFamilyDetailsURL, param);
 

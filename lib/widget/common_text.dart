@@ -44,7 +44,8 @@ class CommonText extends StatelessWidget {
         textAlign: textAlign,
         softWrap: softWrap ?? true,
         overflow: overflow ?? TextOverflow.visible,
-        style: AppFonts.dMSansTextStyle().copyWith(
+        //style: AppFonts.dMSansTextStyle().copyWith(
+        style: AppFonts.interTextStyle().copyWith(
           fontSize: fontSize ?? 14,
           fontWeight: fontWeight ?? AppFontWeight.medium,
           overflow: TextOverflow.ellipsis,

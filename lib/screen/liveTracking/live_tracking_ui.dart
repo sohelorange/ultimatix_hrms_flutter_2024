@@ -90,7 +90,7 @@ class LiveTrackingUi extends GetView<LiveTrackingController> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 8.0),
+                           const SizedBox(height: 8.0),
                           Row(
                             children: [
                               Expanded(

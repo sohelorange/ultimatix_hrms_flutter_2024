@@ -312,7 +312,7 @@ class DashController extends GetxController {
         }
         break;
       case 2: // Leaves
-        Get.toNamed(AppRoutes.leaveApplicationRoute);
+        //Get.toNamed(AppRoutes.leaveApplicationRoute);
         break;
       case 3: // Attendance
         //Get.toNamed(AppRoutes.attendanceMainRoute);

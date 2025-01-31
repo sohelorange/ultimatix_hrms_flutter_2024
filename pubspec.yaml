@@ -116,6 +116,7 @@ flutter:
     - assets/icon/clockInOut/
     - assets/icon/clockInOut/new/
     - assets/icon/liveTracking/
+    - assets/icon/liveTracking/new/
     - assets/icon/attendance/
     - assets/applicationIcon/dashboard/
     - assets/applicationIcon/explore/

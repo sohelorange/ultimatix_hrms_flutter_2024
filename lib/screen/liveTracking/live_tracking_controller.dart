@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:isolate';
 
 import 'package:battery_plus/battery_plus.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -57,6 +58,9 @@ class LiveTrackingController extends GetxController{
     super.onInit();
   }
 
+  double responsiveFontSize(BuildContext context, double fontSize) {
+    return fontSize * (MediaQuery.of(context).size.width / 375);
+  }
 
   void getGeoLocationTrackingList(String nSelectedDate) async{
     isLoadingOnUi.value = true;

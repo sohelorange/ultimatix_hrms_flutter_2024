@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../app/app_colors.dart';
-import '../../app/app_font_weight.dart';
 import '../../app/app_images.dart';
 import '../../app/app_status_bar.dart';
-import '../common_text.dart';
 
 class CommonAppBarTwo extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -28,9 +26,15 @@ class CommonAppBarTwo extends StatelessWidget implements PreferredSizeWidget {
       scrolledUnderElevation: 0,
       backgroundColor: Colors.white,
       automaticallyImplyLeading: false,
-      leading: IconButton(onPressed: () {
-        Navigator.pop(context);
-      }, icon: SvgPicture.asset(AppImages.backBtnSvg,height: 12,width: 15,)),
+      leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: SvgPicture.asset(
+            AppImages.backBtnSvg,
+            height: 12,
+            width: 15,
+          )),
       title: Text(
         title,
         style: const TextStyle(

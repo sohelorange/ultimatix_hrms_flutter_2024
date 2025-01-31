@@ -7,7 +7,6 @@ import 'package:ultimatix_hrms_flutter/app/app_images.dart';
 import 'package:ultimatix_hrms_flutter/screen/leave/leave_status/leave_status_controller.dart';
 import 'package:ultimatix_hrms_flutter/utility/utils.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_app_image_svg.dart';
-import 'package:ultimatix_hrms_flutter/widget/common_button.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_date_picker.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_text.dart';
 import 'package:ultimatix_hrms_flutter/widget/new/common_button_new.dart';
@@ -232,7 +231,8 @@ class LeaveStatusView extends GetView<LeaveStatusController> {
                                             .data![index].applicationStatus
                                             .toString() ==
                                         'A'
-                                    ? const Color(0XFF00ABA4) // Green for status 'A'
+                                    ? const Color(
+                                        0XFF00ABA4) // Green for status 'A'
                                     : controller.leaveStatusListResponse.value
                                                 .data![index].applicationStatus
                                                 .toString() ==

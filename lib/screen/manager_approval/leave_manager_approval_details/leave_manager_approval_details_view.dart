@@ -165,7 +165,7 @@ class LeaveManagerApprovalDetailsView
                     color: AppColors.colorDarkBlue,
                   ).paddingOnly(top: 5),
                   Divider(
-                    color: AppColors.colorBlack.withOpacity(0.2),
+                    color: AppColors.colorBlack.withValues(alpha: 0.2),
                   ),
                   CommonText(
                     text: 'Leave From',
@@ -183,7 +183,7 @@ class LeaveManagerApprovalDetailsView
                     color: AppColors.colorDarkBlue,
                   ).paddingOnly(top: 5),
                   Divider(
-                    color: AppColors.colorBlack.withOpacity(0.2),
+                    color: AppColors.colorBlack.withValues(alpha: 0.2),
                   ),
                   CommonText(
                       text: 'Leave To',
@@ -200,7 +200,7 @@ class LeaveManagerApprovalDetailsView
                     color: AppColors.colorDarkBlue,
                   ).paddingOnly(top: 5),
                   Divider(
-                    color: AppColors.colorBlack.withOpacity(0.2),
+                    color: AppColors.colorBlack.withValues(alpha: 0.2),
                   ),
                   CommonText(
                     text: 'Period',
@@ -215,7 +215,7 @@ class LeaveManagerApprovalDetailsView
                     color: AppColors.colorDarkBlue,
                   ).paddingOnly(top: 5),
                   Divider(
-                    color: AppColors.colorBlack.withOpacity(0.2),
+                    color: AppColors.colorBlack.withValues(alpha: 0.2),
                   ),
                   CommonText(
                     text: 'Days Available',
@@ -230,7 +230,7 @@ class LeaveManagerApprovalDetailsView
                     color: AppColors.colorDarkBlue,
                   ).paddingOnly(top: 5),
                   Divider(
-                    color: AppColors.colorBlack.withOpacity(0.2),
+                    color: AppColors.colorBlack.withValues(alpha: 0.2),
                   ),
                   CommonText(
                       text: 'Reason',

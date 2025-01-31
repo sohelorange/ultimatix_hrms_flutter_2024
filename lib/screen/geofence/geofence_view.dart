@@ -7,10 +7,7 @@ import 'package:ultimatix_hrms_flutter/app/app_routes.dart';
 import 'package:ultimatix_hrms_flutter/app/app_strings.dart';
 import 'package:ultimatix_hrms_flutter/screen/geofence/geofence_controller.dart';
 import 'package:ultimatix_hrms_flutter/utility/utils.dart';
-import 'package:ultimatix_hrms_flutter/widget/common_app_bar.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_app_image_svg.dart';
-import 'package:ultimatix_hrms_flutter/widget/common_button.dart';
-import 'package:ultimatix_hrms_flutter/widget/common_container.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_text.dart';
 import 'package:ultimatix_hrms_flutter/widget/new/common_app_bar_new.dart';
 

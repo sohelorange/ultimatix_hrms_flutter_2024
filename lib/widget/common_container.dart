@@ -31,7 +31,7 @@ class CommonContainer extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.2),
+              color: Colors.black.withValues(alpha: 0.2),
               blurRadius: 4, // Add a blur to make the shadow visible
               offset: const Offset(0, 4), // Slight vertical shadow offset
             ),

@@ -46,6 +46,7 @@ class _CommonDropdownWithModelState<T>
   Widget build(BuildContext context) {
     return Obx(() {
       // Ensure there's exactly one item with the selected value
+      // ignore: unused_local_variable
       T? selectedItem;
       if (widget.items.isNotEmpty) {
         selectedItem = widget.items.firstWhere(

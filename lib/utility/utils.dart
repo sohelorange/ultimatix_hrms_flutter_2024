@@ -128,7 +128,7 @@ class Utils {
           customBorder: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
-          splashColor: AppColors.purpleSwatch.withOpacity(0.5),
+          splashColor: AppColors.purpleSwatch.withValues(alpha: 0.5),
           child: const RotatedBox(
             quarterTurns: 0,
             child: Icon(Icons.person, size: 16, color: AppColors.purpleSwatch),
@@ -157,9 +157,7 @@ class Utils {
     return null;
   }
 
-  static Future<XFile?> captureSelfie({
-    required BuildContext context
-  }) async{
+  static Future<XFile?> captureSelfie({required BuildContext context}) async {
     try {
       final pickedFile = await SelfieCamera.selfieCameraFile(
         context,

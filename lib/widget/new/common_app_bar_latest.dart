@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/utility/utils.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_text.dart';
 import '../../app/app_colors.dart';
 
-class CommonLatestAppBar extends StatelessWidget{
+class CommonLatestAppBar extends StatelessWidget {
   final String title;
   final IconData leadingIcon;
   final VoidCallback? onLeadingIconTap;
@@ -20,8 +19,9 @@ class CommonLatestAppBar extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return  Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 20), // Spacing above and below
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+      // Spacing above and below
       child: Container(
         //height: preferredSize.height,
         width: Utils.getScreenWidth(context: context) * 0.9,

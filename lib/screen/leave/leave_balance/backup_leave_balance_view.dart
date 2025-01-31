@@ -40,7 +40,10 @@ class BackupLeaveBalanceView extends GetView<LeaveBalanceController> {
                           height: 20,
                         ),
                         CommonText(
-                          text: controller.leaveBalListResponse.value.message != null ? controller.leaveBalListResponse.value.message! : controller.errorMsg.value,
+                          text: controller.leaveBalListResponse.value.message !=
+                                  null
+                              ? controller.leaveBalListResponse.value.message!
+                              : controller.errorMsg.value,
                           fontWeight: FontWeight.w400,
                           fontSize: 16,
                           color: AppColors.colorDarkBlue,

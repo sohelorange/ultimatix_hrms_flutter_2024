@@ -121,7 +121,7 @@ class GeofenceController extends GetxController {
   //         circleId: CircleId('circle_$i'),
   //         center: location,
   //         radius: radius.value, // Radius in meters
-  //         fillColor: AppColors.color7B1FA2.withOpacity(0.3),
+  //         fillColor: AppColors.color7B1FA2.withValues(alpha: 0.3),
   //         strokeColor: AppColors.colorAppPurple,
   //         strokeWidth: 2,
   //       ),
@@ -190,7 +190,7 @@ class GeofenceController extends GetxController {
                   double.parse(location.longitude!)),
               radius: location.meter!.toDouble(),
               // Radius in meters
-              fillColor: AppColors.color7B1FA2.withOpacity(0.3),
+              fillColor: AppColors.color7B1FA2.withValues(alpha: 0.3),
               strokeColor: AppColors.colorAppPurple,
               strokeWidth: 2,
             ),
@@ -218,7 +218,7 @@ class GeofenceController extends GetxController {
               circleId: CircleId('circle_'),
               center: LatLng(double.parse(element.latitude!), double.parse(element.longitude!)),
               radius: element.meter!.toDouble(), // Radius in meters
-              fillColor: AppColors.color7B1FA2.withOpacity(0.3),
+              fillColor: AppColors.color7B1FA2.withValues(alpha: 0.3),
               strokeColor: AppColors.colorAppPurple,
               strokeWidth: 2,
             ),
@@ -235,7 +235,7 @@ class GeofenceController extends GetxController {
     } catch (e) {
       debugPrint("Login catch --$e");
     } finally {
-       isLoading.value = false;
+      isLoading.value = false;
     }
   }
 }

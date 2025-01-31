@@ -1,14 +1,10 @@
-/// status : true
-/// code : 200
-/// message : "Success"
-/// data : [{"Res_Id":66,"Reason_Name":"Others1"}]
-
 class GetReasonResponse {
   GetReasonResponse({
     bool? status,
     num? code,
     String? message,
-    List<Data>? data,}){
+    List<Data>? data,
+  }) {
     _status = status;
     _code = code;
     _message = message;
@@ -26,22 +22,31 @@ class GetReasonResponse {
       });
     }
   }
+
   bool? _status;
   num? _code;
   String? _message;
   List<Data>? _data;
-  GetReasonResponse copyWith({  bool? status,
+
+  GetReasonResponse copyWith({
+    bool? status,
     num? code,
     String? message,
     List<Data>? data,
-  }) => GetReasonResponse(  status: status ?? _status,
-    code: code ?? _code,
-    message: message ?? _message,
-    data: data ?? _data,
-  );
+  }) =>
+      GetReasonResponse(
+        status: status ?? _status,
+        code: code ?? _code,
+        message: message ?? _message,
+        data: data ?? _data,
+      );
+
   bool? get status => _status;
+
   num? get code => _code;
+
   String? get message => _message;
+
   List<Data>? get data => _data;
 
   Map<String, dynamic> toJson() {
@@ -54,7 +59,6 @@ class GetReasonResponse {
     }
     return map;
   }
-
 }
 
 /// Res_Id : 66
@@ -63,7 +67,8 @@ class GetReasonResponse {
 class Data {
   Data({
     num? resId,
-    String? reasonName,}){
+    String? reasonName,
+  }) {
     _resId = resId;
     _reasonName = reasonName;
   }
@@ -72,14 +77,21 @@ class Data {
     _resId = json['Res_Id'];
     _reasonName = json['Reason_Name'];
   }
+
   num? _resId;
   String? _reasonName;
-  Data copyWith({  num? resId,
+
+  Data copyWith({
+    num? resId,
     String? reasonName,
-  }) => Data(  resId: resId ?? _resId,
-    reasonName: reasonName ?? _reasonName,
-  );
+  }) =>
+      Data(
+        resId: resId ?? _resId,
+        reasonName: reasonName ?? _reasonName,
+      );
+
   num? get resId => _resId;
+
   String? get reasonName => _reasonName;
 
   Map<String, dynamic> toJson() {
@@ -88,5 +100,4 @@ class Data {
     map['Reason_Name'] = _reasonName;
     return map;
   }
-
 }

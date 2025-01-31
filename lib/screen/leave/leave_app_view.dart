@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ultimatix_hrms_flutter/app/app_font_weight.dart';
 import 'package:ultimatix_hrms_flutter/app/app_images.dart';
 import 'package:ultimatix_hrms_flutter/app/app_routes.dart';
 import 'package:ultimatix_hrms_flutter/screen/leave/leave_balance/leave_balance_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/leave/leave_controller.dart';
 import 'package:ultimatix_hrms_flutter/screen/leave/leave_status/leave_status_view.dart';
-import 'package:ultimatix_hrms_flutter/utility/utils.dart';
-import 'package:ultimatix_hrms_flutter/widget/common_app_image.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_app_image_svg.dart';
-import 'package:ultimatix_hrms_flutter/widget/common_container.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_text.dart';
-import 'package:ultimatix_hrms_flutter/widget/new/common_app_bar_latest.dart';
 
 import '../../app/app_colors.dart';
-import '../../widget/common_app_bar.dart';
 
 class LeaveAppView extends GetView<LeaveController> {
   const LeaveAppView({super.key});
@@ -148,12 +142,16 @@ class LeaveAppView extends GetView<LeaveController> {
                     borderRadius: BorderRadius.circular(10),
                     color: AppColors.colorWhite, // Selected tab background
                   ),
-                  indicatorColor: Colors.transparent, // Remove default indicator line
+                  indicatorColor: Colors.transparent,
+                  // Remove default indicator line
                   automaticIndicatorColorAdjustment: true,
-                  unselectedLabelColor: AppColors.colorWhite, // Unselected text color
-                  labelColor: AppColors.colorBlack, // Selected text color
+                  unselectedLabelColor: AppColors.colorWhite,
+                  // Unselected text color
+                  labelColor: AppColors.colorBlack,
+                  // Selected text color
                   labelPadding: const EdgeInsets.symmetric(horizontal: 20),
-                  labelStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                  labelStyle: const TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.w400),
                   tabs: const [
                     // Tab(
                     //   child: Container(

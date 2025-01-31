@@ -33,8 +33,14 @@ class CommonConfirmationDialog extends StatelessWidget {
         textInputAction: TextInputAction.done,
         controller: textEditingController,
         placeholder: placeholder,
-        style: TextStyle(color: PreferenceUtils.getIsTheme() ? AppColors.colorWhite : AppColors.colorBlack),
-        placeholderStyle: TextStyle(color: PreferenceUtils.getIsTheme() ? AppColors.colorWhite : AppColors.colorBlack),
+        style: TextStyle(
+            color: PreferenceUtils.getIsTheme()
+                ? AppColors.colorWhite
+                : AppColors.colorBlack),
+        placeholderStyle: TextStyle(
+            color: PreferenceUtils.getIsTheme()
+                ? AppColors.colorWhite
+                : AppColors.colorBlack),
         maxLines: null,
       ),
       actions: <Widget>[

@@ -3,7 +3,8 @@ class TeamAttendanceResponse {
     bool? status,
     num? code,
     String? message,
-    List<Data>? data,}){
+    List<Data>? data,
+  }) {
     _status = status;
     _code = code;
     _message = message;
@@ -21,22 +22,31 @@ class TeamAttendanceResponse {
       });
     }
   }
+
   bool? _status;
   num? _code;
   String? _message;
   List<Data>? _data;
-  TeamAttendanceResponse copyWith({  bool? status,
+
+  TeamAttendanceResponse copyWith({
+    bool? status,
     num? code,
     String? message,
     List<Data>? data,
-  }) => TeamAttendanceResponse(  status: status ?? _status,
-    code: code ?? _code,
-    message: message ?? _message,
-    data: data ?? _data,
-  );
+  }) =>
+      TeamAttendanceResponse(
+        status: status ?? _status,
+        code: code ?? _code,
+        message: message ?? _message,
+        data: data ?? _data,
+      );
+
   bool? get status => _status;
+
   num? get code => _code;
+
   String? get message => _message;
+
   List<Data>? get data => _data;
 
   Map<String, dynamic> toJson() {
@@ -49,7 +59,6 @@ class TeamAttendanceResponse {
     }
     return map;
   }
-
 }
 
 class Data {
@@ -114,7 +123,8 @@ class Data {
     num? deptID,
     num? catID,
     String? catName,
-    String? imagePath,}){
+    String? imagePath,
+  }) {
     _empId = empId;
     _cmpID = cmpID;
     _branchID = branchID;
@@ -241,6 +251,7 @@ class Data {
     _catName = json['cat_Name'];
     _imagePath = json['image_Path'];
   }
+
   num? _empId;
   num? _cmpID;
   num? _branchID;
@@ -302,7 +313,9 @@ class Data {
   num? _catID;
   String? _catName;
   String? _imagePath;
-  Data copyWith({  num? empId,
+
+  Data copyWith({
+    num? empId,
     num? cmpID,
     num? branchID,
     String? forDate,
@@ -363,128 +376,191 @@ class Data {
     num? catID,
     String? catName,
     String? imagePath,
-  }) => Data(  empId: empId ?? _empId,
-    cmpID: cmpID ?? _cmpID,
-    branchID: branchID ?? _branchID,
-    forDate: forDate ?? _forDate,
-    status: status ?? _status,
-    leaveCode: leaveCode ?? _leaveCode,
-    leaveCount: leaveCount ?? _leaveCount,
-    od: od ?? _od,
-    oDCount: oDCount ?? _oDCount,
-    wOHO: wOHO ?? _wOHO,
-    status2: status2 ?? _status2,
-    rowID: rowID ?? _rowID,
-    inDate: inDate ?? _inDate,
-    outDate: outDate ?? _outDate,
-    shiftId: shiftId ?? _shiftId,
-    shiftName: shiftName ?? _shiftName,
-    shInTime: shInTime ?? _shInTime,
-    shOutTime: shOutTime ?? _shOutTime,
-    holiday: holiday ?? _holiday,
-    lateLimit: lateLimit ?? _lateLimit,
-    reason: reason ?? _reason,
-    halfFullDay: halfFullDay ?? _halfFullDay,
-    chkBySuperior: chkBySuperior ?? _chkBySuperior,
-    supComment: supComment ?? _supComment,
-    isCancelLateIn: isCancelLateIn ?? _isCancelLateIn,
-    isCancelEarlyOut: isCancelEarlyOut ?? _isCancelEarlyOut,
-    earlyLimit: earlyLimit ?? _earlyLimit,
-    mainStatus: mainStatus ?? _mainStatus,
-    detailStatus: detailStatus ?? _detailStatus,
-    isLateCalcOnHOWO: isLateCalcOnHOWO ?? _isLateCalcOnHOWO,
-    isEarlyCalcOnHOWO: isEarlyCalcOnHOWO ?? _isEarlyCalcOnHOWO,
-    lateMinute: lateMinute ?? _lateMinute,
-    earlyMinute: earlyMinute ?? _earlyMinute,
-    isLeaveApp: isLeaveApp ?? _isLeaveApp,
-    otherReason: otherReason ?? _otherReason,
-    dateOfJoin: dateOfJoin ?? _dateOfJoin,
-    leftDate: leftDate ?? _leftDate,
-    lateTime: lateTime ?? _lateTime,
-    earlyTime: earlyTime ?? _earlyTime,
-    lateMinutes: lateMinutes ?? _lateMinutes,
-    earlyOut: earlyOut ?? _earlyOut,
-    alphaEmpCode: alphaEmpCode ?? _alphaEmpCode,
-    empFullName: empFullName ?? _empFullName,
-    branchName: branchName ?? _branchName,
-    deptName: deptName ?? _deptName,
-    grdName: grdName ?? _grdName,
-    desigName: desigName ?? _desigName,
-    branchAddress: branchAddress ?? _branchAddress,
-    compName: compName ?? _compName,
-    dbrDCode: dbrDCode ?? _dbrDCode,
-    pDays: pDays ?? _pDays,
-    empLateMark: empLateMark ?? _empLateMark,
-    empEarlyMark: empEarlyMark ?? _empEarlyMark,
-    disableComment: disableComment ?? _disableComment,
-    grdID: grdID ?? _grdID,
-    location: location ?? _location,
-    desigId: desigId ?? _desigId,
-    deptID: deptID ?? _deptID,
-    catID: catID ?? _catID,
-    catName: catName ?? _catName,
-    imagePath: imagePath ?? _imagePath,
-  );
+  }) =>
+      Data(
+        empId: empId ?? _empId,
+        cmpID: cmpID ?? _cmpID,
+        branchID: branchID ?? _branchID,
+        forDate: forDate ?? _forDate,
+        status: status ?? _status,
+        leaveCode: leaveCode ?? _leaveCode,
+        leaveCount: leaveCount ?? _leaveCount,
+        od: od ?? _od,
+        oDCount: oDCount ?? _oDCount,
+        wOHO: wOHO ?? _wOHO,
+        status2: status2 ?? _status2,
+        rowID: rowID ?? _rowID,
+        inDate: inDate ?? _inDate,
+        outDate: outDate ?? _outDate,
+        shiftId: shiftId ?? _shiftId,
+        shiftName: shiftName ?? _shiftName,
+        shInTime: shInTime ?? _shInTime,
+        shOutTime: shOutTime ?? _shOutTime,
+        holiday: holiday ?? _holiday,
+        lateLimit: lateLimit ?? _lateLimit,
+        reason: reason ?? _reason,
+        halfFullDay: halfFullDay ?? _halfFullDay,
+        chkBySuperior: chkBySuperior ?? _chkBySuperior,
+        supComment: supComment ?? _supComment,
+        isCancelLateIn: isCancelLateIn ?? _isCancelLateIn,
+        isCancelEarlyOut: isCancelEarlyOut ?? _isCancelEarlyOut,
+        earlyLimit: earlyLimit ?? _earlyLimit,
+        mainStatus: mainStatus ?? _mainStatus,
+        detailStatus: detailStatus ?? _detailStatus,
+        isLateCalcOnHOWO: isLateCalcOnHOWO ?? _isLateCalcOnHOWO,
+        isEarlyCalcOnHOWO: isEarlyCalcOnHOWO ?? _isEarlyCalcOnHOWO,
+        lateMinute: lateMinute ?? _lateMinute,
+        earlyMinute: earlyMinute ?? _earlyMinute,
+        isLeaveApp: isLeaveApp ?? _isLeaveApp,
+        otherReason: otherReason ?? _otherReason,
+        dateOfJoin: dateOfJoin ?? _dateOfJoin,
+        leftDate: leftDate ?? _leftDate,
+        lateTime: lateTime ?? _lateTime,
+        earlyTime: earlyTime ?? _earlyTime,
+        lateMinutes: lateMinutes ?? _lateMinutes,
+        earlyOut: earlyOut ?? _earlyOut,
+        alphaEmpCode: alphaEmpCode ?? _alphaEmpCode,
+        empFullName: empFullName ?? _empFullName,
+        branchName: branchName ?? _branchName,
+        deptName: deptName ?? _deptName,
+        grdName: grdName ?? _grdName,
+        desigName: desigName ?? _desigName,
+        branchAddress: branchAddress ?? _branchAddress,
+        compName: compName ?? _compName,
+        dbrDCode: dbrDCode ?? _dbrDCode,
+        pDays: pDays ?? _pDays,
+        empLateMark: empLateMark ?? _empLateMark,
+        empEarlyMark: empEarlyMark ?? _empEarlyMark,
+        disableComment: disableComment ?? _disableComment,
+        grdID: grdID ?? _grdID,
+        location: location ?? _location,
+        desigId: desigId ?? _desigId,
+        deptID: deptID ?? _deptID,
+        catID: catID ?? _catID,
+        catName: catName ?? _catName,
+        imagePath: imagePath ?? _imagePath,
+      );
+
   num? get empId => _empId;
+
   num? get cmpID => _cmpID;
+
   num? get branchID => _branchID;
+
   String? get forDate => _forDate;
+
   String? get status => _status;
+
   String? get leaveCode => _leaveCode;
+
   num? get leaveCount => _leaveCount;
+
   String? get od => _od;
+
   num? get oDCount => _oDCount;
+
   String? get wOHO => _wOHO;
+
   String? get status2 => _status2;
+
   num? get rowID => _rowID;
+
   String? get inDate => _inDate;
+
   String? get outDate => _outDate;
+
   num? get shiftId => _shiftId;
+
   String? get shiftName => _shiftName;
+
   String? get shInTime => _shInTime;
+
   String? get shOutTime => _shOutTime;
+
   String? get holiday => _holiday;
+
   String? get lateLimit => _lateLimit;
+
   String? get reason => _reason;
+
   String? get halfFullDay => _halfFullDay;
+
   String? get chkBySuperior => _chkBySuperior;
+
   String? get supComment => _supComment;
+
   num? get isCancelLateIn => _isCancelLateIn;
+
   num? get isCancelEarlyOut => _isCancelEarlyOut;
+
   String? get earlyLimit => _earlyLimit;
+
   String? get mainStatus => _mainStatus;
+
   String? get detailStatus => _detailStatus;
+
   num? get isLateCalcOnHOWO => _isLateCalcOnHOWO;
+
   num? get isEarlyCalcOnHOWO => _isEarlyCalcOnHOWO;
+
   num? get lateMinute => _lateMinute;
+
   num? get earlyMinute => _earlyMinute;
+
   num? get isLeaveApp => _isLeaveApp;
+
   String? get otherReason => _otherReason;
+
   String? get dateOfJoin => _dateOfJoin;
+
   String? get leftDate => _leftDate;
+
   num? get lateTime => _lateTime;
+
   num? get earlyTime => _earlyTime;
+
   num? get lateMinutes => _lateMinutes;
+
   num? get earlyOut => _earlyOut;
+
   String? get alphaEmpCode => _alphaEmpCode;
+
   String? get empFullName => _empFullName;
+
   String? get branchName => _branchName;
+
   String? get deptName => _deptName;
+
   String? get grdName => _grdName;
+
   String? get desigName => _desigName;
+
   String? get branchAddress => _branchAddress;
+
   String? get compName => _compName;
+
   String? get dbrDCode => _dbrDCode;
+
   num? get pDays => _pDays;
+
   num? get empLateMark => _empLateMark;
+
   num? get empEarlyMark => _empEarlyMark;
+
   String? get disableComment => _disableComment;
+
   num? get grdID => _grdID;
+
   dynamic get location => _location;
+
   num? get desigId => _desigId;
+
   num? get deptID => _deptID;
+
   num? get catID => _catID;
+
   String? get catName => _catName;
+
   String? get imagePath => _imagePath;
 
   Map<String, dynamic> toJson() {
@@ -552,5 +628,4 @@ class Data {
     map['image_Path'] = _imagePath;
     return map;
   }
-
 }

@@ -1,7 +1,7 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:ultimatix_hrms_flutter/screen/clockInOut/clock_in_out_controller.dart';
+import 'package:ultimatix_hrms_flutter/screen/clock_in_out/clock_in_out_controller.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/dash_board_controller.dart';
 import 'package:ultimatix_hrms_flutter/utility/preference_utils.dart';
 import '../../app/app_colors.dart';
@@ -39,37 +39,41 @@ class ClockInOutUiBackUp extends GetView<ClockInOutController> {
   Widget _buildClockInOutView(BuildContext context) {
     return Stack(
       children: [
-        controller.isLoading.isTrue ? const Center(child: CircularProgressIndicator())
+        controller.isLoading.isTrue
+            ? const Center(child: CircularProgressIndicator())
             : Container(
-          width: Utils.getScreenWidth(context: context),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: _responsiveHeight(context, 0.05)),
-                _buildProfileImage(context),
-                SizedBox(height: _responsiveHeight(context, 0.02)),
-                _buildTitle(context, 'Select your working mode'),
-                SizedBox(height: _responsiveHeight(context, 0.02)),
-                _buildDropdownWidget(context),
-                SizedBox(height: _responsiveHeight(context, 0.02)),
-                controller.defaultValue.value=='Other' ? _buildInputText(context) : Container(),
-                _buildCardContainer(context, controller.userLocAddress.value),
-                SizedBox(height: _responsiveHeight(context, 0.02)),
-                _buildWorkHourWidget(context),
-                SizedBox(height: _responsiveHeight(context, 0.02)),
-                _buildCheckInOutButton(context),
-                SizedBox(height: _responsiveHeight(context, 0.02)),
-                _buildBottomWidgets(context),
-                const SizedBox(height: 20),
-              ],
-            ),
-          ),
-        ).marginOnly(top: 2),
+                width: Utils.getScreenWidth(context: context),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: _responsiveHeight(context, 0.05)),
+                      _buildProfileImage(context),
+                      SizedBox(height: _responsiveHeight(context, 0.02)),
+                      _buildTitle(context, 'Select your working mode'),
+                      SizedBox(height: _responsiveHeight(context, 0.02)),
+                      _buildDropdownWidget(context),
+                      SizedBox(height: _responsiveHeight(context, 0.02)),
+                      controller.defaultValue.value == 'Other'
+                          ? _buildInputText(context)
+                          : Container(),
+                      _buildCardContainer(
+                          context, controller.userLocAddress.value),
+                      SizedBox(height: _responsiveHeight(context, 0.02)),
+                      _buildWorkHourWidget(context),
+                      SizedBox(height: _responsiveHeight(context, 0.02)),
+                      _buildCheckInOutButton(context),
+                      SizedBox(height: _responsiveHeight(context, 0.02)),
+                      _buildBottomWidgets(context),
+                      const SizedBox(height: 20),
+                    ],
+                  ),
+                ),
+              ).marginOnly(top: 2),
       ],
     );
   }
@@ -94,12 +98,12 @@ class ClockInOutUiBackUp extends GetView<ClockInOutController> {
           ),
           child: controller.selectedImage.value == null
               ? SvgPicture.asset(AppImages.svgCamera, fit: BoxFit.fill)
-              .paddingAll(37)
+                  .paddingAll(37)
               : CommonAppImage(
-            imagePath: controller.selectedImage.value!.path,
-            fit: BoxFit.fill,
-            isCircle: true,
-          ),
+                  imagePath: controller.selectedImage.value!.path,
+                  fit: BoxFit.fill,
+                  isCircle: true,
+                ),
         ),
       ),
     );
@@ -129,32 +133,32 @@ class ClockInOutUiBackUp extends GetView<ClockInOutController> {
         ),
       ),
       child: controller.items.isEmpty
-          ? Container() :
-      DropdownButton<String>(
-        value: controller.defaultValue.value.isNotEmpty
-            ? controller.defaultValue.value
-            : null,
-        hint: const Text('Select an option'),
-        isExpanded: true,
-        underline: const SizedBox(),
-        items: controller.items.map((String item) {
-          return DropdownMenuItem(
-            value: item,
-            child: CommonText(
-              text: item,
-              fontSize: FontSize.responsiveFontSize(context, 14),
-              color: AppColors.color1C1F37,
-              fontWeight: AppFontWeight.w400,
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+          ? Container()
+          : DropdownButton<String>(
+              value: controller.defaultValue.value.isNotEmpty
+                  ? controller.defaultValue.value
+                  : null,
+              hint: const Text('Select an option'),
+              isExpanded: true,
+              underline: const SizedBox(),
+              items: controller.items.map((String item) {
+                return DropdownMenuItem(
+                  value: item,
+                  child: CommonText(
+                    text: item,
+                    fontSize: FontSize.responsiveFontSize(context, 14),
+                    color: AppColors.color1C1F37,
+                    fontWeight: AppFontWeight.w400,
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                  ),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                if (newValue != null) {
+                  controller.defaultValue.value = newValue;
+                }
+              },
             ),
-          );
-        }).toList(),
-        onChanged: (String? newValue) {
-          if (newValue != null) {
-            controller.defaultValue.value = newValue;
-          }
-        },
-      ),
     );
   }
 
@@ -269,32 +273,29 @@ class ClockInOutUiBackUp extends GetView<ClockInOutController> {
     return Column(
       children: [
         Container(
-          width: MediaQuery.of(context).size.width > 600 ? 500 : MediaQuery.of(context).size.width - 32,
-          padding: const EdgeInsets.only(
-              left: 15, right: 15),
+          width: MediaQuery.of(context).size.width > 600
+              ? 500
+              : MediaQuery.of(context).size.width - 32,
+          padding: const EdgeInsets.only(left: 15, right: 15),
           child: TextField(
             controller: controller.textDescriptionController,
             decoration: InputDecoration(
               hintText: "Enter Reason",
-              hintStyle: const TextStyle(
-                  color: AppColors.color1C1F37),
+              hintStyle: const TextStyle(color: AppColors.color1C1F37),
               border: UnderlineInputBorder(
                 borderSide: BorderSide(
                     color: AppColors.color6B6D7A
-                        .withOpacity(
-                        0.12)), // Default grey underline
+                        .withValues(alpha: 0.12)), // Default grey underline
               ),
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
                     color: AppColors.color6B6D7A
-                        .withOpacity(
-                        0.12)), // Grey when enabled
+                        .withValues(alpha: 0.12)), // Grey when enabled
               ),
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
                     color: AppColors.color6B6D7A
-                        .withOpacity(
-                        0.12)), // Blue when focused
+                        .withValues(alpha: 0.12)), // Blue when focused
               ),
             ),
           ),

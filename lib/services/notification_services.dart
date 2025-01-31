@@ -34,8 +34,7 @@ class NotificationServices {
     }
   }
 
-  void initLocalNotifications(
-       RemoteMessage message) async {
+  void initLocalNotifications(RemoteMessage message) async {
     var androidInitializationSettings =
         const AndroidInitializationSettings('@mipmap/ic_launcher');
     var iosInitializationSettings = const DarwinInitializationSettings();
@@ -44,7 +43,7 @@ class NotificationServices {
 
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onDidReceiveNotificationResponse: (payload) {
-      handelMsg( message);
+      handelMsg(message);
     });
   }
 
@@ -52,7 +51,7 @@ class NotificationServices {
     FirebaseMessaging.onMessage.listen((message) {
       if (message.notification != null) {
         if (Platform.isAndroid) {
-          initLocalNotifications( message);
+          initLocalNotifications(message);
           showNotification(message);
         }
       }
@@ -115,11 +114,10 @@ class NotificationServices {
     });
   }
 
-  void handelMsg( RemoteMessage message) {
-    if (message.data['type'].toString().toLowerCase() ==
-        ''.toLowerCase()) {
+  void handelMsg(RemoteMessage message) {
+    if (message.data['type'].toString().toLowerCase() == ''.toLowerCase()) {
       //TODO : Any Specific screen redirect code here
-    }else {
+    } else {
       //TODO : Redirect Notification Screen or Home Screen
       //Get.offAll(const HomeViewScreen());
       //Get.to(() => const NotificationViewScreen());

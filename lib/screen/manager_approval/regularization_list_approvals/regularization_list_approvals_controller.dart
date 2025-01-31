@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 import 'dart:isolate';
 import 'package:flutter/services.dart';
@@ -10,8 +9,7 @@ import '../../../app/app_url.dart';
 import '../../../utility/network.dart';
 import '../../../utility/preference_utils.dart';
 
-class RegularizationListApprovalsController extends GetxController{
-
+class RegularizationListApprovalsController extends GetxController {
   RxBool isLoading = true.obs;
   RxString currentMonth = "".obs;
   RxString userProfile = "".obs;
@@ -20,7 +18,8 @@ class RegularizationListApprovalsController extends GetxController{
   RxString userEmpId = "".obs;
   RxString userCmpId = "".obs;
 
-  Rx<GetApproveRegularizeList> attendanceApprovalListData = GetApproveRegularizeList().obs;
+  Rx<GetApproveRegularizeList> attendanceApprovalListData =
+      GetApproveRegularizeList().obs;
 
   @override
   void onInit() {
@@ -28,21 +27,25 @@ class RegularizationListApprovalsController extends GetxController{
     super.onInit();
   }
 
-  void getRegularizeApprovalList() async{
+  void getRegularizeApprovalList() async {
     var receivePort = ReceivePort();
     var rootToken = RootIsolateToken.instance!;
 
-    receivePort.listen((message) {
-      if(message!=null){
-        attendanceApprovalListData.value = GetApproveRegularizeList.fromJson(message);
-        log("The Half And Full day ${attendanceApprovalListData.value.data?.elementAt(0).halfFullDay?.trim().toString()}");
-        isLoading.value = false;
-      }else{
-        isLoading.value = false;
-      }
-    },);
+    receivePort.listen(
+      (message) {
+        if (message != null) {
+          attendanceApprovalListData.value =
+              GetApproveRegularizeList.fromJson(message);
+          log("The Half And Full day ${attendanceApprovalListData.value.data?.elementAt(0).halfFullDay?.trim().toString()}");
+          isLoading.value = false;
+        } else {
+          isLoading.value = false;
+        }
+      },
+    );
 
-    await Isolate.spawn<_IsolateGetApiData>(_getAttendanceRecordsByApi,
+    await Isolate.spawn<_IsolateGetApiData>(
+        _getAttendanceRecordsByApi,
         _IsolateGetApiData(
             token: rootToken,
             answerPort: receivePort.sendPort,
@@ -52,36 +55,38 @@ class RegularizationListApprovalsController extends GetxController{
   static void _getAttendanceRecordsByApi(_IsolateGetApiData api) async {
     BackgroundIsolateBinaryMessenger.ensureInitialized(api.token);
     await PreferenceUtils.init();
-    if(await Network.isConnected()) {
-      await DioClient().get(api.apiUrl).then((value) {
-        if(value!=null){
-          api.answerPort.send(value);
-        }else{
-          api.answerPort.send(null);
-        }
-      },);
+    if (await Network.isConnected()) {
+      await DioClient().get(api.apiUrl).then(
+        (value) {
+          if (value != null) {
+            api.answerPort.send(value);
+          } else {
+            api.answerPort.send(null);
+          }
+        },
+      );
     }
   }
 
   String setDate(String? date) {
-    if(date!=null && date!=""){
+    if (date != null && date != "") {
       DateFormat inputFormat = DateFormat('yyyy-MM-ddTHH:mm:ss');
       // Parse the input string to DateTime
       DateTime parsedDate = inputFormat.parse(date);
       // Format the DateTime to the desired output format (MM/dd/yyyy)
       String formattedDate = DateFormat('MM/dd/yyyy').format(parsedDate);
       return formattedDate;
-    }else{
+    } else {
       return "";
     }
   }
 
   String getTime(String? dateTime) {
-    if(dateTime!=null && dateTime!="") {
+    if (dateTime != null && dateTime != "") {
       List<String> parts = dateTime.split(' ');
       String time = parts[1];
       return time;
-    }else{
+    } else {
       return "--:--";
     }
   }
@@ -93,5 +98,6 @@ class _IsolateGetApiData {
   final SendPort answerPort;
   final String apiUrl;
 
-  _IsolateGetApiData({required this.token, required this.answerPort, required this.apiUrl});
+  _IsolateGetApiData(
+      {required this.token, required this.answerPort, required this.apiUrl});
 }

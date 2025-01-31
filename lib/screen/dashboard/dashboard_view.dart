@@ -35,7 +35,7 @@ class DashboardView extends GetView<DashController> {
       appBar: CommonNewAppBar(
         title: "Dashboard",
         //leadingIconSvg: Icons.menu,
-        leadingIconSvg: AppImages.ic_menu, // Menu icon
+        leadingIconSvg: AppImages.icAppMenu, // Menu icon
         onLeadingIconTap: () {
           Scaffold.of(context).openDrawer();
         },
@@ -621,7 +621,7 @@ class DashboardView extends GetView<DashController> {
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    //crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         //mainAxisAlignment: MainAxisAlignment.center,

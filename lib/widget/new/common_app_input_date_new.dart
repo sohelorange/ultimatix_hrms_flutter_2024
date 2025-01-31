@@ -75,7 +75,8 @@ class CommonAppInputDateNew extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color effectiveBorderColor = isEnable == false ? AppColors.colorDCDCDC : borderColor;
+    final Color effectiveBorderColor =
+        isEnable == false ? AppColors.colorDCDCDC : borderColor;
 
     return SizedBox(
       height: inputHeight,
@@ -102,17 +103,20 @@ class CommonAppInputDateNew extends StatelessWidget {
           counter: const Offstage(),
           hintText: hintText,
           isDense: true,
-          labelStyle: labelStyle ?? AppFonts.interTextStyle().copyWith(
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-            color: hintColor ?? effectiveBorderColor,
-          ),
-          hintStyle: hintStyle ?? AppFonts.interTextStyle().copyWith(
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-            color: hintColor ?? effectiveBorderColor,
-          ),
-          contentPadding: padding ?? const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+          labelStyle: labelStyle ??
+              AppFonts.interTextStyle().copyWith(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+                color: hintColor ?? effectiveBorderColor,
+              ),
+          hintStyle: hintStyle ??
+              AppFonts.interTextStyle().copyWith(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+                color: hintColor ?? effectiveBorderColor,
+              ),
+          contentPadding: padding ??
+              const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
           border: OutlineInputBorder(
             borderSide: BorderSide(color: effectiveBorderColor, width: 1),
             borderRadius: BorderRadius.circular(borderRadius),
@@ -126,7 +130,8 @@ class CommonAppInputDateNew extends StatelessWidget {
             borderRadius: BorderRadius.circular(borderRadius),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: AppColors.color7A1FA2, width: 1),
+            borderSide:
+                const BorderSide(color: AppColors.color7A1FA2, width: 1),
             borderRadius: BorderRadius.circular(borderRadius),
           ),
         ),

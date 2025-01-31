@@ -64,17 +64,19 @@ class CommonAppElevatedButton extends StatelessWidget {
             foregroundColor: buttonSplashColor ?? Colors.white,
             backgroundColor: Colors.transparent,
             shadowColor: Colors.transparent,
-            disabledForegroundColor: Colors.transparent.withOpacity(0.38),
-            disabledBackgroundColor: Colors.transparent.withOpacity(0.12),
+            disabledForegroundColor: Colors.transparent.withValues(alpha: 0.38),
+            disabledBackgroundColor: Colors.transparent.withValues(alpha: 0.12),
             padding: const EdgeInsets.symmetric(horizontal: 5),
             shape: RoundedRectangleBorder(
-              side: BorderSide(color: buttonBorderColor ?? AppColors.colorWhite),
+              side:
+                  BorderSide(color: buttonBorderColor ?? AppColors.colorWhite),
               borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
           ),
           child: isLoading
               ? CircularProgressIndicator(
-                  color: circularProgressColor ?? AppColors.purpleSwatch.shade900,
+                  color:
+                      circularProgressColor ?? AppColors.purpleSwatch.shade900,
                   strokeWidth: 3,
                 )
               : CommonText(

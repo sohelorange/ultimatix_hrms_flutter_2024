@@ -3,7 +3,6 @@ import 'package:ultimatix_hrms_flutter/app/app_theme.dart';
 
 import '../utility/preference_utils.dart';
 
-
 class AppThemeController extends ChangeNotifier {
   /*ThemeData _currentTheme = ThemeData.light();
 

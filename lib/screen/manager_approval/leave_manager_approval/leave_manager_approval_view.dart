@@ -21,10 +21,11 @@ class LeaveManagerApprovalView extends GetView<LeaveManagerApprovalController> {
     return SafeArea(
         child: PopScope(
       canPop: true,
-      onPopInvoked: (val) {
+      onPopInvokedWithResult: (bool didPop, Object? result) {
         final ManagerApprovalController controller =
             Get.find<ManagerApprovalController>();
         controller.managerApprovalCountAPI();
+        return;
       },
       child: Scaffold(
         appBar: const CommonAppBar(

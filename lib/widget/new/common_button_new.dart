@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:ultimatix_hrms_flutter/app/app_font_style.dart';
 
 import '../../app/app_colors.dart';
@@ -13,15 +12,14 @@ class CommonButtonNew extends StatelessWidget {
   final bool? isSvgIcon;
   final Widget? nWidget;
 
-  const CommonButtonNew({
-    super.key,
-    required this.buttonText,
-    required this.onPressed,
-    required this.isLoading,
-    this.isDisable = false,
-    this.isSvgIcon,
-    this.nWidget
-  });
+  const CommonButtonNew(
+      {super.key,
+      required this.buttonText,
+      required this.onPressed,
+      required this.isLoading,
+      this.isDisable = false,
+      this.isSvgIcon,
+      this.nWidget});
 
   @override
   Widget build(BuildContext context) {
@@ -66,22 +64,22 @@ class CommonButtonNew extends StatelessWidget {
                         strokeWidth: 3,
                       ),
                     )
-                  : isSvgIcon==true ?
-                      nWidget
-                  : Text(buttonText,
-                      style: AppFonts.interTextStyle().copyWith(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: PreferenceUtils.getIsTheme()
-                              ? AppColors.colorWhite
-                              : AppColors.colorWhite)
-                      // TextStyle(
-                      //     color: PreferenceUtils.getIsTheme()
-                      //         ? AppColors.colorWhite
-                      //         : AppColors.colorWhite,
-                      //     fontSize: 16,
-                      //     fontWeight: FontWeight.w400),
-                      ),
+                  : isSvgIcon == true
+                      ? nWidget
+                      : Text(buttonText,
+                          style: AppFonts.interTextStyle().copyWith(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: PreferenceUtils.getIsTheme()
+                                  ? AppColors.colorWhite
+                                  : AppColors.colorWhite)
+                          // TextStyle(
+                          //     color: PreferenceUtils.getIsTheme()
+                          //         ? AppColors.colorWhite
+                          //         : AppColors.colorWhite,
+                          //     fontSize: 16,
+                          //     fontWeight: FontWeight.w400),
+                          ),
             ),
           ),
         ),

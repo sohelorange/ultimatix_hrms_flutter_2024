@@ -120,7 +120,7 @@ class LeaveApplicationDetailsController extends GetxController {
                       //   focusNode: userNameFocus,
                       //   hintText: 'Second Type',
                       //   // prifixPadding: const EdgeInsets.all(12),
-                      //   hintColor: AppColors.colorBlack.withOpacity(0.3),
+                      //   hintColor: AppColors.colorBlack.withValues(alpha: 0.3),
                       // ).paddingOnly(left: 20, right: 20),
                       // Row(
                       //   children: [
@@ -139,7 +139,7 @@ class LeaveApplicationDetailsController extends GetxController {
                       //   focusNode: passWordFocus,
                       //   hintText: 'Type Here....',
                       //   prifixPadding: const EdgeInsets.all(12),
-                      //   hintColor: AppColors.colorBlack.withOpacity(0.3),
+                      //   hintColor: AppColors.colorBlack.withValues(alpha: 0.3),
                       //   isPassword: true,
                       // ).paddingOnly(left: 20, right: 20),
                       // SizedBox(
@@ -222,7 +222,7 @@ class LeaveApplicationDetailsController extends GetxController {
                     focusNode: userNameFocus,
                     hintText: 'Second Type',
                     // prifixPadding: const EdgeInsets.all(12),
-                    hintColor: AppColors.colorBlack.withOpacity(0.3),
+                    hintColor: AppColors.colorBlack.withValues(alpha: 0.3),
                   ).paddingOnly(left: 20, right: 20),
                   Row(
                     children: [
@@ -241,7 +241,7 @@ class LeaveApplicationDetailsController extends GetxController {
                     focusNode: passWordFocus,
                     hintText: 'Type Here....',
                     prifixPadding: const EdgeInsets.all(12),
-                    hintColor: AppColors.colorBlack.withOpacity(0.3),
+                    hintColor: AppColors.colorBlack.withValues(alpha: 0.3),
                     isPassword: true,
                   ).paddingOnly(left: 20, right: 20),
                   SizedBox(
@@ -304,7 +304,7 @@ class LeaveApplicationDetailsController extends GetxController {
                 ),
                 const SizedBox(height: 8),
                 Divider(
-                    color: AppColors.colorDarkGray.withOpacity(0.2),
+                    color: AppColors.colorDarkGray.withValues(alpha: 0.2),
                     thickness: 1),
               ],
             ),

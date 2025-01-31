@@ -138,7 +138,7 @@ class FeedbackView extends GetView<FeedbackController> {
                       focusNode: controller.feedbackFocus,
                       hintText: 'Type here',
                       prifixPadding: const EdgeInsets.all(12),
-                      hintColor: AppColors.colorBlack.withOpacity(0.3),
+                      hintColor: AppColors.colorBlack.withValues(alpha: 0.3),
                     ),
                     const SizedBox(
                       height: 20,

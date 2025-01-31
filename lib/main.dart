@@ -391,7 +391,7 @@ Widget getMainAppViewBuilder(BuildContext context, Widget? widget) {
                     .isShowLoading
                     .isTrue) // Top level loading ( used while api calls)
                   ColoredBox(
-                    color: AppColors.colorBlack.withOpacity(0.6),
+                    color: AppColors.colorBlack.withValues(alpha: 0.6),
                     child: Center(child: Utils.commonCircularProgress()),
                   ),
               ],

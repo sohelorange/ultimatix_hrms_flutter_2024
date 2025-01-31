@@ -1,4 +1,3 @@
-
 import 'package:path_provider/path_provider.dart';
 import 'dart:async';
 import 'package:path/path.dart';
@@ -10,6 +9,7 @@ class DatabaseHelper {
   DatabaseHelper._();
 
   // Singleton instance
+  // ignore: unused_field
   static final DatabaseHelper _instance = DatabaseHelper._();
 
   // Database instance

@@ -62,20 +62,20 @@ class BackupLeaveApplicationDetailsView
             decoration: BoxDecoration(
               color: controller.leaveAppStatus.value == 'A'
                   ? AppColors.colorGreen
-                      .withOpacity(0.1) // Green for status 'A'
+                      .withValues(alpha: 0.1) // Green for status 'A'
                   : controller.leaveAppStatus.value == 'P'
                       ? AppColors.colorAmber
-                          .withOpacity(0.1) // Amber for status 'P'
-                      : AppColors.colorRed.withOpacity(0.1),
+                          .withValues(alpha: 0.1) // Amber for status 'P'
+                      : AppColors.colorRed.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(6),
               boxShadow: [
                 BoxShadow(
                   color: controller.leaveAppStatus.value == 'A'
                       ? AppColors.colorGreen
-                          .withOpacity(0.1) // Green for status 'A'
+                          .withValues(alpha: 0.1) // Green for status 'A'
                       : controller.leaveAppStatus.value == 'P'
-                          ? AppColors.colorAmber.withOpacity(0.1)
-                          : AppColors.colorRed.withOpacity(0.1),
+                          ? AppColors.colorAmber.withValues(alpha: 0.1)
+                          : AppColors.colorRed.withValues(alpha: 0.1),
                   blurRadius: 0.0,
                   spreadRadius: 1.0,
                   offset: const Offset(0, 0),
@@ -132,7 +132,7 @@ class BackupLeaveApplicationDetailsView
                     color: AppColors.colorDarkBlue,
                   ).paddingOnly(top: 5),
                   Divider(
-                    color: AppColors.colorBlack.withOpacity(0.2),
+                    color: AppColors.colorBlack.withValues(alpha: 0.2),
                   ),
                   CommonText(
                     text: 'Leave From',
@@ -161,7 +161,7 @@ class BackupLeaveApplicationDetailsView
                     color: AppColors.colorDarkBlue,
                   ).paddingOnly(top: 5),
                   Divider(
-                    color: AppColors.colorBlack.withOpacity(0.2),
+                    color: AppColors.colorBlack.withValues(alpha: 0.2),
                   ),
                   CommonText(
                     text: 'Period',
@@ -176,7 +176,7 @@ class BackupLeaveApplicationDetailsView
                     color: AppColors.colorDarkBlue,
                   ).paddingOnly(top: 5),
                   Divider(
-                    color: AppColors.colorBlack.withOpacity(0.2),
+                    color: AppColors.colorBlack.withValues(alpha: 0.2),
                   ),
                   CommonText(
                       text: 'Reason',
@@ -433,14 +433,14 @@ class BackupLeaveApplicationDetailsView
 
 // Helper methods for status colors
   Color _getStatusColor(String? status) {
-    if (status == null) return AppColors.colorRed.withOpacity(0.1);
+    if (status == null) return AppColors.colorRed.withValues(alpha: 0.1);
     switch (status.toUpperCase().substring(0, 1)) {
       case 'A':
-        return AppColors.colorGreen.withOpacity(0.1);
+        return AppColors.colorGreen.withValues(alpha: 0.1);
       case 'P':
-        return AppColors.colorAmber.withOpacity(0.1);
+        return AppColors.colorAmber.withValues(alpha: 0.1);
       default:
-        return AppColors.colorRed.withOpacity(0.1);
+        return AppColors.colorRed.withValues(alpha: 0.1);
     }
   }
 

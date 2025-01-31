@@ -1,19 +1,15 @@
-/// status : true
-/// code : 200
-/// message : "Success"
-/// data : [{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"},{"empId":28201,"cmpId":187,"latitude":21.7254685,"longitude":73.0237397,"trackingDate":"2024-08-01T11:12:09","address":"P2GF+48J, GNFC Twp, Bharuch, Gujarat 392012, India","city":"Bharuch","area":" GNFC Twp"}]
-
 class LocationTrackResponse {
   LocationTrackResponse({
-      bool? status,
-      num? code,
-      String? message,
-      List<Data>? data,}){
+    bool? status,
+    num? code,
+    String? message,
+    List<Data>? data,
+  }) {
     _status = status;
     _code = code;
     _message = message;
     _data = data;
-}
+  }
 
   LocationTrackResponse.fromJson(dynamic json) {
     _status = json['status'];
@@ -26,22 +22,31 @@ class LocationTrackResponse {
       });
     }
   }
+
   bool? _status;
   num? _code;
   String? _message;
   List<Data>? _data;
-LocationTrackResponse copyWith({  bool? status,
-  num? code,
-  String? message,
-  List<Data>? data,
-}) => LocationTrackResponse(  status: status ?? _status,
-  code: code ?? _code,
-  message: message ?? _message,
-  data: data ?? _data,
-);
+
+  LocationTrackResponse copyWith({
+    bool? status,
+    num? code,
+    String? message,
+    List<Data>? data,
+  }) =>
+      LocationTrackResponse(
+        status: status ?? _status,
+        code: code ?? _code,
+        message: message ?? _message,
+        data: data ?? _data,
+      );
+
   bool? get status => _status;
+
   num? get code => _code;
+
   String? get message => _message;
+
   List<Data>? get data => _data;
 
   Map<String, dynamic> toJson() {
@@ -54,7 +59,6 @@ LocationTrackResponse copyWith({  bool? status,
     }
     return map;
   }
-
 }
 
 /// empId : 28201
@@ -68,14 +72,15 @@ LocationTrackResponse copyWith({  bool? status,
 
 class Data {
   Data({
-      num? empId,
-      num? cmpId,
-      num? latitude,
-      num? longitude,
-      String? trackingDate,
-      String? address,
-      String? city,
-      String? area,}){
+    num? empId,
+    num? cmpId,
+    num? latitude,
+    num? longitude,
+    String? trackingDate,
+    String? address,
+    String? city,
+    String? area,
+  }) {
     _empId = empId;
     _cmpId = cmpId;
     _latitude = latitude;
@@ -84,7 +89,7 @@ class Data {
     _address = address;
     _city = city;
     _area = area;
-}
+  }
 
   Data.fromJson(dynamic json) {
     _empId = json['empId'];
@@ -96,6 +101,7 @@ class Data {
     _city = json['city'];
     _area = json['area'];
   }
+
   num? _empId;
   num? _cmpId;
   num? _latitude;
@@ -104,30 +110,42 @@ class Data {
   String? _address;
   String? _city;
   String? _area;
-Data copyWith({  num? empId,
-  num? cmpId,
-  num? latitude,
-  num? longitude,
-  String? trackingDate,
-  String? address,
-  String? city,
-  String? area,
-}) => Data(  empId: empId ?? _empId,
-  cmpId: cmpId ?? _cmpId,
-  latitude: latitude ?? _latitude,
-  longitude: longitude ?? _longitude,
-  trackingDate: trackingDate ?? _trackingDate,
-  address: address ?? _address,
-  city: city ?? _city,
-  area: area ?? _area,
-);
+
+  Data copyWith({
+    num? empId,
+    num? cmpId,
+    num? latitude,
+    num? longitude,
+    String? trackingDate,
+    String? address,
+    String? city,
+    String? area,
+  }) =>
+      Data(
+        empId: empId ?? _empId,
+        cmpId: cmpId ?? _cmpId,
+        latitude: latitude ?? _latitude,
+        longitude: longitude ?? _longitude,
+        trackingDate: trackingDate ?? _trackingDate,
+        address: address ?? _address,
+        city: city ?? _city,
+        area: area ?? _area,
+      );
+
   num? get empId => _empId;
+
   num? get cmpId => _cmpId;
+
   num? get latitude => _latitude;
+
   num? get longitude => _longitude;
+
   String? get trackingDate => _trackingDate;
+
   String? get address => _address;
+
   String? get city => _city;
+
   String? get area => _area;
 
   Map<String, dynamic> toJson() {
@@ -142,5 +160,4 @@ Data copyWith({  num? empId,
     map['area'] = _area;
     return map;
   }
-
 }

@@ -148,7 +148,6 @@ class _CommonAppDrawerState extends State<CommonAppDrawer> {
   }
 }
 
-
 class CommonDrawerItem extends StatelessWidget {
   final String icon;
   final String text;

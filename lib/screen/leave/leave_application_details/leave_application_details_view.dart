@@ -5,10 +5,6 @@ import 'package:ultimatix_hrms_flutter/app/app_date_format.dart';
 import 'package:ultimatix_hrms_flutter/screen/leave/leave_application_details/leave_application_details_controller.dart';
 import 'package:ultimatix_hrms_flutter/screen/leave/leave_application_details/leave_application_details_model.dart';
 import 'package:ultimatix_hrms_flutter/utility/utils.dart';
-import 'package:ultimatix_hrms_flutter/widget/common_button.dart';
-import 'package:ultimatix_hrms_flutter/widget/common_container.dart';
-import 'package:ultimatix_hrms_flutter/widget/common_dropdown.dart';
-import 'package:ultimatix_hrms_flutter/widget/common_input_field.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_text.dart';
 import 'package:ultimatix_hrms_flutter/widget/new/common_app_bar_new.dart';
 import 'package:ultimatix_hrms_flutter/widget/new/common_app_input_new.dart';
@@ -19,7 +15,6 @@ import '../../../app/app_colors.dart';
 import '../../../app/app_font_weight.dart';
 
 import '../../../app/app_images.dart';
-import '../../../widget/common_app_bar.dart';
 import '../../../widget/common_app_image_svg.dart';
 
 class LeaveApplicationDetailsView
@@ -49,20 +44,20 @@ class LeaveApplicationDetailsView
           //   decoration: BoxDecoration(
           //     color: controller.leaveAppStatus.value == 'A'
           //         ? AppColors.colorGreen
-          //             .withOpacity(0.1) // Green for status 'A'
+          //             .withValues(alpha: 0.1) // Green for status 'A'
           //         : controller.leaveAppStatus.value == 'P'
           //             ? AppColors.colorAmber
-          //                 .withOpacity(0.1) // Amber for status 'P'
-          //             : AppColors.colorRed.withOpacity(0.1),
+          //                 .withValues(alpha: 0.1) // Amber for status 'P'
+          //             : AppColors.colorRed.withValues(alpha: 0.1),
           //     borderRadius: BorderRadius.circular(6),
           //     boxShadow: [
           //       BoxShadow(
           //         color: controller.leaveAppStatus.value == 'A'
           //             ? AppColors.colorGreen
-          //                 .withOpacity(0.1) // Green for status 'A'
+          //                 .withValues(alpha: 0.1) // Green for status 'A'
           //             : controller.leaveAppStatus.value == 'P'
-          //                 ? AppColors.colorAmber.withOpacity(0.1)
-          //                 : AppColors.colorRed.withOpacity(0.1),
+          //                 ? AppColors.colorAmber.withValues(alpha: 0.1)
+          //                 : AppColors.colorRed.withValues(alpha: 0.1),
           //         blurRadius: 0.0,
           //         spreadRadius: 1.0,
           //         offset: const Offset(0, 0),
@@ -210,16 +205,16 @@ class LeaveApplicationDetailsView
                 },
                 isLoading: controller.isDeleteLoading.value,
                 isDisable: controller.isDisable.value,
-              ).paddingOnly(top: 20)
-          ),
+              ).paddingOnly(top: 20)),
           Visibility(
               visible:
                   controller.leaveAppStatus.value.toString().toUpperCase() ==
                       'A',
               child: controller.isLoading.isTrue
                   ? SizedBox(
-                      height: 500,
-                      child: Center(child: Utils.commonCircularProgress())).paddingOnly(top: 20)
+                          height: 500,
+                          child: Center(child: Utils.commonCircularProgress()))
+                      .paddingOnly(top: 20)
                   : controller.leaveDetailsListResponse.value.data != null
                       ? _leaveCancelListUI(context).paddingOnly(top: 20)
                       : SizedBox(
@@ -243,8 +238,7 @@ class LeaveApplicationDetailsView
                                 color: AppColors.colorDarkBlue,
                               ),
                             ],
-                          )).paddingOnly(top: 20)
-          ),
+                          )).paddingOnly(top: 20)),
         ],
       ),
     );

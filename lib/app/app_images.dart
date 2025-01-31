@@ -25,10 +25,10 @@ class AppImages {
   static const String icMic = 'assets/images/ic_mic.png';
   static const String icContactCall = 'assets/images/ic_contanct_call.png';
   static const String icSalaryDownload = 'assets/images/ic_salary_download.png';
-  static const String icprofile = 'assets/images/ic_profile.png';
-  static const String icclock = 'assets/images/ic_clock.png';
-  static const String iclocation = 'assets/images/ic_location.png';
-  static const String ic_menu = 'assets/images/ic_menu.svg';
+  static const String icProfile = 'assets/images/ic_profile.png';
+  static const String icAppClock = 'assets/images/ic_clock.png';
+  static const String icLocation = 'assets/images/ic_location.png';
+  static const String icAppMenu = 'assets/images/ic_menu.svg';
   static const String icBack = 'assets/images/ic_back.svg';
   static const String backBtnImg = 'assets/images/back_image.png';
   static const String addLeaveImg = 'assets/images/add_leave_img.png';
@@ -397,8 +397,7 @@ class AppImages {
   static const String gifLogo = 'assets/icon/gif_otl.gif';
 
   //LeaveApplication icon
-  static const String leaveBgDateIcon =
-      'assets/images/ic_bg_date.svg';
+  static const String leaveBgDateIcon = 'assets/images/ic_bg_date.svg';
   static const String leaveApprovalIcon =
       'assets/applicationIcon/leave/leave_approval_icon.svg';
   static const String leaveCalendarIcon =
@@ -430,7 +429,8 @@ class AppImages {
   static const String icbirth = 'assets/icon/profileicon/ic_birth.png';
   static const String icpan = 'assets/icon/profileicon/ic_pan.png';
 
-  static const String profileChoosePhotoIcon = 'assets/images/ic_choose_photo.svg';
+  static const String profileChoosePhotoIcon =
+      'assets/images/ic_choose_photo.svg';
   static const String profileAddIcon = 'assets/images/ic_add.svg';
   static const String profileViewIcon = 'assets/images/ic_view.svg';
   static const String profileEmpCodeIcon =
@@ -501,22 +501,32 @@ class AppImages {
       'assets/applicationIcon/approval/approval_exit_icon.svg';
   static const String approvalCalendarIcon =
       'assets/applicationIcon/approval/approval_calendar_icon.svg';
+
 //end region
 
-
   //Clocking new icon
-  static const String backBtnSvg = "assets/icon/clockInOut/new/svg_back_btn_icon.svg";
-  static const String svgClockNew = "assets/icon/clockInOut/new/clock_icon_dropdown.svg";
-  static const String svgClockLocation = "assets/icon/clockInOut/new/clock_location_svg.svg";
-  static const String svgClockCamera = "assets/icon/clockInOut/new/clock_camera_svg.svg";
-  static const String svgClockInputReason = "assets/icon/clockInOut/new/clock_input_reason_svg.svg";
-  static const String pngClockReason = "assets/icon/clockInOut/new/clock_reason_png.png";
+  static const String backBtnSvg =
+      "assets/icon/clockInOut/new/svg_back_btn_icon.svg";
+  static const String svgClockNew =
+      "assets/icon/clockInOut/new/clock_icon_dropdown.svg";
+  static const String svgClockLocation =
+      "assets/icon/clockInOut/new/clock_location_svg.svg";
+  static const String svgClockCamera =
+      "assets/icon/clockInOut/new/clock_camera_svg.svg";
+  static const String svgClockInputReason =
+      "assets/icon/clockInOut/new/clock_input_reason_svg.svg";
+  static const String pngClockReason =
+      "assets/icon/clockInOut/new/clock_reason_png.png";
 
   //live tracking
-  static const String svgClockLiveTracking = "assets/icon/liveTracking/new/svg_clock_new.svg";
-  static const String svgBatteryNew = "assets/icon/liveTracking/new/svg_battery_new.svg";
-  static const String svgDistanceNew = "assets/icon/liveTracking/new/svg_dist_new.svg";
-  static const String svgLocationLiveTrack = "assets/icon/liveTracking/new/svg_location_live_track.svg";
-  static const String svgLocationTrack = "assets/icon/liveTracking/new/svg_location_line.svg";
-
+  static const String svgClockLiveTracking =
+      "assets/icon/liveTracking/new/svg_clock_new.svg";
+  static const String svgBatteryNew =
+      "assets/icon/liveTracking/new/svg_battery_new.svg";
+  static const String svgDistanceNew =
+      "assets/icon/liveTracking/new/svg_dist_new.svg";
+  static const String svgLocationLiveTrack =
+      "assets/icon/liveTracking/new/svg_location_live_track.svg";
+  static const String svgLocationTrack =
+      "assets/icon/liveTracking/new/svg_location_line.svg";
 }

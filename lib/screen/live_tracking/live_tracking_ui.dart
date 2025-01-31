@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:ultimatix_hrms_flutter/screen/liveTracking/live_tracking_controller.dart';
+import 'package:ultimatix_hrms_flutter/screen/live_tracking/live_tracking_controller.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_app_image.dart';
 import 'package:ultimatix_hrms_flutter/widget/new/common_button_new.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -10,8 +10,6 @@ import '../../app/app_colors.dart';
 import '../../app/app_font_weight.dart';
 import '../../app/app_images.dart';
 import '../../utility/utils.dart';
-import '../../widget/common_app_bar.dart';
-import '../../widget/common_container.dart';
 import '../../widget/common_text.dart';
 import '../../widget/new/common_app_bar_two.dart';
 
@@ -345,12 +343,12 @@ class LiveTrackingUi extends GetView<LiveTrackingController> {
                                                     height: 65,
                                                     width: 2,
                                                     color: AppColors.color1C1F37
-                                                        .withOpacity(0.3),
+                                                        .withValues(alpha: 0.3),
                                                   )*/
-                                                  SvgPicture.asset(
-                                                      height: 65,
-                                                      width: 2,
-                                                      AppImages.svgLocationTrack)
+                                                SvgPicture.asset(
+                                                    height: 65,
+                                                    width: 2,
+                                                    AppImages.svgLocationTrack)
                                                 : const SizedBox(
                                                     height: 65, width: 2),
                                           ],
@@ -368,7 +366,9 @@ class LiveTrackingUi extends GetView<LiveTrackingController> {
                                                         .data
                                                         ?.elementAt(position)
                                                         .trackingDate),
-                                                fontSize: controller.responsiveFontSize(context, 14),
+                                                fontSize: controller
+                                                    .responsiveFontSize(
+                                                        context, 14),
                                                 // Responsively adjusted font size
                                                 fontWeight: AppFontWeight.w500,
                                                 color: AppColors.color2F2F31,
@@ -393,7 +393,9 @@ class LiveTrackingUi extends GetView<LiveTrackingController> {
                                                         .elementAt(position)
                                                         .address
                                                         .toString(),
-                                                fontSize: controller.responsiveFontSize(context, 12),
+                                                fontSize: controller
+                                                    .responsiveFontSize(
+                                                        context, 12),
                                                 fontWeight: AppFontWeight.w400,
                                                 maxLine: 4,
                                                 color: AppColors.color7B758E,

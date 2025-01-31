@@ -29,7 +29,7 @@ class CommonPieChartWithTitle extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
+            color: Colors.grey.withValues(alpha: 0.5),
             spreadRadius: 0,
             blurRadius: 8,
             offset: const Offset(0, 3),
@@ -41,7 +41,7 @@ class CommonPieChartWithTitle extends StatelessWidget {
           Container(
             height: 34,
             width: double.infinity,
-            decoration:  const BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppColors.purpleSwatch,
               // Change to your preferred color
               borderRadius: BorderRadius.only(

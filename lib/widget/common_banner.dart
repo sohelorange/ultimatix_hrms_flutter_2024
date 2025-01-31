@@ -24,7 +24,7 @@ class _CommonCarouselBannerState extends State<CommonCarouselBanner> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Stack(
-          children: [ 
+          children: [
             CarouselSlider.builder(
               itemCount: widget.images.isNotEmpty ? widget.images.length : 1,
               options: CarouselOptions(
@@ -69,8 +69,10 @@ class _CommonCarouselBannerState extends State<CommonCarouselBanner> {
                     // Adjusted width for selected/unselected
                     decoration: BoxDecoration(
                       color: _currentIndex == index
-                          ? Colors.white.withOpacity(0.8) // Selected color
-                          : Colors.white.withOpacity(0.5), // Unselected color
+                          ? Colors.white
+                              .withValues(alpha: 0.8) // Selected color
+                          : Colors.white.withValues(alpha: 0.5),
+                      // Unselected color
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                   );
@@ -92,8 +94,8 @@ class _CommonCarouselBannerState extends State<CommonCarouselBanner> {
             //         width: _currentIndex == index ? 16.0 : 8.0,
             //         decoration: BoxDecoration(
             //           color: _currentIndex == index
-            //               ? Colors.white.withOpacity(0.8) // Selected color
-            //               : Colors.white.withOpacity(0.5), // Unselected color
+            //               ? Colors.white.withValues(alpha: 0.8) // Selected color
+            //               : Colors.white.withValues(alpha: 0.5), // Unselected color
             //           borderRadius: BorderRadius.circular(8.0),
             //         ),
             //       );

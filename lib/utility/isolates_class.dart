@@ -10,7 +10,11 @@ class IsolateApiFormData {
   final SendPort answerPort;
   final String apiUrl;
 
-  IsolateApiFormData({required this.token, required this.formData, required this.answerPort, required this.apiUrl});
+  IsolateApiFormData(
+      {required this.token,
+      required this.formData,
+      required this.answerPort,
+      required this.apiUrl});
 }
 
 class IsolateDb {
@@ -19,7 +23,11 @@ class IsolateDb {
   String s;
   final SendPort answerPort;
 
-  IsolateDb({required this.token, required this.dao, required this.s, required this.answerPort});
+  IsolateDb(
+      {required this.token,
+      required this.dao,
+      required this.s,
+      required this.answerPort});
 }
 
 class IsolateDataStore {
@@ -27,14 +35,18 @@ class IsolateDataStore {
   final UltimatixDao dao;
   ClockInOutEntity entity;
 
-  IsolateDataStore({required this.token, required this.dao, required this.entity});
+  IsolateDataStore(
+      {required this.token, required this.dao, required this.entity});
 }
 
 class IsolateLocationData {
   final RootIsolateToken token;
   final SendPort answerPort;
 
-  IsolateLocationData({required this.token, required this.answerPort,});
+  IsolateLocationData({
+    required this.token,
+    required this.answerPort,
+  });
 }
 
 class IsolatePostApiData {
@@ -43,7 +55,11 @@ class IsolatePostApiData {
   final SendPort answerPort;
   final String apiUrl;
 
-  IsolatePostApiData({required this.token, required this.requestData, required this.answerPort, required this.apiUrl});
+  IsolatePostApiData(
+      {required this.token,
+      required this.requestData,
+      required this.answerPort,
+      required this.apiUrl});
 }
 
 class IsolateGetApiData {
@@ -52,5 +68,9 @@ class IsolateGetApiData {
   final String apiUrl;
   final Map<String, dynamic>? requestParam;
 
-  IsolateGetApiData({required this.token, required this.answerPort, required this.apiUrl, this.requestParam});
+  IsolateGetApiData(
+      {required this.token,
+      required this.answerPort,
+      required this.apiUrl,
+      this.requestParam});
 }

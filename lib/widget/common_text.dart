@@ -4,7 +4,6 @@ import '../app/app_colors.dart';
 import '../app/app_font_style.dart';
 import '../app/app_font_weight.dart';
 
-
 // ignore: must_be_immutable
 class CommonText extends StatelessWidget {
   String text;

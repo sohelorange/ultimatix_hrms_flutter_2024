@@ -172,7 +172,13 @@ class LeaveBalanceView extends GetView<LeaveBalanceController> {
                                 color: AppColors.color7B758E,
                               ),
                               CommonText(
-                                text: double.parse(controller.leaveBalListResponse.value.data![index].leaveOpening.toString()).toStringAsFixed(1),
+                                text: double.parse(controller
+                                        .leaveBalListResponse
+                                        .value
+                                        .data![index]
+                                        .leaveOpening
+                                        .toString())
+                                    .toStringAsFixed(1),
                                 fontWeight: AppFontWeight.w400,
                                 fontSize: 14,
                                 color: AppColors.color2F2F31,
@@ -192,7 +198,13 @@ class LeaveBalanceView extends GetView<LeaveBalanceController> {
                                 color: AppColors.color7B758E,
                               ),
                               CommonText(
-                                text: double.parse(controller.leaveBalListResponse.value.data![index].leaveUsed.toString()).toStringAsFixed(1),
+                                text: double.parse(controller
+                                        .leaveBalListResponse
+                                        .value
+                                        .data![index]
+                                        .leaveUsed
+                                        .toString())
+                                    .toStringAsFixed(1),
                                 fontWeight: AppFontWeight.w400,
                                 fontSize: 14,
                                 color: AppColors.color2F2F31,

@@ -50,7 +50,7 @@ class CommonCommentDialog extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Divider(
-                  color: AppColors.colorDarkGray.withOpacity(0.2),
+                  color: AppColors.colorDarkGray.withValues(alpha: 0.2),
                   thickness: 1),
             ],
           ),

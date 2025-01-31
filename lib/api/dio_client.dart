@@ -130,7 +130,8 @@ class DioClient {
     }
   }
 
-  Future<dynamic> postQuery(String url, {Map<String, dynamic>? queryParams}) async {
+  Future<dynamic> postQuery(String url,
+      {Map<String, dynamic>? queryParams}) async {
     var uri = Uri.parse(url);
     log("API is:$url");
     log("API Param is:$queryParams");
@@ -139,22 +140,24 @@ class DioClient {
     try {
       var response = await Dio()
           .post(
-        uri.toString(), // Use the URI string directly
-        queryParameters: queryParams, // Pass query parameters
-        options: Options(
-          headers: {
-            'Content-Type': 'application/json',
-            'accept': '*/*',
-            'Authorization': PreferenceUtils.getAuthToken(),
-          },
-        ),
-      ).timeout(const Duration(seconds: timeOutDuration));
+            uri.toString(), // Use the URI string directly
+            queryParameters: queryParams, // Pass query parameters
+            options: Options(
+              headers: {
+                'Content-Type': 'application/json',
+                'accept': '*/*',
+                'Authorization': PreferenceUtils.getAuthToken(),
+              },
+            ),
+          )
+          .timeout(const Duration(seconds: timeOutDuration));
 
       return _processResponse(response);
     } on SocketException {
       throw FetchDataException('No Internet connection', uri.toString());
     } on TimeoutException {
-      throw ApiNotRespondingException('API not responded in time', uri.toString());
+      throw ApiNotRespondingException(
+          'API not responded in time', uri.toString());
     } on DioException catch (error) {
       throw handleError(error);
     }

@@ -6,7 +6,6 @@ import '../../app/app_font_weight.dart';
 import '../../app/app_images.dart';
 import '../../app/app_status_bar.dart';
 import '../../app/app_strings.dart';
-import '../../widget/common_app_image.dart';
 import '../../widget/common_text.dart';
 import 'splash_controller.dart';
 

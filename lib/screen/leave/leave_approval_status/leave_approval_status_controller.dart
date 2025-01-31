@@ -11,6 +11,7 @@ import 'package:ultimatix_hrms_flutter/utility/preference_utils.dart';
 class LeaveApprovalStatusController extends GetxController {
   RxBool isLoading = false.obs;
   RxInt leaveId = 0.obs;
+  RxString userImageUrl = ''.obs;
 
   @override
   void onInit() {

@@ -3,39 +3,39 @@ import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/app/app_images.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/notification_announcement/notification_announcement_controller.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_app_image_svg.dart';
-import 'package:ultimatix_hrms_flutter/widget/new/common_app_bar_new.dart';
 
 import '../../../app/app_colors.dart';
 import '../../../app/app_font_weight.dart';
 import '../../../utility/utils.dart';
+import '../../../widget/common_app_bar.dart';
 import '../../../widget/common_container.dart';
 import '../../../widget/common_text.dart';
 
-class NotificationAnnouncementView
+class BackupNotificationAnnouncementView
     extends GetView<NotificationAnnouncementController> {
-  const NotificationAnnouncementView({super.key});
+  const BackupNotificationAnnouncementView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      appBar: const CommonNewAppBar(
-        title: 'Notification',
-        leadingIconSvg: AppImages.icBack,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+      appBar: const CommonAppBar(title: 'Notification'),
+      body: CommonContainer(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          //mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SizedBox(
+              height: 10,
+            ),
             CommonText(
-              textAlign: TextAlign.start,
               text: 'ORGANIZATION ANNOUNCEMENT',
               color: AppColors.colorDarkBlue,
               fontSize: 16,
               fontWeight: AppFontWeight.w700,
-            ).paddingOnly(bottom: 10),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             Obx(() => _notificationUI(context)),
           ],
         ),
@@ -53,18 +53,21 @@ class NotificationAnnouncementView
                   //controller: _scrollController,
                   itemCount: controller.leaveBalListResponse.value.data!.length,
                   itemBuilder: (context, index) {
-                    Color boxColor = controller
-                        .boxColors[index % controller.boxColors.length];
-                    Color textColor = controller
-                        .textColors[index % controller.textColors.length];
                     return Container(
                       margin: const EdgeInsets.symmetric(
-                          horizontal: 0, vertical: 5),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 15),
+                          horizontal: 10, vertical: 10),
+                      padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
-                        color: boxColor,
+                        color: Colors.white,
                         borderRadius: BorderRadius.circular(10),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0X1C1F370D),
+                            blurRadius: 4.0,
+                            spreadRadius: 1.0,
+                            offset: Offset(0, 0),
+                          ),
+                        ],
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,50 +81,50 @@ class NotificationAnnouncementView
                                     .data![index].docTitle!
                                     .toString()
                                 : 'N/A',
-                            color: textColor,
+                            color: AppColors.colorDarkBlue,
                             fontSize: 16,
-                            fontWeight: AppFontWeight.w600,
+                            fontWeight: AppFontWeight.w500,
                           ),
-                          Container(
-                            width: double.infinity,
-                            margin: const EdgeInsets.only(top: 10),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 15),
-                            decoration: BoxDecoration(
-                              color: AppColors.colorWhite,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CommonText(
-                                  text: controller.leaveBalListResponse.value
-                                          .data![index].description!
-                                          .toString()
-                                          .isNotEmpty
-                                      ? controller.leaveBalListResponse.value
-                                          .data![index].description!
-                                          .toString()
-                                      : 'N/A',
-                                  color: AppColors.color2F2F31,
-                                  fontSize: 14,
-                                  fontWeight: AppFontWeight.w400,
-                                ),
-                                CommonText(
-                                  text: controller.leaveBalListResponse.value
-                                          .data![index].docFromDate!
-                                          .toString()
-                                          .isNotEmpty
-                                      ? controller.leaveBalListResponse.value
-                                          .data![index].docFromDate!
-                                          .toString()
-                                      : 'N/A',
-                                  color: AppColors.color7B758E,
-                                  fontSize: 12,
-                                  fontWeight: AppFontWeight.w400,
-                                ).paddingOnly(top: 5),
-                              ],
-                            ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          CommonText(
+                            text: 'Description',
+                            color: AppColors.purpleSwatch,
+                            fontSize: 14,
+                            fontWeight: AppFontWeight.w500,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          CommonText(
+                            text: controller.leaveBalListResponse.value
+                                    .data![index].description!
+                                    .toString()
+                                    .isNotEmpty
+                                ? controller.leaveBalListResponse.value
+                                    .data![index].description!
+                                    .toString()
+                                : 'N/A',
+                            color: AppColors.colorDarkBlue,
+                            fontSize: 14,
+                            fontWeight: AppFontWeight.w400,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          CommonText(
+                            text: controller.leaveBalListResponse.value
+                                    .data![index].docFromDate!
+                                    .toString()
+                                    .isNotEmpty
+                                ? controller.leaveBalListResponse.value
+                                    .data![index].docFromDate!
+                                    .toString()
+                                : 'N/A',
+                            color: AppColors.purpleSwatch,
+                            fontSize: 12,
+                            fontWeight: AppFontWeight.w400,
                           ),
                         ],
                       ), // Your widget inside the Container

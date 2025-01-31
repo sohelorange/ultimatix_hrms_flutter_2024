@@ -70,41 +70,57 @@ class _CommonDropdownWithModelState<T>
             ),
             borderRadius: BorderRadius.circular(8.0),
           ),
-          child: DropdownButton<String>(
-            value: selectedValue.value.isNotEmpty ? selectedValue.value : null,
-            isExpanded: true,
-            icon: const Icon(Icons.keyboard_arrow_down,
-                color: AppColors.colorDarkGray),
-            underline: const SizedBox(),
-            hint: widget.hint != null
-                ? CommonText(
-                    text: widget.hint!,
-                    fontWeight: AppFontWeight.w400,
-                    fontSize: 16,
-                    color: AppColors.color7B758E,
-            )
-                : null,
-            items: widget.items.map<DropdownMenuItem<String>>((T value) {
-              final itemValue = widget.value(value);
-              return DropdownMenuItem<String>(
-                value: itemValue,
-                child: CommonText(
-                  text: widget.displayValue(value),
-                  fontWeight: AppFontWeight.w400,
-                  fontSize: 16,
-                  color: AppColors.colorDarkBlue,
-                ),
-              );
-            }).toList(),
-            onChanged: (String? newValue) {
-              if (newValue != null) {
-                selectedValue.value = newValue;
-                if (widget.onChanged != null) {
-                  widget.onChanged!(newValue);
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              value: selectedValue.value.isNotEmpty ? selectedValue.value : null,
+              isExpanded: true,
+              icon: const Icon(
+                Icons.keyboard_arrow_down,
+                color: AppColors.colorDarkGray,
+              ),
+              hint: widget.hint != null
+                  ? CommonText(
+                text: widget.hint!,
+                fontWeight: AppFontWeight.w400,
+                fontSize: 16,
+                color: AppColors.color7B758E,
+              )
+                  : null,
+              items: widget.items.map<DropdownMenuItem<String>>((T value) {
+                final itemValue = widget.value(value);
+                return DropdownMenuItem<String>(
+                  value: itemValue,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8.0), // Rounded corners for items
+                    ),
+                    //padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft, // Align text to the left
+                      child: CommonText(
+                        text: widget.displayValue(value),
+                        fontWeight: AppFontWeight.w400,
+                        fontSize: 16,
+                        color: AppColors.colorDarkBlue,
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                if (newValue != null) {
+                  selectedValue.value = newValue;
+                  if (widget.onChanged != null) {
+                    widget.onChanged!(newValue);
+                  }
                 }
-              }
-            },
-          ),
+              },
+              dropdownColor: Colors.white,
+              borderRadius: BorderRadius.circular(6.0,), // Rounded corners for dropdown menu
+            ),
+          )
+          ,
         ),
       );
     });

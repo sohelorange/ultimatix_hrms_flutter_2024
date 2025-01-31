@@ -230,7 +230,7 @@ class DashController extends GetxController {
         Get.offAllNamed(AppRoutes.dashBoardRoute);
         break;
       case 1:
-        //Get.toNamed(AppRoutes.settingsRoute);
+        Get.toNamed(AppRoutes.settingsRoute);
         break;
       case 2:
         Get.toNamed(AppRoutes.attendanceMainRoute);
@@ -273,7 +273,7 @@ class DashController extends GetxController {
         break;
       case 6:
         Get.back();
-        //Get.toNamed(AppRoutes.settingsRoute);
+        Get.toNamed(AppRoutes.settingsRoute);
         break;
       case 7:
         Get.back();
@@ -312,7 +312,7 @@ class DashController extends GetxController {
         }
         break;
       case 2: // Leaves
-        //Get.toNamed(AppRoutes.leaveApplicationRoute);
+        Get.toNamed(AppRoutes.leaveApplicationRoute);
         break;
       case 3: // Attendance
         //Get.toNamed(AppRoutes.attendanceMainRoute);

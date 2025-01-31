@@ -4,9 +4,7 @@ import 'package:ultimatix_hrms_flutter/app/app_colors.dart';
 import 'package:ultimatix_hrms_flutter/app/app_font_weight.dart';
 import 'package:ultimatix_hrms_flutter/app/app_images.dart';
 import 'package:ultimatix_hrms_flutter/utility/utils.dart';
-import 'package:ultimatix_hrms_flutter/widget/common_app_bar.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_app_image_svg.dart';
-import 'package:ultimatix_hrms_flutter/widget/common_container.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_text.dart';
 import 'package:ultimatix_hrms_flutter/widget/new/common_app_bar_new.dart';
 
@@ -23,41 +21,43 @@ class ManagerApprovalView extends GetView<ManagerApprovalController> {
         title: "Approval",
         leadingIconSvg: AppImages.icBack, // Menu icon
       ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        margin: const EdgeInsets.symmetric(horizontal: 20),
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: AppColors.colorF1EBFB,
-        ),
-        child: Obx(() => controller.isLoading.isTrue
-            ? Center(child: Utils.commonCircularProgress())
-            : controller.leaveManagerApprovalResponse.value.data != null
-                ? getLeaveApprovalView(context)
-                : Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CommonAppImageSvg(
-                          imagePath: AppImages.svgNoData,
-                          height: 100,
-                          width: MediaQuery.sizeOf(context).width),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      CommonText(
-                        text: controller
-                                .leaveManagerApprovalResponse.value.message ??
-                            controller.errorMsg.value,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 16,
-                        color: AppColors.colorDarkBlue,
-                      ),
-                    ],
-                  )),
-      ),
+      body: Obx(() => controller.isLoading.isTrue
+          ? Center(child: Utils.commonCircularProgress())
+          : controller.leaveManagerApprovalResponse.value.data != null
+              ? Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  margin:
+                      const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: AppColors.colorF1EBFB,
+                  ),
+                  child: getLeaveApprovalView(context),
+                )
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CommonAppImageSvg(
+                        imagePath: AppImages.svgNoData,
+                        height: 100,
+                        width: MediaQuery.sizeOf(context).width),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    CommonText(
+                      text: controller
+                              .leaveManagerApprovalResponse.value.message ??
+                          controller.errorMsg.value,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16,
+                      color: AppColors.colorDarkBlue,
+                    ),
+                  ],
+                )),
     ));
   }
 

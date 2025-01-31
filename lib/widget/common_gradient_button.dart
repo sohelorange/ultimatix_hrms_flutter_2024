@@ -27,7 +27,7 @@ class CommonGradientButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 15),
         decoration: BoxDecoration(
-          gradient: gradient ?? AppColors.gradientBackground,
+          gradient: gradient ?? AppColors.gradientBackgroundNew,
           // Assign default if null
           borderRadius: BorderRadius.circular(borderRadius),
         ),

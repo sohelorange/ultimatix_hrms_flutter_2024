@@ -397,6 +397,8 @@ class AppImages {
   static const String gifLogo = 'assets/icon/gif_otl.gif';
 
   //LeaveApplication icon
+  static const String leaveBgDateIcon =
+      'assets/images/ic_bg_date.svg';
   static const String leaveApprovalIcon =
       'assets/applicationIcon/leave/leave_approval_icon.svg';
   static const String leaveCalendarIcon =

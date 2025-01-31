@@ -133,9 +133,7 @@ class DashboardView extends GetView<DashController> {
             text: 'Logout',
           ),
         ],
-        onTabSelected: (index) {
-          controller.onDrawerTabSelected(index);
-        },
+        onTabSelected: controller.onDrawerTabSelected,
         profileValueNotifier: controller.profileValueNotifier,
         nameValueNotifier: controller.nameValueNotifier,
         designationValueNotifier: controller.designationValueNotifier,

@@ -40,7 +40,10 @@ class LeaveBalanceView extends GetView<LeaveBalanceController> {
                           height: 20,
                         ),
                         CommonText(
-                          text: controller.leaveBalListResponse.value.message != null ? controller.leaveBalListResponse.value.message! : controller.errorMsg.value,
+                          text: controller.leaveBalListResponse.value.message !=
+                                  null
+                              ? controller.leaveBalListResponse.value.message!
+                              : controller.errorMsg.value,
                           fontWeight: FontWeight.w400,
                           fontSize: 16,
                           color: AppColors.colorDarkBlue,
@@ -104,108 +107,106 @@ class LeaveBalanceView extends GetView<LeaveBalanceController> {
 
   Widget _leaveBalanceListUI(BuildContext context) {
     return Expanded(
-      child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: controller.leaveBalListResponse.value.data!.length,
-          //physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (BuildContext context, int index) {
-            Color cardColor =
-                controller.colors[index % controller.colors.length];
-            return Container(
-              margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: cardColor,
-                borderRadius: BorderRadius.circular(6),
-                boxShadow: [
-                  BoxShadow(
-                    //color: Color(0X1C1F370D),
-                    color: cardColor,
-                    blurRadius: 4.0,
-                    spreadRadius: 1.0,
-                    offset: const Offset(0, 0),
-                  ),
-                ],
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CommonText(
-                        text: controller
-                            .leaveBalListResponse.value.data![index].leaveName
-                            .toString(),
-                        fontWeight: AppFontWeight.w400,
-                        fontSize: 14,
-                        color: AppColors.colorDarkBlue,
-                      ),
-                      CommonText(
-                        text:
-                            '${(double.parse(controller.leaveBalListResponse.value.data![index].leaveOpening.toString()) - double.parse(controller.leaveBalListResponse.value.data![index].leaveUsed.toString())).toStringAsFixed(1)} Days',
-                        fontWeight: AppFontWeight.w700,
-                        fontSize: 16,
-                        color: AppColors.colorDarkBlue,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 6,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CommonText(
-                              text: 'Opening',
-                              fontWeight: AppFontWeight.w400,
-                              fontSize: 12,
-                              color: AppColors.color6B6D7A,
-                            ),
-                            CommonText(
-                              text: controller.leaveBalListResponse.value
-                                  .data![index].leaveOpening
-                                  .toString(),
-                              fontWeight: AppFontWeight.w500,
-                              fontSize: 12,
-                              color: AppColors.colorDarkBlue,
-                            ).paddingOnly(top: 2),
-                          ],
+      child: Container(
+        width: double.infinity,
+        //height: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10),
+            topRight: Radius.circular(10),
+          ),
+          color: AppColors.colorF1EBFB,
+        ),
+        child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: controller.leaveBalListResponse.value.data!.length,
+            //physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                decoration: BoxDecoration(
+                  color: AppColors.colorWhite,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CommonText(
+                          text: controller
+                              .leaveBalListResponse.value.data![index].leaveName
+                              .toString(),
+                          fontWeight: AppFontWeight.w400,
+                          fontSize: 14,
+                          color: AppColors.color2F2F31,
                         ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CommonText(
-                              text: 'Used',
-                              fontWeight: AppFontWeight.w400,
-                              fontSize: 12,
-                              color: AppColors.color6B6D7A,
-                            ),
-                            CommonText(
-                              text: controller.leaveBalListResponse.value
-                                  .data![index].leaveUsed
-                                  .toString(),
-                              fontWeight: AppFontWeight.w500,
-                              fontSize: 12,
-                              color: AppColors.colorDarkBlue,
-                            ).paddingOnly(top: 2),
-                          ],
+                        CommonText(
+                          text:
+                              '${(double.parse(controller.leaveBalListResponse.value.data![index].leaveOpening.toString()) - double.parse(controller.leaveBalListResponse.value.data![index].leaveUsed.toString())).toStringAsFixed(1)} Days',
+                          fontWeight: AppFontWeight.w500,
+                          fontSize: 14,
+                          color: AppColors.color2F2F31,
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              ), // Your widget inside the Container
-            );
-          }),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 6,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CommonText(
+                                text: 'Opening',
+                                fontWeight: AppFontWeight.w400,
+                                fontSize: 12,
+                                color: AppColors.color7B758E,
+                              ),
+                              CommonText(
+                                text: double.parse(controller.leaveBalListResponse.value.data![index].leaveOpening.toString()).toStringAsFixed(1),
+                                fontWeight: AppFontWeight.w400,
+                                fontSize: 14,
+                                color: AppColors.color2F2F31,
+                              ).paddingOnly(top: 2),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CommonText(
+                                text: 'Used',
+                                fontWeight: AppFontWeight.w400,
+                                fontSize: 12,
+                                color: AppColors.color7B758E,
+                              ),
+                              CommonText(
+                                text: double.parse(controller.leaveBalListResponse.value.data![index].leaveUsed.toString()).toStringAsFixed(1),
+                                fontWeight: AppFontWeight.w400,
+                                fontSize: 14,
+                                color: AppColors.color2F2F31,
+                              ).paddingOnly(top: 2),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ), // Your widget inside the Container
+              );
+            }),
+      ),
     );
   }
 }

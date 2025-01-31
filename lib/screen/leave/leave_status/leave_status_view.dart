@@ -10,6 +10,7 @@ import 'package:ultimatix_hrms_flutter/widget/common_app_image_svg.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_button.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_date_picker.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_text.dart';
+import 'package:ultimatix_hrms_flutter/widget/new/common_button_new.dart';
 
 import '../../../app/app_routes.dart';
 
@@ -68,10 +69,16 @@ class LeaveStatusView extends GetView<LeaveStatusController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "From Date",
-                style: TextStyle(fontSize: 14, color: Colors.grey),
+              CommonText(
+                text: 'From Date',
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: AppColors.color2F2F31,
               ),
+              // const Text(
+              //   "From Date",
+              //   style: TextStyle(fontSize: 14, color: Colors.grey),
+              // ),
               CommonDatePicker(
                 text: controller.formattedFromDate.value,
                 imagePath: AppImages.leaveCalendarIcon,
@@ -110,10 +117,16 @@ class LeaveStatusView extends GetView<LeaveStatusController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "To Date",
-                style: TextStyle(fontSize: 14, color: Colors.grey),
+              CommonText(
+                text: 'To Date',
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: AppColors.color2F2F31,
               ),
+              // const Text(
+              //   "To Date",
+              //   style: TextStyle(fontSize: 14, color: Colors.grey),
+              // ),
               CommonDatePicker(
                 text: controller.formattedToDate.value,
                 imagePath: AppImages.leaveCalendarIcon,
@@ -151,7 +164,7 @@ class LeaveStatusView extends GetView<LeaveStatusController> {
         SizedBox(
           width: 120,
           height: 40,
-          child: CommonButton(
+          child: CommonButtonNew(
               buttonText: 'Change',
               onPressed: () {
                 controller.onLeaveBalanceAPI(
@@ -165,263 +178,232 @@ class LeaveStatusView extends GetView<LeaveStatusController> {
 
   Widget _leaveStatusListUI(BuildContext context) {
     return Expanded(
-      child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: controller.leaveStatusListResponse.value.data!.length,
-          //physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (BuildContext context, int index) {
-            return Container(
-                margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                padding: const EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  color: AppColors.colorWhite,
-                  borderRadius: BorderRadius.circular(6),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0X1C1F370D),
-                      blurRadius: 4.0,
-                      spreadRadius: 1.0,
-                      offset: Offset(0, 0),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Get.toNamed(AppRoutes.leaveRequestDetailRoute,
-                            arguments: {
-                              'leaveData': controller
-                                  .leaveStatusListResponse.value.data![index],
-                            });
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CommonText(
-                            text: controller.leaveStatusListResponse.value
-                                .data![index].leaveName
-                                .toString(),
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16,
-                            color: AppColors.colorBlack,
-                          ),
-                          Container(
-                            height: 40,
-                            //width: 80,
-                            decoration: BoxDecoration(
-                              color: controller.leaveStatusListResponse.value
-                                          .data![index].applicationStatus
-                                          .toString() ==
-                                      'A'
-                                  ? AppColors.colorGreen
-                                      .withOpacity(0.1) // Green for status 'A'
-                                  : controller.leaveStatusListResponse.value
-                                              .data![index].applicationStatus
-                                              .toString() ==
-                                          'P'
-                                      ? AppColors.colorAmber.withOpacity(
-                                          0.1) // Amber for status 'P'
-                                      : AppColors.colorRed.withOpacity(0.1),
-                              // Red for statuses 'C' or 'R',
-                              borderRadius: BorderRadius.circular(6),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: controller
-                                              .leaveStatusListResponse
-                                              .value
-                                              .data![index]
-                                              .applicationStatus
-                                              .toString() ==
-                                          'A'
-                                      ? AppColors.colorGreen.withOpacity(
-                                          0.1) // Green for status 'A'
-                                      : controller
-                                                  .leaveStatusListResponse
-                                                  .value
-                                                  .data![index]
-                                                  .applicationStatus
-                                                  .toString() ==
-                                              'P'
-                                          ? AppColors.colorAmber
-                                              .withOpacity(0.1)
-                                          : AppColors.colorRed.withOpacity(0.1),
-                                  blurRadius: 0.0,
-                                  spreadRadius: 1.0,
-                                  offset: const Offset(0, 0),
-                                ),
-                              ],
+      child: Container(
+        width: double.infinity,
+        //height: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10),
+            topRight: Radius.circular(10),
+          ),
+          color: AppColors.colorF1EBFB,
+        ),
+        child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: controller.leaveStatusListResponse.value.data!.length,
+            //physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: AppColors.colorWhite,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Get.toNamed(AppRoutes.leaveRequestDetailRoute,
+                              arguments: {
+                                'leaveData': controller
+                                    .leaveStatusListResponse.value.data![index],
+                              });
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CommonText(
+                              text:
+                                  "${controller.leaveStatusListResponse.value.data![index].leaveName} (${controller.leaveStatusListResponse.value.data![index].leaveCode})",
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14,
+                              color: AppColors.color2F2F31,
                             ),
-                            child: Center(
-                              child: CommonText(
-                                text: controller.leaveStatusListResponse.value
-                                    .data![index].appStatus
-                                    .toString(),
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12,
+                            Container(
+                              height: 24,
+                              //width: 80,
+                              decoration: BoxDecoration(
                                 color: controller.leaveStatusListResponse.value
                                             .data![index].applicationStatus
                                             .toString() ==
                                         'A'
-                                    ? AppColors
-                                        .colorGreen // Green for status 'A'
+                                    ? const Color(0XFF00ABA4) // Green for status 'A'
                                     : controller.leaveStatusListResponse.value
                                                 .data![index].applicationStatus
                                                 .toString() ==
                                             'P'
-                                        ? AppColors
-                                            .colorAmber // Amber for status 'P'
-                                        : AppColors.colorRed,
-                              ).paddingSymmetric(horizontal: 10),
+                                        ? const Color(
+                                            0XFFB2AF76) // Amber for status 'P'
+                                        : AppColors.colorRed
+                                            .withValues(alpha: 0.80),
+                                // Red for statuses 'C' or 'R',
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Center(
+                                child: CommonText(
+                                  text: controller.leaveStatusListResponse.value
+                                      .data![index].appStatus
+                                      .toString(),
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 12,
+                                  color: AppColors.colorWhite,
+                                ).paddingSymmetric(horizontal: 10),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CommonText(
+                                  text: 'Leave From',
+                                  fontWeight: AppFontWeight.w400,
+                                  fontSize: 12,
+                                  color: AppColors.color7B758E,
+                                ),
+                                CommonText(
+                                  text: controller.leaveStatusListResponse.value
+                                      .data![index].fromDate
+                                      .toString(),
+                                  fontWeight: AppFontWeight.w400,
+                                  fontSize: 14,
+                                  color: AppColors.color2F2F31,
+                                ).paddingOnly(top: 2)
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CommonText(
+                                  text: 'Leave To',
+                                  fontWeight: AppFontWeight.w400,
+                                  fontSize: 12,
+                                  color: AppColors.color7B758E,
+                                ),
+                                CommonText(
+                                  text: controller.leaveStatusListResponse.value
+                                      .data![index].toDate
+                                      .toString(),
+                                  fontWeight: AppFontWeight.w500,
+                                  fontSize: 12,
+                                  color: AppColors.color2F2F31,
+                                ).paddingOnly(top: 2)
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CommonText(
+                                  text: 'Period',
+                                  fontWeight: AppFontWeight.w400,
+                                  fontSize: 12,
+                                  color: AppColors.color7B758E,
+                                ),
+                                CommonText(
+                                  text: controller.leaveStatusListResponse.value
+                                      .data![index].leaveAppDays
+                                      .toString(),
+                                  fontWeight: AppFontWeight.w500,
+                                  fontSize: 12,
+                                  color: AppColors.color2F2F31,
+                                ).paddingOnly(top: 2)
+                              ],
                             ),
                           ),
                         ],
+                      ).paddingOnly(top: 10),
+                      CommonText(
+                        text: 'Reason',
+                        fontWeight: AppFontWeight.w400,
+                        fontSize: 12,
+                        color: AppColors.color7B758E,
+                      ).paddingOnly(top: 10),
+                      CommonText(
+                        text: controller.leaveStatusListResponse.value
+                            .data![index].leaveReason
+                            .toString(),
+                        fontWeight: FontWeight.w400,
+                        maxLine: 3,
+                        fontSize: 12,
+                        color: AppColors.color2F2F31,
+                      ).paddingOnly(top: 2),
+                      CommonText(
+                        text: 'Assigned As',
+                        fontWeight: AppFontWeight.w400,
+                        fontSize: 12,
+                        color: AppColors.color7B758E,
+                      ).paddingOnly(top: 10),
+                      GestureDetector(
+                        onTap: () {
+                          Get.toNamed(AppRoutes.leaveApprovalRoute, arguments: {
+                            'LeaveAppId': controller.leaveStatusListResponse
+                                .value.data![index].leaveApplicationId,
+                          });
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                ClipOval(
+                                  child: Image.network(
+                                    '',
+                                    height: 40,
+                                    width: 10,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return const CommonAppImageSvg(
+                                        imagePath: AppImages.svgAvatar,
+                                        height: 40,
+                                        width: 40,
+                                        fit: BoxFit.cover,
+                                      );
+                                    },
+                                  ),
+                                ).paddingOnly(right: 10),
+                                CommonText(
+                                  text: controller.leaveStatusListResponse.value
+                                      .data![index].seniorEmployee
+                                      .toString(),
+                                  fontWeight: AppFontWeight.w500,
+                                  maxLine: 3,
+                                  fontSize: 12,
+                                  color: AppColors.colorDarkBlue,
+                                )
+                              ],
+                            ).paddingOnly(top: 5),
+                            const CommonAppImageSvg(
+                              imagePath: AppImages.settingsRightArrowIcon,
+                              height: 14,
+                              width: 8,
+                              fit: BoxFit
+                                  .cover, // Ensures the image fills the space
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Divider(
-                      color: AppColors.colorBlack.withOpacity(0.2),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              CommonText(
-                                text: 'Leave From',
-                                fontWeight: AppFontWeight.w400,
-                                fontSize: 12,
-                                color: AppColors.colorDarkGray,
-                              ),
-                              CommonText(
-                                text: controller.leaveStatusListResponse.value
-                                    .data![index].fromDate
-                                    .toString(),
-                                fontWeight: AppFontWeight.w500,
-                                fontSize: 12,
-                                color: AppColors.colorDarkBlue,
-                              ).paddingOnly(top: 5)
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              CommonText(
-                                text: 'Leave To',
-                                fontWeight: AppFontWeight.w400,
-                                fontSize: 12,
-                                color: AppColors.colorDarkGray,
-                              ),
-                              CommonText(
-                                text: controller.leaveStatusListResponse.value
-                                    .data![index].toDate
-                                    .toString(),
-                                fontWeight: AppFontWeight.w500,
-                                fontSize: 12,
-                                color: AppColors.colorDarkBlue,
-                              ).paddingOnly(top: 5)
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              CommonText(
-                                text: 'Period',
-                                fontWeight: AppFontWeight.w400,
-                                fontSize: 12,
-                                color: AppColors.colorDarkGray,
-                              ),
-                              CommonText(
-                                text: controller.leaveStatusListResponse.value
-                                    .data![index].leaveAppDays
-                                    .toString(),
-                                fontWeight: AppFontWeight.w500,
-                                fontSize: 12,
-                                color: AppColors.colorDarkBlue,
-                              ).paddingOnly(top: 5)
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    Divider(
-                      color: AppColors.colorBlack.withOpacity(0.2),
-                    ),
-                    CommonText(
-                      text: 'Reason',
-                      fontWeight: AppFontWeight.w400,
-                      fontSize: 12,
-                      color: AppColors.colorDarkGray,
-                    ),
-                    CommonText(
-                      text: controller.leaveStatusListResponse.value
-                          .data![index].leaveReason
-                          .toString(),
-                      fontWeight: FontWeight.w400,
-                      maxLine: 3,
-                      fontSize: 12,
-                      color: AppColors.colorDarkBlue,
-                    ),
-                    Divider(
-                      color: AppColors.colorBlack.withOpacity(0.2),
-                    ),
-                    CommonText(
-                      text: 'Assigned As',
-                      fontWeight: AppFontWeight.w400,
-                      fontSize: 12,
-                      color: AppColors.color6B6D7A,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Get.toNamed(AppRoutes.leaveApprovalRoute, arguments: {
-                          'LeaveAppId': controller.leaveStatusListResponse.value
-                              .data![index].leaveApplicationId,
-                        });
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              const CommonAppImageSvg(
-                                imagePath: AppImages.svgAvatar,
-                                height: 40,
-                                width: 40,
-                              ).paddingOnly(right: 10),
-                              CommonText(
-                                text: controller.leaveStatusListResponse.value
-                                    .data![index].seniorEmployee
-                                    .toString(),
-                                fontWeight: AppFontWeight.w500,
-                                maxLine: 3,
-                                fontSize: 12,
-                                color: AppColors.colorDarkBlue,
-                              )
-                            ],
-                          ).paddingOnly(top: 10),
-                          const CommonAppImageSvg(
-                            imagePath: AppImages.settingsRightArrowIcon,
-                            height: 14,
-                            width: 8,
-                            fit: BoxFit
-                                .cover, // Ensures the image fills the space
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ));
-          }),
+                    ],
+                  ));
+            }),
+      ),
     );
   }
 }

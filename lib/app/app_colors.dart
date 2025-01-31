@@ -118,6 +118,20 @@ class AppColors {
   static const Color colorLightPurple3 = Color(0xFFF1EBFB);
 
   //New UI Theme Color
+  static LinearGradient gradientBackgroundNew = const LinearGradient(
+    colors: [color7A1FA2, color303E9F],
+    stops: [0.05, 0.55],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  static LinearGradient gradientBackgroundDate = const LinearGradient(
+    colors: [color7A1FA2, color303E9F],
+    stops: [0.05, 0.55],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
   static const Color color2F2F31 = Color(0XFF2F2F31);
   static const Color colorDCDCDC = Color(0XFFDCDCDC);
   static const Color color7B758E = Color(0XFF7B758E);
@@ -129,5 +143,4 @@ class AppColors {
   static const Color color8957DD = Color(0XFF8957DD);
   static const Color colorEEFAFE = Color(0XFFEEFAFE);
   static const Color color0085FF = Color(0XFF0085FF);
-  static const Color color6D24A1 = Color(0XFF6D24A1);
 }

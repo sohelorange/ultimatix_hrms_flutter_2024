@@ -517,6 +517,8 @@ class AppImages {
       "assets/icon/clockInOut/new/clock_input_reason_svg.svg";
   static const String pngClockReason =
       "assets/icon/clockInOut/new/clock_reason_png.png";
+  static const String svgPoint =
+      "assets/icon/clockInOut/new/svg_point.svg";
 
   //live tracking
   static const String svgClockLiveTracking =

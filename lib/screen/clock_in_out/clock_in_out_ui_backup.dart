@@ -2,6 +2,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:ultimatix_hrms_flutter/screen/clock_in_out/clock_in_out_controller.dart';
+import 'package:ultimatix_hrms_flutter/screen/clock_in_out/clock_in_out_controller_backup.dart';
 import 'package:ultimatix_hrms_flutter/screen/dashboard/dash_board_controller.dart';
 import 'package:ultimatix_hrms_flutter/utility/preference_utils.dart';
 import '../../app/app_colors.dart';
@@ -13,7 +14,7 @@ import '../../widget/common_app_image.dart';
 import '../../widget/common_container.dart';
 import '../../widget/common_text.dart';
 
-class ClockInOutUiBackUp extends GetView<ClockInOutController> {
+class ClockInOutUiBackUp extends GetView<ClockInOutControllerBackup> {
   const ClockInOutUiBackUp({super.key});
 
   @override

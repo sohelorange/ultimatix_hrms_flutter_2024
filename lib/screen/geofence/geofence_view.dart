@@ -9,7 +9,7 @@ import 'package:ultimatix_hrms_flutter/screen/geofence/geofence_controller.dart'
 import 'package:ultimatix_hrms_flutter/utility/utils.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_app_image_svg.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_text.dart';
-import 'package:ultimatix_hrms_flutter/widget/new/common_app_bar_new.dart';
+import 'package:ultimatix_hrms_flutter/widget/new/common_app_bar_two.dart';
 
 import '../../app/app_images.dart';
 import '../../widget/common_app_image.dart';
@@ -22,20 +22,19 @@ class GeofenceView extends GetView<GeofenceController> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      appBar: CommonNewAppBar(
-        title: "Geofence",
-        leadingIconSvg: AppImages.icBack,
-        trailingWidgets: [
-          GestureDetector(
-            onTap: () {
-              controller.getCurrentLocation();
-            },
-            child: const CommonAppImage(
-              imagePath: AppImages.dashRefreshIcon,
-              color: AppColors.colorWhite,
-            ),
-          ),
-        ],
+      appBar: CommonAppBarTwo(
+          title: "Geofence",
+          actions: [
+            GestureDetector(
+              onTap: () {
+                controller.getCurrentLocation();
+              },
+              child: const CommonAppImage(
+                imagePath: AppImages.dashRefreshIcon,
+                color: AppColors.color2F2F31,
+              ),
+            ).paddingOnly(right: 20),
+          ],
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 20.0, right: 20.0),
@@ -48,6 +47,7 @@ class GeofenceView extends GetView<GeofenceController> {
     return SingleChildScrollView(
       child: Column(
         children: [
+          SizedBox(height: MediaQuery.of(context).size.width * 0.04),
           Container(
             width: double.infinity,
             //height: double.infinity,

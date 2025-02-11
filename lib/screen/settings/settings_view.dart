@@ -37,10 +37,10 @@ class SettingsView extends GetView<SettingsController> {
             children: [
               _changePasswordUI(),
               _feedbackUI(),
-              _cameraUI(),
-              _patternUI(),
-              _voiceUI(),
-              _contactUSUI(),
+              /*_cameraUI(),*/
+              /*_patternUI(),*/
+              /*_voiceUI(),*/
+              /*_contactUSUI(),*/
               _versionUI(),
             ],
           ),
@@ -131,7 +131,7 @@ class SettingsView extends GetView<SettingsController> {
     );
   }
 
-  Widget _cameraUI() {
+  /*Widget _cameraUI() {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
@@ -165,9 +165,9 @@ class SettingsView extends GetView<SettingsController> {
         ],
       ), // Your widget inside the Container
     );
-  }
+  }*/
 
-  Widget _patternUI() {
+  /*Widget _patternUI() {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
@@ -201,9 +201,9 @@ class SettingsView extends GetView<SettingsController> {
         ],
       ), // Your widget inside the Container
     );
-  }
+  }*/
 
-  Widget _voiceUI() {
+  /*Widget _voiceUI() {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
@@ -237,9 +237,10 @@ class SettingsView extends GetView<SettingsController> {
         ],
       ), // Your widget inside the Container
     );
-  }
+  }*/
 
-  Widget _contactUSUI() {
+  /*Temp commented due to play release*/
+  /*Widget _contactUSUI() {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
@@ -293,7 +294,7 @@ class SettingsView extends GetView<SettingsController> {
         ],
       ), // Your widget inside the Container
     );
-  }
+  }*/
 
   Widget _versionUI() {
     return Container(

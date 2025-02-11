@@ -370,6 +370,13 @@ class MyApp extends StatelessWidget {
       theme: Provider.of<AppThemeController>(context).currentTheme,
       enableLog: true,
       locale: Get.deviceLocale,
+      builder: (context, widget) => NotificationListener<OverscrollIndicatorNotification>(
+        onNotification: (OverscrollIndicatorNotification overscroll) {
+          overscroll.disallowIndicator();
+          return true;
+        },
+        child: getMainAppViewBuilder(context, widget),
+      ),
       initialRoute: AppRoutes.initialRoute,
       getPages: AppRoutes.pages,
     );

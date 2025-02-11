@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'dart:math';
 
@@ -105,6 +106,7 @@ class NotificationServices {
 
   Future<String> getDeviceToken() async {
     String? token = await messaging.getToken();
+    print("The device token is:$token");
     return token!;
   }
 

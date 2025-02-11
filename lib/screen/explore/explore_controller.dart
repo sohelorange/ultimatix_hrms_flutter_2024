@@ -12,7 +12,7 @@ class ExploreController extends GetxController {
 
   final List<Map<String, dynamic>> exploreItems = [
     {'id': 1, 'icon': AppImages.exploreClockingIcon, 'name': 'Clocking'},
-    {'id': 2, 'icon': AppImages.exploreLeaveIcon, 'name': 'Leaves'},
+    /*{'id': 2, 'icon': AppImages.exploreLeaveIcon, 'name': 'Leaves'},
     {'id': 3, 'icon': AppImages.exploreAttendanceIcon, 'name': 'Attendance'},
     {
       'id': 4,
@@ -39,7 +39,7 @@ class ExploreController extends GetxController {
       'id': 13,
       'icon': AppImages.svgRegAttendance,
       'name': 'Regularize Approval'
-    },
+    },*/
   ];
 
   final RxInt selectedIndex = 0.obs;
@@ -65,10 +65,10 @@ class ExploreController extends GetxController {
         }
         break;
       case 2: // Leaves
-        Get.toNamed(AppRoutes.leaveApplicationRoute);
+        /*Get.toNamed(AppRoutes.leaveApplicationRoute);*/
         break;
       case 3: // Attendance
-        Get.toNamed(AppRoutes.attendanceMainRoute);
+        /*Get.toNamed(AppRoutes.attendanceMainRoute);*/
         break;
       case 4: // Change Request
         break;
@@ -89,7 +89,7 @@ class ExploreController extends GetxController {
       case 12: // Exit Application
         break;
       case 13:
-        Get.toNamed(AppRoutes.regularizeListApprovals);
+        /*Get.toNamed(AppRoutes.regularizeListApprovals);*/
         break;
       default:
         AppSnackBar.showGetXCustomSnackBar(

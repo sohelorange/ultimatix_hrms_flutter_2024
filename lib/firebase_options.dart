@@ -41,48 +41,49 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAinRedZSefV7j0UqK7mbTrMCRwZW-AIvc',
-    appId: '1:113535576900:web:5749a4512cd9b691bd0511',
-    messagingSenderId: '113535576900',
-    projectId: 'ultimatixorange',
-    authDomain: 'ultimatixorange.firebaseapp.com',
-    storageBucket: 'ultimatixorange.firebasestorage.app',
-    measurementId: 'G-7E1QHDJYZF',
+    apiKey: 'AIzaSyCoswm3_9L7KWkYXcKzqJWjjT7n3n3lWX0',
+    appId: '1:612280367220:web:123f72238bd91a6b413921',
+    messagingSenderId: '612280367220',
+    projectId: 'ultmatixorangeflutter',
+    authDomain: 'ultmatixorangeflutter.firebaseapp.com',
+    storageBucket: 'ultmatixorangeflutter.firebasestorage.app',
+    measurementId: 'G-Y14T0049E7',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCvCvzzp7t5HStm6UVY4FlzWbIBAqiDomg',
-    appId: '1:113535576900:android:20f28a97c686b00dbd0511',
-    messagingSenderId: '113535576900',
-    projectId: 'ultimatixorange',
-    storageBucket: 'ultimatixorange.firebasestorage.app',
+    apiKey: 'AIzaSyCF_40rPiHNRJVtjQkJ1TN6NZoehEMVX1Q',
+    appId: '1:612280367220:android:a010b2bde8022b1e413921',
+    messagingSenderId: '612280367220',
+    projectId: 'ultmatixorangeflutter',
+    storageBucket: 'ultmatixorangeflutter.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBrGENsvOyCjX3DR7r9i31YE3xBaYKkRXg',
-    appId: '1:113535576900:ios:6dc37664975f9cadbd0511',
-    messagingSenderId: '113535576900',
-    projectId: 'ultimatixorange',
-    storageBucket: 'ultimatixorange.firebasestorage.app',
-    iosBundleId: 'com.ultmatix.orange.ultimatixHrmsFlutter',
+    apiKey: 'AIzaSyAA3zmb_fGM4HsRc_MqNI9Zlsrmokm5n20',
+    appId: '1:612280367220:ios:f632947acd03c3b7413921',
+    messagingSenderId: '612280367220',
+    projectId: 'ultmatixorangeflutter',
+    storageBucket: 'ultmatixorangeflutter.firebasestorage.app',
+    iosBundleId: 'com.orange.ultmatix',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBrGENsvOyCjX3DR7r9i31YE3xBaYKkRXg',
-    appId: '1:113535576900:ios:6dc37664975f9cadbd0511',
-    messagingSenderId: '113535576900',
-    projectId: 'ultimatixorange',
-    storageBucket: 'ultimatixorange.firebasestorage.app',
-    iosBundleId: 'com.ultmatix.orange.ultimatixHrmsFlutter',
+    apiKey: 'AIzaSyAA3zmb_fGM4HsRc_MqNI9Zlsrmokm5n20',
+    appId: '1:612280367220:ios:1b63a4600bcdb9d7413921',
+    messagingSenderId: '612280367220',
+    projectId: 'ultmatixorangeflutter',
+    storageBucket: 'ultmatixorangeflutter.firebasestorage.app',
+    iosBundleId: 'com.orange.ultmatix.ultimatixHrmsFlutter',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyAinRedZSefV7j0UqK7mbTrMCRwZW-AIvc',
-    appId: '1:113535576900:web:b77f23acb1f715edbd0511',
-    messagingSenderId: '113535576900',
-    projectId: 'ultimatixorange',
-    authDomain: 'ultimatixorange.firebaseapp.com',
-    storageBucket: 'ultimatixorange.firebasestorage.app',
-    measurementId: 'G-027B3LC1HN',
+    apiKey: 'AIzaSyCoswm3_9L7KWkYXcKzqJWjjT7n3n3lWX0',
+    appId: '1:612280367220:web:ffb0652f024d85f0413921',
+    messagingSenderId: '612280367220',
+    projectId: 'ultmatixorangeflutter',
+    authDomain: 'ultmatixorangeflutter.firebaseapp.com',
+    storageBucket: 'ultmatixorangeflutter.firebasestorage.app',
+    measurementId: 'G-TG63RN9MNE',
   );
+
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/app/app_date_format.dart';
 import 'package:ultimatix_hrms_flutter/app/app_routes.dart';
-import 'package:ultimatix_hrms_flutter/app/app_snack_bar.dart';
 import 'package:ultimatix_hrms_flutter/utility/utils.dart';
 import 'package:ultimatix_hrms_flutter/widget/new/common_app_bar_latest.dart';
 import 'package:ultimatix_hrms_flutter/widget/new/common_app_bar_new.dart';
@@ -101,29 +101,33 @@ class DashboardView extends GetView<DashController> {
       drawer: CommonAppDrawer(
         items: const [
           CommonDrawerItem(
+            icon: AppImages.clockingMenuSvg, // Your icon file path
+            text: 'Clocking',
+          ),
+          /*CommonDrawerItem(
             icon: AppImages.drawerApprovalsIcon, // Your icon file path
             text: 'Approval',
-          ),
-          CommonDrawerItem(
+          ),*/
+          /*CommonDrawerItem(
             icon: AppImages.drawerSalaryIcon, // Your icon file path
             text: 'Salary',
-          ),
+          ),*/
           CommonDrawerItem(
             icon: AppImages.drawerLiveTrackingIcon, // Your icon file path
             text: 'Live Tracking',
           ),
-          CommonDrawerItem(
+          /*CommonDrawerItem(
             icon: AppImages.drawerHolidayIcon, // Your icon file path
             text: 'Holiday',
-          ),
-          CommonDrawerItem(
+          ),*/
+          /*CommonDrawerItem(
             icon: AppImages.drawerPolicyIcon, // Your icon file path
             text: 'Policy & Document',
-          ),
-          CommonDrawerItem(
+          ),*/
+          /*CommonDrawerItem(
             icon: AppImages.drawerSurveyIcon, // Your icon file path
             text: 'Survey',
-          ),
+          ),*/
           CommonDrawerItem(
             icon: AppImages.drawerSettingIcon, // Your icon file path
             text: 'Setting',
@@ -186,7 +190,7 @@ class DashboardView extends GetView<DashController> {
             isScrollControlled: true, // Allow full-screen behavior
             builder: (BuildContext context) {
               return DraggableScrollableSheet(
-                initialChildSize: 0.65, // Full height on opening
+                initialChildSize: 0.30,//0.65 // Full height on opening
                 //maxChildSize: 0.8, // Full height allowed
                 //minChildSize: 0.5, // Minimum height
                 expand: false,
@@ -440,13 +444,14 @@ class DashboardView extends GetView<DashController> {
                 fontSize: 14,
                 fontWeight: AppFontWeight.w400,
               ),
-              const CommonAppImageSvg(
+              /*Commented due to Play Release*/
+              /*const CommonAppImageSvg(
                 imagePath: AppImages.settingsRightArrowIcon,
                 height: 14,
                 width: 8,
                 color: AppColors.colorWhite,
                 fit: BoxFit.cover, // Ensures the image fills the space
-              ),
+              ),*/
             ],
           ),
         ),
@@ -477,12 +482,12 @@ class DashboardView extends GetView<DashController> {
   Widget _leaveApprovalInfoUI() {
     return GestureDetector(
       onTap: () {
-        if (controller.leaveApprovalCount.value == '0') {
+        /*if (controller.leaveApprovalCount.value == '0') {
           AppSnackBar.showGetXCustomSnackBar(
               message: 'No Leave Approval Request...');
         } else {
           Get.toNamed(AppRoutes.leaveManagerApprovalRoute);
-        }
+        }*/
       },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
@@ -515,12 +520,12 @@ class DashboardView extends GetView<DashController> {
   Widget _regularizationApprovalInfoUI() {
     return GestureDetector(
       onTap: () {
-        if (controller.attendanceCount.value == '0') {
+        /*if (controller.attendanceCount.value == '0') {
           AppSnackBar.showGetXCustomSnackBar(
               message: 'No Regularization Approval Request...');
         } else {
           //Get.toNamed(AppRoutes.leaveManagerApprovalRoute);
-        }
+        }*/
       },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
@@ -553,12 +558,12 @@ class DashboardView extends GetView<DashController> {
   Widget _cancellationApprovalInfoUI() {
     return GestureDetector(
       onTap: () {
-        if (controller.leaveCancelCount.value == '0') {
+        /*if (controller.leaveCancelCount.value == '0') {
           AppSnackBar.showGetXCustomSnackBar(
               message: 'No Cancellation Approval Request...');
         } else {
           //Get.toNamed(AppRoutes.leaveManagerApprovalRoute);
-        }
+        }*/
       },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
@@ -643,12 +648,19 @@ class DashboardView extends GetView<DashController> {
                             fontSize: 14,
                             fontWeight: AppFontWeight.w500,
                           ),
-                          CommonText(
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          SvgPicture.asset(AppImages.svgPoint),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          /*CommonText(
                             text: '.',
                             color: AppColors.color6D24A1,
                             fontSize: 20,
                             fontWeight: AppFontWeight.w900,
-                          ).marginOnly(left: 5, right: 5),
+                          ).marginOnly(left: 5, right: 5),*/
                           CommonText(
                             text: controller.lstClockingTime.value,
                             color: AppColors.color2F2F31,
@@ -671,7 +683,8 @@ class DashboardView extends GetView<DashController> {
                     ],
                   ),
                 ),
-                const SizedBox(
+                /*Commented due to Play Release*/
+                /*const SizedBox(
                   width: 10,
                 ),
                 Container(
@@ -699,7 +712,7 @@ class DashboardView extends GetView<DashController> {
                       fit: BoxFit.cover, // Ensures the image fills the space
                     ),
                   ),
-                )
+                )*/
               ],
             ),
           )

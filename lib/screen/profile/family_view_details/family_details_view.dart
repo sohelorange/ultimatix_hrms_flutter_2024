@@ -30,44 +30,44 @@ class FamilyDetailsView extends GetView<FamilyDetailsViewController> {
         child: Obx(() => SingleChildScrollView(
               child: Column(
                 children: [
-                  CommonListRow(label: 'Name', value: controller.name.value),
+                  CommonListRow(label: 'Name', value: controller.getTextNA(controller.name.value)),
                   CommonListRow(
                       label: 'Relationship',
-                      value: controller.relationship.value),
+                      value: controller.getTextNA(controller.relationship.value)),
                   CommonListRow(
-                      label: 'Gender', value: controller.gender.value),
+                      label: 'Gender', value: controller.getTextNA(controller.gender.value)),
                   CommonListRow(
-                      label: 'Date Of Birth', value: controller.dob.value),
+                      label: 'Date Of Birth', value: controller.getTextNA(controller.dob.value)),
                   CommonListRow(
-                      label: 'Occupation', value: controller.occupation.value),
-                  CommonListRow(label: 'Hobby', value: controller.hobby.value),
+                      label: 'Occupation', value: controller.getTextNA(controller.occupation.value)),
+                  CommonListRow(label: 'Hobby', value: controller.getTextNA(controller.hobby.value)),
                   CommonListRow(
-                      label: 'Standard', value: controller.standard.value),
+                      label: 'Standard', value: controller.getTextNA(controller.standard.value)),
                   CommonListRow(
                       label: 'Specialization',
-                      value: controller.specialization.value),
+                      value: controller.getTextNA(controller.specialization.value)),
                   CommonListRow(
-                      label: 'School/College', value: controller.clg.value),
+                      label: 'School/College', value: controller.getTextNA(controller.clg.value)),
                   CommonListRow(
                       label: 'School/College City',
-                      value: controller.city.value),
+                      value: controller.getTextNA(controller.city.value)),
                   CommonListRow(
                       label: 'Extra Activity',
-                      value: controller.extraActivity.value),
+                      value: controller.getTextNA(controller.extraActivity.value)),
                   CommonListRow(
                       label: 'Is Residing With him/her?',
-                      value: controller.isResiding.value),
+                      value: controller.getTextNA(controller.isResiding.value)),
                   CommonListRow(
                       label: 'Is Dependent With on you?',
-                      value: controller.isDependent.value),
+                      value: controller.getTextNA(controller.isDependent.value)),
                   CommonListRow(
-                      label: 'PAN Card', value: controller.panCard.value),
+                      label: 'PAN Card', value: controller.getTextNA(controller.panCard.value)),
                   CommonListRow(
-                      label: 'Aadhar Card', value: controller.aadharCard.value),
+                      label: 'Aadhar Card', value: controller.getTextNA(controller.aadharCard.value)),
                   CommonListRow(
-                      label: 'Height', value: controller.height.value),
+                      label: 'Height', value: controller.getTextNA(controller.height.value)),
                   CommonListRow(
-                      label: 'Weight', value: controller.weight.value),
+                      label: 'Weight', value: controller.getTextNA(controller.weight.value)),
                 ],
               ),
             )),

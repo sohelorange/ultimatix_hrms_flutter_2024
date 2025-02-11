@@ -289,16 +289,17 @@ class ProfileView extends GetView<ProfileController> {
               _employeeDetails(
                       AppImages.profileDOJIcon,
                       'Date Of Joining',
-                      controller.profilePersonalModelResponse.value.data!
-                              .employeeDetails!.dateOfJoin ??
-                          '')
+                      controller.getTextNA(
+                          controller.profilePersonalModelResponse.value.data!
+                          .employeeDetails!.dateOfJoin)
+              )
                   .paddingOnly(left: 15, right: 15, top: 0),
               _employeeDetails(
                       AppImages.profileBloodGroupIcon,
                       'Blood Group',
-                      controller.profilePersonalModelResponse.value.data!
-                              .employeeDetails!.bloodGroup ??
-                          '')
+                controller.getTextNA(controller.profilePersonalModelResponse.value.data!
+                    .employeeDetails!.bloodGroup)
+              )
                   .paddingOnly(left: 15, right: 15, top: 10),
               // _employeeDetails(
               //         AppImages.leaveCalendarIcon,
@@ -316,7 +317,7 @@ class ProfileView extends GetView<ProfileController> {
                               .data!
                               .employeeDetails!
                               .uaNNo ??
-                          ''))
+                          'N/A'))
                   .paddingOnly(left: 15, right: 15, top: 10),
               _employeeDetails(
                       AppImages.profileAadharCardNoIcon,
@@ -327,7 +328,7 @@ class ProfileView extends GetView<ProfileController> {
                               .data!
                               .employeeDetails!
                               .aadharCardNo ??
-                          ''))
+                          'N/A'))
                   .paddingOnly(left: 15, right: 15, top: 10),
               _employeeDetails(
                       AppImages.profilePanNoIcon,
@@ -338,14 +339,15 @@ class ProfileView extends GetView<ProfileController> {
                               .data!
                               .employeeDetails!
                               .panNo ??
-                          ''))
+                          'N/A'))
                   .paddingOnly(left: 15, right: 15, top: 10),
               _employeeDetails(
                       AppImages.profileUANIcon,
                       'Contact No',
+                controller.getTextNA(
                       controller.profilePersonalModelResponse.value.data!
-                              .employeeDetails!.mobileNo ??
-                          '')
+                              .employeeDetails!.mobileNo)
+              )
                   .paddingOnly(left: 15, right: 15, top: 10),
               // _employeeDetails(
               //         AppImages.profileCompanyEmailIcon,
@@ -357,14 +359,15 @@ class ProfileView extends GetView<ProfileController> {
               _employeeDetails(
                       AppImages.profilePersonEmailIcon,
                       'Person Email',
+                controller.getTextNA(
                       controller
                               .profilePersonalModelResponse
                               .value
                               .data!
                               .employeeDetails!
                               //.otherEmail ??
-                              .froMEMAIL ??
-                          '')
+                              .froMEMAIL)
+              )
                   .paddingOnly(left: 15, right: 15, top: 10),
               _employeeDetails(AppImages.profileAddressIcon, 'Address',
                       '${controller.profilePersonalModelResponse.value.data!.employeeDetails!.street1 ?? ''},${controller.profilePersonalModelResponse.value.data!.employeeDetails!.city ?? ''},${controller.profilePersonalModelResponse.value.data!.employeeDetails!.state ?? ''},${controller.profilePersonalModelResponse.value.data!.employeeDetails!.zipCode ?? '' '.'}')
@@ -399,30 +402,33 @@ class ProfileView extends GetView<ProfileController> {
               _employeeDetails(
                       AppImages.profileBankNameIcon,
                       'Bank Name',
+                controller.getTextNA(
                       controller.profilePersonalModelResponse.value.data!
-                              .employeeDetails!.bankName ??
-                          '')
+                              .employeeDetails!.bankName)
+              )
                   .paddingOnly(left: 15, right: 15, top: 0),
               _employeeDetails(
                       AppImages.profileBankBranchNameIcon,
                       'Bank Branch Name',
+                controller.getTextNA(
                       controller.profilePersonalModelResponse.value.data!
-                              .employeeDetails!.bankBranchName ??
-                          '')
+                              .employeeDetails!.bankBranchName)
+              )
                   .paddingOnly(left: 15, right: 15, top: 10),
               _employeeDetails(
                 AppImages.profileACNoIcon,
                 'Account Number',
                 controller.maskNumber(controller.profilePersonalModelResponse
                         .value.data!.employeeDetails!.incBankACNo ??
-                    ''),
+                    'N/A'),
               ).paddingOnly(left: 15, right: 15, top: 10),
               _employeeDetails(
                       AppImages.profileIFSCCodeIcon,
                       'IFSC Code',
+                controller.getTextNA(
                       controller.profilePersonalModelResponse.value.data!
-                              .employeeDetails!.ifscCode ??
-                          '')
+                              .employeeDetails!.ifscCode)
+              )
                   .paddingOnly(left: 15, right: 15, top: 10, bottom: 10),
             ],
           )).paddingOnly(top: 10),
@@ -454,58 +460,66 @@ class ProfileView extends GetView<ProfileController> {
             _employeeDetails(
                     AppImages.profileFavSportIcon,
                     'Favourite Sport',
+              controller.getTextNA(
                     controller.profileFavoriteModelResponse.value.data![0]
-                            .empFavSportName ??
-                        '')
+                            .empFavSportName)
+            )
                 .paddingOnly(left: 15, right: 15, top: 0),
             _employeeDetails(
                     AppImages.profileFavHobbyIcon,
                     'Hobby',
+              controller.getTextNA(
                     controller.profileFavoriteModelResponse.value.data![0]
-                            .empHobbyName ??
-                        '')
+                            .empHobbyName)
+            )
                 .paddingOnly(left: 15, right: 15, top: 10),
             _employeeDetails(
                     AppImages.profileFavFoodIcon,
                     'Favourite Food',
+              controller.getTextNA(
                     controller.profileFavoriteModelResponse.value.data![0]
-                            .empFavFood ??
-                        '')
+                            .empFavFood)
+            )
                 .paddingOnly(left: 15, right: 15, top: 10),
             _employeeDetails(
                     AppImages.profileFavRestIcon,
                     'Favourite Restaurant',
+              controller.getTextNA(
                     controller.profileFavoriteModelResponse.value.data![0]
-                            .empFavRestro ??
-                        '')
+                            .empFavRestro)
+            )
                 .paddingOnly(left: 15, right: 15, top: 10),
             _employeeDetails(
                     AppImages.profileFavTravelIcon,
                     'Favourite Travel Destination',
+              controller.getTextNA(
                     controller.profileFavoriteModelResponse.value.data![0]
-                            .empFavTrvDestination ??
-                        '')
+                            .empFavTrvDestination)
+            )
                 .paddingOnly(left: 15, right: 15, top: 10),
             _employeeDetails(
                     AppImages.profileFavFestivalIcon,
                     'Favourite Festival',
+              controller.getTextNA(
                     controller.profileFavoriteModelResponse.value.data![0]
-                            .empFavFestival ??
-                        '')
+                            .empFavFestival)
+            )
                 .paddingOnly(left: 15, right: 15, top: 10),
             _employeeDetails(
                     AppImages.profileFavSportsPersonIcon,
                     'Favourite Sport Person',
+              controller.getTextNA(
                     controller.profileFavoriteModelResponse.value.data![0]
-                            .empFavSportPerson ??
-                        '')
+                            .empFavSportPerson)
+            )
                 .paddingOnly(left: 15, right: 15, top: 10),
             _employeeDetails(
                     AppImages.profileFavSingerIcon,
                     'Favourite Singer',
+              controller.getTextNA(
                     controller.profileFavoriteModelResponse.value.data![0]
-                            .empFavSinger ??
-                        '')
+                            .empFavSinger)
+            )
                 .paddingOnly(left: 15, right: 15, top: 10, bottom: 10),
           ],
         ),
@@ -562,7 +576,7 @@ class ProfileView extends GetView<ProfileController> {
                                 children: [
                                   Expanded(
                                     child: _assetDetails(
-                                            'Name', person.name.toString())
+                                            'Name', controller.getTextNA(person.name.toString()))
                                         .paddingOnly(
                                             left: 15, right: 15, top: 0),
                                   ),
@@ -654,7 +668,7 @@ class ProfileView extends GetView<ProfileController> {
                                 ],
                               ),
                               _assetDetails(
-                                      'Relationship', person.relationship ?? '')
+                                      'Relationship', controller.getTextNA(person.relationship))
                                   .paddingOnly(left: 15, right: 15, top: 10),
                               _assetDetails(
                                 'Dependent',

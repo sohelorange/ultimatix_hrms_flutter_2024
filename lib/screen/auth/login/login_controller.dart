@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,10 +9,12 @@ import 'package:ultimatix_hrms_flutter/api/dio_client.dart';
 import 'package:ultimatix_hrms_flutter/app/app_colors.dart';
 import 'package:ultimatix_hrms_flutter/app/app_snack_bar.dart';
 import 'package:ultimatix_hrms_flutter/app/app_url.dart';
+import 'package:ultimatix_hrms_flutter/main.dart';
 import 'package:ultimatix_hrms_flutter/services/notification_services.dart';
 import 'package:ultimatix_hrms_flutter/utility/constants.dart';
 import 'package:ultimatix_hrms_flutter/utility/preference_utils.dart';
 import 'package:unique_identifier/unique_identifier.dart';
+import 'package:http/http.dart' as http;
 
 import '../../../app/app_routes.dart';
 import '../../../utility/network.dart';
@@ -127,13 +132,91 @@ class LoginController extends GetxController {
     }
   }
 
-  Future<void> login(String username, String password) async {
+ /* Future<void> login1(String username, String password) async {
     try {
+      log("Login Api started with try");
       isLoading(true);
       isDisable(true);
 
       // Check if network is available
       if (await Network.isConnected()) {
+        Map<String, dynamic> param = {
+          'userName': username,
+          'password': password,
+          'imeiNo': PreferenceUtils.getDeviceID(),
+          'deviceID': PreferenceUtils.getFCMId(),
+        };
+
+        var response = await http.post(
+          Uri.parse("http://192.168.1.200:8080/api/v1/LoginCheck"),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': PreferenceUtils.getAuthToken()
+          },
+          body: jsonEncode(param),
+        ).then((value) {
+          log("The response is:$value");
+        },);
+
+        if (response['code'] == 200 && response['status'] == true) {
+          log("Login Api is success");
+
+          PreferenceUtils.setLoginUserID(loginIDController.value.text);
+          PreferenceUtils.setLoginUserPassword(passwordController.value.text);
+
+          PreferenceUtils.setAuthToken('Bearer ${response['data']['token']}');
+
+          if (response['data']['loginData'] is Map<String, dynamic>) {
+            PreferenceUtils.setProfileImage(
+                response['data']['loginData']['image_Name']);
+            await PreferenceUtils.setLoginDetails(
+                response['data']['loginData']);
+          }
+          //TODO : Get MAP DATA
+          Map<String, dynamic> loginData = PreferenceUtils.getLoginDetails();
+
+          if (response['data']['details'] is List<dynamic>) {
+            await PreferenceUtils.setDetails(response['data']['details']);
+          }
+          //TODO : Get List DATA
+          List<dynamic> details = PreferenceUtils.getDetails();
+
+          if (loginData.isNotEmpty && details.isNotEmpty) {
+            PreferenceUtils.setIsLogin(true).then((_) {
+              Get.offAllNamed(AppRoutes.dashBoardRoute);
+              AppSnackBar.showGetXCustomSnackBar(
+                  message: response['message'],
+                  backgroundColor: AppColors.colorGreen);
+            });
+          }
+        } else {
+          log("Login Api is not success");
+
+          AppSnackBar.showGetXCustomSnackBar(message: response['message']);
+        }
+
+      } else {
+        AppSnackBar.showGetXCustomSnackBar(message: Constants.networkMsg);
+      }
+    }catch (e) {
+      log("The issue is:$e");
+      AppSnackBar.showGetXCustomSnackBar(message: e.toString());
+    } finally {
+      isLoading(false);
+      isDisable(false);
+    }
+  }*/
+
+  Future<void> login(String username, String password) async {
+    try {
+      log("Login Api started with try");
+      isLoading(true);
+      isDisable(true);
+
+      // Check if network is available
+      if (await Network.isConnected()) {
+        log("Login Api Network.isConnected");
+
         Map<String, dynamic> param = {
           'userName': username,
           'password': password,
@@ -199,6 +282,8 @@ class LoginController extends GetxController {
     } else if (passwordController.value.text.isEmpty) {
       AppSnackBar.showGetXCustomSnackBar(message: 'Please enter password.');
     } else {
+      log("Login Api started with try:1");
+
       login(loginIDController.value.text, passwordController.value.text);
     }
   }

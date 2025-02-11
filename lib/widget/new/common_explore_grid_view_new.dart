@@ -74,6 +74,7 @@ class CommonExploreGridViewNew extends StatelessWidget {
     return GestureDetector(
       onTap: () => onItemTap(index),
       child: Container(
+        height: 55,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         decoration: BoxDecoration(
           color: boxColor,

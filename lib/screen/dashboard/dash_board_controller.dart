@@ -121,7 +121,7 @@ class DashController extends GetxController {
       'visible': true,
       'boxColor': const Color(0XFFE8FFF7),
     },
-    {
+    /*{
       'id': 2,
       'icon': AppImages.exploreLeaveIcon,
       'name': 'Leaves',
@@ -211,7 +211,7 @@ class DashController extends GetxController {
       'name': 'Birthday &\nAnniversary',
       'visible': true,
       'boxColor': const Color(0XFFF1EBFB),
-    }
+    }*/
   ];
 
   final RxInt selectedExploreIndex = 0.obs;
@@ -245,12 +245,14 @@ class DashController extends GetxController {
     switch (index) {
       case 0:
         Get.back();
-        Get.toNamed(AppRoutes.managerApprovalRoute);
+        /*Get.toNamed(AppRoutes.managerApprovalRoute);*/
+        if (isGeofenceEnable == 1) {
+          Get.toNamed(AppRoutes.geofenceRoute);
+        } else {
+          Get.toNamed(AppRoutes.clockInRoute);
+        }
         break;
       case 1:
-        Get.back();
-        break;
-      case 2:
         Get.back();
         Get.toNamed(AppRoutes.liveTrackingRoute, arguments: [
           {
@@ -261,20 +263,19 @@ class DashController extends GetxController {
           }
         ]);
         break;
-      case 3:
-        Get.back();
-        break;
-      case 4:
-        Get.back();
-        break;
-      case 5:
-        Get.back();
-        break;
-      case 6:
+      case 2:
         Get.back();
         Get.toNamed(AppRoutes.settingsRoute);
+        /*Get.toNamed(AppRoutes.liveTrackingRoute, arguments: [
+          {
+            "username": userName.value,
+            "empId": int.parse(empID.value),
+            "cmpId": int.parse(cmpID.value),
+            "userImage": userImageUrl.value
+          }
+        ]);*/
         break;
-      case 7:
+      case 3:
         Get.back();
         Get.dialog(CommonMaterialDialog(
           title: 'Logout',
@@ -292,6 +293,35 @@ class DashController extends GetxController {
           },
           isLoading: isLogoutLoading,
         ));
+        break;
+      case 4:
+        Get.back();
+        break;
+      case 5:
+        Get.back();
+        break;
+      case 6:
+        Get.back();
+        /*Get.toNamed(AppRoutes.settingsRoute);*/
+        break;
+      case 7:
+        Get.back();
+        /*Get.dialog(CommonMaterialDialog(
+          title: 'Logout',
+          message: 'Are you sure you want to\nsign out?',
+          yesButtonText: 'Yes',
+          noButtonText: 'No',
+          onConfirm: () {
+            logout();
+            // PreferenceUtils.setIsLogin(false).then((_) {
+            //   Get.offAllNamed(AppRoutes.loginRoute);
+            // });
+          },
+          onCancel: () {
+            Get.back();
+          },
+          isLoading: isLogoutLoading,
+        ));*/
 
         break;
     }
@@ -666,15 +696,27 @@ class DashController extends GetxController {
   }
 
   closeDb() async {
-    await database.close();
+    try {
+      await database.close();
+    }catch(e){
+      e.printError();
+    }
   }
 
   void deleteRecord() async {
-    await localDao.deleteAllRecords();
+    try {
+      await localDao.deleteAllRecords();
+    }catch(e){
+      e.printError();
+    }
   }
 
   void deleteAllLocations() async {
-    await localDao.deleteAllLocations();
+    try {
+      await localDao.deleteAllLocations();
+    }catch(e){
+      e.printError();
+    }
   }
 
   Future<String> getBatteryPercentage() async {

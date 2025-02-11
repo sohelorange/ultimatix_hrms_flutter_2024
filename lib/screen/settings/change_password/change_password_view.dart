@@ -7,6 +7,8 @@ import '../../../widget/common_app_bar.dart';
 import '../../../widget/common_button.dart';
 import '../../../widget/common_container.dart';
 import '../../../widget/common_input_field.dart';
+import '../../../widget/new/common_app_bar_two.dart';
+import '../../../widget/new/common_button_new.dart';
 
 class ChangePasswordView extends GetView<ChangePasswordController> {
   const ChangePasswordView({super.key});
@@ -15,88 +17,86 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      appBar: const CommonAppBar(title: 'Change Password'),
-      body: CommonContainer(
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          child: Obx(() => SingleChildScrollView(
-                child: Column(
-                  //mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CommonInputField(
-                      suffixIcon: controller.isCurrentPass.value
-                          ? Icons.visibility_off_rounded
-                          : Icons.visibility_rounded,
-                      onSuffixClick: () => controller.currentPassObscured(),
-                      textInputAction: TextInputAction.next,
-                      textEditingController:
-                          controller.currentPasswordController.value,
-                      hintText: "Current Password",
-                      focusNode: controller.currentPassWordFocus,
-                      isPassword: controller.isCurrentPass.value,
-                      labelStyle: const TextStyle(
-                        color: AppColors.colorDarkBlue,
-                      ),
-                      hintStyle: const TextStyle(
-                        color: AppColors.colorDarkBlue,
-                      ),
+      appBar: const CommonAppBarTwo(title: 'Change Password'),
+      body: Container(
+        padding: const EdgeInsets.all(20),
+        child: Obx(() => SingleChildScrollView(
+              child: Column(
+                //mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CommonInputField(
+                    suffixIcon: controller.isCurrentPass.value
+                        ? Icons.visibility_off_rounded
+                        : Icons.visibility_rounded,
+                    onSuffixClick: () => controller.currentPassObscured(),
+                    textInputAction: TextInputAction.next,
+                    textEditingController:
+                        controller.currentPasswordController.value,
+                    hintText: "Current Password",
+                    focusNode: controller.currentPassWordFocus,
+                    isPassword: controller.isCurrentPass.value,
+                    labelStyle: const TextStyle(
+                      color: AppColors.colorDarkBlue,
                     ),
-                    const SizedBox(
-                      height: 30,
+                    hintStyle: const TextStyle(
+                      color: AppColors.colorDarkBlue,
                     ),
-                    CommonInputField(
-                      suffixIcon: controller.isChangePass.value
-                          ? Icons.visibility_off_rounded
-                          : Icons.visibility_rounded,
-                      onSuffixClick: () => controller.changePassObscured(),
-                      textInputAction: TextInputAction.next,
-                      textEditingController:
-                          controller.changePasswordController.value,
-                      hintText: "Change Password",
-                      focusNode: controller.changePassWordFocus,
-                      isPassword: controller.isChangePass.value ? true : false,
-                      labelStyle: const TextStyle(
-                        color: AppColors.colorDarkBlue,
-                      ),
-                      hintStyle: const TextStyle(
-                        color: AppColors.colorDarkBlue,
-                      ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  CommonInputField(
+                    suffixIcon: controller.isChangePass.value
+                        ? Icons.visibility_off_rounded
+                        : Icons.visibility_rounded,
+                    onSuffixClick: () => controller.changePassObscured(),
+                    textInputAction: TextInputAction.next,
+                    textEditingController:
+                        controller.changePasswordController.value,
+                    hintText: "Change Password",
+                    focusNode: controller.changePassWordFocus,
+                    isPassword: controller.isChangePass.value ? true : false,
+                    labelStyle: const TextStyle(
+                      color: AppColors.colorDarkBlue,
                     ),
-                    const SizedBox(
-                      height: 30,
+                    hintStyle: const TextStyle(
+                      color: AppColors.colorDarkBlue,
                     ),
-                    CommonInputField(
-                      suffixIcon: controller.isConfirmPass.value
-                          ? Icons.visibility_off_rounded
-                          : Icons.visibility_rounded,
-                      onSuffixClick: () => controller.confirmPassObscured(),
-                      textInputAction: TextInputAction.done,
-                      textEditingController:
-                          controller.confirmPasswordController.value,
-                      hintText: "Confirm Password",
-                      focusNode: controller.confirmPassWordFocus,
-                      isPassword: controller.isConfirmPass.value ? true : false,
-                      labelStyle: const TextStyle(
-                        color: AppColors.colorDarkBlue,
-                      ),
-                      hintStyle: const TextStyle(
-                        color: AppColors.colorDarkBlue,
-                      ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  CommonInputField(
+                    suffixIcon: controller.isConfirmPass.value
+                        ? Icons.visibility_off_rounded
+                        : Icons.visibility_rounded,
+                    onSuffixClick: () => controller.confirmPassObscured(),
+                    textInputAction: TextInputAction.done,
+                    textEditingController:
+                        controller.confirmPasswordController.value,
+                    hintText: "Confirm Password",
+                    focusNode: controller.confirmPassWordFocus,
+                    isPassword: controller.isConfirmPass.value ? true : false,
+                    labelStyle: const TextStyle(
+                      color: AppColors.colorDarkBlue,
                     ),
-                    const SizedBox(
-                      height: 30,
+                    hintStyle: const TextStyle(
+                      color: AppColors.colorDarkBlue,
                     ),
-                    CommonButton(
-                        buttonText: 'Update',
-                        onPressed: () {
-                          controller.changePasswordWithAPI();
-                        },
-                        isLoading: controller.isLoading.value,
-                        isDisable: controller.isDisable.value),
-                  ],
-                ),
-              )),
-        ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  CommonButtonNew(
+                      buttonText: 'Update',
+                      onPressed: () {
+                        controller.changePasswordWithAPI();
+                      },
+                      isLoading: controller.isLoading.value,
+                      isDisable: controller.isDisable.value),
+                ],
+              ),
+            )),
       ),
     ));
   }

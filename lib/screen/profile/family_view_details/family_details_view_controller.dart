@@ -60,4 +60,11 @@ class FamilyDetailsViewController extends GetxController {
     height.value = leaveData.height ?? '';
     weight.value = leaveData.weight ?? '';
   }
+
+  String getTextNA(String? text) {
+    if(text!=null){
+      return text!=''&&text.isNotEmpty ? text : 'N/A';
+    }
+    return 'N/A';
+  }
 }

@@ -8,7 +8,7 @@
 PRODUCT_NAME = ultimatix_hrms_flutter
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.ultmatix.orange.ultimatixHrmsFlutter
+PRODUCT_BUNDLE_IDENTIFIER = com.orange.ultmatix.ultimatixHrmsFlutter
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2024 com.ultmatix.orange. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2024 com.orange.ultmatix. All rights reserved.

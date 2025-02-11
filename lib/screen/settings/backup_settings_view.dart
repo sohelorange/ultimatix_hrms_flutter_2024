@@ -257,7 +257,7 @@ class BackupSettingsView extends GetView<SettingsController> {
             fontSize: 16,
             fontWeight: AppFontWeight.w400,
           ),
-          Row(
+          /*Row(
             children: [
               GestureDetector(
                 onTap: () => controller.makePhoneCall('07949068968'),
@@ -282,7 +282,7 @@ class BackupSettingsView extends GetView<SettingsController> {
                 ),
               ),
             ],
-          )
+          )*/
         ],
       ), // Your widget inside the Container
     );

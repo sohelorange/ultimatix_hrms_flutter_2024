@@ -133,7 +133,7 @@ class _CommonAppDrawerState extends State<CommonAppDrawer> {
                       text: item.text,
                       onTap: () => _onItemTapped(index),
                     ),
-                    const Divider(
+                    widget.items[index]==widget.items.last ? Container() : const Divider(
                       height: 0.5,
                       color: AppColors.colorDCDCDC,
                     ),

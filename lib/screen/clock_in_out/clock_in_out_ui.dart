@@ -239,12 +239,14 @@ class ClockInOutUi extends GetView<ClockInOutController> {
           Expanded(
             child: Container(
                 width: MediaQuery.of(context).size.width * 0.9,
-                padding: const EdgeInsets.all(16),
+                height: _responsiveHeight(context, 0.3),
+                padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(6)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       controller.checkInOutDate.value,

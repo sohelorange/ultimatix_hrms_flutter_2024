@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "113535576900",
-    "project_id": "ultimatixorange",
-    "storage_bucket": "ultimatixorange.firebasestorage.app"
+    "project_number": "612280367220",
+    "project_id": "ultmatixorangeflutter",
+    "storage_bucket": "ultmatixorangeflutter.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:113535576900:android:20f28a97c686b00dbd0511",
+        "mobilesdk_app_id": "1:612280367220:android:a010b2bde8022b1e413921",
         "android_client_info": {
-          "package_name": "com.ultmatix.orange"
+          "package_name": "com.orange.ultmatix"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCvCvzzp7t5HStm6UVY4FlzWbIBAqiDomg"
+          "current_key": "AIzaSyCF_40rPiHNRJVtjQkJ1TN6NZoehEMVX1Q"
         }
       ],
       "services": {

@@ -117,6 +117,8 @@ class ClockInOutController extends GetxController
   Future<void> clockInOutByApi() async {
     isLoading.value = true;
 
+    log("Is Login:${isCheckIn.value}");
+
     var geoLocation = await Geolocator.getCurrentPosition(
         locationSettings: const LocationSettings(
             accuracy: LocationAccuracy.bestForNavigation));
@@ -125,7 +127,7 @@ class ClockInOutController extends GetxController
     formData.fields.add(const MapEntry("Cmp_id", ""));
     formData.fields.add(MapEntry(
         "Date", DateFormat('yyyy-MM-dd hh:mm:ss a').format(DateTime.now())));
-    formData.fields.add(const MapEntry("IOFlag", "test"));
+    formData.fields.add(MapEntry("IOFlag", isCheckIn.value==false ? "I" : "O"));
     formData.fields.add(const MapEntry("IMEIno", ""));
     formData.fields.add(MapEntry("Address", userLocAddress.value.trim()));
     formData.fields.add(MapEntry("Latitude", "${geoLocation.latitude}"));
@@ -155,6 +157,10 @@ class ClockInOutController extends GetxController
         }
       },
     );
+
+    for (var element in formData.fields) {
+      log("The data of request is:${element}");
+    }
 
     var rootToken = RootIsolateToken.instance!;
     if (await Network.isConnected()) {
@@ -248,7 +254,7 @@ class ClockInOutController extends GetxController
     isLoading.value = false;
   }
 
-  void checkWorkTypeValidation(BuildContext context) {
+  /*void checkWorkTypeValidation(BuildContext context) {
     if (defaultValue.value.isEmpty || defaultValue.value == '') {
       AppSnackBar.showGetXCustomSnackBar(
           message: "Please select your working mode",
@@ -259,6 +265,15 @@ class ClockInOutController extends GetxController
       } else {
         imageCapture(context);
       }
+    }
+  }*/
+
+  /*As per discussion with sir will made it non-mandatory*/
+  void checkWorkTypeValidation(BuildContext context) {
+    if (defaultValue.value == "Other") {
+      checkValidation(context);
+    } else {
+      imageCapture(context);
     }
   }
 

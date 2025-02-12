@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:ultimatix_hrms_flutter/screen/attendance_reg/attendance_controller.dart';
+import 'package:ultimatix_hrms_flutter/widget/new/common_app_bar_new.dart';
 import '../../app/app_colors.dart';
 import '../../app/app_font_weight.dart';
 import '../../app/app_images.dart';
@@ -20,14 +21,12 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      appBar: const CommonAppBar(
-        title: 'Attendance',
+      appBar: const CommonNewAppBar(
+        title: 'Attendance', leadingIconSvg: AppImages.icBack,
       ),
-      body: CommonContainer(
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          child: getView(context),
-        ),
+      body: Container(
+        padding: const EdgeInsets.all(16),
+        child: getView(context),
       ),
     ));
   }
@@ -81,20 +80,9 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
                           width: MediaQuery.of(context).size.width * 0.9,
                           // Adjust container width as needed
                           decoration: BoxDecoration(
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Color(0X1C1F370D),
-                                // Light gray color for shadow
-                                blurRadius: 4.0,
-                                // Increase the blur for a more spread-out shadow
-                                spreadRadius: 1.0,
-                                // Small spread to create a more pronounced shadow
-                                offset: Offset(0,
-                                    0), // Offset to simulate elevation effect (vertical shadow)
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(6),
-                            color: Colors.white,
+                            border: Border.all(color: AppColors.color303E9F),
+                            borderRadius: BorderRadius.circular(10),
+                            color: AppColors.colorF1EBFB,
                           ),
                           child: LayoutBuilder(
                             builder: (context, constraints) {
@@ -149,7 +137,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
                                               overflow: TextOverflow.ellipsis,
                                               softWrap: true,
                                             ),
-                                            const SizedBox(height: 8.0),
+                                            /*const SizedBox(height: 8.0),
                                             Row(
                                               children: [
                                                 SvgPicture.asset(
@@ -169,7 +157,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
                                                   ),
                                                 ),
                                               ],
-                                            )
+                                            )*/
                                           ],
                                         ),
                                       ),
@@ -218,24 +206,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
                                   ),
                                   const SizedBox(height: 16.0),
                                   /*Second Row*/
-
-                                  /*Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Address:", style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w500, color: AppColors.color1C1F37)),
-                                const SizedBox(width: 2.0),
-                                // Three Texts
-                                Expanded(
-                                    child: Obx(
-                                          ()=> Text(
-                                        controller.userAddress.value=="" ? "Westgate Business Bay, SG Hwy Vastrapur Station Rd, Makarba, near Sanand Chowkdi, Vejalpur, Ahmedabad, Gujarat 380015" : controller.userAddress.value,
-                                        style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w400, color: AppColors.color1C1F37),
-                                      ),
-                                    )
-                                ),
-                              ],
-                            ),*/
-                                  Column(
+                                  /*Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
@@ -258,8 +229,8 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
                                         ),
                                       ),
                                     ],
-                                  ),
-                                  const SizedBox(height: 16.0),
+                                  ),*/
+                                  /*const SizedBox(height: 16.0),*/
 
                                   /*Third Row*/
                                   Row(
@@ -271,9 +242,10 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
                                         child: Container(
                                           padding: const EdgeInsets.all(12.0),
                                           decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color: AppColors.colorF8F4FA),
+                                              border: Border.all(color: AppColors.colorDCDCDC),
+                                              borderRadius: BorderRadius.circular(10),
+                                              color: AppColors.colorWhite
+                                          ),
                                           child: Row(
                                             children: [
                                               SvgPicture.asset(
@@ -324,9 +296,10 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
                                         child: Container(
                                           padding: const EdgeInsets.all(12.0),
                                           decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color: AppColors.colorF8F4FA),
+                                              border: Border.all(color: AppColors.colorDCDCDC),
+                                              borderRadius: BorderRadius.circular(10),
+                                              color: AppColors.colorWhite
+                                          ),
                                           child: Row(
                                             children: [
                                               SvgPicture.asset(

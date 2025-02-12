@@ -236,6 +236,7 @@ class LoginController extends GetxController {
                 response['data']['loginData']['image_Name']);
             await PreferenceUtils.setLoginDetails(
                 response['data']['loginData']);
+            await PreferenceUtils.setIsCameraEnable(response['data']['loginData']['is_Camera_enable']);
           }
           //TODO : Get MAP DATA
           Map<String, dynamic> loginData = PreferenceUtils.getLoginDetails();

@@ -123,6 +123,13 @@ class DashController extends GetxController {
     },
     /*{
       'id': 2,
+      'icon': AppImages.exploreAttendanceIcon,
+      'name': 'Attendance',
+      'visible': true,
+      'boxColor': const Color(0XFFF1EBFB),
+    }*/
+    /*{
+      'id': 2,
       'icon': AppImages.exploreLeaveIcon,
       'name': 'Leaves',
       'visible': true,
@@ -341,7 +348,7 @@ class DashController extends GetxController {
         }
         break;
       case 2: // Leaves
-        Get.toNamed(AppRoutes.leaveApplicationRoute);
+        Get.toNamed(AppRoutes.attendanceMainRoute);
         break;
       case 3: // Attendance
         //Get.toNamed(AppRoutes.attendanceMainRoute);

@@ -40,10 +40,13 @@ class ClockInOutController extends GetxController
 
   RxBool isLoadDropDown = true.obs;
 
+  late int? isImageRequire;
+
   @override
   void onInit() async {
     WidgetsFlutterBinding.ensureInitialized();
 
+    isImageRequireInClocking();
     getTypeForWork();
     getBgGeoLocation();
     getCheckInOutStatus();
@@ -52,10 +55,14 @@ class ClockInOutController extends GetxController
 
   /*First, executed this method after image capture clockInOutByApi method call Api for Clock In/Out*/
   void imageCapture(BuildContext context) async {
-    selectedImage.value?.absolute.delete();
-    var image = await Utils.captureSelfie(context: context);
-    if (image != null) {
-      selectedImage.value = File(image.path);
+    if(isImageRequire!=null && isImageRequire==1){
+      selectedImage.value?.absolute.delete();
+      var image = await Utils.captureSelfie(context: context);
+      if (image != null) {
+        selectedImage.value = File(image.path);
+        clockInOutByApi();
+      }
+    }else{
       clockInOutByApi();
     }
   }
@@ -134,17 +141,21 @@ class ClockInOutController extends GetxController
     formData.fields.add(MapEntry("Longitude", "${geoLocation.longitude}"));
     formData.fields.add(MapEntry("Reason", "$defaultValue"));
 
-    if (selectedImage.value != null) {
-      formData.files.add(MapEntry(
-        'file',
-        await dio.MultipartFile.fromFile(selectedImage.value!.path,
-            filename: selectedImage.value?.path.isImageFileName.toString()),
-      ));
+    if(isImageRequire!=null && isImageRequire==1){
+      if (selectedImage.value != null) {
+        formData.files.add(MapEntry(
+          'file',
+          await dio.MultipartFile.fromFile(selectedImage.value!.path,
+              filename: selectedImage.value?.path.isImageFileName.toString()),
+        ));
+      } else {
+        formData.files.add(MapEntry(
+          'file',
+          dio.MultipartFile.fromString("", filename: "test.jpg"),
+        ));
+      }
     } else {
-      formData.files.add(MapEntry(
-        'file',
-        dio.MultipartFile.fromString("", filename: "test.jpg"),
-      ));
+      formData.fields.add(const MapEntry("file", ''));
     }
 
     var receivePort = ReceivePort();
@@ -401,5 +412,10 @@ class ClockInOutController extends GetxController
       );
     }
     isLoadDropDown.value = false;
+  }
+
+  void isImageRequireInClocking() async {
+    await PreferenceUtils.init();
+    isImageRequire = await PreferenceUtils.getIsCameraEnable();
   }
 }

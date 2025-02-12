@@ -174,4 +174,12 @@ class PreferenceUtils {
     return await _prefsInstance!
         .setString(Constants.locationDetailsPref, encodedCoordinates);
   }
+
+  static setIsCameraEnable(int isCamEnable) async{
+    await _prefsInstance?.setInt(Constants.isCameraEnable,isCamEnable);
+  }
+
+  static Future<int?> getIsCameraEnable() async{
+    return _prefsInstance?.getInt(Constants.isCameraEnable);
+  }
 }

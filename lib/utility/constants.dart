@@ -43,6 +43,7 @@ class Constants {
   static const String serverConnectionPref = 'serverConnectionPref';
   static const String locationDetailsPref = 'locationDetailsPref';
   static const String profileImagePref = 'profileImagePref';
+  static const String isCameraEnable = 'Is_Camera_enable';
 
   //TODO : Msg Show Constants
   static const String contactMsg = 'Please contact to system admin...';

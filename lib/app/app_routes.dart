@@ -31,6 +31,7 @@ import 'package:ultimatix_hrms_flutter/screen/geofence/geofence_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/geofence/geofence_view.dart';
 import 'package:ultimatix_hrms_flutter/screen/live_tracking/live_tracking_bind.dart';
 import 'package:ultimatix_hrms_flutter/screen/live_tracking/live_tracking_ui.dart';
+import 'package:ultimatix_hrms_flutter/screen/location_permission/location_perm_bind.dart';
 
 import 'package:ultimatix_hrms_flutter/screen/manager_approval/leave_manager_approval_details/leave_manager_approval_details_binding.dart';
 import 'package:ultimatix_hrms_flutter/screen/manager_approval/leave_manager_approval_details/leave_manager_approval_details_view.dart';
@@ -55,6 +56,7 @@ import 'package:ultimatix_hrms_flutter/screen/settings/settings_view.dart';
 import '../screen/auth/forgotpassword/forgot_pass_binding.dart';
 import '../screen/auth/login/login_binding.dart';
 import '../screen/auth/login/login_view_new.dart';
+import '../screen/location_permission/location_perm_ui.dart';
 import '../screen/manager_approval/leave_manager_approval/leave_manager_approval_binding.dart';
 import '../screen/manager_approval/leave_manager_approval/leave_manager_approval_view.dart';
 import '../screen/manager_approval/leave_manager_approval_details/leave_manager_approval_edit_details/leave_manager_approval_edit_details_view.dart';
@@ -155,6 +157,9 @@ class AppRoutes {
   static const settingsRoute = '/settings_route';
   static const changePasswordRoute = '/change_password_route';
   static const feedbackRoute = '/feedback_route';
+
+  //location permission
+  static const locationPermRoute = '/location_perm';
 
   //end region
 
@@ -312,6 +317,11 @@ class AppRoutes {
       name: AppRoutes.leaveManagerApprovalEditDetailsRoute,
       binding: LeaveManagerApprovalEditDetailsBinding(),
       page: () => const LeaveManagerApprovalEditDetailsView(),
+    ),
+    GetPage(
+      name: AppRoutes.locationPermRoute,
+      binding: LocationPermBind(),
+      page: () => const LocationPermUi(),
     ),
   ];
 }

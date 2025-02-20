@@ -32,6 +32,7 @@ class Constants {
   static const String isClockingPref = 'isClockingPref';
   static const String isThemePref = 'isThemePref';
   static const String isLoginPref = 'isLoginPref';
+  static const String isLocateMe = 'isLocateMe';
   static const String fcmIdPref = 'fcmIdPref';
   static const String authTokenPref = 'authTokenPref';
   static const String loginDataPref = 'loginDataPref';

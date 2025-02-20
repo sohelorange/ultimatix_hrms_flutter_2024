@@ -27,4 +27,7 @@ abstract class UltimatixDao {
 
   @Query("SELECT DISTINCT longitude,latitude FROM LocationEntity")
   Future<List<LocationEntity>> getAllRecordsFromDb();
+
+  @Query("SELECT * FROM LocationEntity")
+  Future<List<LocationEntity>> getLocationRecordsFromDb();
 }

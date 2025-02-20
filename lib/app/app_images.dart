@@ -381,6 +381,24 @@ class AppImages {
       "assets/icon/attendance/svg_cal_regularize.svg";
   static const String svgReasonRegularize =
       "assets/icon/attendance/svg_reason_regularize.svg";
+  static const String svgBagAttendance =
+      "assets/icon/attendance/svg_bag_attendance.svg";
+  static const String svgCalenderAttendance =
+      "assets/icon/attendance/svg_calender_attendance.svg";
+
+  static const String svgLocateMe =
+      "assets/icon/location/svg_locate_me.svg";
+
+  static const String svgAttendancePresentFirst =
+      "assets/icon/attendance/svg_present_attendance.svg";
+  static const String svgAttendanceAbsentFirst =
+      "assets/icon/attendance/svg_absent_attendance.svg";
+  static const String svgAttendanceWeekOffFirst =
+      "assets/icon/attendance/svg_weekOff_attendance.svg";
+  static const String svgAttendanceHolidayFirst =
+      "assets/icon/attendance/svg_holiday_attendance.svg";
+  static const String svgAttendanceOnDutyFirst =
+      "assets/icon/attendance/svg_onDuty_attendance.svg";
 
   static const String svgPresentAttendance =
       "assets/icon/attendance/svg_present_reg.svg";
@@ -393,6 +411,9 @@ class AppImages {
   static const String svgOdAttendance = "assets/icon/attendance/svg_od_reg.svg";
   static const String svgRegAttendance =
       "assets/icon/attendance/svg_regularize_attendance.svg";
+  static const String svgInTimeAttendance = "assets/icon/attendance/svg_in_time_attendance.svg";
+  static const String svgOutTimeAttendance = "assets/icon/attendance/svg_out_time_attendance.svg";
+  static const String svgDropDownAttendance = "assets/icon/attendance/svg_dropdown_attendance.svg";
 
   static const String gifLogo = 'assets/icon/gif_otl.gif';
 

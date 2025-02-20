@@ -9,6 +9,7 @@ import 'package:ultimatix_hrms_flutter/utility/preference_utils.dart';
 
 import '../../../api/dio_client.dart';
 import '../../../app/app_url.dart';
+import '../../../database/database_helper.dart';
 import '../../../database/ultimatix_dao.dart';
 import '../../../database/ultimatix_db.dart';
 import '../../../utility/network.dart';
@@ -23,7 +24,7 @@ class DrawerDashController extends GetxController {
   RxString empID = "".obs;
   RxString cmpID = "".obs;
 
-  late UltimatixDb database;
+  /*late UltimatixDb database;*/
   late UltimatixDao localDao;
 
   final List<Map<String, dynamic>> exploreItems = [
@@ -119,12 +120,12 @@ class DrawerDashController extends GetxController {
   }
 
   @override
-  void onInit() {
+  void onInit() async{
     // TODO: implement onInit
     super.onInit();
     //onEmployeePersonalDetailsAPI();
     profileValueNotifier.value = PreferenceUtils.getProfileImage();
-    initDatabase();
+    await initDatabase();
     Map<String, dynamic> loginData = PreferenceUtils.getLoginDetails();
     //userImageUrl.value = loginData['image_Name'] ?? '';
     //userName.value = loginData['emp_Full_Name'] ?? '';
@@ -135,13 +136,15 @@ class DrawerDashController extends GetxController {
   }
 
   Future<void> initDatabase() async {
-    database =
-        await $FloorUltimatixDb.databaseBuilder('ultimatix_db.db').build();
-    localDao = database.localDao;
+    /*database = await $FloorUltimatixDb.databaseBuilder('ultimatix_db.db').build();*/
+    /*localDao = database.localDao;*/
+
+    localDao = await DatabaseHelper.localDao;
   }
 
   closeDb() async {
-    await database.close();
+    UltimatixDb db = await DatabaseHelper.database;
+    await db.close();
   }
 
   void deleteRecord() async {
@@ -167,10 +170,13 @@ class DrawerDashController extends GetxController {
         var response =
             await DioClient().postQuery(AppURL.logoutURL, queryParams: param);
         if (response['code'] == 200 && response['status'] == true) {
-          deleteRecord();
+          /*deleteRecord();*/
+
           deleteAllLocations();
 
+
           PreferenceUtils.setIsLogin(false).then((_) {
+
             closeDb();
             Get.offAllNamed(AppRoutes.loginRoute);
           });

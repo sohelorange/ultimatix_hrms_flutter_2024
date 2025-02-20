@@ -211,6 +211,18 @@ class _$UltimatixDao extends UltimatixDao {
   }
 
   @override
+  Future<List<LocationEntity>> getLocationRecordsFromDb() async {
+    return _queryAdapter.queryList('SELECT * FROM LocationEntity',
+        mapper: (Map<String, Object?> row) => LocationEntity(
+            id: row['id'] as int?,
+            latitude: row['latitude'] as double,
+            longitude: row['longitude'] as double,
+            dateTime: row['dateTime'] as String?,
+            gpsOff:
+                row['gpsOff'] == null ? null : (row['gpsOff'] as int) != 0));
+  }
+
+  @override
   Future<void> insertClockInOutDetails(
       ClockInOutEntity clockInOutEntity) async {
     await _clockInOutEntityInsertionAdapter.insert(

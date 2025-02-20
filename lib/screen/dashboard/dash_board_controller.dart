@@ -4,6 +4,7 @@ import 'dart:ui';
 
 import 'package:battery_plus/battery_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
@@ -28,6 +29,7 @@ import '../../app/app_snack_bar.dart';
 import '../../app/app_url.dart';
 import '../../database/clock_response.dart';
 import '../../database/location_entity.dart';
+import '../../main.dart';
 import '../../services/notification_services.dart';
 import '../../utility/constants.dart';
 import '../../utility/network.dart';
@@ -36,7 +38,7 @@ import '../../utility/utils.dart';
 
 class DashController extends GetxController {
   late UltimatixDao localDao;
-  late UltimatixDb database;
+  /*late UltimatixDb database;*/
 
   RxBool isLoading = false.obs;
   RxBool isViewMore = false.obs;
@@ -384,6 +386,8 @@ class DashController extends GetxController {
   @override
   onInit() async {
     super.onInit();
+    checkGpsEnabled();
+
     _updateTime();
     checkInOutStatus.value = PreferenceUtils.getIsClocking();
 
@@ -393,6 +397,8 @@ class DashController extends GetxController {
 
     await getLoginDetails();
     await fetchDataInParallel();
+    await initLocalDb();
+
     /*await initDatabase();*/
 
     imeiNo = await getImeiNo() ?? "";
@@ -667,10 +673,14 @@ class DashController extends GetxController {
         var response =
             await DioClient().postQuery(AppURL.logoutURL, queryParams: param);
         if (response['code'] == 200 && response['status'] == true) {
-          deleteRecord();
+          /*deleteRecord();*/
           deleteAllLocations();
 
+          PreferenceUtils.removeWhenLogout();
+          stopService();
+
           PreferenceUtils.setIsLogin(false).then((_) {
+
             closeDb();
             Get.offAllNamed(AppRoutes.loginRoute);
           });
@@ -692,7 +702,7 @@ class DashController extends GetxController {
   }
 
   //TODO: dashboard use for live tracking field
-  Future<void> initDatabase() async {
+  /*Future<void> initDatabase() async {
     localDao = await DatabaseHelper.localDao;
     await getAllLocationRecords().then(
       (value) {
@@ -700,11 +710,16 @@ class DashController extends GetxController {
       },
     );
     await initializeService();
+  }*/
+
+  Future<void> initLocalDb() async{
+    localDao = await DatabaseHelper.localDao;
   }
 
   closeDb() async {
     try {
-      await database.close();
+      UltimatixDb db = await DatabaseHelper.database;
+      await db.close();
     }catch(e){
       e.printError();
     }
@@ -763,20 +778,26 @@ class DashController extends GetxController {
   }
 
   Future<void> checkGpsEnabled() async {
-    bool gpsEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!gpsEnabled) {
-      Geolocator.openLocationSettings();
+    try {
+      checkLocationPermission();
+      bool gpsEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!gpsEnabled) {
+        Geolocator.openLocationSettings();
+      }
+    }catch(e){
+      e.printError();
     }
-    checkLocationPermission();
   }
 
   Future<void> checkLocationPermission() async {
-    LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied ||
-        permission != LocationPermission.always) {
-      AppSnackBar.showGetXCustomSnackBar(
-          message: 'Allow location all time in permission');
-      openAppSettings();
+    try {
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied ||
+          permission != LocationPermission.always) {
+        checkLocations();
+      }
+    }catch(e){
+      e.printError();
     }
   }
 
@@ -849,7 +870,6 @@ class DashController extends GetxController {
           if (value != null) {
             Map<String, dynamic> jsonResponse = value;
             if (jsonResponse['code'] == 200) {
-              log("successfully data stored for location");
             } else if (jsonResponse['code'] == 401) {
               AppSnackBar.showGetXCustomSnackBar(
                   message: '${jsonResponse['message']}',
@@ -872,7 +892,6 @@ late Timer timer;
 
 @pragma('vm:entry-point')
 void onStartOne(ServiceInstance service) async {
-  log("OnStart Method");
   DartPluginRegistrant.ensureInitialized();
 
   /*_viewModelController.initDatabase();*/
@@ -880,22 +899,18 @@ void onStartOne(ServiceInstance service) async {
   if (service is AndroidServiceInstance) {
     service.on('setAsForeground').listen((event) {
       service.setAsForegroundService();
-      log("**Service set As Foreground**");
     });
 
     service.on('setAsBackground').listen((event) {
       service.setAsBackgroundService();
-      log("**Service set As Background**");
     });
 
     service.on('stopService').listen((event) async {
       timer.cancel();
       service.stopSelf();
-      log("**Service is stop**");
     });
 
     timer = Timer.periodic(const Duration(seconds: 30), (timer) async {
-      log("Service running****");
       if (await service.isForegroundService()) {
         service.setForegroundNotificationInfo(
             title: "Locate ME", content: "Updated at${DateTime.now()}");

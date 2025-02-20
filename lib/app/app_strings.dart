@@ -5,6 +5,9 @@ class AppString {
   static const String payrollHRMS = 'Payroll & HRMS';
   static const String poweredBy = 'Powered By';
   static const String allowed = 'Allow';
+  static const String useLoc1 = 'Use Your Location';
+  static const String useLoc2 = 'Ultimatix Payroll & HRMS Collect location Data to enable location and movement tracking even when app is closed or not in use.';
+  static const String useLoc3 = 'This (All Time Allow) is then used for Live tracking, Pinning Customer Location.';
   static const String deny = 'Deny';
   static const String copyRights =
       'Copyrights by Orange Technolab Pvt. Ltd 2016';

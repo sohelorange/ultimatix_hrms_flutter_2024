@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ultimatix_hrms_flutter/screen/attendance_reg/user_attendance_regularize/attendance_user_controller.dart';
 import '../../../app/app_colors.dart';
 import '../../../app/app_font_weight.dart';
 import '../../../app/app_images.dart';
 import '../../../app/app_routes.dart';
 import '../../../utility/utils.dart';
-import '../../../widget/common_app_bar.dart';
 import '../../../widget/common_app_image.dart';
-import '../../../widget/common_container.dart';
-import '../../../widget/common_gradient_button.dart';
 import '../../../widget/common_text.dart';
+import '../../../widget/new/common_app_bar_new.dart';
 
 class UserAttendanceUi extends GetView<UserAttendanceController> {
   const UserAttendanceUi({super.key});
@@ -20,15 +19,11 @@ class UserAttendanceUi extends GetView<UserAttendanceController> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      appBar: const CommonAppBar(
-        title: 'Attendance',
-      ),
-      body: CommonContainer(
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          child: getView(context),
+        appBar: const CommonNewAppBar(
+          title: 'Attendance',
+          leadingIconSvg: AppImages.icBack,
         ),
-      ),
+        body: getView(context),
     ));
   }
 
@@ -52,13 +47,13 @@ class UserAttendanceUi extends GetView<UserAttendanceController> {
                   children: [
                     Container(
                       padding: const EdgeInsets.all(16.0),
-                      margin: const EdgeInsets.all(10),
                       width: MediaQuery.of(context).size.width * 0.9,
                       // Adjust container width as needed
                       decoration: BoxDecoration(
-                        gradient: AppColors.gradientBackground,
+                        /*gradient: AppColors.gradientBackground,*/
                         // Assign default if null
                         borderRadius: BorderRadius.circular(10),
+                        color: AppColors.colorLightPurple3,
                       ),
                       child: LayoutBuilder(
                         builder: (context, constraints) {
@@ -69,10 +64,10 @@ class UserAttendanceUi extends GetView<UserAttendanceController> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   // Small Image
-                                  Container(
+                                  /*Container(
                                     width: 50,
                                     height: 50,
                                     decoration: BoxDecoration(
@@ -86,6 +81,16 @@ class UserAttendanceUi extends GetView<UserAttendanceController> {
                                       radius: 10,
                                       fit: BoxFit.contain,
                                     ),
+                                  ),*/
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(30),
+                                    child: CommonAppImage(
+                                        height: MediaQuery.of(context).size.height * (70 / 812),
+                                        width: MediaQuery.of(context).size.width * (70 / 375),
+                                        imagePath: controller
+                                            .userProfile
+                                            .trim()
+                                            .toString()),
                                   ),
                                   const SizedBox(width: 14.0),
                                   // Spacer between image and text
@@ -106,25 +111,29 @@ class UserAttendanceUi extends GetView<UserAttendanceController> {
                                             () => CommonText(
                                               text: controller.userName.value,
                                               fontWeight: AppFontWeight.w500,
-                                              fontSize: fontSize,
-                                              color: Colors.white,
+                                              fontSize: MediaQuery.of(context).size.width * 0.045,
+                                              color: AppColors.color2F2F31,
                                             ),
                                           ),
                                           /*const SizedBox(height: 5.0),*/
-                                          Row(
-                                            children: [
-                                              SvgPicture.asset(
-                                                  AppImages.icDesignation),
-                                              const SizedBox(width: 3.0),
-                                              CommonText(
-                                                text: controller
-                                                    .userDesignation.value
-                                                    .toString(),
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: fontSize,
-                                              ),
-                                            ],
+                                          Expanded(
+                                            child: Row(
+                                              children: [
+                                                SvgPicture.asset(
+                                                  height: MediaQuery.of(context).size.height * 0.02,
+                                                    width: MediaQuery.of(context).size.width * 0.03,
+                                                    AppImages.svgBagAttendance),
+                                                const SizedBox(width: 3.0),
+                                                CommonText(
+                                                  text: controller
+                                                      .userDesignation.value
+                                                      .toString(),
+                                                  color: AppColors.color2F2F31,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: MediaQuery.of(context).size.width * 0.035,
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -156,7 +165,7 @@ class UserAttendanceUi extends GetView<UserAttendanceController> {
                                             height: 25,
                                             width: 25,
                                             child: SvgPicture.asset(
-                                                AppImages.svgUserLocation)),
+                                                AppImages.svgAttendanceLocation)),
                                       ],
                                     ),
                                   ),
@@ -167,12 +176,13 @@ class UserAttendanceUi extends GetView<UserAttendanceController> {
                         },
                       ),
                     ),
+                    const SizedBox(height: 10,),
                     Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 6, vertical: 0),
                         width: MediaQuery.of(context).size.width *
                             0.9, // Adjust container width as needed
-                        child: _attendanceUi(context)),
+                        child: _getAttendanceCalender(context)),
                     /*const SizedBox(height: 16.0),*/
                     Expanded(
                       child: ListView.builder(
@@ -190,6 +200,7 @@ class UserAttendanceUi extends GetView<UserAttendanceController> {
       ],
     );
   }
+
 
   responsiveContainer(BuildContext context, int index) {
     return Column(
@@ -597,7 +608,120 @@ class UserAttendanceUi extends GetView<UserAttendanceController> {
     }
   }
 
-  Widget _attendanceUi(BuildContext context) {
+  getAttendanceImage(int index){
+    if (controller.attendanceRegularizeDetails.value.data!
+        .elementAt(index)
+        .mainStatus ==
+        "A") {
+      return AppImages.svgAttendanceAbsentFirst;
+    } else if (controller.attendanceRegularizeDetails.value.data!
+        .elementAt(index)
+        .mainStatus ==
+        "P") {
+      return AppImages.svgAttendancePresentFirst;
+    } else if (controller.attendanceRegularizeDetails.value.data!
+        .elementAt(index)
+        .mainStatus ==
+        "W") {
+      return AppImages.svgAttendanceWeekOffFirst;
+    } else if (controller.attendanceRegularizeDetails.value.data!
+        .elementAt(index)
+        .mainStatus ==
+        "HO") {
+      return AppImages.svgAttendanceHolidayFirst;
+    } else if (controller.attendanceRegularizeDetails.value.data!
+        .elementAt(index)
+        .mainStatus ==
+        "OD") {
+      return AppImages.svgAttendanceOnDutyFirst;
+    } else {
+      return AppImages.svgAbsentAttendance;
+    }
+  }
+  
+  Widget _getAttendanceCalender(BuildContext context){
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+            Text(
+              "Month",
+              style: GoogleFonts.inter(fontSize: MediaQuery.of(context).size.width * 0.035,fontWeight: FontWeight.w400,color: AppColors.color2F2F31),
+            ),
+            SizedBox(height: 3,),
+            Container(
+              width: MediaQuery.of(context).size.width * (115 / 375),
+              height: MediaQuery.of(context).size.height * (40 / 812),
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.colorDCDCDC),
+                  borderRadius: BorderRadius.circular(6)
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                      "February",
+                       style: GoogleFonts.inter(fontSize: MediaQuery.of(context).size.width * 0.03,fontWeight: FontWeight.w500,color: AppColors.color2F2F31),
+                  ),
+                  SvgPicture.asset(AppImages.svgCalenderAttendance)
+                ],
+              ),)
+          ],),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+            Text(
+                "Year",
+                style: GoogleFonts.inter(fontSize: MediaQuery.of(context).size.width * 0.035,fontWeight: FontWeight.w400,color: AppColors.color2F2F31),
+            ),
+            SizedBox(height: 3,),
+            Container(
+              height: MediaQuery.of(context).size.height * (40 / 812),
+              padding: EdgeInsets.all(8),
+              width: MediaQuery.of(context).size.width * (115 / 375),
+              decoration: BoxDecoration(
+                border: Border.all(color: AppColors.colorDCDCDC),
+                borderRadius: BorderRadius.circular(6)
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                      "2025",
+                      style: GoogleFonts.inter(fontSize: MediaQuery.of(context).size.width * 0.03,fontWeight: FontWeight.w500,color: AppColors.color2F2F31),
+                  ),
+                  SizedBox(width: 10,),
+                  SvgPicture.asset(AppImages.svgCalenderAttendance)
+                ],
+              ),)
+          ],),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(""),
+              Container(
+                height: MediaQuery.of(context).size.height * (40 / 812),
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                    gradient: AppColors.gradientBackgroundNew
+                ),
+                child: Text(
+                  "Change",
+                  style: GoogleFonts.inter(fontSize: MediaQuery.of(context).size.width * 0.035,fontWeight: FontWeight.w400,color: AppColors.colorWhite),
+                  textAlign: TextAlign.center,),
+              )
+            ],),
+        ],
+      ),
+    );
+  }
+
+  /*Widget _attendanceUi(BuildContext context) {
     final int currentMonth = DateTime.now().month;
 
     // Get the selected month or current month
@@ -638,7 +762,7 @@ class UserAttendanceUi extends GetView<UserAttendanceController> {
         controller.showYearDialog(context); // Define your on-tap behavior here
       },
     );
-  }
+  }*/
 
   bool checkTime(int index) {
     if (controller.attendanceRegularizeDetails.value.data

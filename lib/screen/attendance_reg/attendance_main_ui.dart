@@ -10,6 +10,7 @@ import '../../app/app_routes.dart';
 import '../../utility/utils.dart';
 import '../../widget/common_app_bar.dart';
 import '../../widget/common_app_image.dart';
+import '../../widget/common_app_image_svg.dart';
 import '../../widget/common_container.dart';
 import '../../widget/common_gradient_button.dart';
 import '../../widget/common_text.dart';
@@ -21,13 +22,54 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      appBar: const CommonNewAppBar(
-        title: 'Attendance', leadingIconSvg: AppImages.icBack,
-      ),
-      body: Container(
-        padding: const EdgeInsets.all(16),
-        child: getView(context),
-      ),
+        appBar: CommonNewAppBar(
+          title: 'Attendance',
+          leadingIconSvg: AppImages.icBack,
+          trailingWidgets: [
+            GestureDetector(
+              onTap: () {},
+              child: const CommonAppImage(
+                imagePath: AppImages.dashRefreshIcon,
+                color: AppColors.colorWhite,
+              ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+                // Adjust radius
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withValues(alpha: 0.5),
+                    spreadRadius: 0,
+                    blurRadius: 0,
+                    offset: const Offset(0, 0), // Shadow position
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(4),
+                child: controller.cmpImageUrl.value.isEmpty
+                    ? const CommonAppImageSvg(
+                  imagePath: AppImages.svgAvatar, // Default SVG image
+                  height: 30,
+                  width: 30,
+                  fit: BoxFit.cover, // Ensures the image fills the space
+                )
+                    : CommonAppImageSvg(
+                  imagePath:
+                  controller.cmpImageUrl.value, // Use profile image URL
+                  height: 30,
+                  width: 30,
+                  fit: BoxFit.cover, // Ensures the image fills the space
+                ),
+              ),
+            ),
+          ],
+        ),
+        body: getView(context),
     ));
   }
 
@@ -76,7 +118,6 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
                         },
                         child: Container(
                           padding: const EdgeInsets.all(16.0),
-                          margin: const EdgeInsets.all(10),
                           width: MediaQuery.of(context).size.width * 0.9,
                           // Adjust container width as needed
                           decoration: BoxDecoration(
@@ -98,28 +139,15 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       // Small Image
-                                      Container(
-                                          width: 50,
-                                          height: 50,
-                                          decoration: BoxDecoration(
-                                              boxShadow: const [
-                                                BoxShadow(
-                                                  color: Colors.white,
-                                                  blurRadius: 5.0,
-                                                ),
-                                              ],
-                                              border: Border.all(
-                                                  color: AppColors.color1C1F37
-                                                      .withAlpha((0.10 * 255)
-                                                          .toInt())),
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color: Colors.white),
-                                          child: CommonAppImage(
-                                              imagePath: controller
-                                                  .userProfileUrl
-                                                  .trim()
-                                                  .toString())),
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(30),
+                                        child: CommonAppImage(
+                                          height: 50,width: 50,
+                                            imagePath: controller
+                                                .userProfileUrl
+                                                .trim()
+                                                .toString()),
+                                      ),
                                       const SizedBox(width: 16.0),
                                       // Spacer between image and text
                                       // Column for Texts
@@ -129,6 +157,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
                                               CrossAxisAlignment.start,
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
+                                            const SizedBox(height: 10,),
                                             CommonText(
                                               text: controller.userName.value,
                                               fontWeight: AppFontWeight.w500,
@@ -171,7 +200,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
                                                   CrossAxisAlignment.end,
                                               children: [
                                                 SizedBox(height: 8.0),
-                                                Icon(Icons.arrow_forward_ios)
+                                                Icon(Icons.arrow_forward_ios,color: AppColors.color7A1FA2,)
                                               ],
                                             ))
                                           : GestureDetector(
@@ -249,7 +278,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
                                           child: Row(
                                             children: [
                                               SvgPicture.asset(
-                                                  AppImages.svgTime,
+                                                  AppImages.svgInTimeAttendance,
                                                   height: 20,
                                                   width: 20),
                                               const SizedBox(width: 8.0),
@@ -261,11 +290,11 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
                                                       MainAxisSize.min,
                                                   children: [
                                                     Text(
-                                                      'Check in',
+                                                      'In Time',
                                                       style: TextStyle(
                                                           fontSize: fontSize,
                                                           color: AppColors
-                                                              .color6B6D7A,
+                                                              .color1C1F37,
                                                           fontWeight:
                                                               FontWeight.w400),
                                                     ),
@@ -279,7 +308,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
                                                             fontWeight:
                                                                 FontWeight.w700,
                                                             color: AppColors
-                                                                .color1C1F37),
+                                                                .color6B6D7A),
                                                       ),
                                                     ),
                                                   ],
@@ -303,7 +332,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
                                           child: Row(
                                             children: [
                                               SvgPicture.asset(
-                                                  AppImages.svgTime,
+                                                  AppImages.svgOutTimeAttendance,
                                                   height: 20,
                                                   width: 20), // Location Icon
                                               const SizedBox(width: 8.0),
@@ -315,11 +344,11 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
                                                       MainAxisSize.min,
                                                   children: [
                                                     Text(
-                                                      'Check out',
+                                                      'Out Time',
                                                       style: TextStyle(
                                                           fontSize: fontSize,
                                                           color: AppColors
-                                                              .color6B6D7A,
+                                                              .color1C1F37,
                                                           fontWeight:
                                                               FontWeight.w400),
                                                     ),
@@ -333,7 +362,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
                                                             fontWeight:
                                                                 FontWeight.w700,
                                                             color: AppColors
-                                                                .color1C1F37),
+                                                                .color6B6D7A),
                                                       ),
                                                     ),
                                                   ],
@@ -390,6 +419,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
+                              SizedBox(width: 10,),
                               Text(
                                 "My Team",
                                 style: TextStyle(
@@ -428,13 +458,14 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
   getTeamAttendanceUi(BuildContext context, int index) {
     return Column(
       children: [
+        index==0 ? const SizedBox(height: 2,) : const SizedBox(height: 10,),
         Container(
           padding: const EdgeInsets.all(16.0),
-          margin: const EdgeInsets.all(10),
+          /*margin: const EdgeInsets.all(10),*/
           width: MediaQuery.of(context).size.width * 0.9,
           // Adjust container width as needed
           decoration: BoxDecoration(
-            boxShadow: const [
+            /*boxShadow: const [
               BoxShadow(
                 color: Color(0X1C1F370D),
                 // Light gray color for shadow
@@ -445,9 +476,9 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
                 offset: Offset(0,
                     0), // Offset to simulate elevation effect (vertical shadow)
               ),
-            ],
+            ],*/
             borderRadius: BorderRadius.circular(6),
-            color: Colors.white,
+            color: AppColors.colorF3FFFB,
           ),
           child: LayoutBuilder(
             builder: (context, constraints) {
@@ -462,26 +493,12 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Small Image
-                      Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.white,
-                                blurRadius: 5.0,
-                              ),
-                            ],
-                            border: Border.all(
-                                color: AppColors.color1C1F37
-                                    .withAlpha((0.10 * 255).toInt())),
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
                         child: CommonAppImage(
+                          height: 50,width: 50,
                           imagePath: getImageUrl(index),
                           radius: 10,
-                          height: 50,
-                          width: 50,
                         ),
                       ),
                       const SizedBox(width: 16.0),
@@ -614,11 +631,12 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
                                 padding: const EdgeInsets.all(12.0),
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    color: AppColors.colorF8F4FA),
+                                    border: Border.all(color: AppColors.colorDCDCDC),
+                                    color: AppColors.colorWhite),
                                 child: Row(
                                   children: [
                                     SvgPicture.asset(
-                                      AppImages.svgClock,
+                                      AppImages.svgInTimeAttendance,
                                       height: 20,
                                       width: 20,
                                     ),
@@ -631,10 +649,10 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Text(
-                                            'Check in',
+                                            'In Time',
                                             style: TextStyle(
                                                 fontSize: fontSize,
-                                                color: AppColors.color6B6D7A,
+                                                color: AppColors.color1C1F37,
                                                 fontWeight: FontWeight.w400),
                                           ),
                                           Text(
@@ -655,7 +673,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
                                             style: TextStyle(
                                                 fontSize: fontSize,
                                                 fontWeight: FontWeight.w700,
-                                                color: AppColors.color1C1F37),
+                                                color: AppColors.color6B6D7A),
                                           ),
                                         ],
                                       ),
@@ -672,11 +690,12 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
                                 padding: const EdgeInsets.all(12.0),
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    color: AppColors.colorF8F4FA),
+                                    border: Border.all(color: AppColors.colorDCDCDC),
+                                    color: AppColors.colorWhite),
                                 child: Row(
                                   children: [
                                     SvgPicture.asset(
-                                      AppImages.svgClock,
+                                      AppImages.svgOutTimeAttendance,
                                       height: 20,
                                       width: 20,
                                     ),
@@ -689,10 +708,10 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Text(
-                                            'Check out',
+                                            'Out Time',
                                             style: TextStyle(
                                                 fontSize: fontSize,
-                                                color: AppColors.color6B6D7A,
+                                                color: AppColors.color1C1F37,
                                                 fontWeight: FontWeight.w400),
                                           ),
                                           Text(
@@ -714,7 +733,7 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
                                             style: TextStyle(
                                                 fontSize: fontSize,
                                                 fontWeight: FontWeight.w700,
-                                                color: AppColors.color1C1F37),
+                                                color: AppColors.color6B6D7A),
                                           ),
                                         ],
                                       ),
@@ -725,6 +744,22 @@ class AttendanceMainUi extends GetView<AttendanceMainController> {
                             ),
                           ],
                         ),
+
+                  /*Third Row*/ //TODO:check condition for sub emp data available or not 17-02-2025 If available then visible else Invisible
+                  const SizedBox(height: 16.0),
+                  Container(
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6),
+                      gradient: AppColors.gradientBackgroundNew
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                      Text("Show Team Members",style: TextStyle(color: AppColors.colorWhite,fontWeight: FontWeight.w500, fontSize: fontSize),),
+                      SvgPicture.asset(AppImages.svgDropDownAttendance)
+                    ],),
+                  )
                 ],
               );
             },

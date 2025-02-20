@@ -182,4 +182,23 @@ class PreferenceUtils {
   static Future<int?> getIsCameraEnable() async{
     return _prefsInstance?.getInt(Constants.isCameraEnable);
   }
+
+  static bool getIsLocateMe() {
+    return _prefsInstance?.getBool(Constants.isLocateMe) ?? false;
+  }
+
+  static Future<bool> setIsLocateMe(bool isLocateMe) {
+    ArgumentError.checkNotNull(isLocateMe, Constants.isLocateMe);
+    return _prefsInstance!.setBool(Constants.isLocateMe, isLocateMe);
+  }
+
+  static Future<void> removeWhenLogout() async{
+    await _prefsInstance?.remove(Constants.deviceIDPref);
+    await _prefsInstance?.remove(Constants.isCameraEnable);
+    await _prefsInstance?.remove(Constants.fcmIdPref);
+    await _prefsInstance?.remove(Constants.authTokenPref);
+    await _prefsInstance?.remove(Constants.profileImagePref);
+    await _prefsInstance?.remove(Constants.loginDetailsArrayPref);
+    await _prefsInstance?.remove(Constants.loginDataPref);
+  }
 }

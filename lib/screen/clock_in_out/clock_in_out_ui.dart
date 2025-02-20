@@ -79,7 +79,11 @@ class ClockInOutUi extends GetView<ClockInOutController> {
                                     ? "Check Out"
                                     : "Check In",
                                 onPressed: () {
-                                  controller.checkWorkTypeValidation(context);
+                                  try {
+                                    controller.checkWorkTypeValidation(context);
+                                  }catch(e){
+                                    e.printError();
+                                  }
                                 },
                                 isLoading: false),
                           ],

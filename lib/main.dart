@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:battery_plus/battery_plus.dart';
@@ -15,6 +15,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:selfie_camera/selfie_camera.dart';
@@ -38,7 +39,13 @@ late UltimatixDao localDao;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await clearCache();
   await PreferenceUtils.init();
+  await PreferenceUtils.setIsLocateMe(false);
+
+  checkLocations();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -54,7 +61,6 @@ void main() async {
     return true;
   };
 
-  initDbWithLocationTrackService();
   await SelfieCamera.initialize(isLog: true);
 
   runApp(
@@ -65,7 +71,28 @@ void main() async {
   );
 }
 
+void checkLocations() async{
+  try {
+
+    isLocateMeTime = Timer.periodic(const Duration(seconds: 2), (timer) async {
+
+      PreferenceUtils.init();
+      PreferenceUtils.reload();
+      locationStatus.value = PreferenceUtils.getIsLocateMe();
+
+      if (!locationStatus.value) {}
+      else{
+        initDbWithLocationTrackService();
+      }
+    });
+  }catch(e){
+    e.printError();
+  }
+}
+
 void initDbWithLocationTrackService() async {
+  isLocateMeTime.cancel();
+
   localDao = await DatabaseHelper.localDao;
 
   await getAllLocationTrackingRecords().then(
@@ -80,7 +107,6 @@ const notificationChannelId = 'my_foreground';
 const notificationId = 888;
 
 Future<void> initializeService() async {
-  await checkGpsEnabled();
 
   final service = FlutterBackgroundService();
 
@@ -94,6 +120,15 @@ Future<void> initializeService() async {
 
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
+
+  if (Platform.isIOS || Platform.isAndroid) {
+    await flutterLocalNotificationsPlugin.initialize(
+      const InitializationSettings(
+        iOS: DarwinInitializationSettings(),
+        android: AndroidInitializationSettings('ic_bg_service_small'),
+      ),
+    );
+  }
 
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
@@ -110,132 +145,193 @@ Future<void> initializeService() async {
           initialNotificationContent: 'Initializing',*/
           foregroundServiceNotificationId: notificationId,
           isForegroundMode: true,
+          foregroundServiceTypes: [AndroidForegroundType.location],
           autoStartOnBoot: true));
 
-  await service.startService();
+  service.startService();
 }
 
 late Timer timer;
 ValueNotifier<bool> loginStatus = ValueNotifier<bool>(false);
 
+late Timer isLocateMeTime;
+ValueNotifier<bool> locationStatus = ValueNotifier<bool>(false);
+
+@pragma('vm:entry-point')
 void onStartOne(ServiceInstance service) async {
-  log("OnStart Method");
+
   DartPluginRegistrant.ensureInitialized();
+
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
 
   if (service is AndroidServiceInstance) {
     service.on('setAsForeground').listen((event) {
       service.setAsForegroundService();
-      log("**Service set As Foreground**");
     });
 
     service.on('setAsBackground').listen((event) {
       service.setAsBackgroundService();
-      log("**Service set As Background**");
     });
 
     service.on('stopService').listen((event) async {
       timer.cancel();
       service.stopSelf();
-      log("**Service is stop**");
     });
 
     timer = Timer.periodic(const Duration(seconds: 30), (timer) async {
-      log("Service running****");
 
       PreferenceUtils.init();
       PreferenceUtils.reload();
       loginStatus.value = PreferenceUtils.getIsLogin();
-
-      log("+Main+ login status is:${loginStatus.value}");
 
       if (!loginStatus.value) {
         return;
       }
 
       if (await service.isForegroundService()) {
+
+        flutterLocalNotificationsPlugin.show(
+            notificationId,
+            "Locate ME",
+            "Updated at${DateTime.now()}",
+            const NotificationDetails(android: AndroidNotificationDetails(
+                notificationChannelId, 'MY FOREGROUND SERVICE',ongoing: true,icon: 'ic_notification'
+              )
+            )
+        );
+
         service.setForegroundNotificationInfo(
             title: "Locate ME", content: "Updated at${DateTime.now()}");
-        try {
-          insertDataToStorage();
-        } catch (e) {
-          e.printError(info: "Getting Error while collecting locations");
-        }
+        insertDataToStorage();
       }
+
+      final deviceInfo = DeviceInfoPlugin();
+      String? device;
+      if (Platform.isAndroid) {
+        final androidInfo = await deviceInfo.androidInfo;
+        device = androidInfo.model;
+      } else if (Platform.isIOS) {
+        final iosInfo = await deviceInfo.iosInfo;
+        device = iosInfo.model;
+      }
+
+      service.invoke(
+        'update',
+        {
+          "current_date": DateTime.now().toIso8601String(),
+          "device": device,
+        },
+      );
+
     });
   }
 }
 
-getSwitchState() {}
+void stopService(){
+  FlutterBackgroundService().invoke("stopService");
+}
 
 void insertDataToStorage() async {
-  LocationPermission permission = await Geolocator.checkPermission();
-  bool gpsEnabled = await Geolocator.isLocationServiceEnabled();
+  try {
+    LocationPermission permission = await Geolocator.checkPermission();
+    bool gpsEnabled = await Geolocator.isLocationServiceEnabled();
 
-  if (permission != LocationPermission.always || !gpsEnabled) {
-    checkGpsEnabled();
-  } else {
-    if (await Network.isConnected()) {
-      await Geolocator.getCurrentPosition(
-          locationSettings: const LocationSettings(
-        accuracy: LocationAccuracy.best, // Use LocationSettings for accuracy
-        //distanceFilter:
-        //100, // Optional: minimum distance (in meters) to move before updates
-      )).then(
-        (value) {
-          addGeoLocationByAPICall(
-              value.latitude, value.longitude, value.accuracy);
-        },
-      );
+    if (permission != LocationPermission.always || !gpsEnabled) {
+      checkGpsEnabled();
     } else {
-      await Geolocator.getCurrentPosition(
-          locationSettings: const LocationSettings(
-        accuracy: LocationAccuracy.best, // Use LocationSettings for accuracy
-        //distanceFilter:
-        //100, // Optional: minimum distance (in meters) to move before updates
-      )).then(
-        (value) {
-          localDao.insertLocations(LocationEntity(
-              latitude: value.latitude,
-              longitude: value.longitude,
-              dateTime: DateTime.now().toString(),
-              gpsOff: false));
-        },
-      );
+
+      if (await Network.isConnected()) {
+
+        await Geolocator.getCurrentPosition(
+            locationSettings: const LocationSettings(
+              accuracy: LocationAccuracy.best,
+            )).then(
+              (value) {
+
+            addGeoLocationByAPICall(
+                value.latitude, value.longitude, value.accuracy, false, LocationEntity(latitude: 0.0, longitude: 0.0, dateTime: "", gpsOff: false));
+          },
+        );
+      } else {
+
+        localDao = await DatabaseHelper.localDao;
+
+        await Geolocator.getCurrentPosition(
+            locationSettings: const LocationSettings(
+              accuracy: LocationAccuracy
+                  .best, // Use LocationSettings for accuracy
+              //distanceFilter:
+              //100, // Optional: minimum distance (in meters) to move before updates
+            )).then(
+              (value) {
+            localDao.insertLocations(LocationEntity(
+                latitude: value.latitude,
+                longitude: value.longitude,
+                dateTime: DateTime.now().toString(),
+                gpsOff: false));
+          },
+        );
+      }
     }
+  }catch(e){
+    e.printError();
   }
 }
 
 Future<void> checkGpsEnabled() async {
-  checkLocationPermission();
-  bool gpsEnabled = await Geolocator.isLocationServiceEnabled();
-  if (!gpsEnabled) {
-    Geolocator.openLocationSettings();
+  try {
+    checkLocationPermission();
+    bool gpsEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!gpsEnabled) {
+      Geolocator.openLocationSettings();
+    }
+  }catch(e){
+    e.printError();
   }
 }
 
 Future<void> checkLocationPermission() async {
-  LocationPermission permission = await Geolocator.checkPermission();
-  if (permission == LocationPermission.denied ||
-      permission != LocationPermission.always) {
-    AppSnackBar.showGetXCustomSnackBar(
-        message: 'Allow location all time in permission');
-    openAppSettings();
+  try {
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied ||
+        permission != LocationPermission.always) {
+      openAppSettings();
+    }
+  }catch(e){
+    e.printError();
   }
 }
 
 void syncAllGeoLocationRecord() async {
   if (localGeoLocationList!.isNotEmpty) {
+
     for (var element in localGeoLocationList!) {
-      addGeoLocationByAPICall(element.latitude, element.longitude, 0.0);
+      addGeoLocationByAPICall(element.latitude, element.longitude, 0.0, true, element);
     }
+
+  }else{
+    deleteAllLocations();
+  }
+}
+
+void deleteAllLocations() async {
+  try {
+    await localDao.deleteAllLocations();
+  }catch(e){
+    e.printError();
   }
 }
 
 List<LocationEntity>? localGeoLocationList = [];
 
 Future<void> getAllLocationTrackingRecords() async {
-  localGeoLocationList?.clear();
-  localGeoLocationList?.addAll(await localDao.getAllRecordsFromDb());
+  try {
+    localGeoLocationList?.clear();
+    localGeoLocationList?.addAll(await localDao.getLocationRecordsFromDb());
+  }catch(e){
+    e.printError();
+  }
 }
 
 @pragma('vm:entry-point')
@@ -246,46 +342,55 @@ Future<void> _firebaseMessBackgroundHandle(RemoteMessage message) async {
 }
 
 Future<void> addGeoLocationByAPICall(
-    double lat, double lon, double accuracy) async {
-  if (await Network.isConnected()) {
-    await getAddress(lat, lon);
-    await PreferenceUtils.init();
+    double lat, double lon, double accuracy, bool isList, LocationEntity element) async {
+  try {
+    if (await Network.isConnected()) {
+      await getAddress(lat, lon);
+      await PreferenceUtils.init();
 
-    String gpsAcc = accuracy.toStringAsFixed(1).toString();
-    String battery = await getBatteryPercentage();
-    String deviceName = await getDeviceName();
+      String gpsAcc = accuracy.toStringAsFixed(1).toString();
+      String battery = await getBatteryPercentage();
+      String deviceName = await getDeviceName();
 
-    Map<String, dynamic> param = {
-      "empID": 0,
-      "cmpID": 0,
-      "latitude": lat,
-      "longitude": lon,
-      "trackingDate": DateFormat('dd/MM/yyyy').format(DateTime.now()),
-      "address": textPosition.toString().trim(), // Fixed here
-      "city": city.toString().trim(),
-      "area": area.toString().trim(),
-      "battery": "$battery%",
-      "gps": "$gpsAcc Meters",
-      "imei": PreferenceUtils.getDeviceID(),
-      "modelName": deviceName
-    };
+      Map<String, dynamic> param = {
+        "empID": 0,
+        "cmpID": 0,
+        "latitude": lat,
+        "longitude": lon,
+        "trackingDate": DateFormat('dd/MM/yyyy').format(DateTime.now()),
+        "address": textPosition.toString().trim(), // Fixed here
+        "city": city.toString().trim(),
+        "area": area.toString().trim(),
+        "battery": "$battery%",
+        "gps": "$gpsAcc Meters",
+        "imei": PreferenceUtils.getDeviceID(),
+        "modelName": deviceName
+      };
 
-    await http
-        .post(
-      Uri.parse(AppURL.addLocations),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': PreferenceUtils.getAuthToken()
-      },
-      body: jsonEncode(param),
-    )
-        .then(
-      (value) {
-        log("Response From Location Service:${value.body}");
-      },
-    );
-  } else {
-    AppSnackBar.showGetXCustomSnackBar(message: Constants.networkMsg);
+      await http
+          .post(
+        Uri.parse(AppURL.addLocations),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': PreferenceUtils.getAuthToken()
+        },
+        body: jsonEncode(param),
+      )
+          .then(
+            (value) {
+          if (value.statusCode==200) {
+            if(isList) {
+              localGeoLocationList?.remove(element);
+              syncAllGeoLocationRecord();
+            }
+          }
+        },
+      );
+    } else {
+      AppSnackBar.showGetXCustomSnackBar(message: Constants.networkMsg);
+    }
+  }catch(e){
+    e.printError();
   }
 }
 
@@ -315,6 +420,18 @@ Future<void> getAddress(double latitude, double longitude) async {
     area = place.subLocality.toString();
     textPosition =
         "${place.name}, ${place.street}, ${place.subLocality}, ${place.locality}, ${place.administrativeArea}, ${place.country}, ${place.postalCode}";
+  } catch (e) {
+    e.printError();
+  }
+}
+
+Future<void> clearCache() async {
+  try {
+    final cacheDir = await getTemporaryDirectory();
+
+    if (cacheDir.existsSync()) {
+      cacheDir.deleteSync(recursive: true);
+    }
   } catch (e) {
     e.printError();
   }

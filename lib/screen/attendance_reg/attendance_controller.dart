@@ -34,6 +34,7 @@ class AttendanceMainController extends GetxController {
   final RxInt selectedYearIndex = RxInt(-1);
   final RxInt selectedMonthIndex = RxInt(-1);
   RxInt selectedYear = DateTime.now().year.obs;
+  RxString cmpImageUrl = "".obs;
 
   @override
   void onInit() {
@@ -170,6 +171,7 @@ class AttendanceMainController extends GetxController {
     var loginData = PreferenceUtils.getLoginDetails();
     empID.value = loginData['emp_ID'].toString();
     cmpID.value = loginData['cmp_ID'].toString();
+    cmpImageUrl.value = loginData['cmp_Logo'] ?? '';
   }
 
   String getWeekDay(String? date) {

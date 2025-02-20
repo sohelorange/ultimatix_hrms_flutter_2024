@@ -47,6 +47,7 @@ class LiveTrackingController extends GetxController {
   @override
   void onInit() async {
     getLocalData();
+
     webController = WebViewController()
       ..enableZoom(false)
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
@@ -57,6 +58,7 @@ class LiveTrackingController extends GetxController {
           getBgGeoLocation();
         },
       ));
+
     getGeoLocationTrackingList(selectedDate);
     getBatteryPercentage();
     super.onInit();
@@ -67,56 +69,61 @@ class LiveTrackingController extends GetxController {
   }
 
   void getGeoLocationTrackingList(String nSelectedDate) async {
-    isLoadingOnUi.value = true;
+    try {
+      isLoadingOnUi.value = true;
 
-    var receivePort = ReceivePort();
+      var receivePort = ReceivePort();
 
-    var rootToken = RootIsolateToken.instance!;
+      var rootToken = RootIsolateToken.instance!;
 
-    receivePort.listen(
-      (message) {
-        if (message != null) {
-          isLoadingOnUi.value = false;
-          locationTrackingResponse.value =
-              LocationTrackResponse.fromJson(message);
-          if (locationTrackingResponse.value.data != null &&
-              locationTrackingResponse.value.code == 200) {
-            log("Response getting success:${locationTrackingResponse.value.message}");
-            showTrack(locationTrackingResponse.value);
-            calculateTimeDifference(
-                locationTrackingResponse.value.data!.first.trackingDate!
-                    .trim()
-                    .toString(),
-                locationTrackingResponse.value.data!.last.trackingDate!
-                    .trim()
-                    .toString());
-          } else {
-            //TODO: Add the dialog or the clean ui without any data show here when data getting the null 11-12-2024.
+      receivePort.listen(
+            (message) {
+          if (message != null) {
             isLoadingOnUi.value = false;
-            log("Response getting not success");
+            locationTrackingResponse.value =
+                LocationTrackResponse.fromJson(message);
+            if (locationTrackingResponse.value.data != null &&
+                locationTrackingResponse.value.code == 200) {
+              log("Response getting success:${locationTrackingResponse.value
+                  .message}");
+              showTrack(locationTrackingResponse.value);
+              calculateTimeDifference(
+                  locationTrackingResponse.value.data!.first.trackingDate!
+                      .trim()
+                      .toString(),
+                  locationTrackingResponse.value.data!.last.trackingDate!
+                      .trim()
+                      .toString());
+            } else {
+              //TODO: Add the dialog or the clean ui without any data show here when data getting the null 11-12-2024.
+              isLoadingOnUi.value = false;
+              log("Response getting not success");
+            }
+          } else {
+            isLoadingOnUi.value = false;
+            log("Response getting error");
           }
-        } else {
-          isLoadingOnUi.value = false;
-          log("Response getting error");
-        }
-      },
-    );
+        },
+      );
 
-    //"2024-12-03"
+      //"2024-12-03"
 
-    Map<String, dynamic> requestParam = {
-      "empID": empId,
-      "cmpID": cmpId,
-      "date": nSelectedDate
-    };
+      Map<String, dynamic> requestParam = {
+        "empID": empId,
+        "cmpID": cmpId,
+        "date": nSelectedDate
+      };
 
-    await Isolate.spawn<IsolatePostApiData>(
-        _getGeoLocationTrackingListByApi,
-        IsolatePostApiData(
-            token: rootToken,
-            requestData: requestParam,
-            answerPort: receivePort.sendPort,
-            apiUrl: AppURL.getGeoLocationTrackingList));
+      await Isolate.spawn<IsolatePostApiData>(
+          _getGeoLocationTrackingListByApi,
+          IsolatePostApiData(
+              token: rootToken,
+              requestData: requestParam,
+              answerPort: receivePort.sendPort,
+              apiUrl: AppURL.getGeoLocationTrackingList));
+    }catch(e){
+      e.printError();
+    }
   }
 
   static void _getGeoLocationTrackingListByApi(IsolatePostApiData api) async {
@@ -154,32 +161,37 @@ class LiveTrackingController extends GetxController {
   }
 
   void getBgGeoLocation() async {
-    isLoadingOnUi.value = true;
-    var receivePort = ReceivePort();
+    try {
+      isLoadingOnUi.value = true;
+      var receivePort = ReceivePort();
 
-    receivePort.listen(
-      (message) {
-        if (message != null) {
-          getCurrentPosition(message);
-          log("This address is the:$message");
-          userLocAddress.value = message.substring(0, message.lastIndexOf("+"));
-          isLoadingOnUi.value = false;
-        } else {
-          isLoadingOnUi.value = false;
-          userLocAddress.value = "Address not found";
-        }
-      },
-    );
-
-    if (await Geolocator.isLocationServiceEnabled()) {
-      var rootToken = RootIsolateToken.instance!;
-      await Isolate.spawn<IsolateLocationData>(
-        _getAddressByLoc,
-        IsolateLocationData(
-          token: rootToken,
-          answerPort: receivePort.sendPort,
-        ),
+      receivePort.listen(
+            (message) {
+          if (message != null) {
+            getCurrentPosition(message);
+            log("This address is the:$message");
+            userLocAddress.value =
+                message.substring(0, message.lastIndexOf("+"));
+            isLoadingOnUi.value = false;
+          } else {
+            isLoadingOnUi.value = false;
+            userLocAddress.value = "Address not found";
+          }
+        },
       );
+
+      if (await Geolocator.isLocationServiceEnabled()) {
+        var rootToken = RootIsolateToken.instance!;
+        await Isolate.spawn<IsolateLocationData>(
+          _getAddressByLoc,
+          IsolateLocationData(
+            token: rootToken,
+            answerPort: receivePort.sendPort,
+          ),
+        );
+      }
+    }catch(e){
+      e.printError();
     }
   }
 
@@ -217,8 +229,12 @@ class LiveTrackingController extends GetxController {
   }
 
   Future<void> getBatteryPercentage() async {
-    final level = await Battery().batteryLevel;
-    battery.value = level.toString();
+    try {
+      final level = await Battery().batteryLevel;
+      battery.value = level.toString();
+    }catch(e){
+      e.printError();
+    }
   }
 
   Future<void> showTrack(LocationTrackResponse value) async {
@@ -241,16 +257,19 @@ class LiveTrackingController extends GetxController {
 
   Future<void> metersToKilometers(double startLatitude, double startLongitude,
       double endLatitude, double endLongitude) async {
-    double meters = getDistanceByLatLon(
-        startLatitude, startLongitude, endLatitude, endLongitude);
-    double km = meters / 1000;
-    distance.value = km;
+    try {
+      double meters = getDistanceByLatLon(
+          startLatitude, startLongitude, endLatitude, endLongitude);
+      double km = meters / 1000;
+      distance.value = km;
+    }catch(e){
+      e.printError();
+    }
   }
 
   double getDistanceByLatLon(double startLatitude, double startLongitude,
       double endLatitude, double endLongitude) {
-    return Geolocator.distanceBetween(
-        startLatitude, startLongitude, endLatitude, endLongitude);
+    return Geolocator.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude);
   }
 
   Future<void> calculateTimeDifference(String time1Str, String time2Str) async {
@@ -296,9 +315,13 @@ class LiveTrackingController extends GetxController {
   }
 
   getLocalData() {
-    userName.value = argumentData[0]['username'];
-    empId = argumentData[0]['empId'];
-    cmpId = argumentData[0]['cmpId'];
-    userProfile.value = argumentData[0]['userImage'];
+    try {
+      userName.value = argumentData[0]['username'];
+      empId = argumentData[0]['empId'];
+      cmpId = argumentData[0]['cmpId'];
+      userProfile.value = argumentData[0]['userImage'];
+    }catch(e){
+      e.printError();
+    }
   }
 }

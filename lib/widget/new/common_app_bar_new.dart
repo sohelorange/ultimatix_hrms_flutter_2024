@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/dynamic_extensions.dart';
 import 'package:ultimatix_hrms_flutter/utility/utils.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_app_image_svg.dart';
 import 'package:ultimatix_hrms_flutter/widget/common_text.dart';
@@ -34,7 +35,41 @@ class CommonNewAppBar extends StatelessWidget implements PreferredSizeWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Row(
+        child: trailingWidgets==null || trailingWidgets?.isBlank==true ?
+        Row(
+          children: [
+            GestureDetector(
+              onTap: () {
+                if (Navigator.canPop(context)) {
+                  Navigator.pop(context);
+                } else {
+                  Scaffold.of(context).openDrawer();
+                }
+              },
+              child: CommonAppImageSvg(
+                imagePath: leadingIconSvg,
+                height: 15,
+                width: 15,
+              ),
+            ),
+            Expanded(
+              child: Center(
+                child: CommonText(
+                  text: title,
+                  color: AppColors.colorWhite,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 18,
+                ),
+              ),
+            ),
+            if (trailingWidgets != null)
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: trailingWidgets!,
+              ),
+          ],
+        )
+            : Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(

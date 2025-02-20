@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:ultimatix_hrms_flutter/api/dio_client.dart';
 import 'package:ultimatix_hrms_flutter/app/app_colors.dart';
 import 'package:ultimatix_hrms_flutter/app/app_snack_bar.dart';
@@ -43,9 +44,15 @@ class LoginController extends GetxController {
   RxString strIdentifier = 'Unknown'.obs;
 
   @override
-  void onInit() {
+  void onInit() async{
     // TODO: implement onInit
     super.onInit();
+
+    await Permission.notification.isDenied.then((value) {
+      if (value) {
+        Permission.notification.request();
+      }
+    });
 
     //notificationServices.isTokenRefresh();
 

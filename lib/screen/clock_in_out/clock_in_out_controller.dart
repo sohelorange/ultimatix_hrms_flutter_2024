@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 import 'dart:isolate';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -74,30 +75,34 @@ class ClockInOutController extends GetxController
 
   /*This method is collecting the geolocation lat long, then getting address by _getAddressByLoc method*/
   void getBgGeoLocation() async {
-    isLoading.value = true;
-    var receivePort = ReceivePort();
+    try {
+      isLoading.value = true;
+      var receivePort = ReceivePort();
 
-    receivePort.listen(
-      (message) {
-        if (message != null) {
-          userLocAddress.value = message;
-          isLoading.value = false;
-        } else {
-          isLoading.value = false;
-          userLocAddress.value = "Address not found";
-        }
-      },
-    );
-
-    if (await Geolocator.isLocationServiceEnabled()) {
-      var rootToken = RootIsolateToken.instance!;
-      await Isolate.spawn<IsolateLocationData>(
-        _getAddressByLoc,
-        IsolateLocationData(
-          token: rootToken,
-          answerPort: receivePort.sendPort,
-        ),
+      receivePort.listen(
+            (message) {
+          if (message != null) {
+            userLocAddress.value = message;
+            isLoading.value = false;
+          } else {
+            isLoading.value = false;
+            userLocAddress.value = "Address not found";
+          }
+        },
       );
+
+      if (await Geolocator.isLocationServiceEnabled()) {
+        var rootToken = RootIsolateToken.instance!;
+        await Isolate.spawn<IsolateLocationData>(
+          _getAddressByLoc,
+          IsolateLocationData(
+            token: rootToken,
+            answerPort: receivePort.sendPort,
+          ),
+        );
+      }
+    }catch(e){
+      e.printError();
     }
   }
 
@@ -122,68 +127,73 @@ class ClockInOutController extends GetxController
 
   /*This method preparing the data, then execute the _callApi for Api*/
   Future<void> clockInOutByApi() async {
-    isLoading.value = true;
+    try {
+      isLoading.value = true;
 
-    log("Is Login:${isCheckIn.value}");
+      log("Is Login:${isCheckIn.value}");
 
-    var geoLocation = await Geolocator.getCurrentPosition(
-        locationSettings: const LocationSettings(
-            accuracy: LocationAccuracy.bestForNavigation));
-    dio.FormData formData = dio.FormData();
-    formData.fields.add(const MapEntry("Emp_id", ""));
-    formData.fields.add(const MapEntry("Cmp_id", ""));
-    formData.fields.add(MapEntry(
-        "Date", DateFormat('yyyy-MM-dd hh:mm:ss a').format(DateTime.now())));
-    formData.fields.add(MapEntry("IOFlag", isCheckIn.value==false ? "I" : "O"));
-    formData.fields.add(const MapEntry("IMEIno", ""));
-    formData.fields.add(MapEntry("Address", userLocAddress.value.trim()));
-    formData.fields.add(MapEntry("Latitude", "${geoLocation.latitude}"));
-    formData.fields.add(MapEntry("Longitude", "${geoLocation.longitude}"));
-    formData.fields.add(MapEntry("Reason", "$defaultValue"));
+      var geoLocation = await Geolocator.getCurrentPosition(
+          locationSettings: const LocationSettings(
+              accuracy: LocationAccuracy.bestForNavigation));
+      dio.FormData formData = dio.FormData();
+      formData.fields.add(const MapEntry("Emp_id", ""));
+      formData.fields.add(const MapEntry("Cmp_id", ""));
+      formData.fields.add(MapEntry(
+          "Date", DateFormat('yyyy-MM-dd hh:mm:ss a').format(DateTime.now())));
+      formData.fields.add(
+          MapEntry("IOFlag", isCheckIn.value == false ? "I" : "O"));
+      formData.fields.add(const MapEntry("IMEIno", ""));
+      formData.fields.add(MapEntry("Address", userLocAddress.value.trim()));
+      formData.fields.add(MapEntry("Latitude", "${geoLocation.latitude}"));
+      formData.fields.add(MapEntry("Longitude", "${geoLocation.longitude}"));
+      formData.fields.add(MapEntry("Reason", "$defaultValue"));
 
-    if(isImageRequire!=null && isImageRequire==1){
-      if (selectedImage.value != null) {
-        formData.files.add(MapEntry(
-          'file',
-          await dio.MultipartFile.fromFile(selectedImage.value!.path,
-              filename: selectedImage.value?.path.isImageFileName.toString()),
-        ));
-      } else {
-        formData.files.add(MapEntry(
-          'file',
-          dio.MultipartFile.fromString("", filename: "test.jpg"),
-        ));
-      }
-    } else {
-      formData.fields.add(const MapEntry("file", ''));
-    }
-
-    var receivePort = ReceivePort();
-    receivePort.listen(
-      (message) {
-        if (message != null) {
-          log(message);
-          isLoading.value = false;
-          checkInOutEvent();
+      if (isImageRequire != null && isImageRequire == 1) {
+        if (selectedImage.value != null) {
+          formData.files.add(MapEntry(
+            'file',
+            await dio.MultipartFile.fromFile(selectedImage.value!.path,
+                filename: selectedImage.value?.path.isImageFileName.toString()),
+          ));
+        } else {
+          formData.files.add(MapEntry(
+            'file',
+            dio.MultipartFile.fromString("", filename: "test.jpg"),
+          ));
         }
-      },
-    );
+      } else {
+        formData.fields.add(const MapEntry("file", ''));
+      }
 
-    for (var element in formData.fields) {
-      log("The data of request is:${element}");
-    }
+      var receivePort = ReceivePort();
+      receivePort.listen(
+            (message) {
+          if (message != null) {
+            log(message);
+            isLoading.value = false;
+            checkInOutEvent();
+          }
+        },
+      );
 
-    var rootToken = RootIsolateToken.instance!;
-    if (await Network.isConnected()) {
-      Isolate.spawn(
-          _callApi,
-          IsolateApiFormData(
-              token: rootToken,
-              formData: formData,
-              answerPort: receivePort.sendPort,
-              apiUrl: isCheckIn.value == false
-                  ? AppURL.clockInURL
-                  : AppURL.clockOutURL));
+      for (var element in formData.fields) {
+        log("The data of request is:${element}");
+      }
+
+      var rootToken = RootIsolateToken.instance!;
+      if (await Network.isConnected()) {
+        Isolate.spawn(
+            _callApi,
+            IsolateApiFormData(
+                token: rootToken,
+                formData: formData,
+                answerPort: receivePort.sendPort,
+                apiUrl: isCheckIn.value == false
+                    ? AppURL.clockInURL
+                    : AppURL.clockOutURL));
+      }
+    }catch(e){
+      e.printError();
     }
   }
 
@@ -206,31 +216,35 @@ class ClockInOutController extends GetxController
   }
 
   getTypeForWork() async {
-    isLoading.value = true;
+    try {
+      isLoading.value = true;
 
-    Map<String, dynamic> requestParam = {"ReasonType": "MA"};
+      Map<String, dynamic> requestParam = {"ReasonType": "MA"};
 
-    var receivePort = ReceivePort();
-    receivePort.listen(
-      (message) {
-        if (message != null) {
-          setToUi(message);
-        } else {
-          isLoading.value = false;
-          log("This is response getting null");
-        }
-      },
-    );
+      var receivePort = ReceivePort();
+      receivePort.listen(
+            (message) {
+          if (message != null) {
+            setToUi(message);
+          } else {
+            isLoading.value = false;
+          }
+        },
+      );
 
-    var rootToken = RootIsolateToken.instance!;
-    if (await Network.isConnected()) {
-      Isolate.spawn(
-          _getReasonApi,
-          IsolateGetApiData(
-              token: rootToken,
-              answerPort: receivePort.sendPort,
-              apiUrl: AppURL.attendanceGetReasonURL,
-              requestParam: requestParam));
+      var rootToken = RootIsolateToken.instance!;
+      if (await Network.isConnected()) {
+        Isolate.spawn(
+            _getReasonApi,
+            IsolateGetApiData(
+                token: rootToken,
+                answerPort: receivePort.sendPort,
+                apiUrl: AppURL.attendanceGetReasonURL,
+                requestParam: requestParam));
+      }
+    }catch(e){
+      e.printError();
+      FirebaseCrashlytics.instance.crash();
     }
   }
 
@@ -299,31 +313,35 @@ class ClockInOutController extends GetxController
   }
 
   void getCheckInOutStatus() async {
-    isLoading.value = true;
+    try {
+      isLoading.value = true;
 
-    var receivePort = ReceivePort();
-    receivePort.listen(
-      (message) {
-        if (message != null) {
-          isLoading.value = false;
-          log("This is response getting not null:$message");
-          remoteDataSetToUi(message);
-        } else {
-          isLoading.value = false;
-          log("This is response getting null");
-        }
-      },
-    );
+      var receivePort = ReceivePort();
+      receivePort.listen(
+            (message) {
+          if (message != null) {
+            isLoading.value = false;
+            log("This is response getting not null:$message");
+            remoteDataSetToUi(message);
+          } else {
+            isLoading.value = false;
+            log("This is response getting null");
+          }
+        },
+      );
 
-    var rootToken = RootIsolateToken.instance!;
-    if (await Network.isConnected()) {
-      Isolate.spawn(
-          _getCheckInOutStatus,
-          IsolateGetApiData(
-            token: rootToken,
-            answerPort: receivePort.sendPort,
-            apiUrl: AppURL.checkInOutStatusURL,
-          ));
+      var rootToken = RootIsolateToken.instance!;
+      if (await Network.isConnected()) {
+        Isolate.spawn(
+            _getCheckInOutStatus,
+            IsolateGetApiData(
+              token: rootToken,
+              answerPort: receivePort.sendPort,
+              apiUrl: AppURL.checkInOutStatusURL,
+            ));
+      }
+    }catch(e){
+      e.printError();
     }
   }
 
@@ -415,7 +433,11 @@ class ClockInOutController extends GetxController
   }
 
   void isImageRequireInClocking() async {
-    await PreferenceUtils.init();
-    isImageRequire = await PreferenceUtils.getIsCameraEnable();
+    try {
+      await PreferenceUtils.init();
+      isImageRequire = await PreferenceUtils.getIsCameraEnable();
+    }catch(e){
+      e.printError();
+    }
   }
 }

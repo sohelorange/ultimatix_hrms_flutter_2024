@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:developer';
 import 'dart:isolate';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -31,37 +33,93 @@ class AttendanceMainController extends GetxController {
   Rx<AttendanceRegularizeDetails> attendanceRegularizeDetails =
       AttendanceRegularizeDetails().obs;
 
+  Rx<TeamAttendanceResponse> subTeamAttendanceResponse =
+      TeamAttendanceResponse().obs;
+
   final RxInt selectedYearIndex = RxInt(-1);
   final RxInt selectedMonthIndex = RxInt(-1);
   RxInt selectedYear = DateTime.now().year.obs;
   RxString cmpImageUrl = "".obs;
 
+  final RxString selectedMonth = "".obs;
+
+  RxBool isShowSubEmp = false.obs;
+
+  RxList<String> listOfYears = [""].obs;
+
+  final List<String> listOfMonths = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  final RxString selectedMonths = "".obs;
+  final RxString selectedYears = "".obs;
+
+  RxString currentMonth = "".obs;
+
+  RxBool isExpanded = false.obs;
+  RxList<bool> expanded = [false].obs;
+
   @override
   void onInit() {
     super.onInit();
+    nowDate.value = DateFormat('dd/MM/yyyy').format(DateTime.now());
+
+    currentMonth.value = DateFormat.MMMM().format(DateTime.now());
+
+    getListOfYears();
     _initializeData();
   }
 
   void _initializeData() {
     getLocalData();
-    getMyTeamRecords();
+    getMyTeamRecords(empID.value, cmpID.value,false);
     getUserAttendanceRecords(DateTime.now().year, DateTime.now().month);
+    getAttendanceChartData();
   }
 
-  Future<void> getMyTeamRecords() async {
+  Future<void> getMyTeamRecords(String empId, String cmpId, bool isSubEmpData) async {
+    isLoading.value = true;
+
     await _fetchDataFromApi(
       AppURL.myTeamAttendanceURL,
       (data) {
-        teamAttendanceResponse.value = TeamAttendanceResponse.fromJson(data);
-        setUserOwnData();
+        if(isSubEmpData==true) {
+          isLoading.value = false;
+          subTeamAttendanceResponse.value = TeamAttendanceResponse.fromJson(data);
+          subTeamAttendanceResponse.value.data?.removeAt(0);
+        } else {
+          expanded.clear();
+          teamAttendanceResponse.value = TeamAttendanceResponse.fromJson(data);
+          log("The items are:${teamAttendanceResponse.value.data?.length}");
+          expanded.value = List.generate(teamAttendanceResponse.value.data!.length-1, (index) => false,);
+          setUserOwnData();
+        }
       },
+      empId,
+      cmpId
     );
   }
 
   Future<void> _fetchDataFromApi(
-      String apiUrl, Function(Map<String, dynamic>) onSuccess) async {
+      String apiUrl, Function(Map<String, dynamic>) onSuccess, String empId, String cmpId) async {
     var receivePort = ReceivePort();
     var rootToken = RootIsolateToken.instance!;
+
+    var requestParam = {
+      "cmpId": cmpId,
+      "empId": empId
+    };
 
     receivePort.listen((message) {
       if (message != null) {
@@ -74,7 +132,7 @@ class AttendanceMainController extends GetxController {
     await Isolate.spawn(
       _getAttendanceRecordsByApi,
       IsolateGetApiData(
-          token: rootToken, answerPort: receivePort.sendPort, apiUrl: apiUrl),
+          token: rootToken, answerPort: receivePort.sendPort, apiUrl: apiUrl, requestParam: requestParam),
     );
   }
 
@@ -83,12 +141,29 @@ class AttendanceMainController extends GetxController {
     await PreferenceUtils.init();
 
     if (await Network.isConnected()) {
-      var value = await DioClient().get(api.apiUrl);
+      var value = await DioClient().getQueryParam(api.apiUrl, queryParams: api.requestParam);
       api.answerPort.send(value);
     }
   }
 
+  getListOfYears() {
+    final int currentYear = DateTime.now().year;
+
+    final List<String> yearItems = List.generate(
+        13, // Total of 13 years (10 previous + current year + 2 future)
+            (index) => (currentYear - 12 + index).toString()
+    );
+
+    listOfYears.clear();
+
+    for (var element in yearItems) {
+      listOfYears.add(element.toString());
+    }
+  }
+
   Future<void> setUserOwnData() async {
+    print("The 1 length of now is:${teamAttendanceResponse.value.data?.length}");
+
     var userData = teamAttendanceResponse.value.data?.firstWhere(
       (item) => "${item.empId}" == empID.value,
     );
@@ -106,6 +181,8 @@ class AttendanceMainController extends GetxController {
       userCmpId.value = userData.cmpID!;
       teamAttendanceResponse.value.data?.remove(userData);
     }
+
+    print("The 2 length of now is:${teamAttendanceResponse.value.data?.length}");
 
     isLoading.value = false;
   }
@@ -197,6 +274,21 @@ class AttendanceMainController extends GetxController {
       return "";
     }
   }
+
+  final List<String> dropdownValues = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
 
   void showYearDialog(BuildContext context) {
     final int currentYear = DateTime.now().year;
@@ -362,5 +454,86 @@ class AttendanceMainController extends GetxController {
       {'name': 'November'},
       {'name': 'December'},
     ];
+  }
+
+  RxBool isShowChart = false.obs;
+  Rx<double> present = 0.0.obs;
+  Rx<double> absent = 0.0.obs;
+  Rx<int> totalEmployees = 0.obs;
+
+  RxString nowDate = "".obs;
+
+  Future<void> getAttendanceChartData() async{
+    var receivePort = ReceivePort();
+    var rootToken = RootIsolateToken.instance!;
+
+    receivePort.listen((message) {
+      if (message != null) {
+        log("The Api Data of PieChart:$message");
+        if(message['data']!=null) {
+          present.value = (message['data']['present'] as int).toDouble();
+          absent.value = (message['data']['absent'] as int).toDouble();
+          totalEmployees.value = message['data']['totalEmployees'];
+        }
+      } else {
+        isLoading.value = false;
+      }
+    });
+
+    await Isolate.spawn(
+      _getAttendanceChartData,
+      IsolateGetApiData(
+          token: rootToken,
+          answerPort: receivePort.sendPort,
+          apiUrl: AppURL.getAttendanceChartData
+      ),
+    );
+  }
+
+  static void _getAttendanceChartData(IsolateGetApiData api) async {
+    BackgroundIsolateBinaryMessenger.ensureInitialized(api.token);
+    await PreferenceUtils.init();
+
+    if (await Network.isConnected()) {
+      var value = await DioClient().get(api.apiUrl);
+      api.answerPort.send(value);
+    }
+  }
+}
+
+class Employee {
+  final int empId;
+  final String empCode;
+  final String fullName;
+  final String branch;
+  final String department;
+  final String designation;
+  final String imageUrl;
+
+  Employee({
+    required this.empId,
+    required this.empCode,
+    required this.fullName,
+    required this.branch,
+    required this.department,
+    required this.designation,
+    required this.imageUrl,
+  });
+
+  factory Employee.fromJson(Map<String, dynamic> json) {
+    return Employee(
+      empId: json['emp_Id'],
+      empCode: json['alpha_Emp_Code'],
+      fullName: json['emp_full_Name'],
+      branch: json['branch_Name'],
+      department: json['dept_Name'],
+      designation: json['desig_Name'],
+      imageUrl: json['image_Path'],
+    );
+  }
+
+  @override
+  String toString() {
+    return 'Employee(empId: $empId, empCode: $empCode, Name: $fullName, Branch: $branch, Department: $department, Designation: $designation, Image: $imageUrl)';
   }
 }

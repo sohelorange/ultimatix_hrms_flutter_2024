@@ -226,7 +226,7 @@ class AppRoutes {
     GetPage(
       name: AppRoutes.attendanceMainRoute,
       binding: AttendanceMainBinding(),
-      page: () => const AttendanceMainUi(),
+      page: () =>  const AttendanceMainUi(),
     ),
     GetPage(
       name: AppRoutes.userAttendanceRoute,

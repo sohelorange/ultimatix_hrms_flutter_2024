@@ -80,6 +80,8 @@ class AppURL {
       "${PreferenceUtils.getAppUrl()}api/v1/GetLeaveApplicationRecords";
   static String getLeaveApplicationRecordsURL =
       "${PreferenceUtils.getAppUrl()}api/v1/GetLeaveApplicationRecords";
+  static String getAttendanceChartData =
+      "${PreferenceUtils.getAppUrl()}api/v1/AttendanceChartData";
   static String managerApprovalDetailsURL =
       "${PreferenceUtils.getAppUrl()}api/v1/ManagerApprovalDetails";
   static String leaveCancellationApplicationURL =

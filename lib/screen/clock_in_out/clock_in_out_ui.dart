@@ -165,9 +165,13 @@ class ClockInOutUi extends GetView<ClockInOutController> {
                 ),
                 items: controller.menuItems,
                 dropdownStyleData: DropdownStyleData(
-                    offset: const Offset(-20, 0),
+                    offset: const Offset(-20, -5),
                     maxHeight: 200,
                     width: MediaQuery.of(context).size.width * 0.82,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: AppColors.color7A1FA2),
+                      borderRadius: const BorderRadius.all(Radius.circular(6))
+                    ),
                     useSafeArea: true),
                 iconStyleData: const IconStyleData(
                   openMenuIcon: Icon(Icons.arrow_drop_up),

@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -85,8 +88,8 @@ class UserAttendanceUi extends GetView<UserAttendanceController> {
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(30),
                                     child: CommonAppImage(
-                                        height: MediaQuery.of(context).size.height * (70 / 812),
-                                        width: MediaQuery.of(context).size.width * (70 / 375),
+                                        width: MediaQuery.of(context).size.width * 0.15,
+                                        height: MediaQuery.of(context).size.height * 0.08,
                                         imagePath: controller
                                             .userProfile
                                             .trim()
@@ -176,10 +179,9 @@ class UserAttendanceUi extends GetView<UserAttendanceController> {
                         },
                       ),
                     ),
-                    const SizedBox(height: 10,),
+                    /*const SizedBox(height: 10,),*/
                     Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 6, vertical: 0),
+                        padding: const EdgeInsets.only(top: 15,bottom: 15),
                         width: MediaQuery.of(context).size.width *
                             0.9, // Adjust container width as needed
                         child: _getAttendanceCalender(context)),
@@ -640,84 +642,145 @@ class UserAttendanceUi extends GetView<UserAttendanceController> {
   }
   
   Widget _getAttendanceCalender(BuildContext context){
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-            Text(
-              "Month",
-              style: GoogleFonts.inter(fontSize: MediaQuery.of(context).size.width * 0.035,fontWeight: FontWeight.w400,color: AppColors.color2F2F31),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+          Text(
+            "Month",
+            style: GoogleFonts.inter(fontSize: MediaQuery.of(context).size.width * 0.035,fontWeight: FontWeight.w400,color: AppColors.color2F2F31),
+          ),
+          const SizedBox(height: 3,),
+          Container(
+            width: MediaQuery.of(context).size.width * (115 / 375),
+            height: MediaQuery.of(context).size.height * (40 / 812),
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+                border: Border.all(color: AppColors.colorDCDCDC),
+                borderRadius: BorderRadius.circular(6)
             ),
-            SizedBox(height: 3,),
-            Container(
-              width: MediaQuery.of(context).size.width * (115 / 375),
-              height: MediaQuery.of(context).size.height * (40 / 812),
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.colorDCDCDC),
-                  borderRadius: BorderRadius.circular(6)
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton2(
+                items: controller.listOfMonths.map((e) {
+                  return DropdownMenuItem<String>(
+                    value: e,
+                    child: Row(
+                      children: [
+                        Text(
+                          e,
+                          style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black),
+                        ),
+                      ],
+                    ),
+                  );
+                },).toList(),
+                onChanged: (value) {
+                  log("This item name is:$value");
+                  if(value!=null){
+                    controller.selectedMonths.value = value;
+                  }
+                },
+                dropdownStyleData: DropdownStyleData(
+                    offset: const Offset(-10, -10),
+                    maxHeight: 200,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: AppColors.color7A1FA2),
+                        borderRadius: const BorderRadius.all(Radius.circular(6))
+                    ),
+                    width: MediaQuery.of(context).size.width * 0.32,
+                    useSafeArea: true),
+                isExpanded: true,
+                iconStyleData: IconStyleData(
+                  icon: SvgPicture.asset(AppImages.svgCalenderAttendance)
+                ),
+                value: controller.selectedMonths.value.isEmpty || controller.selectedMonths.value=="" ? controller.listOfMonths.first : controller.selectedMonths.value,
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                      "February",
-                       style: GoogleFonts.inter(fontSize: MediaQuery.of(context).size.width * 0.03,fontWeight: FontWeight.w500,color: AppColors.color2F2F31),
-                  ),
-                  SvgPicture.asset(AppImages.svgCalenderAttendance)
-                ],
-              ),)
-          ],),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-            Text(
-                "Year",
-                style: GoogleFonts.inter(fontSize: MediaQuery.of(context).size.width * 0.035,fontWeight: FontWeight.w400,color: AppColors.color2F2F31),
-            ),
-            SizedBox(height: 3,),
-            Container(
+            )
+          )
+        ],),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+          Text(
+              "Year",
+              style: GoogleFonts.inter(fontSize: MediaQuery.of(context).size.width * 0.035,fontWeight: FontWeight.w400,color: AppColors.color2F2F31),
+          ),
+          const SizedBox(height: 3,),
+          Obx(
+                ()=> Container(
               height: MediaQuery.of(context).size.height * (40 / 812),
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               width: MediaQuery.of(context).size.width * (115 / 375),
               decoration: BoxDecoration(
                 border: Border.all(color: AppColors.colorDCDCDC),
                 borderRadius: BorderRadius.circular(6)
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                      "2025",
-                      style: GoogleFonts.inter(fontSize: MediaQuery.of(context).size.width * 0.03,fontWeight: FontWeight.w500,color: AppColors.color2F2F31),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton2(
+                  items: controller.listOfYears.map((e) {
+                    return DropdownMenuItem<String>(
+                      value: e,
+                      child: Row(
+                        children: [
+                          Text(
+                            e,
+                            style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black),
+                          ),
+                        ],
+                      ),
+                    );
+                  },).toList(),
+                  onChanged: (value) {
+                    log("This item name is:$value");
+                    if(value!=null){
+                      controller.selectedYears.value = value;
+                    }
+                  },
+                  dropdownStyleData: DropdownStyleData(
+                      offset: const Offset(-10, -10),
+                      maxHeight: 200,
+                      width: MediaQuery.of(context).size.width * 0.32,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: AppColors.color7A1FA2),
+                        borderRadius: const BorderRadius.all(Radius.circular(6))
+                      ),
+                      useSafeArea: true),
+                  isExpanded: true,
+                  iconStyleData: IconStyleData(
+                      icon: SvgPicture.asset(AppImages.svgCalenderAttendance)
                   ),
-                  SizedBox(width: 10,),
-                  SvgPicture.asset(AppImages.svgCalenderAttendance)
-                ],
-              ),)
-          ],),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(""),
-              Container(
-                height: MediaQuery.of(context).size.height * (40 / 812),
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                    gradient: AppColors.gradientBackgroundNew
+                  value: controller.selectedYears.value.isEmpty || controller.selectedYears.value=="" ? controller.listOfYears.first : controller.selectedYears.value,
                 ),
-                child: Text(
-                  "Change",
-                  style: GoogleFonts.inter(fontSize: MediaQuery.of(context).size.width * 0.035,fontWeight: FontWeight.w400,color: AppColors.colorWhite),
-                  textAlign: TextAlign.center,),
               )
-            ],),
-        ],
-      ),
+            ),
+          )
+        ],),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(""),
+            Container(
+              height: MediaQuery.of(context).size.height * (40 / 812),
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  gradient: AppColors.gradientBackgroundNew
+              ),
+              child: Text(
+                "Change",
+                style: GoogleFonts.inter(fontSize: MediaQuery.of(context).size.width * 0.035,fontWeight: FontWeight.w400,color: AppColors.colorWhite),
+                textAlign: TextAlign.center,),
+            )
+          ],),
+      ],
     );
   }
 

@@ -28,6 +28,7 @@ class UserAttendanceController extends GetxController {
 
   @override
   void onInit() {
+    getListOfYears();
     userProfile.value = argumentData[0]['userPhoto'];
     userName.value = argumentData[0]['userName'];
     userDesignation.value = argumentData[0]['userDesignation'];
@@ -37,8 +38,30 @@ class UserAttendanceController extends GetxController {
     callUserAttendanceRegularizationDetails(
         DateTime.now().year, DateTime.now().month);
 
+    checkCurrentMonth();
+    checkCurrentYear();
     super.onInit();
   }
+
+  RxList<String> listOfYears = [""].obs;
+
+  final List<String> listOfMonths = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  final RxString selectedMonths = "".obs;
+  final RxString selectedYears = "".obs;
 
   Future<void> callUserAttendanceRegularizationDetails(
       int year, int month) async {
@@ -98,6 +121,41 @@ class UserAttendanceController extends GetxController {
     // Format the DateTime to the desired output format (MM/dd/yyyy)
     String formattedDate = DateFormat('MM/dd/yyyy').format(parsedDate);
     return formattedDate;
+  }
+
+  getListOfYears() {
+    final int currentYear = DateTime.now().year;
+
+    final List<String> yearItems = List.generate(
+      13, // Total of 13 years (10 previous + current year + 2 future)
+          (index) => (currentYear - 12 + index).toString()
+    );
+
+    listOfYears.clear();
+
+    for (var element in yearItems) {
+      listOfYears.add(element.toString());
+    }
+  }
+
+  /*to set the current month*/
+  Future<void> checkCurrentMonth() async{
+    String cMonth = DateFormat.MMMM().format(DateTime.now());
+    for(int i=0;i<listOfMonths.length;i++){
+      if(listOfMonths[i]==cMonth){
+        selectedMonths.value = listOfMonths.elementAt(i);
+      }
+    }
+  }
+
+  /*to set the current year*/
+  Future<void> checkCurrentYear() async{
+    String cYear = DateTime.now().year.toString();
+    for(int i=0;i<listOfYears.length;i++){
+      if(listOfYears.elementAt(i)==cYear){
+        selectedYears.value = listOfYears.elementAt(i);
+      }
+    }
   }
 
   void showYearDialog(BuildContext context) {

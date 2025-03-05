@@ -368,6 +368,11 @@ class AppImages {
   static const String svgAbsentReg = 'assets/icon/attendance/svg_absent.svg';
   static const String svgAttendanceLocation =
       "assets/icon/attendance/svg_team_loc.svg";
+  static const String svgEditNew = "assets/icon/attendance/svg_edit_new.svg";
+  static const String svgPendingNew = "assets/icon/attendance/svg_pending_new.svg";
+  static const String svgApprovedNew = "assets/icon/attendance/svg_approved_new.svg";
+  static const String svgCancelNew = "assets/icon/attendance/svg_cancel_new.svg";
+  static const String svgArrowRightAttendance = "assets/icon/attendance/svg_arrow_right_attendance.svg";
 
   /*User Attendance*/
   static const String icDesignation =
@@ -385,6 +390,24 @@ class AppImages {
       "assets/icon/attendance/svg_bag_attendance.svg";
   static const String svgCalenderAttendance =
       "assets/icon/attendance/svg_calender_attendance.svg";
+  static const String svgChartAttendance =
+      "assets/icon/attendance/svg_piechart.svg";
+  static const String svgCalSmall =
+      "assets/icon/attendance/svg_cal_small.svg";
+  static const String svgColorPresent =
+      "assets/icon/attendance/svg_color_present.svg";
+  static const String svgColorAbsent =
+      "assets/icon/attendance/svg_color_absent.svg";
+  static const String svgPresentNew =
+      "assets/icon/attendance/svg_present_new.svg";
+  static const String svgWeekOffNew =
+      "assets/icon/attendance/svg_weekOff_new.svg";
+  static const String svgAbsentNew =
+      "assets/icon/attendance/svg_absent_new.svg";
+  static const String svgHolidayNew =
+      "assets/icon/attendance/svg_holiday_new.svg";
+  static const String svgOnDutyNew =
+      "assets/icon/attendance/sgv_onDuty_new.svg";
 
   static const String svgLocateMe =
       "assets/icon/location/svg_locate_me.svg";
@@ -414,6 +437,11 @@ class AppImages {
   static const String svgInTimeAttendance = "assets/icon/attendance/svg_in_time_attendance.svg";
   static const String svgOutTimeAttendance = "assets/icon/attendance/svg_out_time_attendance.svg";
   static const String svgDropDownAttendance = "assets/icon/attendance/svg_dropdown_attendance.svg";
+  static const String svgMenuAttendance = "assets/icon/attendance/svg_menu_attendance.svg";
+  static const String svgNewLocAttendance = "assets/icon/attendance/svg_new_loc_attendance.svg";
+  static const String svgLocUserAttendance = "assets/icon/attendance/svg_loc_user_attendance.svg";
+  static const String svgEditNewAttendance = "assets/icon/attendance/svg_edit_new_attendance.svg";
+  static const String svgBgCon = "assets/icon/attendance/svg_bg_container.svg";
 
   static const String gifLogo = 'assets/icon/gif_otl.gif';
 

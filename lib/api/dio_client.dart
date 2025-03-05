@@ -14,6 +14,9 @@ class DioClient {
   Future<dynamic> get(String baseUrl) async {
     var uri = Uri.parse(baseUrl);
     try {
+      log("API is:$baseUrl");
+      log("API Token is:${PreferenceUtils.getAuthToken()}");
+
       var response = await Dio()
           .get(baseUrl,
               options: Options(headers: {
@@ -22,6 +25,9 @@ class DioClient {
                 'Authorization': PreferenceUtils.getAuthToken()
               }))
           .timeout(const Duration(seconds: timeOutDuration));
+
+      log("$baseUrl API Response is:${response.data}");
+
       return _processResponse(response);
     } on SocketException {
       throw FetchDataException('No Internet connection', uri.toString());
@@ -38,12 +44,13 @@ class DioClient {
       {Map<String, dynamic>? queryParams}) async {
     var uri = Uri.parse(baseUrl);
 
+    log("API is:$baseUrl");
+
     // Append query parameters if they are not null or empty
     if (queryParams != null && queryParams.isNotEmpty) {
       uri = Uri.parse(baseUrl).replace(queryParameters: queryParams);
     }
 
-    log("API is:$baseUrl");
     log("API Param is:$queryParams");
     log("API Token is:${PreferenceUtils.getAuthToken()}");
 
@@ -58,6 +65,9 @@ class DioClient {
                 },
               ))
           .timeout(const Duration(seconds: timeOutDuration));
+
+      log("$baseUrl API Response is:$response");
+
       return _processResponse(response);
     } on SocketException {
       throw FetchDataException('No Internet connection', uri.toString());
@@ -119,6 +129,9 @@ class DioClient {
               ),
               data: requestParam)
           .timeout(const Duration(seconds: timeOutDuration));
+
+      log("$url API response is:$response");
+
       return _processResponse(response);
     } on SocketException {
       throw FetchDataException('No Internet connection', uri.toString());

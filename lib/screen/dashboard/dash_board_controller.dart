@@ -123,13 +123,13 @@ class DashController extends GetxController {
       'visible': true,
       'boxColor': const Color(0XFFE8FFF7),
     },
-    /*{
+    {
       'id': 2,
       'icon': AppImages.exploreAttendanceIcon,
       'name': 'Attendance',
       'visible': true,
       'boxColor': const Color(0XFFF1EBFB),
-    }*/
+    }
     /*{
       'id': 2,
       'icon': AppImages.exploreLeaveIcon,

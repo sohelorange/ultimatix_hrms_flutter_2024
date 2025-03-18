@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:ultimatix_hrms_flutter/screen/attendance_reg/user_attendance_regularize/attendance_user_controller.dart';
 import '../../../app/app_colors.dart';
 import '../../../app/app_font_weight.dart';
 import '../../../app/app_images.dart';
@@ -12,8 +11,9 @@ import '../../../widget/common_app_image.dart';
 import '../../../widget/common_container.dart';
 import '../../../widget/common_gradient_button.dart';
 import '../../../widget/common_text.dart';
+import 'attendance_user_backup_controller.dart';
 
-class UserAttendanceUiBackup extends GetView<UserAttendanceController> {
+class UserAttendanceUiBackup extends GetView<UserAttendanceBackupController> {
   const UserAttendanceUiBackup({super.key});
 
   @override

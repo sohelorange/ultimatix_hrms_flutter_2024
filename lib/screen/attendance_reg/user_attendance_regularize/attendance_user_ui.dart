@@ -60,7 +60,6 @@ class UserAttendanceUi extends GetView<UserAttendanceController> {
                       ),
                       child: LayoutBuilder(
                         builder: (context, constraints) {
-                          double fontSize = constraints.maxWidth * 0.04;
 
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,22 +68,6 @@ class UserAttendanceUi extends GetView<UserAttendanceController> {
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  // Small Image
-                                  /*Container(
-                                    width: 50,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: AppColors.color1C1F37
-                                                .withValues(alpha: 0.10)),
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.white),
-                                    child: CommonAppImage(
-                                      imagePath: controller.userProfile.value,
-                                      radius: 10,
-                                      fit: BoxFit.contain,
-                                    ),
-                                  ),*/
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(30),
                                     child: CommonAppImage(
@@ -192,7 +175,7 @@ class UserAttendanceUi extends GetView<UserAttendanceController> {
                                 .data?.length ??
                             1,
                         itemBuilder: (context, index) {
-                          return responsiveContainer(context, index);
+                          return getUserAttendanceUi(context, index);
                         },
                       ),
                     )
@@ -201,444 +184,6 @@ class UserAttendanceUi extends GetView<UserAttendanceController> {
         )
       ],
     );
-  }
-
-
-  responsiveContainer(BuildContext context, int index) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(16.0),
-          margin: const EdgeInsets.all(10),
-          width: MediaQuery.of(context).size.width * 0.9,
-          // Adjust container width as needed
-          decoration: BoxDecoration(
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0X1C1F370D),
-                // Light gray color for shadow
-                blurRadius: 4.0,
-                // Increase the blur for a more spread-out shadow
-                spreadRadius: 1.0,
-                // Small spread to create a more pronounced shadow
-                offset: Offset(0,
-                    0), // Offset to simulate elevation effect (vertical shadow)
-              ),
-            ],
-            borderRadius: BorderRadius.circular(6),
-            color: Colors.white,
-          ),
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              double fontSize = constraints.maxWidth * 0.04;
-
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  /*First Row*/
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Small Image
-                      Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.white,
-                                blurRadius: 5.0,
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white),
-                        child: SvgPicture.asset(
-                            height: 50, width: 50, getImageUrl(index)),
-                      ),
-                      const SizedBox(width: 16.0),
-                      // Spacer between image and text
-                      // Column for Texts
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            CommonText(
-                              text: controller.getWeekDay(controller
-                                      .attendanceRegularizeDetails.value.data
-                                      ?.elementAt(index)
-                                      .forDate
-                                      .toString() ??
-                                  ""),
-                              fontWeight: AppFontWeight.w500,
-                              fontSize: fontSize,
-                              color: AppColors.color1C1F37,
-                            ),
-                            const SizedBox(height: 8.0),
-                            Row(
-                              children: [
-                                const SizedBox(width: 2.0),
-                                CommonText(
-                                  text: controller.setDate(controller
-                                      .attendanceRegularizeDetails.value.data!
-                                      .elementAt(index)
-                                      .forDate
-                                      .toString()),
-                                  color: AppColors.color6B6D7A,
-                                  fontSize: fontSize,
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-
-                      Visibility(
-                        visible: controller
-                            .attendanceRegularizeDetails.value.data!
-                            .elementAt(index)
-                            .rowStatus!,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            const SizedBox(height: 8.0),
-                            controller.attendanceRegularizeDetails.value.data
-                                        ?.elementAt(index)
-                                        .chkBySuperior ==
-                                    "Pending"
-                                ? SvgPicture.asset(AppImages.icPendingReg,
-                                    height: 20, width: 20)
-                                : controller.attendanceRegularizeDetails.value
-                                            .data
-                                            ?.elementAt(index)
-                                            .chkBySuperior ==
-                                        "Approved"
-                                    ? SvgPicture.asset(AppImages.icApproveReg,
-                                        height: 20, width: 20)
-                                    : controller.attendanceRegularizeDetails
-                                                .value.data
-                                                ?.elementAt(index)
-                                                .chkBySuperior ==
-                                            "Rejected"
-                                        ? SvgPicture.asset(
-                                            AppImages.icCancelReg,
-                                            height: 20,
-                                            width: 20)
-                                        : GestureDetector(
-                                            onTap: () {
-                                              Get.toNamed(
-                                                  AppRoutes
-                                                      .regularizeApplyRoute,
-                                                  arguments: [
-                                                    {
-                                                      "Shift1": controller
-                                                              .attendanceRegularizeDetails
-                                                              .value
-                                                              .data
-                                                              ?.elementAt(index)
-                                                              .shInTime ??
-                                                          "--:--",
-                                                      "Shift2": controller
-                                                              .attendanceRegularizeDetails
-                                                              .value
-                                                              .data
-                                                              ?.elementAt(index)
-                                                              .shOutTime ??
-                                                          "",
-                                                      "empId": controller
-                                                          .attendanceRegularizeDetails
-                                                          .value
-                                                          .data
-                                                          ?.elementAt(index)
-                                                          .empId,
-                                                      "cmpId": controller
-                                                          .attendanceRegularizeDetails
-                                                          .value
-                                                          .data
-                                                          ?.elementAt(index)
-                                                          .cmpID,
-                                                      "forDate": controller
-                                                          .attendanceRegularizeDetails
-                                                          .value
-                                                          .data
-                                                          ?.elementAt(index)
-                                                          .forDate,
-                                                      "halfFullDay": controller
-                                                              .attendanceRegularizeDetails
-                                                              .value
-                                                              .data
-                                                              ?.elementAt(index)
-                                                              .pDays ??
-                                                          "--:--",
-                                                      "cancellationLateIn": controller
-                                                              .attendanceRegularizeDetails
-                                                              .value
-                                                              .data
-                                                              ?.elementAt(index)
-                                                              .isCancelLateIn ??
-                                                          "--:--",
-                                                      "cancellationEarlyOut": controller
-                                                              .attendanceRegularizeDetails
-                                                              .value
-                                                              .data
-                                                              ?.elementAt(index)
-                                                              .isCancelEarlyOut ??
-                                                          "--:--",
-                                                      "inTime1": controller
-                                                              .attendanceRegularizeDetails
-                                                              .value
-                                                              .data
-                                                              ?.elementAt(index)
-                                                              .status ??
-                                                          "--:--",
-                                                      "outTime1": controller
-                                                              .attendanceRegularizeDetails
-                                                              .value
-                                                              .data
-                                                              ?.elementAt(index)
-                                                              .status2 ??
-                                                          "--:--",
-                                                      "lateIn": controller
-                                                              .attendanceRegularizeDetails
-                                                              .value
-                                                              .data
-                                                              ?.elementAt(index)
-                                                              .earlyMinute ??
-                                                          "--:--",
-                                                      "earlyOut": controller
-                                                              .attendanceRegularizeDetails
-                                                              .value
-                                                              .data
-                                                              ?.elementAt(index)
-                                                              .isLeaveApp ??
-                                                          "--:--",
-                                                      "UiName":
-                                                          "AttendanceUserUi"
-                                                    }
-                                                  ]);
-                                            },
-                                            child: SvgPicture.asset(
-                                              AppImages.svgAttendanceEdit,
-                                              height: 20,
-                                              width: 20,
-                                            ),
-                                          ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-
-                  /*controller.attendanceRegularizeDetails.value.data?.elementAt(index).mainStatus=="W" || controller.attendanceRegularizeDetails.value.data?.elementAt(index).mainStatus=="A" ? const SizedBox(height: 0)
-                      : const SizedBox(height: 16.0),*/
-                  checkTime(index) == false
-                      ? const SizedBox(height: 0)
-                      : const SizedBox(height: 16.0),
-
-                  /*Second Row*/
-                  /*controller.attendanceRegularizeDetails.value.data?.elementAt(index).mainStatus=="W" || controller.attendanceRegularizeDetails.value.data?.elementAt(index).mainStatus=="A" ? Container()*/
-                  checkTime(index) == false
-                      ? Container()
-                      : Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            // Box 1
-                            Expanded(
-                              child: Container(
-                                padding: const EdgeInsets.all(12.0),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: AppColors.colorF8F4FA),
-                                child: Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                        height: 20,
-                                        width: 20,
-                                        AppImages.svgClock), // Clock Icon
-                                    const SizedBox(width: 8.0),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text(
-                                            'Check in',
-                                            style: TextStyle(
-                                                fontSize: fontSize,
-                                                color: AppColors.color6B6D7A,
-                                                fontWeight: FontWeight.w400),
-                                          ),
-                                          Text(
-                                            controller
-                                                    .attendanceRegularizeDetails
-                                                    .value
-                                                    .data
-                                                    ?.elementAt(index)
-                                                    .status
-                                                    ?.trim() ??
-                                                "",
-                                            style: TextStyle(
-                                                fontSize: fontSize,
-                                                fontWeight: FontWeight.w700,
-                                                color: controller
-                                                            .attendanceRegularizeDetails
-                                                            .value
-                                                            .data!
-                                                            .elementAt(index)
-                                                            .lateMinute! >
-                                                        controller
-                                                            .attendanceRegularizeDetails
-                                                            .value
-                                                            .data!
-                                                            .elementAt(index)
-                                                            .lateTime!
-                                                    ? AppColors.colorD33017
-                                                    : AppColors.color1C1F37),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 16.0),
-                            // Spacer between the two boxes
-                            // Box 2
-                            Expanded(
-                              child: Container(
-                                padding: const EdgeInsets.all(12.0),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: AppColors.colorF8F4FA),
-                                child: Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                        height: 20,
-                                        width: 20,
-                                        AppImages.svgClock), // Location Icon
-                                    const SizedBox(width: 8.0),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text(
-                                            'Check out',
-                                            style: TextStyle(
-                                                fontSize: fontSize,
-                                                color: AppColors.color6B6D7A,
-                                                fontWeight: FontWeight.w400),
-                                          ),
-                                          Text(
-                                            controller
-                                                    .attendanceRegularizeDetails
-                                                    .value
-                                                    .data
-                                                    ?.elementAt(index)
-                                                    .status2
-                                                    ?.trim() ??
-                                                "",
-                                            style: TextStyle(
-                                                fontSize: fontSize,
-                                                fontWeight: FontWeight.w700,
-                                                color: controller
-                                                            .attendanceRegularizeDetails
-                                                            .value
-                                                            .data!
-                                                            .elementAt(index)
-                                                            .lateMinute! >
-                                                        controller
-                                                            .attendanceRegularizeDetails
-                                                            .value
-                                                            .data!
-                                                            .elementAt(index)
-                                                            .lateTime!
-                                                    ? AppColors.colorD33017
-                                                    : AppColors.color1C1F37),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                ],
-              );
-            },
-          ),
-        ),
-        /*SizedBox(height: MediaQuery.of(context).size.width * 0.03,),*/
-      ],
-    );
-  }
-
-  getImageUrl(int index) {
-    if (controller.attendanceRegularizeDetails.value.data!
-            .elementAt(index)
-            .mainStatus ==
-        "A") {
-      return AppImages.svgAbsentAttendance;
-    } else if (controller.attendanceRegularizeDetails.value.data!
-            .elementAt(index)
-            .mainStatus ==
-        "P") {
-      return AppImages.svgPresentAttendance;
-    } else if (controller.attendanceRegularizeDetails.value.data!
-            .elementAt(index)
-            .mainStatus ==
-        "W") {
-      return AppImages.svgWeekOffAttendance;
-    } else if (controller.attendanceRegularizeDetails.value.data!
-            .elementAt(index)
-            .mainStatus ==
-        "HO") {
-      return AppImages.svgHolidayAttendance;
-    } else if (controller.attendanceRegularizeDetails.value.data!
-            .elementAt(index)
-            .mainStatus ==
-        "OD") {
-      return AppImages.svgOdAttendance;
-    } else {
-      return AppImages.svgAbsentAttendance;
-    }
-  }
-
-  getAttendanceImage(int index){
-    if (controller.attendanceRegularizeDetails.value.data!
-        .elementAt(index)
-        .mainStatus ==
-        "A") {
-      return AppImages.svgAttendanceAbsentFirst;
-    } else if (controller.attendanceRegularizeDetails.value.data!
-        .elementAt(index)
-        .mainStatus ==
-        "P") {
-      return AppImages.svgAttendancePresentFirst;
-    } else if (controller.attendanceRegularizeDetails.value.data!
-        .elementAt(index)
-        .mainStatus ==
-        "W") {
-      return AppImages.svgAttendanceWeekOffFirst;
-    } else if (controller.attendanceRegularizeDetails.value.data!
-        .elementAt(index)
-        .mainStatus ==
-        "HO") {
-      return AppImages.svgAttendanceHolidayFirst;
-    } else if (controller.attendanceRegularizeDetails.value.data!
-        .elementAt(index)
-        .mainStatus ==
-        "OD") {
-      return AppImages.svgAttendanceOnDutyFirst;
-    } else {
-      return AppImages.svgAbsentAttendance;
-    }
   }
   
   Widget _getAttendanceCalender(BuildContext context){
@@ -682,6 +227,7 @@ class UserAttendanceUi extends GetView<UserAttendanceController> {
                 onChanged: (value) {
                   log("This item name is:$value");
                   if(value!=null){
+                    controller.selectedMonthIndex.value = controller.listOfMonths.indexOf(value.toString())+1;
                     controller.selectedMonths.value = value;
                   }
                 },
@@ -767,65 +313,30 @@ class UserAttendanceUi extends GetView<UserAttendanceController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(""),
-            Container(
-              height: MediaQuery.of(context).size.height * (40 / 812),
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6),
-                  gradient: AppColors.gradientBackgroundNew
+            GestureDetector(
+              onTap: () {
+                controller.callUserAttendanceRegularizationDetails(
+                    controller.selectedMonthIndex.value,
+                    int.tryParse(controller.selectedMonths.value) ?? DateTime.now().year
+                );
+              },
+              child: Container(
+                height: MediaQuery.of(context).size.height * (40 / 812),
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                    gradient: AppColors.gradientBackgroundNew
+                ),
+                child: Text(
+                  "Change",
+                  style: GoogleFonts.inter(fontSize: MediaQuery.of(context).size.width * 0.035,fontWeight: FontWeight.w400,color: AppColors.colorWhite),
+                  textAlign: TextAlign.center,),
               ),
-              child: Text(
-                "Change",
-                style: GoogleFonts.inter(fontSize: MediaQuery.of(context).size.width * 0.035,fontWeight: FontWeight.w400,color: AppColors.colorWhite),
-                textAlign: TextAlign.center,),
             )
           ],),
       ],
     );
   }
-
-  /*Widget _attendanceUi(BuildContext context) {
-    final int currentMonth = DateTime.now().month;
-
-    // Get the selected month or current month
-    final String selectedMonth = controller.selectedMonthIndex.value == -1
-        ? [
-            'January',
-            'February',
-            'March',
-            'April',
-            'May',
-            'June',
-            'July',
-            'August',
-            'September',
-            'October',
-            'November',
-            'December'
-          ][currentMonth - 1] // Convert month index to name
-        : [
-            'January',
-            'February',
-            'March',
-            'April',
-            'May',
-            'June',
-            'July',
-            'August',
-            'September',
-            'October',
-            'November',
-            'December'
-          ][controller.selectedMonthIndex.value];
-
-    return CommonGradientButton(
-      text: '$selectedMonth ${controller.selectedYear.toString()} Attendance',
-      imagePath: AppImages.leaveCalendarIcon, // Change the icon as needed
-      onTap: () {
-        controller.showYearDialog(context); // Define your on-tap behavior here
-      },
-    );
-  }*/
 
   bool checkTime(int index) {
     if (controller.attendanceRegularizeDetails.value.data
@@ -850,6 +361,402 @@ class UserAttendanceUi extends GetView<UserAttendanceController> {
       }
     } else {
       return false;
+    }
+  }
+
+  getUserAttendanceUi(BuildContext context, int index) {
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(16.0),
+          margin: const EdgeInsets.all(10),
+          width: MediaQuery.of(context).size.width * 0.9,
+          // Adjust container width as needed
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6),
+            color: AppColors.colorF1EBFB,
+          ),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              double fontSize = constraints.maxWidth * 0.04;
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * (148 / 375),
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(
+                              height: MediaQuery.of(context).size.width * 0.1,
+                              width: MediaQuery.of(context).size.width * 0.1,
+                              getUserAttendanceStatusIcons(index),
+                            ),
+                            const SizedBox(width: 10.0),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                CommonText(
+                                  text: controller.getWeekDay(controller
+                                      .attendanceRegularizeDetails.value.data
+                                      ?.elementAt(index)
+                                      .forDate
+                                      .toString() ??
+                                      ""),
+                                  fontWeight: AppFontWeight.w400,
+                                  fontSize: fontSize,
+                                  color: AppColors.color2F2F31,
+                                ),
+                                const SizedBox(height: 4.0),
+                                CommonText(
+                                  text: controller.setDate(controller
+                                      .attendanceRegularizeDetails
+                                      .value
+                                      .data
+                                      ?.elementAt(index)
+                                      .forDate
+                                      .toString() ??
+                                      ""),
+                                  color: AppColors.color7B758E,
+                                  fontSize: fontSize,
+                                  fontWeight: FontWeight.w400,
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                          width: MediaQuery.of(context).size.width * (148 / 375),
+                          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SvgPicture.asset(getUserAttendanceImage(index)),
+                              controller.attendanceRegularizeDetails.value.data
+                                  ?.elementAt(index)
+                                  .chkBySuperior ==
+                                  "Pending"
+                                  ? SvgPicture.asset(AppImages.svgPendingNew,
+                                  height: 20, width: 20)
+                                  : controller.attendanceRegularizeDetails.value
+                                  .data
+                                  ?.elementAt(index)
+                                  .chkBySuperior ==
+                                  "Approved"
+                                  ? SvgPicture.asset(AppImages.svgApprovedNew,
+                                  height: 20, width: 20)
+                                  : controller.attendanceRegularizeDetails
+                                  .value.data
+                                  ?.elementAt(index)
+                                  .chkBySuperior ==
+                                  "Rejected"
+                                  ? SvgPicture.asset(
+                                  AppImages.svgCancelNew,
+                                  height: 20,
+                                  width: 20)
+                                  : GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(
+                                      AppRoutes
+                                          .regularizeApplyRoute,
+                                      arguments: [
+                                        {
+                                          "Shift1": controller
+                                              .attendanceRegularizeDetails
+                                              .value
+                                              .data
+                                              ?.elementAt(index)
+                                              .shInTime ??
+                                              "--:--",
+                                          "Shift2": controller
+                                              .attendanceRegularizeDetails
+                                              .value
+                                              .data
+                                              ?.elementAt(index)
+                                              .shOutTime ??
+                                              "",
+                                          "empId": controller
+                                              .attendanceRegularizeDetails
+                                              .value
+                                              .data
+                                              ?.elementAt(index)
+                                              .empId,
+                                          "cmpId": controller
+                                              .attendanceRegularizeDetails
+                                              .value
+                                              .data
+                                              ?.elementAt(index)
+                                              .cmpID,
+                                          "forDate": controller
+                                              .attendanceRegularizeDetails
+                                              .value
+                                              .data
+                                              ?.elementAt(index)
+                                              .forDate,
+                                          "halfFullDay": controller
+                                              .attendanceRegularizeDetails
+                                              .value
+                                              .data
+                                              ?.elementAt(index)
+                                              .pDays ??
+                                              "--:--",
+                                          "cancellationLateIn": controller
+                                              .attendanceRegularizeDetails
+                                              .value
+                                              .data
+                                              ?.elementAt(index)
+                                              .isCancelLateIn ??
+                                              "--:--",
+                                          "cancellationEarlyOut": controller
+                                              .attendanceRegularizeDetails
+                                              .value
+                                              .data
+                                              ?.elementAt(index)
+                                              .isCancelEarlyOut ??
+                                              "--:--",
+                                          "inTime1": controller
+                                              .attendanceRegularizeDetails
+                                              .value
+                                              .data
+                                              ?.elementAt(index)
+                                              .shInTime ??
+                                              "--:--",
+                                          "outTime1": controller
+                                              .attendanceRegularizeDetails
+                                              .value
+                                              .data
+                                              ?.elementAt(index)
+                                              .shOutTime ??
+                                              "--:--",
+                                          "lateIn": controller
+                                              .attendanceRegularizeDetails
+                                              .value
+                                              .data
+                                              ?.elementAt(index)
+                                              .earlyMinute ??
+                                              "--:--",
+                                          "earlyOut": controller
+                                              .attendanceRegularizeDetails
+                                              .value
+                                              .data
+                                              ?.elementAt(index)
+                                              .isLeaveApp ??
+                                              "--:--",
+                                          "UiName":
+                                          "AttendanceMainUi"
+                                        }
+                                      ]);
+                                },
+                                child: SvgPicture.asset(
+                                  AppImages.svgEditNew,
+                                  height: 20,
+                                  width: 20,
+                                ),
+                              ),
+                            ],)),
+                    ],
+                  ),
+
+                  checkTime(index) == false
+                      ? const SizedBox(height: 0)
+                      : const SizedBox(height: 16.0),
+
+                  checkTime(index) == false
+                      ? Container()
+                      : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Box 1
+                      Expanded(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * (148 / 375),
+                          padding: const EdgeInsets.all(12.0),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: AppColors.colorDCDCDC),
+                              borderRadius: BorderRadius.circular(10),
+                              color: AppColors.colorWhite
+                          ),
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                AppImages.svgInTimeAttendance,
+                                height: 20,
+                                width: 20,
+                              ),
+                              const SizedBox(width: 8.0),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      'In Time',
+                                      style:
+                                      TextStyle(fontSize: fontSize,color: AppColors.color2F2F31,fontWeight: FontWeight.w500),
+                                    ),
+                                    Text(
+                                      controller
+                                          .attendanceRegularizeDetails
+                                          .value
+                                          .data
+                                          ?.elementAt(index)
+                                          .status
+                                          ?.trim() ??
+                                          "",
+                                      style: TextStyle(
+                                        fontSize: fontSize,
+                                        fontWeight: FontWeight.w400,
+                                        color: getColors(index),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 16.0),
+                      // Spacer between the two boxes
+                      // Box 2
+                      Expanded(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * (148 / 375),
+                          padding: const EdgeInsets.all(12.0),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: AppColors.colorDCDCDC),
+                              borderRadius: BorderRadius.circular(10),
+                              color: AppColors.colorWhite
+                          ),
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                AppImages.svgOutTimeAttendance,
+                                height: 20,
+                                width: 20,
+                              ),
+                              // Location Icon
+                              const SizedBox(width: 8.0),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      'Out Time',
+                                      style:
+                                      TextStyle(fontSize: fontSize,color: AppColors.color2F2F31,fontWeight: FontWeight.w500),
+                                    ),
+                                    Text(
+                                      controller
+                                          .attendanceRegularizeDetails
+                                          .value
+                                          .data
+                                          ?.elementAt(index)
+                                          .status2
+                                          ?.trim() ??
+                                          "",
+                                      style: TextStyle(
+                                          fontSize: fontSize,
+                                          fontWeight: FontWeight.w400,
+                                          color: getColors(index)),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                ],
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  getColors(int index) {
+    num lateMin = controller.attendanceRegularizeDetails.value.data
+        ?.elementAt(index)
+        .lateMinute ??
+        0;
+    num lateTime = controller.attendanceRegularizeDetails.value.data
+        ?.elementAt(index)
+        .lateTime ??
+        0;
+    return lateMin > lateTime ? AppColors.colorD33017 : AppColors.color7B758E;
+  }
+
+  getUserAttendanceStatusIcons(int index) {
+    if (controller.attendanceRegularizeDetails.value.data
+        ?.elementAt(index)
+        .mainStatus ==
+        "A") {
+      return AppImages.svgAttendanceAbsentFirst;
+    } else if (controller.attendanceRegularizeDetails.value.data
+        ?.elementAt(index)
+        .mainStatus ==
+        "P") {
+      return AppImages.svgAttendancePresentFirst;
+    } else if (controller.attendanceRegularizeDetails.value.data
+        ?.elementAt(index)
+        .mainStatus ==
+        "W") {
+      return AppImages.svgAttendanceWeekOffFirst;
+    } else if (controller.attendanceRegularizeDetails.value.data
+        ?.elementAt(index)
+        .mainStatus ==
+        "HO") {
+      return AppImages.svgAttendanceHolidayFirst;
+    } else if (controller.attendanceRegularizeDetails.value.data
+        ?.elementAt(index)
+        .mainStatus ==
+        "OD") {
+      return AppImages.svgAttendanceOnDutyFirst;
+    } else {
+      return AppImages.svgAbsentAttendance;
+    }
+  }
+
+  getUserAttendanceImage(int index) {
+    if (controller.attendanceRegularizeDetails.value.data
+        ?.elementAt(index)
+        .mainStatus ==
+        "A") {
+      return AppImages.svgAbsentNew;
+    } else if (controller.attendanceRegularizeDetails.value.data
+        ?.elementAt(index)
+        .mainStatus ==
+        "P") {
+      return AppImages.svgPresentNew;
+    } else if (controller.attendanceRegularizeDetails.value.data
+        ?.elementAt(index)
+        .mainStatus ==
+        "W") {
+      return AppImages.svgWeekOffNew;
+    } else if (controller.attendanceRegularizeDetails.value.data
+        ?.elementAt(index)
+        .mainStatus ==
+        "HO") {
+      return AppImages.svgHolidayNew;
+    } else if (controller.attendanceRegularizeDetails.value.data
+        ?.elementAt(index)
+        .mainStatus ==
+        "OD") {
+      return AppImages.svgOnDutyNew;
+    } else {
+      return AppImages.svgAbsentAttendance;
     }
   }
 }

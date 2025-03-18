@@ -437,6 +437,7 @@ class AppImages {
   static const String svgInTimeAttendance = "assets/icon/attendance/svg_in_time_attendance.svg";
   static const String svgOutTimeAttendance = "assets/icon/attendance/svg_out_time_attendance.svg";
   static const String svgDropDownAttendance = "assets/icon/attendance/svg_dropdown_attendance.svg";
+  static const String svgArrowUpAttendance = "assets/icon/attendance/svg_arrow_up_attendance.svg";
   static const String svgMenuAttendance = "assets/icon/attendance/svg_menu_attendance.svg";
   static const String svgNewLocAttendance = "assets/icon/attendance/svg_new_loc_attendance.svg";
   static const String svgLocUserAttendance = "assets/icon/attendance/svg_loc_user_attendance.svg";

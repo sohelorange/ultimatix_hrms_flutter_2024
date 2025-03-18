@@ -1,7 +1,5 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:isolate';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -10,13 +8,12 @@ import '../../api/model/attendance_regularize_details.dart';
 import '../../api/model/team_attendance_response.dart';
 import '../../utility/isolates_class.dart';
 import '../../utility/network.dart';
-import '../../widget/common_button.dart';
-import '../../widget/common_year_month_grid_view.dart';
 import '../../utility/preference_utils.dart';
 import '../../app/app_url.dart';
 
 class AttendanceMainController extends GetxController {
   RxBool isLoading = true.obs;
+  RxBool isLoadingOnItem = false.obs;
   RxString userAddress = "".obs;
   RxString userCheckInTime = "--:--".obs;
   RxString userCheckoutTime = "--:--".obs;
@@ -36,38 +33,12 @@ class AttendanceMainController extends GetxController {
   Rx<TeamAttendanceResponse> subTeamAttendanceResponse =
       TeamAttendanceResponse().obs;
 
-  final RxInt selectedYearIndex = RxInt(-1);
-  final RxInt selectedMonthIndex = RxInt(-1);
-  RxInt selectedYear = DateTime.now().year.obs;
   RxString cmpImageUrl = "".obs;
-
-  final RxString selectedMonth = "".obs;
-
-  RxBool isShowSubEmp = false.obs;
 
   RxList<String> listOfYears = [""].obs;
 
-  final List<String> listOfMonths = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
-  final RxString selectedMonths = "".obs;
-  final RxString selectedYears = "".obs;
-
   RxString currentMonth = "".obs;
 
-  RxBool isExpanded = false.obs;
   RxList<bool> expanded = [false].obs;
 
   @override
@@ -89,19 +60,17 @@ class AttendanceMainController extends GetxController {
   }
 
   Future<void> getMyTeamRecords(String empId, String cmpId, bool isSubEmpData) async {
-    isLoading.value = true;
 
     await _fetchDataFromApi(
       AppURL.myTeamAttendanceURL,
       (data) {
         if(isSubEmpData==true) {
-          isLoading.value = false;
+          isLoadingOnItem.value = false;
           subTeamAttendanceResponse.value = TeamAttendanceResponse.fromJson(data);
           subTeamAttendanceResponse.value.data?.removeAt(0);
         } else {
           expanded.clear();
           teamAttendanceResponse.value = TeamAttendanceResponse.fromJson(data);
-          log("The items are:${teamAttendanceResponse.value.data?.length}");
           expanded.value = List.generate(teamAttendanceResponse.value.data!.length-1, (index) => false,);
           setUserOwnData();
         }
@@ -162,7 +131,6 @@ class AttendanceMainController extends GetxController {
   }
 
   Future<void> setUserOwnData() async {
-    print("The 1 length of now is:${teamAttendanceResponse.value.data?.length}");
 
     var userData = teamAttendanceResponse.value.data?.firstWhere(
       (item) => "${item.empId}" == empID.value,
@@ -181,8 +149,6 @@ class AttendanceMainController extends GetxController {
       userCmpId.value = userData.cmpID!;
       teamAttendanceResponse.value.data?.remove(userData);
     }
-
-    print("The 2 length of now is:${teamAttendanceResponse.value.data?.length}");
 
     isLoading.value = false;
   }
@@ -251,211 +217,6 @@ class AttendanceMainController extends GetxController {
     cmpImageUrl.value = loginData['cmp_Logo'] ?? '';
   }
 
-  String getWeekDay(String? date) {
-    if (date != null && date != "") {
-      DateFormat inputFormat = DateFormat('MM/dd/yyyy HH:mm:ss');
-      DateTime parsedDate = inputFormat.parse(date);
-      String daysStr = DateFormat('EEEE').format(parsedDate);
-      return daysStr; // Output: 2023-10-01
-    } else {
-      return "";
-    }
-  }
-
-  String setDate(String? date) {
-    if (date != null && date != "") {
-      DateFormat inputFormat = DateFormat('MM/dd/yyyy HH:mm:ss');
-      // Parse the input string to DateTime
-      DateTime parsedDate = inputFormat.parse(date);
-      // Format the DateTime to the desired output format (MM/dd/yyyy)
-      String formattedDate = DateFormat('MM/dd/yyyy').format(parsedDate);
-      return formattedDate;
-    } else {
-      return "";
-    }
-  }
-
-  final List<String> dropdownValues = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
-  void showYearDialog(BuildContext context) {
-    final int currentYear = DateTime.now().year;
-
-    // Generate a list of years from (currentYear - 10) to (currentYear + 2)
-    final List<Map<String, dynamic>> yearItems = List.generate(
-      13, // Total of 13 years (10 previous + current year + 2 future)
-      (index) => {'name': (currentYear - 10 + index).toString()},
-    );
-
-    // Set default to current year if no selection has been made yet
-    if (selectedYearIndex.value == -1) {
-      selectedYearIndex.value = 10; // Default to the current year
-    }
-
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Select Year'),
-          content: SizedBox(
-            height: MediaQuery.of(context).size.height *
-                0.3, // 30% of screen height
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                return CommonYearMonthGridView(
-                  gridItems: yearItems,
-                  selectedIndex: selectedYearIndex,
-                  onItemTap: (index) {
-                    selectedYearIndex.value = index;
-
-                    Get.back(); // Close the year dialog
-                    selectedYear.value =
-                        currentYear - 10 + selectedYearIndex.value;
-                    showMonthDialog(context, selectedYear.value);
-                  },
-                );
-              },
-            ),
-          ),
-          actions: [
-            Row(
-              children: [
-                Expanded(
-                  child: CommonButton(
-                    buttonText: 'Next',
-                    onPressed: () {
-                      if (selectedYearIndex.value >= 0) {
-                        Get.back();
-                        final selectedYear =
-                            currentYear - 10 + selectedYearIndex.value;
-                        showMonthDialog(context, selectedYear);
-                      }
-                    },
-                    isLoading: false,
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: CommonButton(
-                    buttonText: 'Close',
-                    onPressed: () {
-                      Get.back();
-                    },
-                    isLoading: false,
-                  ),
-                ),
-              ],
-            )
-          ],
-        );
-      },
-    );
-  }
-
-  void showMonthDialog(BuildContext context, int selectedYear) {
-    _showDialog(
-      context,
-      'Select Month for $selectedYear',
-      _generateMonthItems(),
-      selectedMonthIndex,
-      (index) {
-        selectedMonthIndex.value = index;
-        Get.back();
-        getUserAttendanceRecords(selectedYear, index + 1);
-      },
-    );
-  }
-
-  void _showDialog(
-    BuildContext context,
-    String title,
-    List<Map<String, dynamic>> items,
-    RxInt selectedIndex,
-    Function(int) onItemTap,
-  ) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(title),
-          content: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.3,
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: CommonYearMonthGridView(
-              gridItems: items,
-              selectedIndex: selectedIndex,
-              onItemTap: onItemTap,
-            ),
-          ),
-          actions: [
-            Row(
-              children: [
-                Expanded(
-                  child: CommonButton(
-                    buttonText: 'Submit',
-                    onPressed: () {
-                      if (selectedIndex.value >= 0) {
-                        Get.back();
-                        onItemTap(selectedIndex.value);
-                      }
-                    },
-                    isLoading: false,
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: CommonButton(
-                    buttonText: 'Close',
-                    onPressed: Get.back,
-                    isLoading: false,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  // ignore: unused_element
-  List<Map<String, dynamic>> _generateYearItems() {
-    var currentYear = DateTime.now().year - 15;
-    return List.generate(
-        50, (index) => {'name': (currentYear + index).toString()});
-  }
-
-  List<Map<String, dynamic>> _generateMonthItems() {
-    return [
-      {'name': 'January'},
-      {'name': 'February'},
-      {'name': 'March'},
-      {'name': 'April'},
-      {'name': 'May'},
-      {'name': 'June'},
-      {'name': 'July'},
-      {'name': 'August'},
-      {'name': 'September'},
-      {'name': 'October'},
-      {'name': 'November'},
-      {'name': 'December'},
-    ];
-  }
-
   RxBool isShowChart = false.obs;
   Rx<double> present = 0.0.obs;
   Rx<double> absent = 0.0.obs;
@@ -498,42 +259,5 @@ class AttendanceMainController extends GetxController {
       var value = await DioClient().get(api.apiUrl);
       api.answerPort.send(value);
     }
-  }
-}
-
-class Employee {
-  final int empId;
-  final String empCode;
-  final String fullName;
-  final String branch;
-  final String department;
-  final String designation;
-  final String imageUrl;
-
-  Employee({
-    required this.empId,
-    required this.empCode,
-    required this.fullName,
-    required this.branch,
-    required this.department,
-    required this.designation,
-    required this.imageUrl,
-  });
-
-  factory Employee.fromJson(Map<String, dynamic> json) {
-    return Employee(
-      empId: json['emp_Id'],
-      empCode: json['alpha_Emp_Code'],
-      fullName: json['emp_full_Name'],
-      branch: json['branch_Name'],
-      department: json['dept_Name'],
-      designation: json['desig_Name'],
-      imageUrl: json['image_Path'],
-    );
-  }
-
-  @override
-  String toString() {
-    return 'Employee(empId: $empId, empCode: $empCode, Name: $fullName, Branch: $branch, Department: $department, Designation: $designation, Image: $imageUrl)';
   }
 }
